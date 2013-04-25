@@ -16,13 +16,12 @@
 -->
 <book xmlns="http://docbook.org/ns/docbook"
       xmlns:xlink="http://www.w3.org/1999/xlink"
-      xmlns:xi="http://www.w3.org/2001/XInclude"
-      xmlns:svg="http://www.w3.org/2000/svg"
-      xmlns:m="http://www.w3.org/1998/Math/MathML"
-      xmlns:html="http://www.w3.org/1999/xhtml" version="5.0" status="DRAFT"
+      version="5.0" status="DRAFT"
       xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd
-http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+http://docbook.org/ns/docbook
+http://docbook.org/ns/docbook "
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <title>Murano Project Documentation</title>
     <info>
         <author>
@@ -113,50 +112,329 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
             </itemizedlist>
         </section>
     </chapter>
-    <chapter id="architecture">
-        <title>Architecture</title>
-        <figure xml:id="muranoarchitecture">
+    <chapter>
+        <title>Blueprint</title>
+        <section>
+
+            <title>Project Background</title>
+            <para>Enterprise customers frequently use Windows based
+                Environments for their internal and external products.
+                Configuration of the Windows Environment is a complex task
+                which usually requires a lot of efforts from the
+                administrators. Windows setup consists of numerous services
+                which might be tightly coupled to each other. Windows services
+                installation might be automated pretty straightforward but
+                service configuration itself might be a hard to automate
+                because it requires to have well designed Windows Architecture
+                and deep knowledge in Windows Services configuration.
+            </para>
+            <para>Currently several open source solutions exists that can help
+                to partially solve automation of Windows environment
+                provisioning. In the world of OpenStack there is a Heat project
+                that is similar to Amazon Cloud Formation. Heat is an excellent
+                tool for managing OpenStack cloud resources like VM instances,
+                security groups etc. It allows defining all cloud resources in
+                a single JSON template and later maintain all the resources by
+                editing that template. Although declarative template approach
+                suites well for OpenStack resources it quickly turns to be too
+                complex when it comes to application management.
+            </para>
+            <para>Another option is tools like Chef or Puppet. These tools are
+                flexible but require to have a special knowledge in scripting
+                and require efforts to manually script or modify cookbooks for
+                the specific environment configuration. This fits well when an
+                environment is stable but it becomes time-consuming and
+                involves manual script coding when one needs to deploy various
+                environments with rapidly changing configurations. Also Chef
+                and Puppet require additional infrastructure to support them.
+            </para>
+            <para>The biggest problem for both approaches above is to support
+                multi-step configuration of services with circular dependencies
+                required for correct configuration of Windows services. This
+                can be solved by using external orchestration.
+            </para>
+            <para>Another potential problem is lack of UI functionality
+                allowing to create and configure an environment without writing
+                a script.
+            </para>
+            <section>
+                <title>Proposal</title>
+                <para>Mirantis propose to introduce a new service which will
+                    allow non-experienced user to deploy reliable Windows based
+                    environments in “push-the-button” manner. The key goal is
+                    to provide UI and API which will allow to deploy and
+                    operate Windows Environments on the Windows Services
+                    abstraction level. The Service should be able to
+                    orchestrate complex circular dependent cases in order to
+                    setup complex Windows Environment with many dependant
+                    services.
+                </para>
+                <para>The service will address following use cases:
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Self-provisioning of predefined Windows services with their dependencies</para>
+                        </listitem>
+                        <listitem>
+                            <para>Automation of administrative tasks during data center roll-out</para>
+                        </listitem>
+                        <listitem>
+                            <para>Custom windows application as a windows service</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>
+                    The solution will provide higher level of abstraction for manipulation Windows Environments. Key
+                    concepts are:
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Windows Service - is a service like Active Directory, MSSQL, IIS which usually consist
+                                of multiple virtual machines and has multiple dependencies.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>Windows Environment - is a logical unity for all services and represents a classical
+                                Windows Datacenter
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>Windows VM instance - a VM which hosts a Windows Service. A Windows Service might be
+                                deployed over several Windows VM instances.
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+                <para>
+                    The Key Features of the Service are the following:
+                    <orderedlist>
+                        <listitem>
+                            <para>Native to OpenStack</para>
+                        </listitem>
+                        <listitem>
+                            <para>Introduces abstraction level for Windows Environments</para>
+                        </listitem>
+                        <listitem>
+                            <para>Supports Availability Zones and Disaster Recovery scenarios</para>
+                        </listitem>
+                        <listitem>
+                            <para>Uses native Windows features for HA solutions</para>
+                        </listitem>
+                    </orderedlist>
+                </para>
+            </section>
+        </section>
+        <section xml:id="architecture">
             <title>Architecture</title>
-            <mediaobject>
-                <imageobject role="fo">
-                    <imagedata fileref="figures/architecture_diagram.png"
-                               contentwidth="5in"/>
-                </imageobject>
-                <imageobject role="html">
-                    <imagedata fileref="figures/architecture_diagram.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+            <para>
+                The Murano Service communicates with the following OpenStack components:
+                <itemizedlist>
+                    <listitem>
+                        <para>Horizon - provides GUI with ability to use all of Murano features;</para>
+                    </listitem>
+                    <listitem>
+                        <para>Keystone - authenticates users and provides security token that is used to work with the
+                            OpenStack, hence limiting user abilities in Murano by his OpenStack privileges;
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Heat - is used to provision VMs and other OpenSack resources for Windows Environment;
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Glance - Windows Server VM images are stored there, each image containing an installed OS
+                            and a set of scripts
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Quantum - provides network configuration API</para>
+                    </listitem>
+                    <listitem>
+                        <para>Agent - an agent software which communicates with Orchestration Engine and executes tasks
+                            on VMs
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <figure xml:id="muranoarchitecture">
+                <title>Architecture</title>
+                <mediaobject>
+                    <imageobject role="fo">
+                        <imagedata fileref="figures/architecture_diagram.png"
+                                   contentwidth="5in"/>
+                    </imageobject>
+                    <imageobject role="html">
+                        <imagedata fileref="figures/architecture_diagram.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <section>
+                <title>REST API</title>
+                <para>Exposes service endpoint for the communication with a client. It exposes API functions to
+                    manipulate with objects like: environment, service.
+                </para>
+                <para>This component is responsible for translation API functions parameters to the Object Model
+                    attributes and to propagate the deployment status from the Orchestration Engine.
+                </para>
+            </section>
+            <section>
+                <title>Object Model</title>
+                <para>An internal representation of Windows Services and Environments. All attributes and entities are
+                    described in API specification.
+                </para>
+            </section>
+            <section>
+                <title>Orchestration Engine</title>
+                <para>This is a core component which evaluates the Object Model change and creates a plan for
+                    implementing these changes on the instances or in the cloud. This component will support extensions
+                    via plug-ins. Plugin can add a new service and extend existing services for integration. Currently
+                    there are two services which are already implemented as plugins. They are Active Directory and IIS
+                    Service.
+                    Integration with Heat
+                </para>
+            </section>
+        </section>
+        <section>
+            <title>Integration with Heat</title>
+            <para>Heat is an cloud resource management engine, which allows you to manipulate with resources that
+                represents OpenStack entities (Security Groups, Instances, Floating IPs, Volumes, etc.) and some custom
+                entities like AutoScaling group from a single point of control.
+            </para>
+            <para>OpenStack resource provisioning is one of the step required for environment deployment and Heat will
+                be used for that purpose. Heat allows to define all the OpenStack resources in a single document that
+                would be easy to maintain and would not require resorting to a lots of different OpenStack APIs while
+                keeping the software configuration aside from it.
+            </para>
+        </section>
+        <section>
+            <title>Windows on OpenStack</title>
+            <para>Windows works on KVM pretty smoothly. RedHat created an open-source VirtIO drivers for Windows that
+                allow to work with KVM exposed devices efficiently.
+            </para>
+            <para>In Grizzly release a Microsoft’s hypervisor Hyper-V will be supported. Hyper-V virtual switch will be
+                also supported as a Quantum plug-in. From the performance viewpoint, Hyper-V Server 2012 shows very
+                small difference from physical machine. OLTP workload running on a 75,000 customer database deployed in
+                a Hyper-V virtual machine processed just over 6% fewer transactions per second compared to the same
+                workload running on a similarly configured physical server.
+            </para>
+            <para>Hyper-V also supports natively Windows Clusters in contrary to the current OpenStack implementation.
+            </para>
+        </section>
+    </chapter>
+    <chapter>
+        <title>Roadmap</title>
         <para>
-            The Murano architecture has the following components:
             <itemizedlist spacing="compact">
+                <title>
+                    <emphasis>Phase 1. Initial Version</emphasis>
+                </title>
+                <para>(Release date: May 30th)</para>
                 <listitem>
-                    <para>Murano Dashboard - UI for the Murano, extends
-                        Horizon
-                    </para>
+                    <para>Core Services: REST API, Orchestration Engine</para>
                 </listitem>
                 <listitem>
-                    <para>REST API - exposes Murano API via REST. Maintains
-                        environment configurations in Database
-                    </para>
+                    <para>Horizon dashboard extension as plugin</para>
                 </listitem>
                 <listitem>
-                    <para>Murano Python Client - Python client for Murano
-                        REST API
-                    </para>
+                    <para>Integration with Heat</para>
                 </listitem>
                 <listitem>
-                    <para>Orchestration Engine - builds the environment as
-                        configured by the user.
-                        Turns environment configurations into a Heat templates
-                        for VM provision and Murano Agent commands for service
-                        deployment
-                    </para>
+                    <para>Support single Data Center (no Disaster Recovery)</para>
                 </listitem>
                 <listitem>
-                    <para>Murano Agent - built into Windows Server VM images.
-                        Executes commands sent by Orchestration Engine
+                    <para>Support the following Windows Services:
+                        <itemizedlist spacing="compact">
+                            <listitem>
+                                <para>Active Directory - Single Domain with multiple domain controllers</para>
+                            </listitem>
+                            <listitem>
+                                <para>IIS Server - single instance of IIS Server</para>
+                            </listitem>
+                            <listitem>
+                                <para>IIS Cluster - multiple IIS instances with Load Balancing</para>
+                            </listitem>
+                            <listitem>
+                                <para>ASP.NET Application Service - ASP.NET application installed on top of IIS</para>
+                            </listitem>
+                        </itemizedlist>
                     </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            <itemizedlist spacing="compact">
+                <title>
+                    <emphasis>Phase 2. Stable Release</emphasis>
+                </title>
+                <para>(3 month)</para>
+                <listitem>
+                    <para>Stabilize Core Services (bug fixing)</para>
+                </listitem>
+                <listitem>
+                    <para>Support API, UI extensibility</para>
+                </listitem>
+                <listitem>
+                    <para>UI design</para>
+                </listitem>
+                <listitem>
+                    <para>Workflow and recipes repository</para>
+                </listitem>
+                <listitem>
+                    <para>Data transfer between service instances</para>
+                </listitem>
+                <listitem>
+                    <para>Basic Service monitoring</para>
+                </listitem>
+                <listitem>
+                    <para>Additional Services:
+                        <itemizedlist spacing="compact">
+                            <listitem>
+                                <para>MS SQL - single instance of Microsoft SQL Server or Pair of SQL Servers with DB
+                                    mirroring
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            <itemizedlist spacing="compact">
+                <title>
+                    <emphasis>Phase 3</emphasis>
+                </title>
+                <listitem>
+                    <para>Add more services</para>
+                </listitem>
+                <listitem>
+                    <para>Services Dependencies support</para>
+                </listitem>
+                <listitem>
+                    <para>Extended health monitoring</para>
+                </listitem>
+                <listitem>
+                    <para>Agent extensibility (allow 3rd party configuration tools)</para>
+                </listitem>
+                <listitem>
+                    <para>Basic Self-healing (actions on monitoring events)</para>
+                </listitem>
+                <listitem>
+                    <para>Additional Services</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            <itemizedlist spacing="compact">
+                <title>
+                    <emphasis>Phase 4</emphasis>
+                </title>
+                <listitem>
+                    <para>Availability Zones support</para>
+                </listitem>
+                <listitem>
+                    <para>Auto-scaling for Windows services</para>
+                </listitem>
+                <listitem>
+                    <para>Security improvements</para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -209,25 +487,31 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
         </informaltable>
         <section>
             <title>Introduction</title>
-            <para>Murano Service API is a programmatic interface used for interaction
+            <para>Murano Service API is a programmatic interface used for
+                interaction
                 with Murano. Other interaction
-                mechanisms like Murano Dashboard or Murano CLI should use API as underlying
+                mechanisms like Murano Dashboard or Murano CLI should use API
+                as underlying
                 protocol for interaction.
             </para>
 
             <glossary>
-                <para>For detailed information about entities and terms used in this document, please refer first to
+                <para>For detailed information about entities and terms used in
+                    this document, please refer first to
                     <xref
                             linkend="architecture"/>.
                 </para>
                 <glossentry>
                     <glossterm>Environment</glossterm>
                     <glossdef>
-                        <para>Environment is a set of logically related Services managed by a single tenant. Environment
+                        <para>Environment is a set of logically related
+                            Services managed by a single tenant. Environment
                             defines Windows environment boundaries.
                         </para>
-                        <para>Services within single Environment may comprise some complex configuration while Services
-                            in different Environments are always independent from one another. Each Environment is
+                        <para>Services within single Environment may comprise
+                            some complex configuration while Services
+                            in different Environments are always independent
+                            from one another. Each Environment is
                             associated with single OpenStack project (tenant).
                         </para>
                     </glossdef>
@@ -235,24 +519,32 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                 <glossentry>
                     <glossterm>Service</glossterm>
                     <glossdef>
-                        <para>Service is building block of Windows environment. Service is a set of one or more Virtual
-                            Machines sharing a common purpose and configured together. Each service belongs to a single
+                        <para>Service is building block of Windows environment.
+                            Service is a set of one or more Virtual
+                            Machines sharing a common purpose and configured
+                            together. Each service belongs to a single
                             Environment and single Service Type.
                         </para>
-                        <para>Services are comprised from one or more Service Units.</para>
+                        <para>Services are comprised from one or more Service
+                            Units.
+                        </para>
                     </glossdef>
                 </glossentry>
                 <glossentry>
                     <glossterm>Service Type</glossterm>
                     <glossdef>
-                        <para>Service type is definition for describing set of features exposed by service.</para>
+                        <para>Service type is definition for describing set of
+                            features exposed by service.
+                        </para>
                     </glossdef>
                 </glossentry>
                 <glossentry>
                     <glossterm>Service Unit</glossterm>
                     <glossdef>
-                        <para>Service Units are the actual Windows Server VMs instantiated by OpenStack and then
-                            configured according to its Service Type (this may also correspond to one of predefined
+                        <para>Service Units are the actual Windows Server VMs
+                            instantiated by OpenStack and then
+                            configured according to its Service Type (this may
+                            also correspond to one of predefined
                             Windows Server roles).
                         </para>
                     </glossdef>
@@ -260,8 +552,10 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                 <glossentry>
                     <glossterm>Service Metadata</glossterm>
                     <glossdef>
-                        <para>Service Metadata is a JSON-encoded definition of Environment, its Services and their
-                            Service Units along with all their attributes. Service Metadata may describe both current
+                        <para>Service Metadata is a JSON-encoded definition of
+                            Environment, its Services and their
+                            Service Units along with all their attributes.
+                            Service Metadata may describe both current
                             and the intended state of the Environment.
                         </para>
                     </glossdef>
@@ -269,8 +563,10 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                 <glossentry>
                     <glossterm>Session</glossterm>
                     <glossdef>
-                        <para>All changes to environment done in scope of Session. After all changes to Environment
-                            state are accumulated, changes actually are applied only after session is deployed.
+                        <para>All changes to environment done in scope of
+                            Session. After all changes to Environment
+                            state are accumulated, changes actually are applied
+                            only after session is deployed.
                         </para>
                     </glossdef>
                 </glossentry>
@@ -278,20 +574,25 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
         </section>
         <section>
             <title>Return codes and errors</title>
-            <para>All REST API calls return the natural HTTP response codes for the operations, e.g. a successful GET
-                returns a HTTP 200, a successful PUT returns a HTTP 201, a GET for a non-existent entity returns HTTP
-                404, unauthorized operations return HTTP 401 or HTTP 403, internal errors return HTTP 500.
+            <para>All REST API calls return the natural HTTP response codes for
+                the operations, e.g. a successful GET
+                returns a HTTP 200, a successful PUT returns a HTTP 201, a GET
+                for a non-existent entity returns HTTP
+                404, unauthorized operations return HTTP 401 or HTTP 403,
+                internal errors return HTTP 500.
             </para>
         </section>
         <section>
             <title>Response of POSTs and PUTs</title>
-            <para>All POST and PUT requests by convention should return the created object (in the case of POST, with a
+            <para>All POST and PUT requests by convention should return the
+                created object (in the case of POST, with a
                 generated ID) as if it was requested by GET.
             </para>
         </section>
         <section>
             <title>Authentication</title>
-            <para>All requests include a Keystone authentication token header (X-Auth-Token). Clients must authenticate
+            <para>All requests include a Keystone authentication token header
+                (X-Auth-Token). Clients must authenticate
                 with Keystone before interacting with the Murano service.
             </para>
         </section>
@@ -309,21 +610,28 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>Let’s review a sample workflow (series of API calls) for creating new Environment with Active
+            <para>Let’s review a sample workflow (series of API calls) for
+                creating new Environment with Active
                 Directory Service deployment:
                 <orderedlist spacing="compact">
                     <listitem>
-                        <para>POST /environments/ - Creating new Environment</para>
-                    </listitem>
-                    <listitem>
-                        <para>POST /environments/id/configure – Creating new configuration session for Environment
+                        <para>POST /environments/ - Creating new Environment
                         </para>
                     </listitem>
                     <listitem>
-                        <para>POST /environments/id/activeDirectory – Creating new ActiveDirectory service</para>
+                        <para>POST /environments/id/configure – Creating new
+                            configuration session for Environment
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>POST /environments/id/sessions/session_id/deploy – Saving and deploying changes</para>
+                        <para>POST /environments/id/activeDirectory – Creating
+                            new ActiveDirectory service
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>POST /environments/id/sessions/session_id/deploy
+                            – Saving and deploying changes
+                        </para>
                     </listitem>
                 </orderedlist>
             </para>
@@ -332,7 +640,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
             <title>API</title>
             <section>
                 <title>Environment API</title>
-                <para>This section describes API calls for Environment management.</para>
+                <para>This section describes API calls for Environment
+                    management.
+                </para>
                 <table frame='all'>
                     <title>Environment Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
@@ -360,12 +670,15 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>created</entry>
                                 <entry>datetime</entry>
-                                <entry>Creation date and time in ISO format</entry>
+                                <entry>Creation date and time in ISO format
+                                </entry>
                             </row>
                             <row>
                                 <entry>updated</entry>
                                 <entry>datetime</entry>
-                                <entry>Modification date and time in ISO format</entry>
+                                <entry>Modification date and time in ISO
+                                    format
+                                </entry>
                             </row>
                             <row>
                                 <entry>tenant_id</entry>
@@ -375,7 +688,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>status</entry>
                                 <entry>string</entry>
-                                <entry>Deployment status: draft, pending, inprogress, finished</entry>
+                                <entry>Deployment status: draft, pending,
+                                    inprogress, finished
+                                </entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -386,10 +701,14 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                         <title>Call</title>
                         <table frame='all'>
                             <title>GET /environments Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -401,7 +720,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments</entry>
-                                        <entry>Get a list of existing Environments</entry>
+                                        <entry>Get a list of existing
+                                            Environments
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -413,9 +734,11 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </section>
                     <section>
                         <title>Returns</title>
-                        <para>This call returns list of environments. Only the basic properties are returned. For details see "Get Environment Detailed Information":
-                                <programlisting>
-                                    <![CDATA[
+                        <para>This call returns list of environments. Only the
+                            basic properties are returned. For details see "Get
+                            Environment Detailed Information":
+                            <programlisting>
+                                <![CDATA[
  {
     "environments": [
         {
@@ -435,7 +758,7 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
     ]
 }
                                     ]]>
-                                </programlisting>
+                            </programlisting>
                         </para>
                     </section>
                 </section>
@@ -445,10 +768,14 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                         <title>Call</title>
                         <table frame='all'>
                             <title>POST /environments Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -499,10 +826,14 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                         <title>Call</title>
                         <table frame='all'>
                             <title>PUT /environments/&lt;id&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -514,7 +845,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>PUT</entry>
                                         <entry>/environments/&lt;id&gt;</entry>
-                                        <entry>Update properties of Environment  instance</entry>
+                                        <entry>Update properties of Environment
+                                            instance
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -548,15 +881,20 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </section>
                 </section>
                 <section>
-                    <title>Get Environment Instance Detailed Information</title>
+                    <title>Get Environment Instance Detailed Information
+                    </title>
                     <section>
                         <title>Call</title>
                         <table frame='all'>
                             <title>GET /environments/&lt;id&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -568,7 +906,10 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments/&lt;id&gt;</entry>
-                                        <entry>Returns detailed information about Environment including child entities</entry>
+                                        <entry>Returns detailed information
+                                            about Environment including child
+                                            entities
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -602,10 +943,14 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                         <title>Call</title>
                         <table frame='all'>
                             <title>DELETE /environments/&lt;id&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -617,7 +962,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>DELETE</entry>
                                         <entry>/environments/&lt;id&gt;</entry>
-                                        <entry>Remove specified Environment.</entry>
+                                        <entry>Remove specified Environment.
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -635,7 +981,12 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
             </section>
             <section>
                 <title>Environment Configuration API</title>
-                <para>Only one Environment can be configured at a time by only one user. This behavior archived by opening "configuration session" for some Environment by user, and locking this Environment for changes by other users. Only one open session per Environment is available.</para>
+                <para>Only one Environment can be configured at a time by only
+                    one user. This behavior archived by opening "configuration
+                    session" for some Environment by user, and locking this
+                    Environment for changes by other users. Only one open
+                    session per Environment is available.
+                </para>
                 <table frame='all'>
                     <title>Configuration Session Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
@@ -658,17 +1009,22 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>environment_id</entry>
                                 <entry>guid</entry>
-                                <entry>Environment that going to be modified during this session</entry>
+                                <entry>Environment that going to be modified
+                                    during this session
+                                </entry>
                             </row>
                             <row>
                                 <entry>created</entry>
                                 <entry>datetime</entry>
-                                <entry>Creation date and time in ISO format</entry>
+                                <entry>Creation date and time in ISO format
+                                </entry>
                             </row>
                             <row>
                                 <entry>updated</entry>
                                 <entry>datetime</entry>
-                                <entry>Modification date and time in ISO format</entry>
+                                <entry>Modification date and time in ISO
+                                    format
+                                </entry>
                             </row>
                             <row>
                                 <entry>user_id</entry>
@@ -678,22 +1034,30 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>state</entry>
                                 <entry>string</entry>
-                                <entry>Session state. Could be: open, deploying, deployed</entry>
+                                <entry>Session state. Could be: open,
+                                    deploying, deployed
+                                </entry>
                             </row>
                         </tbody>
                     </tgroup>
                 </table>
                 <section>
                     <title>Get a List of Sessions</title>
-                    <para>Only one open session can be for one Environment.</para>
+                    <para>Only one open session can be for one Environment.
+                    </para>
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>GET /environments/&lt;id&gt;/sessions Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>GET /environments/&lt;id&gt;/sessions Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -705,7 +1069,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments/&lt;id&gt;/sessions</entry>
-                                        <entry>Get a list of open sessions</entry>
+                                        <entry>Get a list of open sessions
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -747,15 +1112,24 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                 </section>
                 <section>
                     <title>Open session</title>
-                    <para>During this call new working session is created, and session ID should be sent in header (X-Configuration-Session) to all next API calls.</para>
+                    <para>During this call new working session is created, and
+                        session ID should be sent in header
+                        (X-Configuration-Session) to all next API calls.
+                    </para>
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>POST /environments/&lt;id&gt;/configure Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>POST /environments/&lt;id&gt;/configure
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -767,7 +1141,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>POST</entry>
                                         <entry>/environments/&lt;id&gt;/configure</entry>
-                                        <entry>Creating new configuration change session</entry>
+                                        <entry>Creating new configuration
+                                            change session
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -800,11 +1176,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>POST /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;/deploy Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>POST /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;/deploy
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -816,7 +1198,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>POST</entry>
                                         <entry>/environments/&lt;id&gt;/sessions/&lt;sessionId&gt;/deploy</entry>
-                                        <entry>Deploying changes made in session with specified &lt;sessionId&gt;</entry>
+                                        <entry>Deploying changes made in
+                                            session with specified &lt;sessionId&gt;</entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -849,11 +1232,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>GET /environments/&lt;id&gt;/sessions/&lt;sessionId&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>GET /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -865,7 +1254,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments/&lt;id&gt;/sessions/&lt;sessionId&gt;</entry>
-                                        <entry>Getting details about session with specified &lt;sessionId&gt;</entry>
+                                        <entry>Getting details about session
+                                            with specified
+                                            &lt;sessionId&gt;</entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -894,15 +1285,21 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </section>
                 </section>
                 <section>
-                    <title>Delete Session </title>
+                    <title>Delete Session</title>
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>DELETE /environments/&lt;id&gt;/sessions/&lt;sessionId&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>DELETE /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -914,7 +1311,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>DELETE</entry>
                                         <entry>/environments/&lt;id&gt;/sessions/&lt;sessionId&gt;</entry>
-                                        <entry>Delete session with specified &lt;sessionId&gt;</entry>
+                                        <entry>Delete session with specified
+                                            &lt;sessionId&gt;</entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -932,9 +1330,12 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
             </section>
             <section>
                 <title>Active Directory API</title>
-                <para>This section describes API calls for Active Directory service management.</para>
+                <para>This section describes API calls for Active Directory
+                    service management.
+                </para>
                 <section>
-                    <title>Get a List of existing Active Directory instances</title>
+                    <title>Get a List of existing Active Directory instances
+                    </title>
                     <table frame='all'>
                         <title>Active Directory Object</title>
                         <tgroup cols='3' align='left' colsep='1' rowsep='1'>
@@ -962,17 +1363,23 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>created</entry>
                                     <entry>datetime</entry>
-                                    <entry>Creation date and time in ISO format</entry>
+                                    <entry>Creation date and time in ISO
+                                        format
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>updated</entry>
                                     <entry>datetime</entry>
-                                    <entry>Modification date and time in ISO format</entry>
+                                    <entry>Modification date and time in ISO
+                                        format
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>configuration</entry>
                                     <entry>string</entry>
-                                    <entry>AD configuration: site, standalone, inTree</entry>
+                                    <entry>AD configuration: site, standalone,
+                                        inTree
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>domain</entry>
@@ -1014,7 +1421,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>location</entry>
                                     <entry>string</entry>
-                                    <entry>AvailabilityZone or specific physical datacenter.</entry>
+                                    <entry>AvailabilityZone or specific
+                                        physical datacenter.
+                                    </entry>
                                 </row>
                             </tbody>
                         </tgroup>
@@ -1022,11 +1431,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>GET /environments/&lt;id&gt;/activeDirectories Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>GET /environments/&lt;id&gt;/activeDirectories
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1038,7 +1453,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments/&lt;id&gt;/activeDirectories</entry>
-                                        <entry>Get a list of Active Directory instances</entry>
+                                        <entry>Get a list of Active Directory
+                                            instances
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1050,7 +1467,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </section>
                     <section>
                         <title>Returns</title>
-                        <para>This call returns list of Active Directory instances:
+                        <para>This call returns list of Active Directory
+                            instances:
                             <programlisting>
                                 <![CDATA[
 {
@@ -1100,12 +1518,16 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>configuration</entry>
                                     <entry>string</entry>
-                                    <entry>AD configuration: site, standalone, inTree</entry>
+                                    <entry>AD configuration: site, standalone,
+                                        inTree
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>adminPassword</entry>
                                     <entry>string</entry>
-                                    <entry>Password from domain administrator account</entry>
+                                    <entry>Password from domain administrator
+                                        account
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>domain</entry>
@@ -1147,7 +1569,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>location</entry>
                                     <entry>string</entry>
-                                    <entry>AvailabilityZone or specific physical datacenter.</entry>
+                                    <entry>AvailabilityZone or specific
+                                        physical datacenter.
+                                    </entry>
                                 </row>
                             </tbody>
                         </tgroup>
@@ -1155,11 +1579,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>POST /environments/&lt;id&gt;/activeDirectories Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>POST /environments/&lt;id&gt;/activeDirectories
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1171,7 +1601,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>POST</entry>
                                         <entry>/environments/&lt;id&gt;/activeDirectories</entry>
-                                        <entry>Create new Active Directory</entry>
+                                        <entry>Create new Active Directory
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1204,7 +1635,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </section>
                     <section>
                         <title>Returns</title>
-                        <para>This call returns created active directory domain:
+                        <para>This call returns created active directory
+                            domain:
                             <programlisting>
                                 <![CDATA[
 {
@@ -1258,12 +1690,16 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>configuration</entry>
                                     <entry>string</entry>
-                                    <entry>AD configuration: site, standalone, inTree</entry>
+                                    <entry>AD configuration: site, standalone,
+                                        inTree
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>adminPassword</entry>
                                     <entry>string</entry>
-                                    <entry>Password from domain administrator account</entry>
+                                    <entry>Password from domain administrator
+                                        account
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>domain</entry>
@@ -1310,7 +1746,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>location</entry>
                                     <entry>string</entry>
-                                    <entry>AvailabilityZone or specific physical datacenter.</entry>
+                                    <entry>AvailabilityZone or specific
+                                        physical datacenter.
+                                    </entry>
                                 </row>
                             </tbody>
                         </tgroup>
@@ -1318,11 +1756,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>PUT /environments/&lt;id&gt;/activeDirectories/&lt;serviceId&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>PUT /environments/&lt;id&gt;/activeDirectories/&lt;serviceId&gt;
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1334,7 +1778,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>PUT</entry>
                                         <entry>/environments/&lt;id&gt;/activeDirectories/&lt;serviceId&gt;</entry>
-                                        <entry>Update existing Active Directory</entry>
+                                        <entry>Update existing Active
+                                            Directory
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1367,7 +1813,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </section>
                     <section>
                         <title>Returns</title>
-                        <para>This call returns updated active directory domain:
+                        <para>This call returns updated active directory
+                            domain:
                             <programlisting>
                                 <![CDATA[
 {
@@ -1393,7 +1840,8 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     </section>
                 </section>
                 <section>
-                    <title>Get Information about Active Directory instance</title>
+                    <title>Get Information about Active Directory instance
+                    </title>
                     <table frame='all'>
                         <title>Active Directory Object</title>
                         <tgroup cols='3' align='left' colsep='1' rowsep='1'>
@@ -1421,17 +1869,23 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>created</entry>
                                     <entry>datetime</entry>
-                                    <entry>Creation date and time in ISO format</entry>
+                                    <entry>Creation date and time in ISO
+                                        format
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>updated</entry>
                                     <entry>datetime</entry>
-                                    <entry>Modification date and time in ISO format</entry>
+                                    <entry>Modification date and time in ISO
+                                        format
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>configuration</entry>
                                     <entry>string</entry>
-                                    <entry>AD configuration: site, standalone, inTree</entry>
+                                    <entry>AD configuration: site, standalone,
+                                        inTree
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>domain</entry>
@@ -1473,7 +1927,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                 <row>
                                     <entry>location</entry>
                                     <entry>string</entry>
-                                    <entry>AvailabilityZone or specific physical datacenter.</entry>
+                                    <entry>AvailabilityZone or specific
+                                        physical datacenter.
+                                    </entry>
                                 </row>
                             </tbody>
                         </tgroup>
@@ -1481,11 +1937,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>GET /environments/&lt;id&gt;/activeDirectories/&lt;serviceId&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>GET /environments/&lt;id&gt;/activeDirectories/&lt;serviceId&gt;
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1497,7 +1959,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments/&lt;id&gt;/activeDirectories/&lt;serviceId&gt;</entry>
-                                        <entry>Return specified Active Directory instance</entry>
+                                        <entry>Return specified Active
+                                            Directory instance
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1537,7 +2001,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
             </section>
             <section>
                 <title>Web Server API</title>
-                <para>This section describes API calls for managing Windows web-server software – IIS.</para>
+                <para>This section describes API calls for managing Windows
+                    web-server software – IIS.
+                </para>
                 <table frame='all'>
                     <title>Web Server Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
@@ -1565,12 +2031,15 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>created</entry>
                                 <entry>datetime</entry>
-                                <entry>Creation date and time in ISO format</entry>
+                                <entry>Creation date and time in ISO format
+                                </entry>
                             </row>
                             <row>
                                 <entry>updated</entry>
                                 <entry>datetime</entry>
-                                <entry>Modification date and time in ISO format</entry>
+                                <entry>Modification date and time in ISO
+                                    format
+                                </entry>
                             </row>
                             <row>
                                 <entry>domain</entry>
@@ -1580,7 +2049,7 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>units</entry>
                                 <entry>object</entry>
-                                <entry>Web Server  Unit object</entry>
+                                <entry>Web Server Unit object</entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -1612,7 +2081,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>location</entry>
                                 <entry>string</entry>
-                                <entry>AvailabilityZone or specific physical datacenter.</entry>
+                                <entry>AvailabilityZone or specific physical
+                                    datacenter.
+                                </entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -1634,7 +2105,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                             <row>
                                 <entry>host</entry>
                                 <entry>string</entry>
-                                <entry>Host address for IIS Management Console connection</entry>
+                                <entry>Host address for IIS Management Console
+                                    connection
+                                </entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -1644,11 +2117,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>GET /environments/&lt;id&gt;/webServers Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>GET /environments/&lt;id&gt;/webServers
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1660,7 +2139,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments/&lt;id&gt;/webServers</entry>
-                                        <entry>Get a list of existing Web Servers</entry>
+                                        <entry>Get a list of existing Web
+                                            Servers
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1717,11 +2198,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>POST /environments/&lt;id&gt;/webServers Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>POST /environments/&lt;id&gt;/webServers
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1787,11 +2274,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>PUT /environments/&lt;id&gt;/webServers/&lt;serviceId&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>PUT /environments/&lt;id&gt;/webServers/&lt;serviceId&gt;
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1803,7 +2296,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>PUT</entry>
                                         <entry>/environments/&lt;id&gt;/webServers/&lt;serviceId&gt;</entry>
-                                        <entry>Update properties of WebServer instance</entry>
+                                        <entry>Update properties of WebServer
+                                            instance
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1854,11 +2349,17 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <section>
                         <title>Call</title>
                         <table frame='all'>
-                            <title>GET /environments/&lt;id&gt;/webServers/&lt;serviceId&gt; Call</title>
-                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                                <colspec colnum="1" colname="col1" colwidth="1*"/>
-                                <colspec colnum="2" colname="col2" colwidth="4*"/>
-                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <title>GET /environments/&lt;id&gt;/webServers/&lt;serviceId&gt;
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
                                 <thead>
                                     <row>
                                         <entry>Method</entry>
@@ -1870,7 +2371,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                                     <row>
                                         <entry>GET</entry>
                                         <entry>/environments/&lt;id&gt;/webServers/&lt;serviceId&gt;</entry>
-                                        <entry>Returns detailed information about Web Server</entry>
+                                        <entry>Returns detailed information
+                                            about Web Server
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1906,5 +2409,280 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                 </section>
             </section>
         </section>
+    </chapter>
+    <chapter>
+        <title>Installation Guide</title>
+        <section>
+            <title>Murano API Service</title>
+            <para>Murano API is a project that provides access to engine via API.</para>
+            <para>This document describes Murano API for contributors of the project, and assumes that you are already
+                familiar with Murano API from an end-user perspective.
+            </para>
+            <section>
+                <title>Install</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ git clone https://github.com/Mirantis/murano-api.git
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Install Murano API:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ cd murano/api && sudo python setup.py install
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                </itemizedlist>
+            </section>
+            <section>
+                <title>Configure</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>Open first configuration file for editing:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ cd murano/api/etc && nano murano-api.conf
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Configure according to your environment (please note rabbitmq section):</para>
+                        <programlisting>
+                            <![CDATA[
+[DEFAULT]
+# Show more verbose log output (sets INFO log level output)
+verbose = True
+# Show debugging output in logs (sets DEBUG log level output)
+debug = True
+# Address to bind the server to
+bind_host = 0.0.0.0
+# Port the bind the server to
+bind_port = 8082
+# Log to this file. Make sure the user running skeleton-api has
+# permissions to write to this file!
+log_file = /tmp/murano-api.log
+#A valid SQLAlchemy connection string for the metadata database
+sql_connection = sqlite:///murano.sqlite
+
+[reports]
+results_exchange = task-results
+results_queue = task-results
+reports_exchange = task-reports
+reports_queue = task-reports
+
+[rabbitmq]
+host = localhost
+port = 5672
+virtual_host = murano
+login = murano
+password = murano
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Open second configuration file for editing:</para>
+                        <programlisting>
+                            <![CDATA[
+smelikyan@work:~/cd murano/api/etc && nano murano-api.conf
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Configure according to your environment (please note filter:authtoken section):</para>
+                        <programlisting>
+                            <![CDATA[
+[pipeline:murano-api]
+pipeline = authtoken context apiv1app
+[app:apiv1app]
+paste.app_factory = muranoapi.api.v1.router:API.factory
+[filter:context]
+paste.filter_factory = muranoapi.api.middleware.context:ContextMiddleware.factory
+
+[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host = localhost
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = admin
+admin_user = admin
+admin_password = password
+signing_dir = /tmp/keystone-signing-muranoapi
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                </itemizedlist>
+            </section>
+            <section>
+                <title>Run</title>
+                <para>Run Murano API and supply valid configuration file:</para>
+                <programlisting>
+                    <![CDATA[
+user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
+                    ]]>
+                </programlisting>
+            </section>
+        </section>
+        <section>
+            <title>Conductor Service</title>
+            <para>Conductor is an Murano orchestration engine that transforms object model sent by REST API service into a series of Heat and Murano-Agent commands.</para>
+            <para>This document describes Conductor for contributors of the project.</para>
+            <section>
+                <title>Install</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ git clone https://github.com/Mirantis/murano-api.git
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Install Conductor:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/cd murano/conductor && sudo python setup.py install
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                </itemizedlist>
+            </section>
+            <section>
+                <title>Configure</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>Open configuration file for editing:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/cd murano/conductor/etc && nano conductor.conf
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Configure according to your environment (please note rabbitmq section):</para>
+                        <programlisting>
+                            <![CDATA[
+[DEFAULT]
+log_file = logs/conductor.log
+debug=True
+verbose=True
+
+[heat]
+auth_url = http://172.18.124.101:5000/v2.0
+
+[rabbitmq]
+host = 172.18.124.101
+port = 5672
+virtual_host = murano
+login = murano
+password = murano
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                </itemizedlist>
+            </section>
+            <section>
+                <title>Run</title>
+                <para>Run Conductor and supply valid configuration file:</para>
+                <programlisting>
+                    <![CDATA[
+user@work:~/cd murano/conductor && conductor --config-file=./murano/conductor/etc/conductor.conf
+                    ]]>
+                </programlisting>
+            </section>
+        </section>
+        <section>
+            <title>Murano Dashboard</title>
+            <para>Murano Dashboard is a project that provides Web UI to Murano Project.</para>
+            <para>This document describes Conductor for contributors of the project.</para>
+            <section>
+                <title>Install</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ git clone https://github.com/Mirantis/murano-api.git
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Install virtualenv:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ cd murano/murano-dashboard && sudo python ./tools/install_venv.py
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                </itemizedlist>
+            </section>
+            <section>
+                <title>Configure</title>
+                <itemizedlist>
+                    <listitem>
+                        <para>Copy configuration file from template:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ cp murano/murano-dashboard/muranodashboard/local/local_settings.py.example murano/murano-dashboard/muranodashboard/local/local_settings.py
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Open configuration file for editing:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ cd murano/murano-dashboard/muranodashboard/local/ && nano local_settings.py
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Configure according to your environment:</para>
+                        <programlisting>
+                            <![CDATA[
+...
+SECRET_KEY = 'some_random_value'
+...
+OPENSTACK_HOST = "localhost"
+...
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                </itemizedlist>
+            </section>
+            <section>
+                <title>Run</title>
+                <para>Run Tabula in virtualenv:</para>
+                <programlisting>
+                    <![CDATA[
+user@work:~/$ cd murano/murano-dashboard && sudo ./tools/with_venv.sh python manage.py runserver 0.0.0.0:8080
+                    ]]>
+                </programlisting>
+            </section>
+        </section>
+    </chapter>
+    <chapter>
+        <title>How To Participate</title>
+        <para>If you would like to ask some questions or make proposals, feel free to reach us on #murano irc channel at
+            FreeNode. Typically somebody from our team will be online at irc from 6:00 to 20:00 UTC. You can also
+            contact
+            Murano community directly by
+            <link xlink:href="mailto:murano@lists.launchpad.net">murano@lists.launchpad.net</link>
+            (please, note that your email address should be registered in launchpad, otherwise your mail will be ignored
+            by
+            mailing system).
+        </para>
+        <para>
+            We’re going to hold public weekly meetings on Mondays at 18:00 UTC on #openstack-meeting-alt irc channel.
+        </para>
+        <para>If you want to contribute either to docs or to code, simply send us change request via
+            <link xlink:href="http://review.openstack.org">review.openstack.org</link>
+            (gerrit). You can file bugs and register blueprints at Murano<link
+                    xlink:href="https://launchpad.net/murano">launchpad page</link>.
+        </para>
     </chapter>
 </book>
