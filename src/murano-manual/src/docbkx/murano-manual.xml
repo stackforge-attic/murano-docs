@@ -23,7 +23,7 @@
       xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd
 http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <title>Glazier Project Documentation</title>
+    <title>Murano Project Documentation</title>
     <info>
         <author>
             <personname>
@@ -39,7 +39,7 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
             <holder>Mirantis, Inc.</holder>
         </copyright>
         <releaseinfo>v0.1</releaseinfo>
-        <productname>Glazier™</productname>
+        <productname>Murano™</productname>
         <pubdate>2013-04-04</pubdate>
         <legalnotice role="apache2">
             <annotation>
@@ -64,7 +64,7 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
     </info>
     <chapter>
         <title>Overview</title>
-        <para>Welcome to Glazier Project.
+        <para>Welcome to Murano Project.
         </para>
         <section>
             <title>Intended Audience</title>
@@ -75,7 +75,7 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
         </section>
         <section>
             <title>Document Change History</title>
-            <para>This version of the Glazier Manual replaces and obsoletes all
+            <para>This version of the Murano Manual replaces and obsoletes all
                 previous versions. The
                 most recent changes are described in the table below:
             </para>
@@ -115,7 +115,7 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
     </chapter>
     <chapter id="architecture">
         <title>Architecture</title>
-        <figure xml:id="glazierarchitecture">
+        <figure xml:id="muranoarchitecture">
             <title>Architecture</title>
             <mediaobject>
                 <imageobject role="fo">
@@ -128,20 +128,20 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
             </mediaobject>
         </figure>
         <para>
-            The Glazier architecture has the following components:
+            The Murano architecture has the following components:
             <itemizedlist spacing="compact">
                 <listitem>
-                    <para>Glazier Dashboard - UI for the Glazier, extends
+                    <para>Murano Dashboard - UI for the Murano, extends
                         Horizon
                     </para>
                 </listitem>
                 <listitem>
-                    <para>REST API - exposes Glazier API via REST. Maintains
+                    <para>REST API - exposes Murano API via REST. Maintains
                         environment configurations in Database
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Glazier Python Client - Python client for Glazier
+                    <para>Murano Python Client - Python client for Murano
                         REST API
                     </para>
                 </listitem>
@@ -149,12 +149,12 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
                     <para>Orchestration Engine - builds the environment as
                         configured by the user.
                         Turns environment configurations into a Heat templates
-                        for VM provision and Glazier Agent commands for service
+                        for VM provision and Murano Agent commands for service
                         deployment
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Glazier Agent - built into Windows Server VM images.
+                    <para>Murano Agent - built into Windows Server VM images.
                         Executes commands sent by Orchestration Engine
                     </para>
                 </listitem>
@@ -209,9 +209,9 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
         </informaltable>
         <section>
             <title>Introduction</title>
-            <para>Glazier Service API is a programmatic interface used for interaction
-                with Glazier. Other interaction
-                mechanisms like Glazier Dashboard or Glazier CLI should use API as underlying
+            <para>Murano Service API is a programmatic interface used for interaction
+                with Murano. Other interaction
+                mechanisms like Murano Dashboard or Murano CLI should use API as underlying
                 protocol for interaction.
             </para>
 
@@ -292,7 +292,7 @@ http://docbook.org/ns/docbook " xmlns:xsi="http://www.w3.org/2001/XMLSchema-inst
         <section>
             <title>Authentication</title>
             <para>All requests include a Keystone authentication token header (X-Auth-Token). Clients must authenticate
-                with Keystone before interacting with the Glazier service.
+                with Keystone before interacting with the Murano service.
             </para>
         </section>
         <section>

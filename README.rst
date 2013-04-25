@@ -1,13 +1,13 @@
-Glazier Manuals
+Murano Manuals
 +++++++++++++++++
 
 This repository contains documentation for the
-Glazier project. It includes:
+Murano project. It includes:
 
  * API Specification
  * Architecture
 
-For more details, see the `Glazier <http://glazier.mirantis.com>`_.
+For more details, see the `Murano <http://murano.mirantis.com>`_.
 
 Prerequisites
 =============
@@ -30,18 +30,18 @@ The different manuals are in subdirectories of the
 To build a specific guide, look for a ``pom.xml`` file within a subdirectory,
 then run the ``mvn`` command in that directory. For example::
 
-    cd docs/src/glazier-manual
+    cd docs/src/murano-manual
     mvn clean generate-sources
 
 The generated PDF documentation file is::
 
-    docs/src/glazier-manual/src/target/docbkx/pdf/glazier-manual.pdf
+    docs/src/murano-manual/src/target/docbkx/pdf/murano-manual.pdf
 
 The root of the generated HTML documentation is::
 
-    docs/src/glazier-manual/src/target/docbkx/webhelp/glazier-manual/content/index.html
+    docs/src/murano-manual/src/target/docbkx/webhelp/murano-manual/content/index.html
 
 Installing
 ==========
-Refer to http://glazier.openstack.org to see where these documents are published
-and to learn more about the Glazier project.
+Refer to http://murano.openstack.org to see where these documents are published
+and to learn more about the Murano project.
