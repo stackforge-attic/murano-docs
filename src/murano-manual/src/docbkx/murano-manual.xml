@@ -2666,6 +2666,81 @@ user@work:~/$ cd murano/murano-dashboard && sudo ./tools/with_venv.sh python man
         </section>
     </chapter>
     <chapter>
+        <title>ScreenShots</title>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/1.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/1.png"/>
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/2.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/2.png"/>
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/3.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/3.png"/>
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/4.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/4.png"/>
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/5.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/5.png"/>
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/6.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/6.png"/>
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/7.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/7.png"/>
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="figures/screens/1.png"
+                           contentwidth="5in"/>
+            </imageobject>
+            <imageobject role="html">
+                <imagedata fileref="figures/screens/1.png"/>
+            </imageobject>
+        </mediaobject>
+    </chapter>
+    <chapter>
         <title>How To Participate</title>
         <para>If you would like to ask some questions or make proposals, feel free to reach us on #murano irc channel at
             FreeNode. Typically somebody from our team will be online at irc from 6:00 to 20:00 UTC. You can also
