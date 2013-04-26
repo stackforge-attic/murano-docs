@@ -35,7 +35,7 @@
     <holder>Mirantis, Inc.</holder>
 </copyright>
 <releaseinfo>v0.1</releaseinfo>
-<productname>Glazier™</productname>
+<productname>Murano™</productname>
 <pubdate>2013-04-04</pubdate>
 <legalnotice role="apache2">
     <annotation>
@@ -46,7 +46,7 @@
 </legalnotice>
 <abstract>
     <para>
-        This document is intended for individuals who wish to prepare development environment for Glazier.
+        This document is intended for individuals who wish to prepare development environment for Murano.
     </para>
 </abstract>
 <cover>
@@ -351,7 +351,7 @@ the Reference Image and configure it. Convert the final image to QCOW2 format.</
 <simpara>Allow the user to become <emphasis>root</emphasis> without password</simpara>
 <screen># echo 'stack ALL=(ALL) NOPASSWD: ALL' &gt; /etc/sudoers.d/stack
 # chmod 0440 /etc/sudoers.d/stack</screen>
-<simpara>Become user <emphasis>stack</emphasis> and clone Glazier code to the <emphasis role="strong">/opt</emphasis> directory</simpara>
+<simpara>Become user <emphasis>stack</emphasis> and clone Murano code to the <emphasis role="strong">/opt</emphasis> directory</simpara>
 <screen># su stack
 $ cd /opt
 $ git clone git://github.com/...</screen>
@@ -360,7 +360,7 @@ $ git clone git://github.com/...</screen>
 $ git clone git://github.com/openstack-dev/devstack.git</screen>
 <simpara>Create a link to <emphasis>devstack-scripts</emphasis> folder</simpara>
 <screen>$ cd
-$ ln -s devstack-scripts /opt/glazier/Deployment/devstack-scripts</screen>
+$ ln -s devstack-scripts /opt/murano/Deployment/devstack-scripts</screen>
 <simpara>Edit <emphasis>localrc</emphasis> file</simpara>
 <screen>$ cd ~/devstack-scripts
 $ vim localrc</screen>
@@ -413,7 +413,7 @@ rowsep="1" colsep="1"
 <tbody>
 <row>
 <entry align="left" valign="top"><simpara>Windows Agent</simpara></entry>
-<entry align="left" valign="top"><simpara><emphasis role="strong">C:\Keero\Agent\log.txt</emphasis></simpara></entry>
+<entry align="left" valign="top"><simpara><emphasis role="strong">C:\Murano\Agent\log.txt</emphasis></simpara></entry>
 </row>
 <row>
 <entry align="left" valign="top"><simpara>Windows PowerShell Modules</simpara></entry>
