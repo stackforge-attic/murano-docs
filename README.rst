@@ -9,6 +9,7 @@ Murano project. It includes:
 
 For more details, see the `Murano <http://murano.mirantis.com>`_.
 
+
 Prerequisites
 =============
 `Apache Maven <http://maven.apache.org/>`_ must be installed to build the
@@ -21,6 +22,7 @@ To install Maven 3 for Ubuntu 12.04 and later,and Debian wheezy and later::
 On Fedora 15 and later::
 
     yum install maven3
+
 
 Building
 ========
@@ -40,6 +42,7 @@ The generated PDF documentation file is::
 The root of the generated HTML documentation is::
 
     docs/src/murano-manual/src/target/docbkx/webhelp/murano-manual/content/index.html
+
 
 Installing
 ==========
