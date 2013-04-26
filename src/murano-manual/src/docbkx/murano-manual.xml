@@ -2604,10 +2604,10 @@ user@work:~/cd murano/conductor && conductor --config-file=./murano/conductor/et
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <para>Check out sources to some directory (&lt;home&gt;/murano-dashboard):</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ git clone https://github.com/Mirantis/murano-api.git
+user@work:~/$ git clone https://github.com/Mirantis/murano-dashboard.git
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2615,7 +2615,7 @@ user@work:~/$ git clone https://github.com/Mirantis/murano-api.git
                         <para>Install virtualenv:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano/murano-dashboard && sudo python ./tools/install_venv.py
+user@work:~/$ cd murano-dashboard && sudo python ./tools/install_venv.py
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2628,7 +2628,7 @@ user@work:~/$ cd murano/murano-dashboard && sudo python ./tools/install_venv.py
                         <para>Copy configuration file from template:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cp murano/murano-dashboard/muranodashboard/local/local_settings.py.example murano/murano-dashboard/muranodashboard/local/local_settings.py
+user@work:~/$ cp murano-dashboard/muranodashboard/local/local_settings.py.example murano-dashboard/muranodashboard/local/local_settings.py
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2636,7 +2636,7 @@ user@work:~/$ cp murano/murano-dashboard/muranodashboard/local/local_settings.py
                         <para>Open configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano/murano-dashboard/muranodashboard/local/ && nano local_settings.py
+user@work:~/$ cd murano-dashboard/muranodashboard/local/ && nano local_settings.py
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2659,7 +2659,7 @@ OPENSTACK_HOST = "localhost"
                 <para>Run Tabula in virtualenv:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/$ cd murano/murano-dashboard && sudo ./tools/with_venv.sh python manage.py runserver 0.0.0.0:8080
+user@work:~/$ cd murano-dashboard && sudo ./tools/with_venv.sh python manage.py runserver 0.0.0.0:8080
                     ]]>
                 </programlisting>
             </section>
