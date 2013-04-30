@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2013 Mirantis, Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+  implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+    <title>Murano Deployment Guide</title>
+<author>
+    <personname>
+        <firstname/>
+        <surname/>
+    </personname>
+    <affiliation>
+        <orgname>Mirantis, Inc.</orgname>
+    </affiliation>
+</author>
+<copyright>
+    <year>2013</year>
+    <holder>Mirantis, Inc.</holder>
+</copyright>
+<releaseinfo>v0.1</releaseinfo>
+<productname>Murano™</productname>
+<pubdate>2013-04-04</pubdate>
+<legalnotice role="apache2">
+    <annotation>
+        <remark>
+            Copyright details are filled in by the template. Change the value of the role attribute on the legalnotice element to change the license.
+        </remark>
+    </annotation>
+</legalnotice>
+<abstract>
+    <para>
+        This document is intended for individuals who wish to prepare development environment for Murano.
+    </para>
+</abstract>
+<cover>
+    <para>
+        This is a placeholder for the front cover
+    </para>
+</cover>
+<cover>
+    <para>
+        This is a placeholder for the back cover
+    </para>
+</cover>
+
+</info>
+<chapter xml:id="_system_configuration">
+<title>System Configuration</title>
+<table
+frame="all"
+rowsep="1" colsep="1"
+>
+<title>Hardware configuration</title>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>HDD</simpara></entry>
+<entry align="left" valign="top"><simpara>2 x 500 GB (2 x 320 GB min) with software RAID</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>CPU</simpara></entry>
+<entry align="left" valign="top"><simpara>4 core</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>RAM</simpara></entry>
+<entry align="left" valign="top"><simpara>8 GB</simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<table
+frame="all"
+rowsep="1" colsep="1"
+>
+<title>Software configuration</title>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>OS</simpara></entry>
+<entry align="left" valign="top"><simpara>Ubuntu Server 12.10</simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<section xml:id="_software_raid_configuration">
+<title>Software RAID Configuration</title>
+<simpara>Software RAID is used to provide additional redundancy to the host system and
+add some performance for the OpenStack. The configureation is the following:</simpara>
+<screen>$ lsblk -i
+NAME    MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+sda       8:0    0 465.8G  0 disk
+|-sda1    8:1    0   7.5G  0 part  [SWAP]
+|-sda2    8:2    0 279.4G  0 part
+| `-md1   9:1    0 558.8G  0 raid0 /opt
+`-sda3    8:3    0 178.8G  0 part
+  `-md0   9:0    0 178.7G  0 raid1 /
+sdb       8:16   0 465.8G  0 disk
+|-sdb1    8:17   0   7.5G  0 part  [SWAP]
+|-sdb2    8:18   0 279.4G  0 part
+| `-md1   9:1    0 558.8G  0 raid0 /opt
+`-sdb3    8:19   0 178.8G  0 part
+  `-md0   9:0    0 178.7G  0 raid1 /
+sr0      11:0    1  1024M  0 rom</screen>
+<simpara><emphasis role="strong">/ets/fstab</emphasis> should be modified in order to allow the system use both swap
+partitions simultaneously: add <emphasis role="strong">pri=0</emphasis> option</simpara>
+<screen># swap was on /dev/sda1 during installation
+UUID=c8a3ca9e-2942-4cf0-bbba-dfa6aa631b55    none    swap   sw,pri=0   0   0
+# swap was on /dev/sdb1 during installation
+UUID=4d7254b9-1461-424d-b129-a8cdb31fbf17    none    swap   sw,pri=0   0   0</screen>
+<warning><simpara>Please <emphasis role="strong">DO NOT</emphasis> store any valuable data under the <emphasis role="strong">/opt</emphasis> folder as it is
+located at RAID1 partition. It provides better performance but it&#8217;s also
+vulnerable to any single drive fault.</simpara></warning>
+</section>
+</chapter>
+<chapter xml:id="_prepare_reference_windows_image">
+<title>Prepare Reference Windows Image</title>
+<table
+frame="all"
+rowsep="1" colsep="1"
+>
+<title>Server-side</title>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Prerequisite </entry>
+<entry align="left" valign="top">Link</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>Ubuntu Server with KVM installed</simpara></entry>
+<entry align="left" valign="top"><simpara><link xlink:href="http://releases.ubuntu.com/12.04.1/ubuntu-12.04.1-server-amd64.iso">Ubuntu Server 12.04.1 amd64</link></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>VirtIO drivers for Windows (.iso file, ~44 MB)</simpara></entry>
+<entry align="left" valign="top"><simpara><link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/">VirtIO Windows Drivers</link></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Windows Server 2012 installation image (.iso file, ~3.5 GB)</simpara></entry>
+<entry align="left" valign="top"><simpara><link xlink:href="http://care.dlservice.microsoft.com/dl/download/6/D/A/6DAB58BA-F939-451D-9101-7DE07DC09C03/9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO?lcid=1033&amp;cprod=winsvr2012rtmisotn_p">Windows Server 2012 Evaluation</link></simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<table
+frame="all"
+rowsep="1" colsep="1"
+>
+<title>Workstation-side</title>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top">Prerequesite </entry>
+<entry align="left" valign="top">Link</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>VNC client</simpara></entry>
+<entry align="left" valign="top"><simpara>Depends on your workstation system</simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<section xml:id="_prepare_the_system">
+<title>Prepare the system</title>
+<section xml:id="_install_kvm">
+<title>Install KVM</title>
+<simpara>Nothing special, just a typical KVM installation</simpara>
+<screen>apt-get install kvm qemu-kvm</screen>
+</section>
+<section xml:id="_install_and_configure_samba">
+<title>Install and configure SAMBA</title>
+<simpara>The SAMBA servier will be used as an untermediate storage for prerequesites and
+scripts that will be copied to the VM.</simpara>
+<simpara>Install samba server</simpara>
+<screen>apt-get intall samba</screen>
+<simpara>Next, let&#8217;s create the folder where we will store files</simpara>
+<screen>mkdir -p /opt/samba/share
+chown nobody:nogroup /opt/samba/share</screen>
+<simpara>Edit the /etc/samba/smb.conf</simpara>
+<screen>...
+[global]
+...
+security = user
+...
+[share]
+comment = Deployment Share
+path = /opt/samba/share
+browsable = yes
+guest ok = yes
+guest account = nobody
+read only = no
+create mask = 0755</screen>
+<simpara>Restart the samba services</simpara>
+<screen>restart smbd &amp;&amp; restart nmdb</screen>
+</section>
+<section xml:id="_get_all_the_files">
+<title>Get all the files</title>
+<simpara>Create a directory where all installation files will be stored. For example,
+let&#8217;s use folder <emphasis role="strong">/opt/kvm</emphasis>.</simpara>
+<simpara>Copy ISO files to that folder, and then change directory to that folder.</simpara>
+<note><simpara>Be sure that MD5 checksums are correct for all ISO images!</simpara></note>
+<simpara>Next, rename ISO files for convinience. I assume that Windows Server
+installation ISO file is renamed to <emphasis role="strong">ws-2012.iso</emphasis> and VirtIO drivers ISO file
+is renamed to <emphasis role="strong">virtio-win.iso</emphasis>.</simpara>
+<simpara>Open the folder shared with the samba package (<emphasis role="strong">//host-server-ip/share</emphasis>).
+Create subfolder Files. Copy the following files to that folder</simpara>
+<informaltable
+frame="all"
+rowsep="1" colsep="1"
+>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top">File </entry>
+<entry align="left" valign="top">URL for download</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>Sysinternals Suite</simpara></entry>
+<entry align="left" valign="top"><simpara>Sysinternals Suite web site</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Far file manager</simpara></entry>
+<entry align="left" valign="top"><simpara></simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+<section xml:id="_start_vm_installation">
+<title>Start VM installation</title>
+<simpara>Now let&#8217;s create hard disk image file with RAW format as it allows better performance.</simpara>
+<screen>kvm-img create -f raw ws-2012.img 40G</screen>
+<simpara>And start the VM</simpara>
+<screen>sudo kvm \
+  -m 2048 \
+  -drive file=ws-2012.img,if=virtio \
+  -cdrom ws-2012.iso \
+  -drive file=virtio-win.iso,index=3,media=cdrom \
+  -boot d \
+  -net user \
+  -net nic,model=virtio \
+  -redir tcp:3389::3389 \
+  -nographic \
+  -usbdevice tablet \
+  -vnc :10</screen>
+<simpara>The terminal window where you issues this command will be locked while kvm is
+running, so you may need to have second terminal opened.</simpara>
+<simpara>Open VNC viewer and connect to the <emphasis role="strong">&lt;your server address&gt;:10</emphasis>. 10 is the number
+of our VNC screen (it corresponds to the port 5910), as we used it earlier when
+started virtual instance. After a small delay a Windows Setup window should
+appear.</simpara>
+<simpara>Choose your language, time zone and keyboard layout, then click Next, and on
+the next screen click Install Now.</simpara>
+<simpara>Select required installation type (Windows Server 2012 Standard Edition (Server with a GUI)).</simpara>
+<simpara>Accept the EULA, and then select type of installation Custom: Install Windows only (advanced).</simpara>
+<simpara>Now we should select the drive to install Windows on. By default Windows won&#8217;t
+see any drives as there are no appropriate drivers.</simpara>
+<simpara>Click Load driver, then Browse, and expand the CDROM drive (drive E:),
+following the path WIN8/AMD64. Click OK.</simpara>
+<simpara>Setup will scan this folder and should find two drivers (for Ethernet and SCSI devices):</simpara>
+<literallayout class="monospaced">Red Hat VirtIO Ethernet Adapter (E:\WIN8\AMD64\NETKVM.INF)
+Red Hat VirtIO SCSI controller (E:\WIN8\AMD64\VIOSTOR.INF)</literallayout>
+<simpara>Select both and click Next.</simpara>
+<simpara>The <emphasis role="strong">Drive 0 Unallocated Space</emphasis> record now should appear. Ensure that it is
+selected and click Next.</simpara>
+<simpara>When installation complete, provide new password for Administrator (I use
+<link xlink:href="mailto:P@ssw0rd">P@ssw0rd</link> by default, as it fit password requirements.)</simpara>
+</section>
+<section xml:id="_post_install_configuration">
+<title>Post-install configuration</title>
+<simpara>Log in to the system.</simpara>
+<simpara>In the Server Manager window select the Local Server tab (it&#8217;s on the left side).</simpara>
+<simpara>Under Properties find the Remote Desktop property and click it&#8217;s value string
+Disabled. Then, select Allow remote connections to this computer and uncheck
+the checkbox below it. Click OK. Click Refresh to ensure that the setting was
+changed.</simpara>
+<simpara>Start PowerShell and type <emphasis role="strong">ipconfig</emphasis> to found your Ethernet adapter&#8217;s default
+Gateway IP. Next, open Explorer and navigate to folder
+<emphasis role="strong">\\gateway-ip\share\Files</emphasis>.</simpara>
+<simpara>Install Far Manager.</simpara>
+<simpara>Create folder <emphasis role="strong">C:\Program Files (x86)\Sysinternals Suite and extract
+SysinternalsSuite.zip</emphasis> there.</simpara>
+<simpara>Copy the Far Manager link file from <emphasis role="strong">"C:\Users\All Users\Start
+Menu\Programs\Far Manager 3 x64\Far Manager 3 x64.lnk"</emphasis> to the folder
+<emphasis role="strong">"C:\Users\All Users\Start Menu\Programs\Administrative Tools"</emphasis>. Now <emphasis role="strong">Far
+Manager</emphasis> could be opened from <emphasis role="strong">Tools</emphasis> menu in <emphasis role="strong">System Manager</emphasis>.</simpara>
+<simpara>Open PowerShell window and shutdown the VM:</simpara>
+<screen>Stop-Computer -Force</screen>
+<simpara>Wait until the system shuts down.</simpara>
+</section>
+<section xml:id="_convert_image_to_qcow2_format">
+<title>Convert image to QCOW2 format</title>
+<simpara>Convert hard drive image from RAW to QCOW2 format:</simpara>
+<screen>kvm-img convert -O qcow2 ws-2012.img ws-2012-refimage.qcow2</screen>
+<note><simpara>The <emphasis role="strong">ws-2012-refimage.qcow2</emphasis> file is your reference image. You shoud <emphasis role="strong">NEVER</emphasis>
+modify it, and just make a copy to create a new VM.</simpara></note>
+<simpara>The best way is to convert it back to the RAW format with a new name like this</simpara>
+<screen>kvm-img convert -O raw ws-2012-refimage.qcow2 new-vm-name.img</screen>
+<simpara>The qcow2 file should be about 7 Gb in size.</simpara>
+<simpara>It&#8217;s a good idea to reflect Windows Server type in image&#8217;s name. For example</simpara>
+<literallayout class="monospaced">ws-2012-full-refimage.qcow2 for GUI version
+ws-2012-core-refimage.qcow2 for Core version</literallayout>
+<simpara>Now we have a Reference Windows Server image, which we will use in further
+image preparation steps.</simpara>
+</section>
+</section>
+</chapter>
+<chapter xml:id="_install_openstack_devstack">
+<title>Install OpenStack (DevStack)</title>
+<section xml:id="_prepare_windows_image">
+<title>Prepare Windows Image</title>
+<simpara>Ensure that you have Reference Image of the Windows Server 2012. Make a copy of
+the Reference Image and configure it. Convert the final image to QCOW2 format.</simpara>
+</section>
+<section xml:id="_prepare_the_system_for_devstack_installation">
+<title>Prepare the system for devstack installation</title>
+<simpara>Create group <emphasis>stack</emphasis> and user <emphasis>stack</emphasis></simpara>
+<screen># groupadd stack
+# useradd -g stack -s /bin/bash -m stack</screen>
+<simpara>Allow the user to become <emphasis>root</emphasis> without password</simpara>
+<screen># echo 'stack ALL=(ALL) NOPASSWD: ALL' &gt; /etc/sudoers.d/stack
+# chmod 0440 /etc/sudoers.d/stack</screen>
+<simpara>Become user <emphasis>stack</emphasis> and clone Murano code to the <emphasis role="strong">/opt</emphasis> directory</simpara>
+<screen># su stack
+$ cd /opt
+$ git clone git://github.com/...</screen>
+<simpara>Next, clone devstack to <emphasis>stack</emphasis> home directory</simpara>
+<screen>$ cd
+$ git clone git://github.com/openstack-dev/devstack.git</screen>
+<simpara>Create a link to <emphasis>devstack-scripts</emphasis> folder</simpara>
+<screen>$ cd
+$ ln -s devstack-scripts /opt/murano/Deployment/devstack-scripts</screen>
+<simpara>Edit <emphasis>localrc</emphasis> file</simpara>
+<screen>$ cd ~/devstack-scripts
+$ vim localrc</screen>
+<simpara>Correct the following variables as shown below</simpara>
+<screen>...
+MYSQL_DB_TMPFS=true
+...
+NOVA_CACHE_TMPFS=false
+...
+GLANCE_IMAGE_LIST="/path/to/the/image.qcow2"
+COMPUTE_NODE_LIST=""
+...</screen>
+<simpara>You may set the <emphasis role="strong">GLANCE_IMAGE_LIST</emphasis> to an empty string (<emphasis role="strong">GLANCE_IMAGE_LIST=""</emphasis>) and import the image name manually later.</simpara>
+<simpara>Edit <emphasis role="strong">~/devstack-scripts/standalone/devstack.localrc</emphasis> file. This file will replace the <emphasis role="strong">~/devstack/localrc</emphasis> file so make all the necessary changes here.</simpara>
+<screen>$ cd ~/devstack-scripts/standalone
+$ vim devstack.localrc</screen>
+<simpara>You might need to change the following variables:</simpara>
+<screen>...
+HOST_IP=
+...
+FLAT_INTERFACE=
+...</screen>
+</section>
+<section xml:id="_start_devstack">
+<title>Start devstack</title>
+<simpara>Start devstack using our helper script</simpara>
+<screen>$ cd ~/devstack-scripts
+$ ./start-devstack.sh standalone</screen>
+<simpara>Wait until script finishes, then try to connect to web-interface.</simpara>
+<simpara>To stop services, use another helper script</simpara>
+<screen>$ cd ~/devstack-scripts
+$ ./stop-devstack.sh</screen>
+</section>
+</chapter>
+<chapter xml:id="_log_files_locations">
+<title>Log Files Locations</title>
+<informaltable
+frame="all"
+rowsep="1" colsep="1"
+>
+<tgroup cols="2">
+<colspec colname="col_1" colwidth="50*"/>
+<colspec colname="col_2" colwidth="50*"/>
+<thead>
+<row>
+<entry align="left" valign="top"> Component </entry>
+<entry align="left" valign="top"> Log files folder</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" valign="top"><simpara>Windows Agent</simpara></entry>
+<entry align="left" valign="top"><simpara><emphasis role="strong">C:\Murano\Agent\log.txt</emphasis></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Windows PowerShell Modules</simpara></entry>
+<entry align="left" valign="top"><simpara><emphasis role="strong">%TEMP%</emphasis> folder by default</simpara>
+<simpara><emphasis role="strong">C:\Windows\Temp</emphasis> for Local System account</simpara>
+<simpara><emphasis role="strong">C:\Users\%username%\AppData\Local\Temp</emphasis> for regular user</simpara>
+<simpara>Separate path also might be specified in module&#8217;s code.</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>CloudBase-Init</simpara></entry>
+<entry align="left" valign="top"><simpara><emphasis role="strong">C:\Program Files (x86)\Cloudbase-Init\logs\cloudbase-init.log</emphasis></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Devstack</simpara></entry>
+<entry align="left" valign="top"><simpara><emphasis role="strong">\opt\stack\logs\</emphasis>*</simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Portas</simpara></entry>
+<entry align="left" valign="top"><simpara></simpara></entry>
+</row>
+<row>
+<entry align="left" valign="top"><simpara>Conductior</simpara></entry>
+<entry align="left" valign="top"><simpara></simpara></entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</chapter>
+</book>
