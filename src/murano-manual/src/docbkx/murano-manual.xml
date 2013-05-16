@@ -2227,7 +2227,7 @@ http://docbook.org/ns/docbook "
                         <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ git clone https://github.com/Mirantis/murano-api.git
+user@work:~/$ git clone https://github.com/stackforge/murano-api.git
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2342,7 +2342,7 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
                         <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ git clone https://github.com/Mirantis/murano-api.git
+user@work:~/$ git clone https://github.com/stackforge/murano-api.git
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2403,7 +2403,6 @@ user@work:~/cd murano/conductor && conductor --config-file=./murano/conductor/et
         <section>
             <title>Murano Dashboard</title>
             <para>Murano Dashboard is a project that provides Web UI to Murano Project.</para>
-            <para>This document describes Conductor for contributors of the project.</para>
             <section>
                 <title>Install</title>
                 <itemizedlist>
@@ -2411,17 +2410,18 @@ user@work:~/cd murano/conductor && conductor --config-file=./murano/conductor/et
                         <para>Check out sources to some directory (&lt;home&gt;/murano-dashboard):</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ git clone https://github.com/Mirantis/murano-dashboard.git
+user@work:~/$ git clone https://github.com/stackforge/murano-dashboard.git
                             ]]>
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Install virtualenv:</para>
+                        <para>Install:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano-dashboard && sudo python ./tools/install_venv.py
+user@work:~/$ cd murano-dashboard && sudo python setup.py install
                             ]]>
                         </programlisting>
+                        <para>Make sure that horizon and python-muranoclient is already installed.</para>
                     </listitem>
                 </itemizedlist>
             </section>
@@ -2429,30 +2429,28 @@ user@work:~/$ cd murano-dashboard && sudo python ./tools/install_venv.py
                 <title>Configure</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Copy configuration file from template:</para>
+                        <para>Open Django configuration file:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cp murano-dashboard/muranodashboard/local/local_settings.py.example murano-dashboard/muranodashboard/local/local_settings.py
+user@work:~/$ cd <Horizon Install Dir> && nano settings.py
                             ]]>
                         </programlisting>
+                        <para>Please, make sure that no local/local_settings.py file exists.</para>
                     </listitem>
                     <listitem>
-                        <para>Open configuration file for editing:</para>
+                        <para>Configure:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano-dashboard/muranodashboard/local/ && nano local_settings.py
-                            ]]>
-                        </programlisting>
-                    </listitem>
-                    <listitem>
-                        <para>Configure according to your environment:</para>
-                        <programlisting>
-                            <![CDATA[
+HORIZON_CONFIG = {
 ...
-SECRET_KEY = 'some_random_value'
+    'customization_module': 'muranodashboard.panel.overrides'
+}
 ...
-OPENSTACK_HOST = "localhost"
+INSTALLED_APPS = (
 ...
+    'muranodashboard',
+...
+)
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2460,10 +2458,10 @@ OPENSTACK_HOST = "localhost"
             </section>
             <section>
                 <title>Run</title>
-                <para>Run Murano Dashboard in virtualenv:</para>
+                <para>Run Horizon:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/$ cd murano-dashboard && sudo ./tools/with_venv.sh python manage.py runserver 0.0.0.0:8080
+user@work:~/$ cd <Horizon Install Dir> && python manage.py runserver 0.0.0.0:8080
                     ]]>
                 </programlisting>
             </section>
