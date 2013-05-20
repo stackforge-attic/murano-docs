@@ -2342,7 +2342,7 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
                         <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ git clone https://github.com/stackforge/murano-api.git
+user@work:~/$ git clone https://github.com/stackforge/murano-conductor.git
                             ]]>
                         </programlisting>
                     </listitem>
