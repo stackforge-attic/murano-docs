@@ -2172,17 +2172,8 @@ http://docbook.org/ns/docbook "
                             <![CDATA[
 {
   "name": "frontend",
-  "domain": {
-      "name": "ACME",
-      "credentials": {
-          "username": "admin",
-          "password": "password"
-      }
-  },
-  "credentials": {
-      "username": "admin",
-      "password": "password"
-  }
+  "adminPassword": "password",
+  "domain": "acme.dc",
   "location": "west-dc"
 }
                             ]]>
