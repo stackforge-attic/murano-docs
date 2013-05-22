@@ -2226,7 +2226,7 @@ user@work:~/$ git clone https://github.com/stackforge/murano-api.git
                         <para>Install Murano API:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano/api && sudo python setup.py install
+user@work:~/$ cd murano-api && sudo python setup.py install
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2239,7 +2239,7 @@ user@work:~/$ cd murano/api && sudo python setup.py install
                         <para>Open first configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano/api/etc && nano murano-api.conf
+user@work:~/$ cd murano-api/etc && nano murano-api.conf
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2281,7 +2281,7 @@ password = murano
                         <para>Open second configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
-smelikyan@work:~/cd murano/api/etc && nano murano-api-paste.ini
+smelikyan@work:~/cd murano-api/etc && nano murano-api-paste.ini
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2341,7 +2341,7 @@ user@work:~/$ git clone https://github.com/stackforge/murano-conductor.git
                         <para>Install Conductor:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/cd murano/conductor && sudo python setup.py install
+user@work:~/cd murano-conductor && sudo python setup.py install
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2354,7 +2354,7 @@ user@work:~/cd murano/conductor && sudo python setup.py install
                         <para>Open configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/cd murano/conductor/etc && nano conductor.conf
+user@work:~/cd murano-conductor/etc && nano conductor.conf
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2386,7 +2386,7 @@ password = murano
                 <para>Run Conductor and supply valid configuration file:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/cd murano/conductor && conductor --config-file=./murano/conductor/etc/conductor.conf
+user@work:~/cd murano-conductor && conductor --config-file=./murano/conductor/etc/conductor.conf
                     ]]>
                 </programlisting>
             </section>
