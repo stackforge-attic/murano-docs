@@ -2226,7 +2226,7 @@ user@work:~/$ git clone https://github.com/stackforge/murano-api.git
                         <para>Install Murano API:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano/api && sudo python setup.py install
+user@work:~/$ cd murano-api && sudo python setup.py install
                             ]]>
                         </programlisting>
                     </listitem>
