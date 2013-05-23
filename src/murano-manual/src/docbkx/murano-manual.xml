@@ -1168,7 +1168,9 @@ http://docbook.org/ns/docbook "
                 </table>
                 <section>
                     <title>Configure Environment / Open session</title>
-                    <para>During this call new working session is created, and session ID should be sent in header (X-Configuration-Session) to all next API calls.</para>
+                    <para>During this call new working session is created, and session ID should be sent in header
+                        (X-Configuration-Session) to all next API calls.
+                    </para>
                     <section>
                         <title>Call</title>
                         <table frame='all'>
@@ -1214,7 +1216,9 @@ http://docbook.org/ns/docbook "
                                 <tbody>
                                     <row>
                                         <entry>403</entry>
-                                        <entry>Could not open session for environment, environment has deploying status</entry>
+                                        <entry>Could not open session for environment, environment has deploying
+                                            status
+                                        </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -2394,6 +2398,33 @@ user@work:~/cd murano-conductor && conductor --config-file=./murano/conductor/et
         <section>
             <title>Murano Dashboard</title>
             <para>Murano Dashboard is a project that provides Web UI to Murano Project.</para>
+            <section>
+                <title>Dependencies</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Horizon</para>
+                        </listitem>
+                        <listitem>
+                            <para>NodeJs</para>
+                        </listitem>
+                        <listitem>
+                            <para>python-muranoclient</para>
+                        </listitem>
+                    </itemizedlist>
+                    First two dependencies is already satisfied if you install Murano Dashboard on machine with
+                    OpenStack
+                    Horizon installed. Otherwise, please run:
+                    <programlisting>
+                        <![CDATA[
+user@work:~/$ sudo apt-get install nodejs
+user@work:~/$ sudo pip install http://tarballs.openstack.org/horizon/horizon-master.tar.gz
+user@work:~/$ sudo pip install http://tarballs.openstack.org/python-muranoclient/python-muranoclient-master.tar.gz
+                        ]]>
+                    </programlisting>
+                </para>
+                <para>Also, this two packages (horizon and python-muranoclient) can be installed to venv.</para>
+            </section>
             <section>
                 <title>Install</title>
                 <itemizedlist>
