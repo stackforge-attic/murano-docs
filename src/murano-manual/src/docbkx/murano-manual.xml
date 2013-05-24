@@ -2243,7 +2243,7 @@ user@work:~/$ cd murano-api && sudo python setup.py install
                         <para>Open first configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano-api/etc && nano murano-api.conf
+user@work:~/murano-api$ nano ./etc/murano-api.conf
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2285,7 +2285,7 @@ password = murano
                         <para>Open second configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
-smelikyan@work:~/cd murano-api/etc && nano murano-api-paste.ini
+user@work:~/murano-api$ nano ./etc/murano-api-paste.ini
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2309,6 +2309,25 @@ admin_tenant_name = admin
 admin_user = admin
 admin_password = password
 signing_dir = /tmp/keystone-signing-muranoapi
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Register murano-api service in Openstack
+                                (note: you need to be authorized in Openstack to run this commands)
+                        </para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/$ keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
+                            ]]>
+                             <![CDATA[
+user@work:~/$ keystone endpoint-create
+
+                    --region RegionOne
+                    --service-id The ID field returned by the keystone service-create
+                    --publicurl http://x.x.x.x:8082 (where x.x.x.x - host ip where murano-api installed)
+                    --internalurl the same as publicurl
+                    --adminurl the same as publicurl
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2358,7 +2377,7 @@ user@work:~/cd murano-conductor && sudo python setup.py install
                         <para>Open configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/cd murano-conductor/etc && nano conductor.conf
+user@work:~/murano-conductor$ nano ./etc/conductor.conf
                             ]]>
                         </programlisting>
                     </listitem>
