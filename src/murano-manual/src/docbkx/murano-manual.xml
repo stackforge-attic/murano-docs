@@ -2240,6 +2240,17 @@ user@work:~/$ cd murano-api && sudo python setup.py install
                 <title>Configure</title>
                 <itemizedlist>
                     <listitem>
+                        <para>Configure your environment (Need to perform the following commands to create RabbitMQ user and vhost for correct work of Murano services):</para>
+                        <programlisting>
+                        <![CDATA[
+sudo rabbitmqctl add_user murano murano
+sudo rabbitmqctl set_user_tags murano administrator
+sudo rabbitmqctl add_vhost murano
+sudo rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*" 
+                        ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
                         <para>Open first configuration file for editing:</para>
                         <programlisting>
                             <![CDATA[
