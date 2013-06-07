@@ -703,7 +703,7 @@ http://docbook.org/ns/docbook "
                                 <row>
                                     <entry>tenant_id</entry>
                                     <entry>string</entry>
-                                    <entry>Open Stack tenant ID</entry>
+                                    <entry>OpenStack tenant ID</entry>
                                 </row>
                                 <row>
                                     <entry>version</entry>
@@ -3358,17 +3358,37 @@ http://docbook.org/ns/docbook "
     </chapter>
     <chapter>
         <title>Installation Guide</title>
+        <para> This chapter is about installation and configuration Murano services.</para>
+        <para>Note that all Murano modules can be downloaded from
+            <ulink url="https://launchpad.net/murano/"> our page </ulink> on launchpad.
+        </para>
+        <section>
+            <title>Common Pre-Requirements</title>
+            <para>Operation system:</para>
+                <orderedlist>
+                    <listitem>Ubuntu</listitem>
+                    <listitem>RHEL/CentOS</listitem>
+                </orderedlist>
+            <para>Packages:</para>
+            <orderedlist>
+                <listitem>python-dev</listitem>
+                <listitem>libxml2-dev  </listitem>
+                <listitem>libxslt-dev</listitem>
+            </orderedlist>
+
+        </section>
         <section>
             <title>Murano API Service</title>
-            <para>Murano API is a project that provides access to engine via API.</para>
-            <para>This document describes Murano API for contributors of the project, and assumes that you are already
+            <para>Murano API provides access to the Murano orchestration engine via API.</para>
+            <para>This chapter describes Murano API for contributors of the project, and assumes that you are already
                 familiar with Murano API from an end-user perspective.
             </para>
             <section>
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <para>Project source can be checked out as git repository (see below) or downloaded from
+                            <ulink url="http://tarballs.openstack.org/murano-api/"> here</ulink></para>
                         <programlisting>
                             <![CDATA[
 user@work:~/$ git clone https://github.com/stackforge/murano-api.git
@@ -3376,10 +3396,18 @@ user@work:~/$ git clone https://github.com/stackforge/murano-api.git
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Install Murano API:</para>
+                            <para>Switch to just created directory</para>
+                        <programlisting>
+                        <![CDATA[
+user@work:~/$ cd murano-api
+                         ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And them perform installation:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano-api && sudo python setup.py install
+user@work:~/murano-api$ chmod +x setup.sh ; sudo ./setup.sh install
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3389,7 +3417,18 @@ user@work:~/$ cd murano-api && sudo python setup.py install
                 <title>Configure</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Open first configuration file for editing:</para>
+                        <para> First configure rabbitMQ by adding vhost and user with administrator rights:</para>
+                        <programlisting>
+                        <![CDATA[
+sudo rabbitmqctl add_user murano murano
+sudo rabbitmqctl set_user_tags murano administrator
+sudo rabbitmqctl add_vhost murano
+sudo rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
+                        ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Edit configuration file:</para>
                         <programlisting>
                             <![CDATA[
 user@work:~/murano-api$ nano ./etc/murano-api.conf
@@ -3397,7 +3436,11 @@ user@work:~/murano-api$ nano ./etc/murano-api.conf
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Configure according to your environment (please note rabbitmq section):</para>
+                        <para>Configure it according to your environment:
+                            <para><emphasis>[DEFAULT]</emphasis> section sets up logging.</para>
+                            <para> In <emphasis>[reports]</emphasis> section you can set names for new rabbitMQ queues.</para>
+                            <para> <emphasis>[rabbitmq]</emphasis> section sets up host configuration where rabbitMQ with just created user and vhost is running.</para>
+                        </para>
                         <programlisting>
                             <![CDATA[
 [DEFAULT]
@@ -3431,7 +3474,7 @@ password = murano
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Open second configuration file for editing:</para>
+                        <para>Edit one more configuration file:</para>
                         <programlisting>
                             <![CDATA[
 user@work:~/murano-api$ nano ./etc/murano-api-paste.ini
@@ -3439,7 +3482,8 @@ user@work:~/murano-api$ nano ./etc/murano-api-paste.ini
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Configure according to your environment (please note filter:authtoken section):</para>
+                        <para>Configure keystone auth_token in <emphasis>[filter:authtoken]</emphasis> section.
+                            For more information see <ulink url="http://docs.openstack.org/developer/keystone/configuringservices.html"> Auth-Token Middleware with Username and Password</ulink></para>
                         <programlisting>
                             <![CDATA[
 [pipeline:murano-api]
@@ -3468,15 +3512,15 @@ signing_dir = /tmp/keystone-signing-muranoapi
                         <programlisting>
                             <![CDATA[
 user@work:~/$ keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
-                            ]]>
-                             <![CDATA[
+                                    ]]>
+                                     <![CDATA[
 user@work:~/$ keystone endpoint-create
 
-                    --region RegionOne
-                    --service-id The ID field returned by the keystone service-create
-                    --publicurl http://x.x.x.x:8082 (where x.x.x.x - host ip where murano-api installed)
-                    --internalurl the same as publicurl
-                    --adminurl the same as publicurl
+    --region RegionOne
+    --service-id The ID field returned by the keystone service-create
+    --publicurl http://x.x.x.x:8082 (where x.x.x.x - host ip where murano-api installed)
+    --internalurl the same as publicurl
+    --adminurl the same as publicurl
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3494,7 +3538,7 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
         </section>
         <section>
             <title>Conductor Service</title>
-            <para>Conductor is an Murano orchestration engine that transforms object model sent by REST API service into
+            <para>Conductor is a Murano orchestration engine that transforms object model sent by REST API service into
                 a series of Heat and Murano-Agent commands.
             </para>
             <para>This document describes Conductor for contributors of the project.</para>
@@ -3502,18 +3546,31 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <para>Project source code can be checked out from git repository (see below) or downloaded from
+                            <ulink url="http://tarballs.openstack.org/murano-conductor/"> here.</ulink>
+
                         <programlisting>
                             <![CDATA[
 user@work:~/$ git clone https://github.com/stackforge/murano-conductor.git
                             ]]>
                         </programlisting>
+
+                        </para>
+
                     </listitem>
                     <listitem>
-                        <para>Install Conductor:</para>
+                        <para>Switch to just created directory</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/cd murano-conductor && sudo python setup.py install
+user@work:~/cd murano-conductor
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And install Conductor Service to the system:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/murano-conductor$ chmod +x setup.sh ; sudo ./setup.sh install
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3523,7 +3580,7 @@ user@work:~/cd murano-conductor && sudo python setup.py install
                 <title>Configure</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Open configuration file for editing:</para>
+                        <para>Edit configuration file:</para>
                         <programlisting>
                             <![CDATA[
 user@work:~/murano-conductor$ nano ./etc/conductor.conf
@@ -3531,7 +3588,12 @@ user@work:~/murano-conductor$ nano ./etc/conductor.conf
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Configure according to your environment (please note rabbitmq section):</para>
+                        <para>
+                            Change it according to your environment.
+                            <para><emphasis>[DEFAULT]</emphasis> section is responsible for logging.</para>
+                            <para><emphasis>[heat]</emphasis> points where heat is running.</para>
+                            <para><emphasis>[rabbitmq]</emphasis> section points where your rabbitMQ installed and configured. </para>
+                        </para>
                         <programlisting>
                             <![CDATA[
 [DEFAULT]
@@ -3540,10 +3602,10 @@ debug=True
 verbose=True
 
 [heat]
-auth_url = http://172.18.124.101:5000/v2.0
+auth_url = http://localhost:5000/v2.0
 
 [rabbitmq]
-host = 172.18.124.101
+host = localhost
 port = 5672
 virtual_host = murano
 login = murano
@@ -3558,46 +3620,38 @@ password = murano
                 <para>Run Conductor and supply valid configuration file:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/cd murano-conductor && conductor --config-file=./murano/conductor/etc/conductor.conf
+user@work:~/murano-conductor$ conductor --config-file=./etc/conductor.conf
                     ]]>
                 </programlisting>
             </section>
         </section>
         <section>
             <title>Murano Dashboard</title>
-            <para>Murano Dashboard is a project that provides Web UI to Murano Project.</para>
+            <para>Murano Dashboard provides Web UI for Murano Project.</para>
             <section>
-                <title>Dependencies</title>
-                <para>
-                    <itemizedlist>
-                        <listitem>
-                            <para>Horizon</para>
-                        </listitem>
-                        <listitem>
-                            <para>NodeJs</para>
-                        </listitem>
-                        <listitem>
-                            <para>python-muranoclient</para>
-                        </listitem>
-                    </itemizedlist>
-                    First two dependencies is already satisfied if you install Murano Dashboard on machine with
-                    OpenStack
-                    Horizon installed. Otherwise, please run:
+                <title>Pre-Requirements</title>
+                <itemizedlist>
+                <listitem>
+                    <para>To setup Murano Dashboard on a host with Openstack Dashbord already installed you just need to install <emphasis>
+                        the python-muranoclient</emphasis>. You can download it from <ulink url="http://tarballs.openstack.org/python-muranoclient/"> here.</ulink></para>
+                        And then perform installation with pip:
                     <programlisting>
                         <![CDATA[
-user@work:~/$ sudo apt-get install nodejs
-user@work:~/$ sudo pip install http://tarballs.openstack.org/horizon/horizon-master.tar.gz
-user@work:~/$ sudo pip install http://tarballs.openstack.org/python-muranoclient/python-muranoclient-master.tar.gz
-                        ]]>
+user@work:~/$ sudo pip install ]]> <emphasis>just_downloaded</emphasis>.tar.gz
                     </programlisting>
-                </para>
-                <para>Also, this two packages (horizon and python-muranoclient) can be installed to venv.</para>
+                </listitem>
+                <listitem>
+                    <para>If there is no OpenStack Dashboard (horizon) you'll need to install it. See <ulink url="http://docs.openstack.org/trunk/openstack-compute/install/yum/content/ch_install-dashboard.html"> here</ulink> how to do that.</para>
+                </listitem>
+                </itemizedlist>
             </section>
             <section>
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Check out sources to some directory (&lt;home&gt;/murano-dashboard):</para>
+                        <para>Project source code can be checked out from git repository (see below) or downloaded from
+                            <ulink url="http://tarballs.openstack.org/murano-dashboard/"> here.</ulink>
+                        </para>
                         <programlisting>
                             <![CDATA[
 user@work:~/$ git clone https://github.com/stackforge/murano-dashboard.git
@@ -3605,13 +3659,19 @@ user@work:~/$ git clone https://github.com/stackforge/murano-dashboard.git
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Install:</para>
+                        <para>Switch to just created directory</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano-dashboard && sudo python setup.py install
+user@work:~/$ cd murano-dashboard  ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And perform installation</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/murano-dashboard$ sudo python setup.py install
                             ]]>
                         </programlisting>
-                        <para>Make sure that horizon and python-muranoclient is already installed.</para>
                     </listitem>
                 </itemizedlist>
             </section>
@@ -3622,18 +3682,50 @@ user@work:~/$ cd murano-dashboard && sudo python setup.py install
                         <para>Open Django configuration file:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd <Horizon Install Dir> && nano settings.py
+user@work:~/$ cd <Horizon Installation Dir> && nano settings.py
                             ]]>
                         </programlisting>
                         <para>Please, make sure that no local/local_settings.py file exists.</para>
                     </listitem>
                     <listitem>
-                        <para>Configure:</para>
+                        <para>Add to import section</para>
                         <programlisting>
                             <![CDATA[
+from muranoclient.common import exceptions as muranoclient
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And this so muranoclient exceptions can be safely handle by horizon:</para>
+                        <programlisting>
+                            <![CDATA[
+RECOVERABLE_EXC = (muranoclient.HTTPException,
+                   muranoclient.CommunicationError,
+                   muranoclient.Forbidden)
+EXTENDED_RECOVERABLE_EXCEPTIONS = tuple(
+    exceptions.RECOVERABLE + RECOVERABLE_EXC)
+
+NOT_FOUND_EXC = (muranoclient.HTTPNotFound, muranoclient.EndpointNotFound)
+EXTENDED_NOT_FOUND_EXCEPTIONS = tuple(exceptions.NOT_FOUND + NOT_FOUND_EXC)
+
+UNAUTHORIZED_EXC = (muranoclient.HTTPUnauthorized, )
+EXTENDED_UNAUTHORIZED_EXCEPTIONS = tuple(
+    exceptions.UNAUTHORIZED + UNAUTHORIZED_EXC)
+            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And finally edit HORIZON_CONFIG and INSTALLED_APPS sections</para>
+                        <programlisting>
+                        <![CDATA[
+
 HORIZON_CONFIG = {
 ...
+    'exceptions': {'recoverable': EXTENDED_RECOVERABLE_EXCEPTIONS,
+                   'not_found': EXTENDED_NOT_FOUND_EXCEPTIONS,
+                   'unauthorized': EXTENDED_UNAUTHORIZED_EXCEPTIONS},
     'customization_module': 'muranodashboard.panel.overrides'
+
 }
 ...
 INSTALLED_APPS = (
