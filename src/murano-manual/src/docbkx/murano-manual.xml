@@ -2211,10 +2211,9 @@ http://docbook.org/ns/docbook "
   "name": "frontend",
   "adminPassword": "password",
   "domain": "acme.dc",
-  "units":
-  {
+  "units": [{
     "location": "west-dc"
-  }
+  }]
 }
                             ]]>
                         </programlisting>
@@ -2974,7 +2973,6 @@ http://docbook.org/ns/docbook "
                 </section>
             </section>
 
-        </section>
             <section>
                 <title>ASP.NET Application Farm API</title>
                 <para>This section describes API calls for managing ASP.NET
@@ -3354,6 +3352,7 @@ http://docbook.org/ns/docbook "
                     </section>
                 </section>
             </section>
+        </section>
 
     </chapter>
     <chapter>
