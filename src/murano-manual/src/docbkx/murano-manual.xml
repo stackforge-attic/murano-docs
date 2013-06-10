@@ -2582,10 +2582,9 @@ http://docbook.org/ns/docbook "
   "adminPassword": "password",
   "domain": "acme.dc",
   "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
-  "units":
-  {
+  "units": [{
     "location": "west-dc"
-  }
+  }]
 }
                             ]]>
                         </programlisting>
@@ -2941,10 +2940,9 @@ http://docbook.org/ns/docbook "
   "adminPassword": "password",
   "domain": "acme.dc",
   "loadBalancerPort": 80,
-  "units":
-  {
+  "units": [{
     "location": "west-dc"
-  }
+  }]
 }
                             ]]>
                         </programlisting>
@@ -3320,10 +3318,9 @@ http://docbook.org/ns/docbook "
   "domain": "acme.dc",
   "loadBalancerPort": 80,
   "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
-  "units":
-  {
+  "units": [{
     "location": "west-dc"
-  }
+  }]
 }
                             ]]>
                         </programlisting>
