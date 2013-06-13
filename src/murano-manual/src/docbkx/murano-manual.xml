@@ -466,6 +466,20 @@ http://docbook.org/ns/docbook "
                         </itemizedlist>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="1" align="center">Jun 06, 2013</td>
+                    <td colspan="4">
+                        <itemizedlist spacing="compact">
+                            <listitem>
+                                <para>ASP.NET Application, Web Server Farm and
+                                    ASP.NET Application Farm Services Added,
+                                    uri/address/endpoint corrections, hostname
+                                    assignment section added
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
             </tbody>
         </informaltable>
         <section>
@@ -620,6 +634,27 @@ http://docbook.org/ns/docbook "
             </para>
         </section>
         <section>
+            <title>Hostname assignment</title>
+            <para>Each Service Object definition may have an attribute
+                "unitNamingPattern" that is used to control hostnames
+                that will be assigned to spawned VM instances of the
+                service.
+            </para>
+            <para>
+                Hostname pattern has the form of "name#" where "#"
+                character is replaced with sequential number of unit
+                within the service (starting with 1) and all other
+                characters remain intact. For example Service with
+                unitNamingPatter equal to "ad#-loc" will have units
+                with hostnames "ad1-loc", "ad2-loc" etc.
+            </para>
+            <para>
+                "unitNamingPattern" attribute is optional.
+                If it is omitted then a unique random hostname
+                would be assigned.
+            </para>
+        </section>
+        <section>
             <title>API</title>
             <section>
                 <title>Environment API</title>
@@ -644,7 +679,7 @@ http://docbook.org/ns/docbook "
                             <tbody>
                                 <row>
                                     <entry>id</entry>
-                                    <entry>guid</entry>
+                                    <entry>string</entry>
                                     <entry>Unique ID</entry>
                                 </row>
                                 <row>
@@ -667,8 +702,8 @@ http://docbook.org/ns/docbook "
                                 </row>
                                 <row>
                                     <entry>tenant_id</entry>
-                                    <entry>guid</entry>
-                                    <entry>Open Stack tenant id</entry>
+                                    <entry>string</entry>
+                                    <entry>OpenStack tenant ID</entry>
                                 </row>
                                 <row>
                                     <entry>version</entry>
@@ -1123,12 +1158,12 @@ http://docbook.org/ns/docbook "
                         <tbody>
                             <row>
                                 <entry>id</entry>
-                                <entry>guid</entry>
+                                <entry>string</entry>
                                 <entry>Session unique ID</entry>
                             </row>
                             <row>
                                 <entry>environment_id</entry>
-                                <entry>guid</entry>
+                                <entry>string</entry>
                                 <entry>Environment that going to be modified
                                     during this session
                                 </entry>
@@ -1148,8 +1183,8 @@ http://docbook.org/ns/docbook "
                             </row>
                             <row>
                                 <entry>user_id</entry>
-                                <entry>guid</entry>
-                                <entry>Session owner guid</entry>
+                                <entry>string</entry>
+                                <entry>Session owner ID</entry>
                             </row>
                             <row>
                                 <entry>version</entry>
@@ -1485,7 +1520,7 @@ http://docbook.org/ns/docbook "
                             <tbody>
                                 <row>
                                     <entry>id</entry>
-                                    <entry>guid</entry>
+                                    <entry>string</entry>
                                     <entry>Unique ID</entry>
                                 </row>
                                 <row>
@@ -1510,7 +1545,12 @@ http://docbook.org/ns/docbook "
                                 <row>
                                     <entry>domain</entry>
                                     <entry>string</entry>
-                                    <entry>Domain name (same as name)</entry>
+                                    <entry>Domain name</entry>
+                                </row>
+                                <row>
+                                    <entry>uri</entry>
+                                    <entry>string</entry>
+                                    <entry>URI of the Service</entry>
                                 </row>
                                 <row>
                                     <entry>units</entry>
@@ -1536,13 +1576,19 @@ http://docbook.org/ns/docbook "
                             <tbody>
                                 <row>
                                     <entry>id</entry>
-                                    <entry>guid</entry>
+                                    <entry>string</entry>
                                     <entry>Unique ID</entry>
                                 </row>
                                 <row>
                                     <entry>isMaster</entry>
                                     <entry>boolean</entry>
-                                    <entry>Is unit is master domain?</entry>
+                                    <entry>true for primary domain controller,
+                                        false otherwise</entry>
+                                </row>
+                                <row>
+                                    <entry>address</entry>
+                                    <entry>string</entry>
+                                    <entry>Unit address</entry>
                                 </row>
                                 <row>
                                     <entry>location</entry>
@@ -1604,9 +1650,9 @@ http://docbook.org/ns/docbook "
                                 <tbody>
                                     <row>
                                         <entry>X-Configuration-Session</entry>
-                                        <entry>UUID</entry>
+                                        <entry>string</entry>
                                         <entry>no</entry>
-                                        <entry>UUID of valid configuration session</entry>
+                                        <entry>ID of valid configuration session</entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1628,13 +1674,17 @@ http://docbook.org/ns/docbook "
         "name": "acme.dc",
         "created": "2010-11-30T03:23:42Z",
         "updated": "2010-11-30T03:23:44Z",
+        "uri": "10.0.0.2",
         "units": [{
             "id": "d08887df15b94178b244904b506fe85b",
             "isMaster": true,
+            "address": "10.0.0.2",
             "location": "west-dc"
-        }, {
+        },
+        {
             "id": "dcf0de317e7046bea555539f19b8ea84",
             "isMaster": false,
+            "address": "10.0.0.3",
             "location": "west-dc"
         }]
     }]
@@ -1680,7 +1730,7 @@ http://docbook.org/ns/docbook "
                                     <entry>domain</entry>
                                     <entry>string</entry>
                                     <entry>yes</entry>
-                                    <entry>Domain name (same as name)</entry>
+                                    <entry>Domain name</entry>
                                 </row>
                                 <row>
                                     <entry>units</entry>
@@ -1711,7 +1761,8 @@ http://docbook.org/ns/docbook "
                                     <entry>isMaster</entry>
                                     <entry>boolean</entry>
                                     <entry>yes</entry>
-                                    <entry>Is unit is master domain?</entry>
+                                    <entry>true for primary domain controller,
+                                        false otherwise</entry>
                                 </row>
                                 <row>
                                     <entry>recoveryPassword</entry>
@@ -1777,9 +1828,9 @@ http://docbook.org/ns/docbook "
                                 <tbody>
                                     <row>
                                         <entry>X-Configuration-Session</entry>
-                                        <entry>UUID</entry>
+                                        <entry>string</entry>
                                         <entry>yes</entry>
-                                        <entry>UUID of valid configuration session</entry>
+                                        <entry>ID of valid configuration session</entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -1858,7 +1909,7 @@ http://docbook.org/ns/docbook "
                             <tbody>
                                 <row>
                                     <entry>id</entry>
-                                    <entry>guid</entry>
+                                    <entry>string</entry>
                                     <entry>Unique ID</entry>
                                 </row>
                                 <row>
@@ -1880,9 +1931,17 @@ http://docbook.org/ns/docbook "
                                     </entry>
                                 </row>
                                 <row>
+                                    <entry>uri</entry>
+                                    <entry>string</entry>
+                                    <entry>URI of the Service</entry>
+                                </row>
+                                <row>
                                     <entry>domain</entry>
                                     <entry>string</entry>
-                                    <entry>Domain name (same as name)</entry>
+                                    <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                        if machine is not a domain member
+                                    </entry>
                                 </row>
                                 <row>
                                     <entry>units</entry>
@@ -1908,42 +1967,18 @@ http://docbook.org/ns/docbook "
                             <tbody>
                                 <row>
                                     <entry>id</entry>
-                                    <entry>guid</entry>
+                                    <entry>string</entry>
                                     <entry>Unique ID</entry>
                                 </row>
                                 <row>
-                                    <entry>endpoint</entry>
-                                    <entry>object</entry>
-                                    <entry>Unit Endpoint</entry>
+                                    <entry>address</entry>
+                                    <entry>string</entry>
+                                    <entry>Unit address</entry>
                                 </row>
                                 <row>
                                     <entry>location</entry>
                                     <entry>string</entry>
                                     <entry>AvailabilityZone or specific physical datacenter.
-                                    </entry>
-                                </row>
-                            </tbody>
-                        </tgroup>
-                    </table>
-                    <table frame='all'>
-                        <title>Web Server Unit Endpoint Object</title>
-                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                            <colspec colnum="1" colname="col1" colwidth="1*"/>
-                            <colspec colnum="2" colname="col2" colwidth="1*"/>
-                            <colspec colnum="3" colname="col3" colwidth="4*"/>
-                            <thead>
-                                <row>
-                                    <entry>Attribute</entry>
-                                    <entry>Type</entry>
-                                    <entry>Description</entry>
-                                </row>
-                            </thead>
-                            <tbody>
-                                <row>
-                                    <entry>host</entry>
-                                    <entry>string</entry>
-                                    <entry>Host address for IIS Management Console
-                                        connection
                                     </entry>
                                 </row>
                             </tbody>
@@ -1999,9 +2034,9 @@ http://docbook.org/ns/docbook "
                                 <tbody>
                                     <row>
                                         <entry>X-Configuration-Session</entry>
-                                        <entry>UUID</entry>
+                                        <entry>string</entry>
                                         <entry>no</entry>
-                                        <entry>UUID of valid configuration session</entry>
+                                        <entry>ID of valid configuration session</entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -2025,11 +2060,10 @@ http://docbook.org/ns/docbook "
            "created": "2010-11-30T03:23:42Z",
            "updated": "2010-11-30T03:23:44Z",
            "domain": "ACME",
+           "uri": "http://10.0.0.2",
            "units": [{
                "id": "1bf3491c409b4541b6f18ea5988a6437",
-               "endpoint": {
-                   "host": "10.0.0.2"
-               },
+               "address": "10.0.0.2",
                "location": "west-dc"
            }]
          },
@@ -2038,12 +2072,11 @@ http://docbook.org/ns/docbook "
            "name": "backend",
            "created": "2010-11-30T03:23:42Z",
            "updated": "2010-11-30T03:23:44Z",
-           "domain": "ACME" ,
+           "domain": "ACME",
+           "uri": "http://10.0.0.3",
            "units": [{
                "id": "eb32f97866d24001baa430cb34e4049f",
-               "endpoint": {
-                   "host": "10.0.0.3"
-               },
+               "address": "10.0.0.3",
                "location": "west-dc"
            }]
          }
@@ -2080,8 +2113,8 @@ http://docbook.org/ns/docbook "
                                 <row>
                                     <entry>domain</entry>
                                     <entry>string</entry>
-                                    <entry>yes</entry>
-                                    <entry>Domain name (same as name)</entry>
+                                    <entry>no</entry>
+                                    <entry>Domain name</entry>
                                 </row>
                                 <row>
                                     <entry>units</entry>
@@ -2124,7 +2157,7 @@ http://docbook.org/ns/docbook "
                             <title>POST /environments/&lt;id&gt;/webServers
                                 Call
                             </title>
-                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
                                 <colspec colnum="1" colname="col1" colwidth="1*"/>
                                 <colspec colnum="2" colname="col2" colwidth="4*"/>
                                 <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2162,9 +2195,9 @@ http://docbook.org/ns/docbook "
                                 <tbody>
                                     <row>
                                         <entry>X-Configuration-Session</entry>
-                                        <entry>UUID</entry>
+                                        <entry>string</entry>
                                         <entry>yes</entry>
-                                        <entry>UUID of valid configuration session</entry>
+                                        <entry>ID of valid configuration session</entry>
                                     </row>
                                 </tbody>
                             </tgroup>
@@ -2178,7 +2211,9 @@ http://docbook.org/ns/docbook "
   "name": "frontend",
   "adminPassword": "password",
   "domain": "acme.dc",
-  "location": "west-dc"
+  "units": [{
+    "location": "west-dc"
+  }]
 }
                             ]]>
                         </programlisting>
@@ -2205,21 +2240,1151 @@ http://docbook.org/ns/docbook "
                     </section>
                 </section>
             </section>
+            <section>
+                <title>ASP.NET Application API</title>
+                <para>This section describes API calls for managing ASP.NET
+                    Applications</para>
+                <section>
+                    <title>Get a List of existing ASP.NET Applications</title>
+                    <table frame='all'>
+                        <title>ASP.NET Application Object</title>
+                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>id</entry>
+                                    <entry>string</entry>
+                                    <entry>Unique ID</entry>
+                                </row>
+                                <row>
+                                    <entry>name</entry>
+                                    <entry>string</entry>
+                                    <entry>User-friendly name</entry>
+                                </row>
+                                <row>
+                                    <entry>created</entry>
+                                    <entry>datetime</entry>
+                                    <entry>Creation date and time in ISO format
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>updated</entry>
+                                    <entry>datetime</entry>
+                                    <entry>Modification date and time in ISO
+                                        format
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>repository</entry>
+                                    <entry>string</entry>
+                                    <entry>URL of git repository containing the
+                                    application source files</entry>
+                                </row>
+                                <row>
+                                    <entry>uri</entry>
+                                    <entry>string</entry>
+                                    <entry>URI of the Service</entry>
+                                </row>
+                                <row>
+                                    <entry>domain</entry>
+                                    <entry>string</entry>
+                                    <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                        if machine is not a domain member
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>units</entry>
+                                    <entry>object</entry>
+                                    <entry>ASP.NET Application Unit
+                                        object</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame='all'>
+                        <title>ASP.NET Application Unit Object</title>
+                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>id</entry>
+                                    <entry>string</entry>
+                                    <entry>Unique ID</entry>
+                                </row>
+                                <row>
+                                    <entry>address</entry>
+                                    <entry>string</entry>
+                                    <entry>Unit address</entry>
+                                </row>
+                                <row>
+                                    <entry>location</entry>
+                                    <entry>string</entry>
+                                    <entry>AvailabilityZone or specific
+                                        physical datacenter.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <section>
+                        <title>Call</title>
+                        <table frame='all'>
+                            <title>GET /environments/&lt;id&gt;/aspNetApps
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>GET</entry>
+                                        <entry>/environments/&lt;id&gt;/aspNetApps</entry>
+                                        <entry>Get a list of existing ASP.NET
+                                            Applications
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame='all'>
+                            <title>Headers</title>
+                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>no</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <para>None</para>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>This call returns list of ASP.NET Applications:
+                            <programlisting>
+                                <![CDATA[
+{
+  "aspNetApps":
+      [
+         {
+           "id": "88f6ed99ff3645bcb84e1e37ab9ece3d",
+           "name": "frontend",
+           "created": "2010-11-30T03:23:42Z",
+           "updated": "2010-11-30T03:23:44Z",
+           "domain": "ACME",
+           "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
+           "uri": "http://10.0.0.2",
+           "units": [{
+               "id": "59255829f0574297acc1cd3a18ff6fd7",
+               "address": "10.0.0.2",
+               "location": "west-dc"
+           }]
+         },
+         {
+           "id": "aa49dcaff9914b8abb26855f0799b0e0",
+           "name": "backend",
+           "created": "2010-11-30T03:23:42Z",
+           "updated": "2010-11-30T03:23:44Z",
+           "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
+           "uri": "http://10.0.0.3",
+           "domain": "ACME2" ,
+           "units": [{
+               "id": "274b54f6bbe6493690e7107aa947e112",
+               "address": "10.0.0.3",
+               "location": "west-dc"
+           }]
+         }
+      ]
+}                                    ]]>
+                            </programlisting>
+                        </para>
+                    </section>
+                </section>
+                <section>
+                    <title>Create ASP.NET Application instance</title>
+                    <table frame='all'>
+                        <title>ASP.NET Application Object</title>
+                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>name</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>User-friendly name</entry>
+                                </row>
+                                <row>
+                                    <entry>repository</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>URL of git repository containing the
+                                    application source files</entry>
+                                </row>
+                                <row>
+                                    <entry>domain</entry>
+                                    <entry>string</entry>
+                                    <entry>no</entry>
+                                    <entry>Domain name</entry>
+                                </row>
+                                <row>
+                                    <entry>units</entry>
+                                    <entry>object</entry>
+                                    <entry>yes</entry>
+                                    <entry>ASP.NET Application Unit object</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame='all'>
+                        <title>ASP.NET Application Unit Object</title>
+                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>location</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>AvailabilityZone or specific physical datacenter.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <section>
+                        <title>Call</title>
+                        <table frame='all'>
+                            <title>POST /environments/&lt;id&gt;/aspNetApps
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="1*"/>
+                                <colspec colnum="2" colname="col2" colwidth="4*"/>
+                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>POST</entry>
+                                        <entry>/environments/&lt;id&gt;/aspNetApps</entry>
+                                        <entry>Create new ASP.NET Application</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame='all'>
+                            <title>Headers</title>
+                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>yes</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <programlisting>
+                            <![CDATA[
+{
+  "name": "frontend",
+  "adminPassword": "password",
+  "domain": "acme.dc",
+  "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
+  "units": [{
+    "location": "west-dc"
+  }]
+}
+                            ]]>
+                        </programlisting>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>This call returns created ASP.NET Application:
+                            <programlisting>
+                                <![CDATA[
+{
+    "id": "5374bd535e26452e8acb6ae3ee87c596",
+    "name": "frontend",
+    "created": "2010-11-30T03:23:42Z",
+    "updated": "2010-11-30T03:23:44Z",
+    "domain": "ACME",
+    "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
+    "units": [{
+        "id": "7bb3f29bcc9449f7b91f7a4d4668499a",
+        "location": "west-dc"
+    }]
+}
+                                    ]]>
+                            </programlisting>
+                        </para>
+                    </section>
+                </section>
+            </section>
+            <section>
+                <title>Web Server Farm API</title>
+                <para>This section describes API calls for managing Web Server
+                    (IIS) Web Farm services</para>
+                <section>
+                    <title>Get a List of existing Web Server Farms</title>
+                    <table frame='all'>
+                        <title>Web Server Farm Object</title>
+                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>id</entry>
+                                    <entry>string</entry>
+                                    <entry>Unique ID</entry>
+                                </row>
+                                <row>
+                                    <entry>name</entry>
+                                    <entry>string</entry>
+                                    <entry>User-friendly name</entry>
+                                </row>
+                                <row>
+                                    <entry>created</entry>
+                                    <entry>datetime</entry>
+                                    <entry>Creation date and time in ISO format
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>updated</entry>
+                                    <entry>datetime</entry>
+                                    <entry>Modification date and time in ISO
+                                        format
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>uri</entry>
+                                    <entry>string</entry>
+                                    <entry>URI of the Service</entry>
+                                </row>
+                                <row>
+                                    <entry>loadBalancerPort</entry>
+                                    <entry>integer</entry>
+                                    <entry>Port number of the Farm</entry>
+                                </row>
+                                <row>
+                                    <entry>domain</entry>
+                                    <entry>string</entry>
+                                    <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                        if machine is not a domain member
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>units</entry>
+                                    <entry>object</entry>
+                                    <entry>Web Server Farm Unit
+                                        object</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame='all'>
+                        <title>Web Server Farm Unit Object</title>
+                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>id</entry>
+                                    <entry>string</entry>
+                                    <entry>Unique ID</entry>
+                                </row>
+                                <row>
+                                    <entry>location</entry>
+                                    <entry>string</entry>
+                                    <entry>AvailabilityZone or specific
+                                        physical datacenter.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <section>
+                        <title>Call</title>
+                        <table frame='all'>
+                            <title>GET /environments/&lt;id&gt;/webServerFarms
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>GET</entry>
+                                        <entry>/environments/&lt;id&gt;/webServerFarms</entry>
+                                        <entry>Get a list of existing
+                                            Web Server Farms
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame='all'>
+                            <title>Headers</title>
+                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>no</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <para>None</para>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>This call returns list of Web Server Farms:
+                            <programlisting>
+                                <![CDATA[
+{
+  "webServerFarms":
+      [
+         {
+           "id": "01fa4412ab4849acb27394aaf307ca88",
+           "name": "frontend",
+           "created": "2010-11-30T03:23:42Z",
+           "updated": "2010-11-30T03:23:44Z",
+           "domain": "ACME",
+           "loadBalancerPort": 80,
+           "uri": "http://192.168.1.1:80",
+           "units": [
+               {
+                   "id": "a34992c8634b482798187d3c0e1c999a",
+                   "address": "10.0.0.2",
+                   "location": "west-dc"
+               },
+               {
+                   "id": "fcd60488bb6f4acf97ccdb8f8fc6bc9a",
+                   "address": "10.0.0.3",
+                   "location": "west-dc"
+               }
+           ]
+         }
+      ]
+}                                    ]]>
+                            </programlisting>
+                        </para>
+                    </section>
+                </section>
+                <section>
+                    <title>Create Web Server Farm instance</title>
+                    <table frame='all'>
+                        <title>Web Server Farm Object</title>
+                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>name</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>User-friendly name</entry>
+                                </row>
+                                <row>
+                                    <entry>loadBalancerPort</entry>
+                                    <entry>integer</entry>
+                                    <entry>yes</entry>
+                                    <entry>Port number for the Farm</entry>
+                                </row>
+                                <row>
+                                    <entry>domain</entry>
+                                    <entry>string</entry>
+                                    <entry>no</entry>
+                                    <entry>Domain name</entry>
+                                </row>
+                                <row>
+                                    <entry>units</entry>
+                                    <entry>object</entry>
+                                    <entry>yes</entry>
+                                    <entry>Web Server Farm Unit object</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame='all'>
+                        <title>Web Server Farm Unit Object</title>
+                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>location</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>AvailabilityZone or specific physical datacenter.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <section>
+                        <title>Call</title>
+                        <table frame='all'>
+                            <title>POST /environments/&lt;id&gt;/webServerFarms
+                                Call
+                            </title>
+                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="1*"/>
+                                <colspec colnum="2" colname="col2" colwidth="4*"/>
+                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>POST</entry>
+                                        <entry>/environments/&lt;id&gt;/webServerFarms</entry>
+                                        <entry>Create new Web Server Farm</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame='all'>
+                            <title>Headers</title>
+                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>yes</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <programlisting>
+                            <![CDATA[
+{
+  "name": "frontend",
+  "adminPassword": "password",
+  "domain": "acme.dc",
+  "loadBalancerPort": 80,
+  "units": [{
+    "location": "west-dc"
+  }]
+}
+                            ]]>
+                        </programlisting>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>This call returns created Web Server Farm:
+                            <programlisting>
+                                <![CDATA[
+{
+    "id": "fa723794e1b7454f967deb65b30d2c22",
+    "name": "frontend",
+    "created": "2010-11-30T03:23:42Z",
+    "updated": "2010-11-30T03:23:44Z",
+    "domain": "ACME",
+    "loadBalancerPort": 80,
+    "units": [{
+        "id": "54213d8fb87d41f7a1be2f81dbba0d69",
+        "location": "west-dc"
+    }]
+}
+                                    ]]>
+                            </programlisting>
+                        </para>
+                    </section>
+                </section>
+            </section>
+
+            <section>
+                <title>ASP.NET Application Farm API</title>
+                <para>This section describes API calls for managing ASP.NET
+                    Web Farm Application Services</para>
+                <section>
+                    <title>Get a List of existing ASP.NET Application Farms</title>
+                    <table frame='all'>
+                        <title>ASP.NET Application Farm Object</title>
+                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>id</entry>
+                                    <entry>string</entry>
+                                    <entry>Unique ID</entry>
+                                </row>
+                                <row>
+                                    <entry>name</entry>
+                                    <entry>string</entry>
+                                    <entry>User-friendly name</entry>
+                                </row>
+                                <row>
+                                    <entry>created</entry>
+                                    <entry>datetime</entry>
+                                    <entry>Creation date and time in ISO format
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>updated</entry>
+                                    <entry>datetime</entry>
+                                    <entry>Modification date and time in ISO
+                                        format
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>uri</entry>
+                                    <entry>string</entry>
+                                    <entry>URI of the Service</entry>
+                                </row>
+                                <row>
+                                    <entry>repository</entry>
+                                    <entry>string</entry>
+                                    <entry>URL of git repository containing the
+                                    application source files</entry>
+                                </row>
+                                <row>
+                                    <entry>loadBalancerPort</entry>
+                                    <entry>integer</entry>
+                                    <entry>Port number of the Farm</entry>
+                                </row>
+                                <row>
+                                    <entry>domain</entry>
+                                    <entry>string</entry>
+                                    <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                        if machine is not a domain member
+                                    </entry>
+                                </row>
+                                <row>
+                                    <entry>units</entry>
+                                    <entry>object</entry>
+                                    <entry>ASP.NET Application Farm Unit
+                                        object</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame='all'>
+                        <title>ASP.NET Application Farm Unit Object</title>
+                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>id</entry>
+                                    <entry>string</entry>
+                                    <entry>Unique ID</entry>
+                                </row>
+                                <row>
+                                    <entry>address</entry>
+                                    <entry>string</entry>
+                                    <entry>Unit address</entry>
+                                </row>
+                                <row>
+                                    <entry>location</entry>
+                                    <entry>string</entry>
+                                    <entry>AvailabilityZone or specific
+                                        physical datacenter.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <section>
+                        <title>Call</title>
+                        <table frame='all'>
+                            <title>GET /environments/&lt;id&gt;/aspNetAppFarms
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1'
+                                    rowsep='1'>
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <colspec colnum="3" colname="col3"
+                                         colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>GET</entry>
+                                        <entry>/environments/&lt;id&gt;/aspNetAppFarms</entry>
+                                        <entry>Get a list of existing
+                                            ASP.NET Application Farms
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame='all'>
+                            <title>Headers</title>
+                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>no</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <para>None</para>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>This call returns list of ASP.NET Application Farms:
+                            <programlisting>
+                                <![CDATA[
+{
+  "aspNetAppFarms":
+      [
+         {
+           "id": "01fa4412ab4849acb27394aaf307ca88",
+           "name": "frontend",
+           "created": "2010-11-30T03:23:42Z",
+           "updated": "2010-11-30T03:23:44Z",
+           "domain": "ACME",
+           "loadBalancerPort": 80,
+           "uri": "http://192.168.1.1:80",
+           "units": [
+               {
+                   "id": "3374f4eb850e4b27bf734649d7004cc0",
+                   "address": "10.0.0.2",
+                   "location": "west-dc"
+               },
+               {
+                   "id": "fcd60488bb6f4acf97ccdb8f8fc6bc9a",
+                   "address": "10.0.0.3",
+                   "location": "west-dc"
+               }
+           ]
+         }
+      ]
+}                                    ]]>
+                            </programlisting>
+                        </para>
+                    </section>
+                </section>
+                <section>
+                    <title>Create ASP.NET Application Farm instance</title>
+                    <table frame='all'>
+                        <title>ASP.NET Application Farm Object</title>
+                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>name</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>User-friendly name</entry>
+                                </row>
+                                <row>
+                                    <entry>repository</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>URL of git repository containing the
+                                    application source files</entry>
+                                </row>
+                                <row>
+                                    <entry>loadBalancerPort</entry>
+                                    <entry>integer</entry>
+                                    <entry>yes</entry>
+                                    <entry>Port number for the Farm</entry>
+                                </row>
+                                <row>
+                                    <entry>domain</entry>
+                                    <entry>string</entry>
+                                    <entry>no</entry>
+                                    <entry>Domain name</entry>
+                                </row>
+                                <row>
+                                    <entry>units</entry>
+                                    <entry>object</entry>
+                                    <entry>yes</entry>
+                                    <entry>ASP.NET Application Farm Unit object</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame='all'>
+                        <title>ASP.NET Application Farm Unit Object</title>
+                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Attribute</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>location</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>AvailabilityZone or specific physical datacenter.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <section>
+                        <title>Call</title>
+                        <table frame='all'>
+                            <title>POST /environments/&lt;id&gt;/aspNetAppFarms
+                                Call
+                            </title>
+                            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="1*"/>
+                                <colspec colnum="2" colname="col2" colwidth="4*"/>
+                                <colspec colnum="3" colname="col3" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>POST</entry>
+                                        <entry>/environments/&lt;id&gt;/aspNetAppFarms</entry>
+                                        <entry>Create new ASP.NET Application Farm</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame='all'>
+                            <title>Headers</title>
+                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>yes</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <programlisting>
+                            <![CDATA[
+{
+  "name": "frontend",
+  "adminPassword": "password",
+  "domain": "acme.dc",
+  "loadBalancerPort": 80,
+  "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
+  "units": [{
+    "location": "west-dc"
+  }]
+}
+                            ]]>
+                        </programlisting>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>This call returns created ASP.NET Application Farm:
+                            <programlisting>
+                                <![CDATA[
+{
+    "id": "1eb6cd5fc3f24d60a9a4c431512d3708",
+    "name": "frontend",
+    "created": "2010-11-30T03:23:42Z",
+    "updated": "2010-11-30T03:23:44Z",
+    "domain": "ACME",
+    "loadBalancerPort": 80,
+    "repository": "https://github.com/Mirantis/murano-mvc-demo.git",
+    "units": [{
+        "id": "54213d8fb87d41f7a1be2f81dbba0d69",
+        "location": "west-dc"
+    }]
+}
+                                    ]]>
+                            </programlisting>
+                        </para>
+                    </section>
+                </section>
+            </section>
         </section>
+
     </chapter>
     <chapter>
         <title>Installation Guide</title>
+        <para> This chapter is about installation and configuration Murano services.</para>
+        <para>Note that all Murano modules can be downloaded from
+            <ulink url="https://launchpad.net/murano/"> our page </ulink> on launchpad.
+        </para>
+        <section>
+            <title>Common Pre-Requirements</title>
+            <para>Operation system:</para>
+                <orderedlist>
+                    <listitem>Ubuntu</listitem>
+                    <listitem>RHEL/CentOS</listitem>
+                </orderedlist>
+            <para>Packages:</para>
+            <orderedlist>
+                <listitem>python-dev</listitem>
+                <listitem>libxml2-dev  </listitem>
+                <listitem>libxslt-dev</listitem>
+            </orderedlist>
+
+        </section>
         <section>
             <title>Murano API Service</title>
-            <para>Murano API is a project that provides access to engine via API.</para>
-            <para>This document describes Murano API for contributors of the project, and assumes that you are already
+            <para>Murano API provides access to the Murano orchestration engine via API.</para>
+            <para>This chapter describes Murano API for contributors of the project, and assumes that you are already
                 familiar with Murano API from an end-user perspective.
             </para>
             <section>
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <para>Project source can be checked out as git repository (see below) or downloaded from
+                            <ulink url="http://tarballs.openstack.org/murano-api/"> here</ulink></para>
                         <programlisting>
                             <![CDATA[
 user@work:~/$ git clone https://github.com/stackforge/murano-api.git
@@ -2227,10 +3392,18 @@ user@work:~/$ git clone https://github.com/stackforge/murano-api.git
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Install Murano API:</para>
+                            <para>Switch to just created directory</para>
+                        <programlisting>
+                        <![CDATA[
+user@work:~/$ cd murano-api
+                         ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And them perform installation:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano-api && sudo python setup.py install
+user@work:~/murano-api$ chmod +x setup.sh ; sudo ./setup.sh install
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2240,18 +3413,18 @@ user@work:~/$ cd murano-api && sudo python setup.py install
                 <title>Configure</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Configure your environment (Need to perform the following commands to create RabbitMQ user and vhost for correct work of Murano services):</para>
+                        <para> First configure rabbitMQ by adding vhost and user with administrator rights:</para>
                         <programlisting>
                         <![CDATA[
 sudo rabbitmqctl add_user murano murano
 sudo rabbitmqctl set_user_tags murano administrator
 sudo rabbitmqctl add_vhost murano
-sudo rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*" 
+sudo rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
                         ]]>
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Open first configuration file for editing:</para>
+                        <para>Edit configuration file:</para>
                         <programlisting>
                             <![CDATA[
 user@work:~/murano-api$ nano ./etc/murano-api.conf
@@ -2259,7 +3432,11 @@ user@work:~/murano-api$ nano ./etc/murano-api.conf
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Configure according to your environment (please note rabbitmq section):</para>
+                        <para>Configure it according to your environment:
+                            <para><emphasis>[DEFAULT]</emphasis> section sets up logging.</para>
+                            <para> In <emphasis>[reports]</emphasis> section you can set names for new rabbitMQ queues.</para>
+                            <para> <emphasis>[rabbitmq]</emphasis> section sets up host configuration where rabbitMQ with just created user and vhost is running.</para>
+                        </para>
                         <programlisting>
                             <![CDATA[
 [DEFAULT]
@@ -2293,7 +3470,7 @@ password = murano
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Open second configuration file for editing:</para>
+                        <para>Edit one more configuration file:</para>
                         <programlisting>
                             <![CDATA[
 user@work:~/murano-api$ nano ./etc/murano-api-paste.ini
@@ -2301,7 +3478,8 @@ user@work:~/murano-api$ nano ./etc/murano-api-paste.ini
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Configure according to your environment (please note filter:authtoken section):</para>
+                        <para>Configure keystone auth_token in <emphasis>[filter:authtoken]</emphasis> section.
+                            For more information see <ulink url="http://docs.openstack.org/developer/keystone/configuringservices.html"> Auth-Token Middleware with Username and Password</ulink></para>
                         <programlisting>
                             <![CDATA[
 [pipeline:murano-api]
@@ -2330,15 +3508,15 @@ signing_dir = /tmp/keystone-signing-muranoapi
                         <programlisting>
                             <![CDATA[
 user@work:~/$ keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
-                            ]]>
-                             <![CDATA[
+                                    ]]>
+                                     <![CDATA[
 user@work:~/$ keystone endpoint-create
 
-                    --region RegionOne
-                    --service-id The ID field returned by the keystone service-create
-                    --publicurl http://x.x.x.x:8082 (where x.x.x.x - host ip where murano-api installed)
-                    --internalurl the same as publicurl
-                    --adminurl the same as publicurl
+    --region RegionOne
+    --service-id The ID field returned by the keystone service-create
+    --publicurl http://x.x.x.x:8082 (where x.x.x.x - host ip where murano-api installed)
+    --internalurl the same as publicurl
+    --adminurl the same as publicurl
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2356,7 +3534,7 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
         </section>
         <section>
             <title>Conductor Service</title>
-            <para>Conductor is an Murano orchestration engine that transforms object model sent by REST API service into
+            <para>Conductor is a Murano orchestration engine that transforms object model sent by REST API service into
                 a series of Heat and Murano-Agent commands.
             </para>
             <para>This document describes Conductor for contributors of the project.</para>
@@ -2364,18 +3542,35 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
+                        <para>Murano Condutor uses OpenStack Heat for new virtual machines creation, therefore Heat should been installed and configured. Some services require the Internet access for virtual machines to successfull deployment.</para>
+                        <para>The detailed information about Heat configuration is described <ulink url="http://docs.openstack.org/developer/heat/getting_started/index.html"> here.</ulink></para>
+                    </listitem>
+                    <listitem>
+                        <para>Project source code can be checked out from git repository (see below) or downloaded from
+                            <ulink url="http://tarballs.openstack.org/murano-conductor/"> here.</ulink>
+
                         <programlisting>
                             <![CDATA[
 user@work:~/$ git clone https://github.com/stackforge/murano-conductor.git
                             ]]>
                         </programlisting>
+
+                        </para>
+
                     </listitem>
                     <listitem>
-                        <para>Install Conductor:</para>
+                        <para>Switch to just created directory</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/cd murano-conductor && sudo python setup.py install
+user@work:~/cd murano-conductor
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And install Conductor Service to the system:</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/murano-conductor$ chmod +x setup.sh ; sudo ./setup.sh install
                             ]]>
                         </programlisting>
                     </listitem>
@@ -2385,7 +3580,7 @@ user@work:~/cd murano-conductor && sudo python setup.py install
                 <title>Configure</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Open configuration file for editing:</para>
+                        <para>Edit configuration file:</para>
                         <programlisting>
                             <![CDATA[
 user@work:~/murano-conductor$ nano ./etc/conductor.conf
@@ -2393,7 +3588,12 @@ user@work:~/murano-conductor$ nano ./etc/conductor.conf
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Configure according to your environment (please note rabbitmq section):</para>
+                        <para>
+                            Change it according to your environment.
+                            <para><emphasis>[DEFAULT]</emphasis> section is responsible for logging.</para>
+                            <para><emphasis>[heat]</emphasis> points where heat is running.</para>
+                            <para><emphasis>[rabbitmq]</emphasis> section points where your rabbitMQ installed and configured. </para>
+                        </para>
                         <programlisting>
                             <![CDATA[
 [DEFAULT]
@@ -2402,10 +3602,10 @@ debug=True
 verbose=True
 
 [heat]
-auth_url = http://172.18.124.101:5000/v2.0
+auth_url = http://localhost:5000/v2.0
 
 [rabbitmq]
-host = 172.18.124.101
+host = localhost
 port = 5672
 virtual_host = murano
 login = murano
@@ -2420,46 +3620,38 @@ password = murano
                 <para>Run Conductor and supply valid configuration file:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/cd murano-conductor && conductor --config-file=./murano/conductor/etc/conductor.conf
+user@work:~/murano-conductor$ conductor --config-file=./etc/conductor.conf
                     ]]>
                 </programlisting>
             </section>
         </section>
         <section>
             <title>Murano Dashboard</title>
-            <para>Murano Dashboard is a project that provides Web UI to Murano Project.</para>
+            <para>Murano Dashboard provides Web UI for Murano Project.</para>
             <section>
-                <title>Dependencies</title>
-                <para>
-                    <itemizedlist>
-                        <listitem>
-                            <para>Horizon</para>
-                        </listitem>
-                        <listitem>
-                            <para>NodeJs</para>
-                        </listitem>
-                        <listitem>
-                            <para>python-muranoclient</para>
-                        </listitem>
-                    </itemizedlist>
-                    First two dependencies is already satisfied if you install Murano Dashboard on machine with
-                    OpenStack
-                    Horizon installed. Otherwise, please run:
+                <title>Pre-Requirements</title>
+                <itemizedlist>
+                <listitem>
+                    <para>To setup Murano Dashboard on a host with Openstack Dashbord already installed you just need to install <emphasis>
+                        the python-muranoclient</emphasis>. You can download it from <ulink url="http://tarballs.openstack.org/python-muranoclient/"> here.</ulink></para>
+                        And then perform installation with pip:
                     <programlisting>
                         <![CDATA[
-user@work:~/$ sudo apt-get install nodejs
-user@work:~/$ sudo pip install http://tarballs.openstack.org/horizon/horizon-master.tar.gz
-user@work:~/$ sudo pip install http://tarballs.openstack.org/python-muranoclient/python-muranoclient-master.tar.gz
-                        ]]>
+user@work:~/$ sudo pip install ]]> <emphasis>just_downloaded</emphasis>.tar.gz
                     </programlisting>
-                </para>
-                <para>Also, this two packages (horizon and python-muranoclient) can be installed to venv.</para>
+                </listitem>
+                <listitem>
+                    <para>If there is no OpenStack Dashboard (horizon) you'll need to install it. See <ulink url="http://docs.openstack.org/trunk/openstack-compute/install/yum/content/ch_install-dashboard.html"> here</ulink> how to do that.</para>
+                </listitem>
+                </itemizedlist>
             </section>
             <section>
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
-                        <para>Check out sources to some directory (&lt;home&gt;/murano-dashboard):</para>
+                        <para>Project source code can be checked out from git repository (see below) or downloaded from
+                            <ulink url="http://tarballs.openstack.org/murano-dashboard/"> here.</ulink>
+                        </para>
                         <programlisting>
                             <![CDATA[
 user@work:~/$ git clone https://github.com/stackforge/murano-dashboard.git
@@ -2467,13 +3659,19 @@ user@work:~/$ git clone https://github.com/stackforge/murano-dashboard.git
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Install:</para>
+                        <para>Switch to just created directory</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd murano-dashboard && sudo python setup.py install
+user@work:~/$ cd murano-dashboard  ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And perform installation</para>
+                        <programlisting>
+                            <![CDATA[
+user@work:~/murano-dashboard$ sudo python setup.py install
                             ]]>
                         </programlisting>
-                        <para>Make sure that horizon and python-muranoclient is already installed.</para>
                     </listitem>
                 </itemizedlist>
             </section>
@@ -2484,18 +3682,50 @@ user@work:~/$ cd murano-dashboard && sudo python setup.py install
                         <para>Open Django configuration file:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/$ cd <Horizon Install Dir> && nano settings.py
+user@work:~/$ cd <Horizon Installation Dir> && nano settings.py
                             ]]>
                         </programlisting>
                         <para>Please, make sure that no local/local_settings.py file exists.</para>
                     </listitem>
                     <listitem>
-                        <para>Configure:</para>
+                        <para>Add to import section</para>
                         <programlisting>
                             <![CDATA[
+from muranoclient.common import exceptions as muranoclient
+                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And this so muranoclient exceptions can be safely handle by horizon:</para>
+                        <programlisting>
+                            <![CDATA[
+RECOVERABLE_EXC = (muranoclient.HTTPException,
+                   muranoclient.CommunicationError,
+                   muranoclient.Forbidden)
+EXTENDED_RECOVERABLE_EXCEPTIONS = tuple(
+    exceptions.RECOVERABLE + RECOVERABLE_EXC)
+
+NOT_FOUND_EXC = (muranoclient.HTTPNotFound, muranoclient.EndpointNotFound)
+EXTENDED_NOT_FOUND_EXCEPTIONS = tuple(exceptions.NOT_FOUND + NOT_FOUND_EXC)
+
+UNAUTHORIZED_EXC = (muranoclient.HTTPUnauthorized, )
+EXTENDED_UNAUTHORIZED_EXCEPTIONS = tuple(
+    exceptions.UNAUTHORIZED + UNAUTHORIZED_EXC)
+            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>And finally edit HORIZON_CONFIG and INSTALLED_APPS sections</para>
+                        <programlisting>
+                        <![CDATA[
+
 HORIZON_CONFIG = {
 ...
+    'exceptions': {'recoverable': EXTENDED_RECOVERABLE_EXCEPTIONS,
+                   'not_found': EXTENDED_NOT_FOUND_EXCEPTIONS,
+                   'unauthorized': EXTENDED_UNAUTHORIZED_EXCEPTIONS},
     'customization_module': 'muranodashboard.panel.overrides'
+
 }
 ...
 INSTALLED_APPS = (
