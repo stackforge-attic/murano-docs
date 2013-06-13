@@ -2364,6 +2364,10 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
                 <title>Install</title>
                 <itemizedlist>
                     <listitem>
+                        <para>Murano Condutor component uses OpenStack Heat for creation of new VMs. It is means that you should have successfully installed and configured Heat on the lab. Some services requires the Internet access for virtual machines to successfull deployment.</para>
+                        <para>Please, see the following link for more detailed information about Heat configuration: http://docs.openstack.org/developer/heat/getting_started/index.html</para>
+                    </listitem>
+                    <listitem>
                         <para>Check out sources to some directory (&lt;home&gt;/murano):</para>
                         <programlisting>
                             <![CDATA[
