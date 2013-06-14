@@ -3736,10 +3736,10 @@ INSTALLED_APPS = (
             </section>
             <section>
                 <title>Run</title>
-                <para>Run Horizon:</para>
+                <para>Horizon usually running on apache2 server, and can be restarted to apply changes by:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/$ cd <Horizon Install Dir> && python manage.py runserver 0.0.0.0:8080
+user@work:~/$ sudo service apache2 restart
                     ]]>
                 </programlisting>
             </section>
