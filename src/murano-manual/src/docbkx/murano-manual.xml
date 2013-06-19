@@ -3427,7 +3427,7 @@ sudo rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
                         <para>Edit configuration file:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/murano-api$ nano ./etc/murano-api.conf
+user@work:~/murano-api$ nano /etc/murano-api/murano-api.conf
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3473,7 +3473,7 @@ password = murano
                         <para>Edit one more configuration file:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/murano-api$ nano ./etc/murano-api-paste.ini
+user@work:~/murano-api$ nano /etc/murano-api/murano-api-paste.ini
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3527,7 +3527,7 @@ user@work:~/$ keystone endpoint-create
                 <para>Run Murano API and supply valid configuration file:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
+user@work:~/$ sudo service murano-api start
                     ]]>
                 </programlisting>
             </section>
@@ -3544,6 +3544,13 @@ user@work:~/$ murano-api --config-file=./murano/api/etc/murano-api.conf
                     <listitem>
                         <para>Murano Condutor uses OpenStack Heat for new virtual machines creation, therefore Heat should been installed and configured. Some services require the Internet access for virtual machines to successfull deployment.</para>
                         <para>The detailed information about Heat configuration is described <ulink url="http://docs.openstack.org/developer/heat/getting_started/index.html"> here.</ulink></para>
+                    </listitem>
+                    <listitem>
+                        <para>OpenStack Heat require Key Pair for Load Balancer instances. Murano Conductor uses LoadBalancer for IIS Farms and ASP.NET Farms. The default name for Key Pair is 'murano-lb-key', you can change this parameter in file
+                          <![CDATA[
+/etc/murano-conductor/data/templates/cf/Windows.template
+                          ]]>    
+                       </para>
                     </listitem>
                     <listitem>
                         <para>Project source code can be checked out from git repository (see below) or downloaded from
@@ -3583,7 +3590,7 @@ user@work:~/murano-conductor$ chmod +x setup.sh ; sudo ./setup.sh install
                         <para>Edit configuration file:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/murano-conductor$ nano ./etc/conductor.conf
+user@work:~/murano-conductor$ nano /etc/murano-conductor/conductor.conf
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3620,7 +3627,7 @@ password = murano
                 <para>Run Conductor and supply valid configuration file:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/murano-conductor$ conductor --config-file=./etc/conductor.conf
+user@work:~/murano-conductor$ sudo service murano-conductor start
                     ]]>
                 </programlisting>
             </section>
