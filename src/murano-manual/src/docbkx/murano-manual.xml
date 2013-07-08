@@ -3424,9 +3424,10 @@ sudo rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Edit configuration file:</para>
+                        <para>Copy and edit configuration file:</para>
                         <programlisting>
                             <![CDATA[
+user@work:~/murano-api$ sudo cp /etc/murano-api/murano-api.conf.sample /etc/murano-api/murano-api.conf
 user@work:~/murano-api$ nano /etc/murano-api/murano-api.conf
                             ]]>
                         </programlisting>
@@ -3470,9 +3471,10 @@ password = murano
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Edit one more configuration file:</para>
+                        <para>Copy and edit one more configuration file:</para>
                         <programlisting>
                             <![CDATA[
+user@work:~/murano-api$ sudo cp etc/murano-api/murano-api-paste.ini.sample etc/murano-api/murano-api-paste.ini
 user@work:~/murano-api$ nano /etc/murano-api/murano-api-paste.ini
                             ]]>
                         </programlisting>
