@@ -3602,6 +3602,7 @@ user@work:~/murano-conductor$ nano /etc/murano-conductor/conductor.conf
                             <para><emphasis>[DEFAULT]</emphasis> section is responsible for logging.</para>
                             <para><emphasis>[heat]</emphasis> points where heat is running.</para>
                             <para><emphasis>[rabbitmq]</emphasis> section points where your rabbitMQ installed and configured. </para>
+                            <para>Take a look <link linkend="ssl">here</link> for more information about SSL configuration</para>
                         </para>
                         <programlisting>
                             <![CDATA[
@@ -3609,6 +3610,9 @@ user@work:~/murano-conductor$ nano /etc/murano-conductor/conductor.conf
 log_file = logs/conductor.log
 debug=True
 verbose=True
+# Maximum number of environments that can be processed simultaneously
+max_environments = 20
+
 
 [heat]
 auth_url = http://localhost:5000/v2.0
@@ -3619,6 +3623,12 @@ port = 5672
 virtual_host = murano
 login = murano
 password = murano
+
+# Use SSL for RabbitMQ connections (True or False)
+ssl = False
+
+# Path to SSL CA certificate or empty to allow self signed server certificate
+ca_certs =
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3636,9 +3646,9 @@ user@work:~/murano-conductor$ sudo service murano-conductor start
         </section>
         <section>
             <title>Murano Dashboard</title>
-            <para>Murano Dashboard provides Web UI for Murano Project.</para>
-            <section>
-                <title>Pre-Requirements</title>
+                <para>Murano Dashboard provides Web UI for Murano Project.</para>
+                <section>
+                    <title>Pre-Requirements</title>
                 <itemizedlist>
                 <listitem>
                     <para>To setup Murano Dashboard on a host with Openstack Dashbord already installed you just need to install <emphasis>
@@ -3757,6 +3767,81 @@ user@work:~/$ sudo service apache2 restart
                 </programlisting>
             </section>
         </section>
+        <section>
+            <title id='ssl'>SSL configuration</title>
+            <para>All Murano components communicate with each other by RabbitMQ.
+                This interaction can be encrypted with SSL. By default all messages in Rabbit MQ are not encrypted.
+                Each RabbitMQ Exchange should be configured separately.</para>
+
+                <itemizedlist>
+                    <listitem>
+                    <para><emphasis>Murano API -> Rabbit MQ exchange</emphasis></para>
+                    <para>Edit <emphasis>rabbitmq</emphasis> section in <emphasis>/etc/murano-api.conf</emphasis>
+                        and set ssl option to True to enable SSL. Specify the path to the SSL CA certificate in regular
+                        format: /path/to/file without quotes or leave it empty to allow self-signed certificates.
+                    </para>
+                        <programlisting>
+<![CDATA[
+    [rabbitmq]
+
+    # Use SSL for RabbitMQ connections (True or False)
+    ssl = True
+
+    # Path to SSL CA certificate or empty to allow self signed server certificate
+    ca_certs =
+                                                                            ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis>Rabbit MQ -> Murano Conductor exchange</emphasis></para>
+                        <para>Open <emphasis> /etc/murano-conductor/conductor.conf </emphasis> and configure <emphasis>rabbitmq</emphasis> section in the same way:
+                        </para>
+                        <programlisting>
+                            <![CDATA[
+    [rabbitmq]
+
+    # Use SSL for RabbitMQ connections (True or False)
+    ssl = True
+
+    # Path to SSL CA certificate or empty to allow self signed server certificate
+    ca_certs = /home/user/certificates/example.crt
+                                                    ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                    <para><emphasis> Murano Agent -> Rabbit MQ exchange </emphasis></para>
+                    <para>By default all Murano Conductor configuration settings apply to Murano Agent. If you want to configure Murano Agent
+                        in a different way change the default template. It can be found here: <emphasis>/murano-conductor/data/templates/agent-config/Default.template.</emphasis>
+                        Take a look at appSettings section:
+                    </para>
+                    <programlisting>
+                            <![CDATA[
+    <appSettings>
+        <add key="rabbitmq.host" value="%RABBITMQ_HOST%"/>
+        <add key="rabbitmq.port" value="%RABBITMQ_PORT%"/>
+        <add key="rabbitmq.user" value="%RABBITMQ_USER%"/>
+        <add key="rabbitmq.password"
+             value="%RABBITMQ_PASSWORD%"/>
+        <add key="rabbitmq.vhost" value="%RABBITMQ_VHOST%"/>
+        <add key="rabbitmq.inputQueue"
+             value="%RABBITMQ_INPUT_QUEUE%"/>
+        <add key="rabbitmq.resultExchange" value=""/>
+        <add key="rabbitmq.resultRoutingKey"
+             value="%RESULT_QUEUE%"/>
+        <add key="rabbitmq.durableMessages" value="true"/>
+
+        <add key="rabbitmq.ssl" value="%RABBITMQ_SSL%"/>
+        <add key="rabbitmq.allowInvalidCA" value="true"/>
+        <add key="rabbitmq.sslServerName" value=""/>
+    </appSettings>
+        ]]>
+                        </programlisting>
+                    <para> Desired parameter should be set directly to the value of the key that you want to change. Quotes are need to be kept.
+                        Thus you can change "rabbitmq.ssl" and "rabbitmq.port" values to make Rabbit MQ work with this exchange in a different from Murano-Conductor way.
+                    </para>
+                    </listitem>
+                </itemizedlist>
+            </section>
     </chapter>
     <chapter>
         <title>ScreenShots</title>
