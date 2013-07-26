@@ -3602,6 +3602,7 @@ user@work:~/murano-conductor$ nano /etc/murano-conductor/conductor.conf
                             <para><emphasis>[DEFAULT]</emphasis> section is responsible for logging.</para>
                             <para><emphasis>[heat]</emphasis> points where heat is running.</para>
                             <para><emphasis>[rabbitmq]</emphasis> section points where your rabbitMQ installed and configured. </para>
+                            <para>Take a look <link linkend="ssl">here</link> for more information about SSL configuration</para>
                         </para>
                         <programlisting>
                             <![CDATA[
@@ -3609,6 +3610,9 @@ user@work:~/murano-conductor$ nano /etc/murano-conductor/conductor.conf
 log_file = logs/conductor.log
 debug=True
 verbose=True
+# Maximum number of environments that can be processed simultaneously
+max_environments = 20
+
 
 [heat]
 auth_url = http://localhost:5000/v2.0
@@ -3619,6 +3623,12 @@ port = 5672
 virtual_host = murano
 login = murano
 password = murano
+
+# Use SSL for RabbitMQ connections (True or False)
+ssl = False
+
+# Path to SSL CA certificate or empty to allow self signed server certificate
+ca_certs =
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3636,9 +3646,9 @@ user@work:~/murano-conductor$ sudo service murano-conductor start
         </section>
         <section>
             <title>Murano Dashboard</title>
-            <para>Murano Dashboard provides Web UI for Murano Project.</para>
-            <section>
-                <title>Pre-Requirements</title>
+                <para>Murano Dashboard provides Web UI for Murano Project.</para>
+                <section>
+                    <title>Pre-Requirements</title>
                 <itemizedlist>
                 <listitem>
                     <para>To setup Murano Dashboard on a host with Openstack Dashbord already installed you just need to install <emphasis>
@@ -3755,6 +3765,69 @@ INSTALLED_APPS = (
 user@work:~/$ sudo service apache2 restart
                     ]]>
                 </programlisting>
+            </section>
+        </section>
+        <section>
+            <title id='ssl'>SSL configuration</title>
+            <para>All communications and transactions can be encrypted with SSL. Since there are different types of protocols that
+                communicate on different levels several steps are required to make Murano work with SSL.</para>
+            <section>
+            <title>HTTPS for the REST API service</title>
+                <para>SOME TEXT HERE</para>
+            </section>
+            <section>
+                <title>SSL for Rabbit MQ</title>
+                <para>"Murano" components communicate with each other by Rabbit MQ. By default all messages in Rabbit MQ are not encrypted. So all communication flows should have ssl option enabled.
+                </para>
+                <itemizedlist>
+                    <listitem>
+                        <para><emphasis>Rabbit MQ -> Murano Conductor exchange</emphasis></para>
+                        <para>Open <emphasis> /etc/murano-conductor/conductor.conf </emphasis> and set ssl option to True in rabbitmq section.
+                            Specify the path to the SSL CA certificate in regular format:  /path/to/file without quotes if you want to allow self-signed certificates.
+                        </para>
+                        <programlisting>
+                            <![CDATA[
+    [rabbitmq]
+
+    # Use SSL for RabbitMQ connections (True or False)
+    ssl = False
+
+    # Path to SSL CA certificate or empty to allow self signed server certificate
+    ca_certs =
+                                                    ]]>
+                        </programlisting>
+                    </listitem>
+                    <listitem>
+                    <para> Murano Agent -> Rabbit MQ exchange </para>
+                    <para>By default all Murano Conductor configuration settings apply to Murano Agent. If you want to configure Murano Agent
+                        in a different way change the default template. It can be found here: <emphasis>/murano-conductor/data/templates/agent-config/Default.template.</emphasis>
+                        Take a look on appSettings section:
+                    </para>
+                    <programlisting>
+                            <![CDATA[
+    <appSettings>
+        <add key="rabbitmq.host" value="%RABBITMQ_HOST%"/>
+        <add key="rabbitmq.port" value="%RABBITMQ_PORT%"/>
+        <add key="rabbitmq.user" value="%RABBITMQ_USER%"/>
+        <add key="rabbitmq.password"
+             value="%RABBITMQ_PASSWORD%"/>
+        <add key="rabbitmq.vhost" value="%RABBITMQ_VHOST%"/>
+        <add key="rabbitmq.inputQueue"
+             value="%RABBITMQ_INPUT_QUEUE%"/>
+        <add key="rabbitmq.resultExchange" value=""/>
+        <add key="rabbitmq.resultRoutingKey"
+             value="%RESULT_QUEUE%"/>
+        <add key="rabbitmq.durableMessages" value="true"/>
+
+        <add key="rabbitmq.ssl" value="%RABBITMQ_VHOST%"/>
+        <add key="rabbitmq.allowInvalidCA" value="true"/>
+        <add key="rabbitmq.sslServerName" value=""/>
+    </appSettings>
+        ]]>
+                        </programlisting>
+                    <para> Desired parameter should be set directly to the value of the key that you want to change. Quotes are need to be kept. </para>
+                    </listitem>
+                </itemizedlist>
             </section>
         </section>
     </chapter>
