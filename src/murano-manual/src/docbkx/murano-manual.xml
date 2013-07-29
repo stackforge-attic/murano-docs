@@ -1,4 +1,4 @@
-<!--
+﻿<!--
  Copyright (c) 2013 Mirantis, Inc.
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -3379,46 +3379,56 @@ http://docbook.org/ns/docbook "
             <section>
                 <title>Install</title>
                 <itemizedlist>
+		    <listitem>
+                        <para>Need to work as root</para>	
+                       		<programlisting>
+                         	   <![CDATA[
+sudo su
+                        	    ]]>   		
+                    </listitem>
                     <listitem>
-                        <para>Navigate to the temporary directory and clone Murano API Service from repository
-                        </para>	
-                       	<para><emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
-                        	</para>	
-                        <programlisting>
-                            <![CDATA[
+                        <para>Navigate to the temporary directory and clone Murano API Service from repository</para>	
+                       		<para><emphasis>Ubuntu Linux 12.04 / 12.10</emphasis></para>	
+                       		<programlisting>
+                         	   <![CDATA[
 mkdir -p /tmp/murano
 cd /tmp/murano
 apt-get install -y git
 git clone https://github.com/stackforge/murano-api
-                            ]]>
-                        </programlisting>
-					<para><emphasis>CentOS 6.x</emphasis>
-                        	</para>	
-                        <programlisting>
-                            <![CDATA[
+                        	    ]]>
+                      		</programlisting>
+				<para><emphasis>CentOS 6.x</emphasis></para>	
+                       		<programlisting>
+                         	   <![CDATA[
 mkdir -p /tmp/murano
 cd /tmp/murano
 yum install -y git
 git clone https://github.com/stackforge/murano-api
-                            ]]>
-                        </programlisting>
+                       		   ]]>
+                       		 </programlisting>
 
                     </listitem>
                     <listitem>
-                            <para>Switch to just created directory</para>
-                        <programlisting>
-                        <![CDATA[
-user@work:~/$ cd murano-api
-                         ]]>
-                        </programlisting>
-                    </listitem>
-                    <listitem>
-                        <para>And them perform installation:</para>
-                        <programlisting>
-                            <![CDATA[
-user@work:~/murano-api$ chmod +x setup.sh ; sudo ./setup.sh install
-                            ]]>
-                        </programlisting>
+                        <para>Switch to just created directory and them perform installation</para>
+                      		<para><emphasis>Ubuntu Linux 12.04 / 12.10</emphasis></para>	
+                       		<programlisting>
+                         	   <![CDATA[
+cd murano-api
+chmod +x setup.sh
+./setup.sh install
+                        	    ]]>
+                      		</programlisting>
+				<para><emphasis>CentOS 6.x</emphasis></para>	
+                       		<programlisting>
+                         	   <![CDATA[
+cd murano-api
+chmod +x setup.sh
+yum install -y
+http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
+./setup-centos.sh install
+                       		   ]]>
+                       		 </programlisting>
+
                     </listitem>
                 </itemizedlist>
             </section>
@@ -3429,19 +3439,21 @@ user@work:~/murano-api$ chmod +x setup.sh ; sudo ./setup.sh install
                         <para> First configure rabbitMQ by adding vhost and user with administrator rights:</para>
                         <programlisting>
                         <![CDATA[
-sudo rabbitmqctl add_user murano murano
-sudo rabbitmqctl set_user_tags murano administrator
-sudo rabbitmqctl add_vhost murano
-sudo rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
+rabbitmqctl add_user murano murano
+rabbitmqctl set_user_tags murano administrator
+rabbitmqctl add_vhost murano
+rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
                         ]]>
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Copy and edit configuration file:</para>
+                        <para>Copy and edit configuration files:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/murano-api$ sudo cp /etc/murano-api/murano-api.conf.sample /etc/murano-api/murano-api.conf
-user@work:~/murano-api$ sudo nano /etc/murano-api/murano-api.conf
+cd /etc/murano-api
+cp murano-api.conf.sample murano-api.conf
+cp murano-api-paste.ini.sample murano-api-paste.ini
+vi murano-api.conf
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3484,11 +3496,10 @@ password = murano
                         </programlisting>
                     </listitem>
                     <listitem>
-                        <para>Copy and edit one more configuration file:</para>
+                        <para>Edit one more configuration file:</para>
                         <programlisting>
                             <![CDATA[
-user@work:~/murano-api$ sudo cp etc/murano-api/murano-api-paste.ini.sample etc/murano-api/murano-api-paste.ini
-user@work:~/murano-api$ sudo nano /etc/murano-api/murano-api-paste.ini
+vi murano-api.conf
                             ]]>
                         </programlisting>
                     </listitem>
@@ -3542,7 +3553,7 @@ user@work:~/$ keystone endpoint-create
                 <para>Run Murano API and supply valid configuration file:</para>
                 <programlisting>
                     <![CDATA[
-user@work:~/$ sudo service murano-api start
+service murano-api start
                     ]]>
                 </programlisting>
             </section>
