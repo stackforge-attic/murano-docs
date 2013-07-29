@@ -725,4 +725,54 @@ The image file <emphasis role="strong">ws-2012-std.qcow2</emphasis> should be st
 </listitem>
 </orderedlist>
 </chapter>
+<chapter xml:id="_post_building_setup">
+    <title>Image registration</title>
+    <para>
+        Murano is one of the Openstack services which communicates with other Openstack components. Therefore just created image should be registered in Openstack Glance - image operation service.
+    </para>
+        <orderedlist numeration="arabic">
+            <listitem>
+             Use the glance image-create command to import your disk image to Glance:
+            <screen>
+    $ glance image-create --name "NAME" --is-public IS_PUBLIC --disk-format DISK_FORMAT
+                --container-format CONTAINER_FORMAT --file IMAGE
+            </screen>
+
+            <itemizedlist>
+                <para>
+                    Replace the command line arguments to glance image-create with the
+                    appropriate values for your environment and disk image:
+                </para>
+                <listitem>
+                    Replace NAME with the name that users will refer to the disk image by.
+                </listitem>
+                    Replace IS_PUBLIC with true or false. Setting this value to true means that all users will be able to view and use the image.
+                <listitem>
+                    Replace DISK_FORMAT with the format of the virtual machine disk
+                    image. Valid values include raw, vhd, vmdk, vdi, iso, qcow2,aki, ami, and ami.
+                </listitem>
+                <listitem>
+                    Replace CONTAINER_FORMAT with the container format of the image. The container format is bare unless the image is
+                    packaged in a file format such as ovf or ami that includes additional metadata related to the image.
+                </listitem>
+                <listitem>
+                    Replace IMAGE with the local path to the image file to upload.
+                </listitem>
+            </itemizedlist>
+            </listitem>
+            <listitem>
+        <para>Next update image metadata by perfoming this command:</para>
+    <screen>
+    $ glance image-update IMAGE-ID --property murano_enabled=True
+    </screen>
+    <itemizedlist>
+    <listitem>
+    Replace IMAGE-ID with image guid from the previous command output.
+    </listitem>
+    </itemizedlist>
+            </listitem>
+    </orderedlist>
+    <para>After these steps desired image can be chosen in Murano dashboard and used for services platform.
+    </para>
+</chapter>
 </book>
