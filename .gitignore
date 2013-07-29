@@ -1,5 +1,6 @@
 #IntelJ Idea
 .idea/
+*.iml
 
 #Build results
 target
