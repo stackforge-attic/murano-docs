@@ -1604,6 +1604,115 @@
             </section>
         </section>
         <section>
+            <title>Shared Attributes</title>
+            <para>This section describes attributes common to all services.
+            </para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame='all'>
+                    <title>Service Object Specs</title>
+                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>type</entry>
+                                <entry>string</entry>
+                                <entry>Service Type</entry>
+                            </row>
+                            <row>
+                                <entry>created</entry>
+                                <entry>datetime</entry>
+                                <entry>Creation date and time in ISO
+                                    format
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>updated</entry>
+                                <entry>datetime</entry>
+                                <entry>Modification date and time in ISO
+                                    format
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>unitNamingPattern</entry>
+                                <entry>string</entry>
+                                <entry>Unit instances naming pattern</entry>
+                            </row>
+                            <row>
+                                <entry>availabilityZone</entry>
+                                <entry>string</entry>
+                                <entry>Availability where service is located</entry>
+                            </row>
+                            <row>
+                                <entry>flavor</entry>
+                                <entry>string</entry>
+                                <entry>Active Directory Unit object</entry>
+                            </row>
+                            <row>
+                                <entry>osImage</entry>
+                                <entry>string</entry>
+                                <entry>Name of image used to power instance</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame='all'>
+                    <title>Service Object Specs</title>
+                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>type</entry>
+                                <entry>string</entry>
+                                <entry>Service Type</entry>
+                            </row>
+                            <row>
+                                <entry>unitNamingPattern</entry>
+                                <entry>string</entry>
+                                <entry>Unit instances naming pattern</entry>
+                            </row>
+                            <row>
+                                <entry>availabilityZone</entry>
+                                <entry>string</entry>
+                                <entry>Availability where service is located</entry>
+                            </row>
+                            <row>
+                                <entry>flavor</entry>
+                                <entry>string</entry>
+                                <entry>Active Directory Unit object</entry>
+                            </row>
+                            <row>
+                                <entry>osImage</entry>
+                                <entry>string</entry>
+                                <entry>Name of image used to power instance</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
             <title>Active Directory Specs</title>
             <para>This section describes objects specs for Active Directory service.
             </para>
@@ -1634,33 +1743,9 @@
                                 <entry>Domain name</entry>
                             </row>
                             <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
-                            </row>
-                            <row>
-                                <entry>created</entry>
-                                <entry>datetime</entry>
-                                <entry>Creation date and time in ISO
-                                    format
-                                </entry>
-                            </row>
-                            <row>
-                                <entry>updated</entry>
-                                <entry>datetime</entry>
-                                <entry>Modification date and time in ISO
-                                    format
-                                </entry>
-                            </row>
-                            <row>
                                 <entry>domain</entry>
                                 <entry>string</entry>
                                 <entry>Domain name</entry>
-                            </row>
-                            <row>
-                                <entry>uri</entry>
-                                <entry>string</entry>
-                                <entry>URI of the Service</entry>
                             </row>
                             <row>
                                 <entry>units</entry>
@@ -1696,18 +1781,6 @@
                                     false otherwise
                                 </entry>
                             </row>
-                            <row>
-                                <entry>address</entry>
-                                <entry>string</entry>
-                                <entry>Unit address</entry>
-                            </row>
-                            <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>AvailabilityZone or specific
-                                    physical datacenter.
-                                </entry>
-                            </row>
                         </tbody>
                     </tgroup>
                 </table>
@@ -1735,11 +1808,6 @@
                                 <entry>string</entry>
                                 <entry>yes</entry>
                                 <entry>Domain name</entry>
-                            </row>
-                            <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
                             </row>
                             <row>
                                 <entry>adminPassword</entry>
@@ -1794,12 +1862,6 @@
                                 <entry>yes</entry>
                                 <entry>Recovery password</entry>
                             </row>
-                            <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>yes</entry>
-                                <entry>AvailabilityZone or specific physical datacenter.</entry>
-                            </row>
                         </tbody>
                     </tgroup>
                 </table>
@@ -1830,27 +1892,9 @@
                                 <entry>Unique ID</entry>
                             </row>
                             <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
-                            </row>
-                            <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>created</entry>
-                                <entry>datetime</entry>
-                                <entry>Creation date and time in ISO format
-                                </entry>
-                            </row>
-                            <row>
-                                <entry>updated</entry>
-                                <entry>datetime</entry>
-                                <entry>Modification date and time in ISO
-                                    format
-                                </entry>
                             </row>
                             <row>
                                 <entry>uri</entry>
@@ -1892,17 +1936,6 @@
                                 <entry>string</entry>
                                 <entry>Unique ID</entry>
                             </row>
-                            <row>
-                                <entry>address</entry>
-                                <entry>string</entry>
-                                <entry>Unit address</entry>
-                            </row>
-                            <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>AvailabilityZone or specific physical datacenter.
-                                </entry>
-                            </row>
                         </tbody>
                     </tgroup>
                 </table>
@@ -1930,11 +1963,6 @@
                                 <entry>string</entry>
                                 <entry>yes</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
                             </row>
                             <row>
                                 <entry>domain</entry>
@@ -1968,11 +1996,10 @@
                         </thead>
                         <tbody>
                             <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>yes</entry>
-                                <entry>AvailabilityZone or specific physical datacenter.
-                                </entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -2006,27 +2033,9 @@
                                 <entry>Unique ID</entry>
                             </row>
                             <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
-                            </row>
-                            <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>created</entry>
-                                <entry>datetime</entry>
-                                <entry>Creation date and time in ISO format
-                                </entry>
-                            </row>
-                            <row>
-                                <entry>updated</entry>
-                                <entry>datetime</entry>
-                                <entry>Modification date and time in ISO
-                                    format
-                                </entry>
                             </row>
                             <row>
                                 <entry>repository</entry>
@@ -2077,18 +2086,6 @@
                                 <entry>string</entry>
                                 <entry>Unique ID</entry>
                             </row>
-                            <row>
-                                <entry>address</entry>
-                                <entry>string</entry>
-                                <entry>Unit address</entry>
-                            </row>
-                            <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>AvailabilityZone or specific
-                                    physical datacenter.
-                                </entry>
-                            </row>
                         </tbody>
                     </tgroup>
                 </table>
@@ -2116,11 +2113,6 @@
                                 <entry>string</entry>
                                 <entry>yes</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
                             </row>
                             <row>
                                 <entry>repository</entry>
@@ -2162,11 +2154,10 @@
                         </thead>
                         <tbody>
                             <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>yes</entry>
-                                <entry>AvailabilityZone or specific physical datacenter.
-                                </entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -2200,27 +2191,9 @@
                                 <entry>Unique ID</entry>
                             </row>
                             <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
-                            </row>
-                            <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>created</entry>
-                                <entry>datetime</entry>
-                                <entry>Creation date and time in ISO format
-                                </entry>
-                            </row>
-                            <row>
-                                <entry>updated</entry>
-                                <entry>datetime</entry>
-                                <entry>Modification date and time in ISO
-                                    format
-                                </entry>
                             </row>
                             <row>
                                 <entry>uri</entry>
@@ -2268,13 +2241,6 @@
                                 <entry>id</entry>
                                 <entry>string</entry>
                                 <entry>Unique ID</entry>
-                            </row>
-                            <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>AvailabilityZone or specific
-                                    physical datacenter.
-                                </entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -2347,11 +2313,10 @@
                         </thead>
                         <tbody>
                             <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>yes</entry>
-                                <entry>AvailabilityZone or specific physical datacenter.
-                                </entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -2385,27 +2350,9 @@
                                 <entry>Unique ID</entry>
                             </row>
                             <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
-                            </row>
-                            <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>created</entry>
-                                <entry>datetime</entry>
-                                <entry>Creation date and time in ISO format
-                                </entry>
-                            </row>
-                            <row>
-                                <entry>updated</entry>
-                                <entry>datetime</entry>
-                                <entry>Modification date and time in ISO
-                                    format
-                                </entry>
                             </row>
                             <row>
                                 <entry>uri</entry>
@@ -2461,18 +2408,6 @@
                                 <entry>string</entry>
                                 <entry>Unique ID</entry>
                             </row>
-                            <row>
-                                <entry>address</entry>
-                                <entry>string</entry>
-                                <entry>Unit address</entry>
-                            </row>
-                            <row>
-                                <entry>location</entry>
-                                <entry>string</entry>
-                                <entry>AvailabilityZone or specific
-                                    physical datacenter.
-                                </entry>
-                            </row>
                         </tbody>
                     </tgroup>
                 </table>
@@ -2500,11 +2435,6 @@
                                 <entry>string</entry>
                                 <entry>yes</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
                             </row>
                             <row>
                                 <entry>repository</entry>
@@ -2552,11 +2482,177 @@
                         </thead>
                         <tbody>
                             <row>
-                                <entry>location</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>MS SQL Server API</title>
+            <para>This section describes API calls for managing MS SQL Server Service</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame='all'>
+                    <title>MS SQL Server Object</title>
+                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>mixedModeAuth</entry>
+                                <entry>bool</entry>
+                                <entry>Use LDAP to access SQL Server</entry>
+                            </row>
+                            <row>
+                                <entry>saPassword</entry>
+                                <entry>string</entry>
+                                <entry>SQL Server admin password</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>adminPassword</entry>
+                                <entry>string</entry>
+                                <entry>Domain password</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>SQL Server Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame='all'>
+                    <title>ASP.NET Application Farm Unit Object</title>
+                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame='all'>
+                    <title>ASP.NET Application Farm Object</title>
+                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>yes</entry>
-                                <entry>AvailabilityZone or specific physical datacenter.
-                                </entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>mixedModeAuth</entry>
+                                <entry>bool</entry>
+                                <entry>yes</entry>
+                                <entry>Use LDAP to access SQL Server</entry>
+                            </row>
+                            <row>
+                                <entry>saPassword</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>SQL Server admin password</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>adminPassword</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain admin password</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>SQL Server Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame='all'>
+                    <title>ASP.NET Application Farm Unit Object</title>
+                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
                             </row>
                         </tbody>
                     </tgroup>
