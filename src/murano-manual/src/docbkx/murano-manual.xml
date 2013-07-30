@@ -67,6 +67,7 @@
     <xi:include href="./content/specification.xml" xlink:title="API Specification" />
     <xi:include href="./content/installation-guide.xml" xlink:title="Installation Guide" />
     <xi:include href="./content/screenshots.xml" xlink:title="Screenshots" />
+    <xi:include href="./content/knownissues.xml" xlink:title="Known Issues" />
     <chapter>
         <title>How To Participate</title>
         <para>If you would like to ask some questions or make proposals, feel free to reach us on #murano irc channel at
