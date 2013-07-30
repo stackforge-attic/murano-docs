@@ -534,7 +534,7 @@ service murano-api start
             <para>
                  SSL for Murano API service
                 can be enabled in <emphasis>ssl</emphasis> section in
-                <emphasis>/etc/murano-api.conf</emphasis>. The use of SSL is
+                <emphasis>/etc/murano-api/murano-api.conf</emphasis>. The use of SSL is
                 automatically implemented by using a URL starting with HTTPS instead of HTTP.
                 SSL configuration example using the included sample certificates:
             </para>
@@ -589,7 +589,7 @@ service murano-api start
             <section>
                 <title>Murano API -> Rabbit MQ exchange</title>
                 <para>
-                    Edit <emphasis>rabbitmq</emphasis> section in <emphasis>/etc/murano-api.conf</emphasis>
+                    Edit <emphasis>rabbitmq</emphasis> section in <emphasis>/etc/murano-api/murano-api.conf</emphasis>
                     and set ssl option to True to enable SSL. Specify the path to the
                     SSL CA certificate in regular format: /path/to/file without quotes or leave it empty to allow
                     self-signed certificates.
@@ -611,7 +611,7 @@ service murano-api start
             <para>
                 Open <emphasis>/etc/murano-conductor/conductor.conf</emphasis>
                 and configure <emphasis>rabbitmq</emphasis> section in the same way:
-                Enable ssl option to True and set CA certificate path or leave it empty to allow
+                enable ssl option to True and set CA certificate path or leave it empty to allow
                 self-signed certificates.
             </para>
             <programlisting>
@@ -631,7 +631,7 @@ service murano-api start
                 <para>
                     By default all Murano Conductor configuration settings apply to Murano Agent.
                     If you want to configure Murano Agent in a different way change the default template. It can be found
-                    here:<emphasis>/murano-conductor/data/templates/agent-config/Default.template.</emphasis>
+                    here:<emphasis>/etc/murano-conductor/data/templates/agent-config/Default.template.</emphasis>
                     Take a look at appSettings section:
                 </para>
                 <programlisting>
