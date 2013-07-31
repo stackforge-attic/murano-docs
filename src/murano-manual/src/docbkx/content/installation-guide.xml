@@ -200,8 +200,17 @@ port = 5672
 virtual_host = murano
 login = murano
 password = murano
+ssl = False
+ca_certs =
+
+[ssl]
+cert_file = /path/to/certfile
+key_file = /path/to/keyfile
+ca_file = /path/to/cafile
+
                         ]]>
                     </programlisting>
+                    <para> For more information how to configure SSL take a look at <link linkend="ssl"> SSL configuration chapter </link></para>
                 </listitem>
                 <listitem>
                     <para>Edit one more configuration file:</para>
@@ -245,6 +254,7 @@ signing_dir = /tmp/keystone-signing-muranoapi
                     <para>Register murano-api service in Openstack
                         (note: you need to be authorized in Openstack to run this commands)
                     </para>
+                    <anchor id="murano_api_endpoint"></anchor>
                     <programlisting>
                         <![CDATA[
 user@work:~/$ keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
@@ -532,51 +542,50 @@ service murano-api start
         <section>
             <title>HTTPS for Murano API</title>
             <para>
-                 SSL for Murano API service
-                can be enabled in <emphasis>ssl</emphasis> section in
-                <emphasis>/etc/murano-api/murano-api.conf</emphasis>. The use of SSL is
-                automatically implemented by using a URL starting with HTTPS instead of HTTP.
-                SSL configuration example using the included sample certificates:
+                 SSL for Murano API service can be configured in <emphasis>ssl</emphasis> section in
+                <emphasis>/etc/murano-api/murano-api.conf</emphasis>. Just point to a valid SSL certificate.
+               See the example below:
             </para>
             <programlisting>
                 <![CDATA[
    [ssl]
-   enable = True
-   certfile = <path to keystone.pem>
-   keyfile = <path to keystone.pem>
-   ca_certs = <path to ca.pem>
-   cert_required = True
+   cert_file = PATH
+   key_file=PATH = PATH
+   ca_file=PATH
                 ]]>
             </programlisting>
             <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis>enable:</emphasis> True enables SSL. Defaults to False.
+                        <emphasis>cert_file=PATH:</emphasis>
+                        Path to the certificate file the server should use when binding to an SSL-wrapped socket.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>certfile:</emphasis> Path to Keystone public certificate file.
+                        <emphasis> key_file=PATH:</emphasis>  Path to the private key file the server should
+                        use when binding to an SSL-wrapped socket.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>keyfile:</emphasis> Path to Keystone private certificate file.
-                        If the private key is included in the certfile, the keyfile maybe omitted.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis>ca_certs:</emphasis> Path to CA trust chain.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis>cert_required:</emphasis>
-                        Requires client certificate. Defaults to False.
+                        <emphasis>ca_file=PATH:</emphasis>
+                        Path to the CA certificate file the server should use to validate
+                        client certificates provided during an SSL handshake. This is
+                        ignored if cert_file and "key_file" are not set.
                     </para>
                 </listitem>
             </itemizedlist>
+            <para>
+                The use of SSL is automatically started after point to HTTPS protocol instead of HTTP during registration Murano API service in endpoints
+                (Change publicurl argument to start with https://). See <link linkend='murano_api_endpoint'>here</link>
+                how to register Murano API in Openstack Keystone.
+            </para>
+            <simpara>
+                SSL for Murano API is implemented like in any other Openstack component.
+                This realization is based on ssl python module so more information about it can be found
+                <link xlink:href="http://docs.python.org/2/library/ssl.html"> here.</link>
+            </simpara>
         </section>
         <section>
             <title>SSL for RabbitMQ</title>
