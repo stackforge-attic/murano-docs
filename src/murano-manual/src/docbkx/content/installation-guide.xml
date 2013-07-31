@@ -550,8 +550,8 @@ service murano-api start
                 <![CDATA[
    [ssl]
    cert_file = PATH
-   key_file=PATH = PATH
-   ca_file=PATH
+   key_file = PATH
+   ca_file = PATH
                 ]]>
             </programlisting>
             <itemizedlist>
@@ -563,7 +563,7 @@ service murano-api start
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis> key_file=PATH:</emphasis>  Path to the private key file the server should
+                        <emphasis>key_file=PATH:</emphasis>  Path to the private key file the server should
                         use when binding to an SSL-wrapped socket.
                     </para>
                 </listitem>
