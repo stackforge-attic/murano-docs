@@ -218,7 +218,7 @@
                     </para>
                 </listitem>
                 <listitem>
-                    <para>POST /environments/id/activeDirectory – Creating
+                    <para>POST /environments/id/services – Creating
                         new ActiveDirectory service
                     </para>
                 </listitem>
@@ -263,7 +263,7 @@
                 <table frame='all'>
                     <title>Environment Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -354,8 +354,7 @@
                 <section>
                     <title>Returns</title>
                     <para>This call returns list of environments. Only the
-                        basic properties are returned. For details see "Get
-                        Environment Detailed Information":
+                        basic properties are returned. For details see "Get Environment Instance Detailed Information":
                         <programlisting>
                             <![CDATA[
      {
@@ -390,7 +389,7 @@
                 <table frame='all'>
                     <title>Environment Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -416,7 +415,7 @@
                     <title>Call</title>
                     <table frame='all'>
                         <title>POST /environments Call</title>
-                        <tgroup cols='4' align='left' colsep='1'
+                        <tgroup cols='3' align='left' colsep='1'
                                 rowsep='1'>
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
@@ -474,7 +473,7 @@
                 <table frame='all'>
                     <title>Environment Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -742,7 +741,7 @@
             <table frame='all'>
                 <title>Configuration Session Object</title>
                 <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                    <colspec colnum="1" colname="col1" colwidth="1*"/>
+                    <colspec colnum="1" colname="col1" colwidth="2*"/>
                     <colspec colnum="2" colname="col2" colwidth="1*"/>
                     <colspec colnum="3" colname="col3" colwidth="4*"/>
                     <thead>
@@ -1612,7 +1611,7 @@
                 <table frame='all'>
                     <title>Service Object Specs</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -1671,7 +1670,7 @@
                 <table frame='all'>
                     <title>Service Object Specs</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -1721,7 +1720,7 @@
                 <table frame='all'>
                     <title>Active Directory Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -1758,7 +1757,7 @@
                 <table frame='all'>
                     <title>Active Directory Unit Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -1790,7 +1789,7 @@
                 <table frame='all'>
                     <title>Active Directory Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -1835,7 +1834,7 @@
                 <table frame='all'>
                     <title>Active Directory Unit Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -1875,7 +1874,7 @@
                 <table frame='all'>
                     <title>Web Server Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -1920,7 +1919,7 @@
                 <table frame='all'>
                     <title>Web Server Unit Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -1945,7 +1944,7 @@
                 <table frame='all'>
                     <title>Web Server Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -1982,7 +1981,7 @@
                 <table frame='all'>
                     <title>Web Server Unit Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2016,7 +2015,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2070,7 +2069,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Unit Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2095,7 +2094,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2140,7 +2139,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Unit Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2174,7 +2173,7 @@
                 <table frame='all'>
                     <title>Web Server Farm Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2226,7 +2225,7 @@
                 <table frame='all'>
                     <title>Web Server Farm Unit Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2251,7 +2250,7 @@
                 <table frame='all'>
                     <title>Web Server Farm Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2269,11 +2268,6 @@
                                 <entry>string</entry>
                                 <entry>yes</entry>
                                 <entry>User-friendly name</entry>
-                            </row>
-                            <row>
-                                <entry>type</entry>
-                                <entry>string</entry>
-                                <entry>Service Type</entry>
                             </row>
                             <row>
                                 <entry>loadBalancerPort</entry>
@@ -2299,7 +2293,7 @@
                 <table frame='all'>
                     <title>Web Server Farm Unit Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2333,7 +2327,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Farm Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2392,7 +2386,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Farm Unit Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2417,7 +2411,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Farm Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2468,7 +2462,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Farm Unit Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2500,7 +2494,7 @@
                 <table frame='all'>
                     <title>MS SQL Server Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2555,7 +2549,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Farm Unit Object</title>
                     <tgroup cols='3' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
                         <thead>
@@ -2580,7 +2574,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Farm Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
@@ -2635,7 +2629,7 @@
                 <table frame='all'>
                     <title>ASP.NET Application Farm Unit Object</title>
                     <tgroup cols='4' align='left' colsep='1' rowsep='1'>
-                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
                         <colspec colnum="4" colname="col4" colwidth="4*"/>
