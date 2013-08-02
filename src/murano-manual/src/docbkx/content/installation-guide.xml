@@ -50,6 +50,9 @@
             <listitem>
                 <para>libxslt-dev</para>
             </listitem>
+            <listitem>
+                <para>libffi-dev</para>
+            </listitem>
         </orderedlist>
 
     </section>
