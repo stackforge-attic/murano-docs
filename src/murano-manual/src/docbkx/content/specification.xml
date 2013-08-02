@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright (c) 2013 Mirantis, Inc.
 
@@ -260,9 +260,9 @@
             </para>
             <section>
                 <title>Get a List of existing Environments</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Environment Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -318,10 +318,10 @@
                 </table>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>GET /environments Call</title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -386,9 +386,9 @@
             </section>
             <section>
                 <title>Create Environment instance</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Environment Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -413,10 +413,10 @@
                 </table>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>POST /environments Call</title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -470,9 +470,9 @@
             </section>
             <section>
                 <title>Update Environment Instance</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Environment Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -497,10 +497,10 @@
                 </table>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>PUT /environments/&lt;id&gt; Call</title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -525,9 +525,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Error Response Codes</title>
-                        <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <thead>
@@ -578,10 +578,10 @@
                 </title>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>GET /environments/&lt;id&gt; Call</title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -607,9 +607,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Error Response Codes</title>
-                        <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <thead>
@@ -674,10 +674,10 @@
                 <title>Remove Environment</title>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>DELETE /environments/&lt;id&gt; Call</title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -701,9 +701,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Error Response Codes</title>
-                        <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <thead>
@@ -738,9 +738,9 @@
                 invalid and could not be deployed at all. User could not open new session for environment that in
                 `deploying` state (that’s why we call it “almost lock free” model).
             </para>
-            <table frame='all'>
+            <table frame="all">
                 <title>Configuration Session Object</title>
-                <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                <tgroup cols="3" align="left" colsep="1" rowsep="1">
                     <colspec colnum="1" colname="col1" colwidth="2*"/>
                     <colspec colnum="2" colname="col2" colwidth="1*"/>
                     <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -804,12 +804,12 @@
                 </para>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>POST /environments/&lt;id&gt;/configure
                             Call
                         </title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -833,9 +833,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Error Response Codes</title>
-                        <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <thead>
@@ -882,12 +882,12 @@
                 <title>Deploy changes from Session</title>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>POST /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;/deploy
                             Call
                         </title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -911,9 +911,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Error Response Codes</title>
-                        <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <thead>
@@ -948,12 +948,12 @@
                 <title>Get session information</title>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>GET /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;
                             Call
                         </title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -978,9 +978,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Error Response Codes</title>
-                        <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <thead>
@@ -1029,12 +1029,12 @@
                 <title>Delete Session</title>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>DELETE /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;
                             Call
                         </title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -1058,9 +1058,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Error Response Codes</title>
-                        <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <thead>
@@ -1111,12 +1111,12 @@
                     </para>
                     <section>
                         <title>Call</title>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>GET /environments/&lt;id&gt;/services
                                 Call
                             </title>
-                            <tgroup cols='2' align='left' colsep='1'
-                                    rowsep='1'>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
                                 <colspec colnum="1" colname="col1"
                                          colwidth="1*"/>
                                 <colspec colnum="2" colname="col2"
@@ -1135,9 +1135,9 @@
                                 </tbody>
                             </tgroup>
                         </table>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>Headers</title>
-                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
                                 <colspec colnum="1" colname="col1" colwidth="2*"/>
                                 <colspec colnum="2" colname="col2" colwidth="1*"/>
                                 <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1175,12 +1175,12 @@
                     <para>Using PUT calls user can update or add any attribute on any service.</para>
                     <section>
                         <title>Call</title>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>PUT /environments/&lt;id&gt;/services
                                 Call
                             </title>
-                            <tgroup cols='2' align='left' colsep='1'
-                                    rowsep='1'>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
                                 <colspec colnum="1" colname="col1"
                                          colwidth="1*"/>
                                 <colspec colnum="2" colname="col2"
@@ -1199,9 +1199,9 @@
                                 </tbody>
                             </tgroup>
                         </table>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>Headers</title>
-                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
                                 <colspec colnum="1" colname="col1" colwidth="2*"/>
                                 <colspec colnum="2" colname="col2" colwidth="1*"/>
                                 <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1239,12 +1239,12 @@
                     <para>POST calls used for adding new elements to lists with objectes.</para>
                     <section>
                         <title>Call</title>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>POST /environments/&lt;id&gt;/services
                                 Call
                             </title>
-                            <tgroup cols='2' align='left' colsep='1'
-                                    rowsep='1'>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
                                 <colspec colnum="1" colname="col1"
                                          colwidth="1*"/>
                                 <colspec colnum="2" colname="col2"
@@ -1263,9 +1263,9 @@
                                 </tbody>
                             </tgroup>
                         </table>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>Headers</title>
-                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
                                 <colspec colnum="1" colname="col1" colwidth="2*"/>
                                 <colspec colnum="2" colname="col2" colwidth="1*"/>
                                 <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1303,12 +1303,12 @@
                     <para>User can remove any attribute or list item using DELETE calls.</para>
                     <section>
                         <title>Call</title>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>DELETE /environments/&lt;id&gt;/services
                                 Call
                             </title>
-                            <tgroup cols='2' align='left' colsep='1'
-                                    rowsep='1'>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
                                 <colspec colnum="1" colname="col1"
                                          colwidth="1*"/>
                                 <colspec colnum="2" colname="col2"
@@ -1327,9 +1327,9 @@
                                 </tbody>
                             </tgroup>
                         </table>
-                        <table frame='all'>
+                        <table frame="all">
                             <title>Headers</title>
-                            <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
                                 <colspec colnum="1" colname="col1" colwidth="2*"/>
                                 <colspec colnum="2" colname="col2" colwidth="1*"/>
                                 <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1371,12 +1371,12 @@
                 <title>Get a List of existing services</title>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>GET /environments/&lt;id&gt;/services
                             Call
                         </title>
-                        <tgroup cols='3' align='left' colsep='1'
-                                rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
                             <colspec colnum="1" colname="col1"
                                      colwidth="1*"/>
                             <colspec colnum="2" colname="col2"
@@ -1399,9 +1399,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Headers</title>
-                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="4" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="2*"/>
                             <colspec colnum="2" colname="col2" colwidth="1*"/>
                             <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1472,11 +1472,11 @@
                 <title>Create Web Server instance</title>
                 <section>
                     <title>Call</title>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>POST /environments/&lt;id&gt;/services
                             Call
                         </title>
-                        <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="3" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="1*"/>
                             <colspec colnum="2" colname="col2" colwidth="4*"/>
                             <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -1496,9 +1496,9 @@
                             </tbody>
                         </tgroup>
                     </table>
-                    <table frame='all'>
+                    <table frame="all">
                         <title>Headers</title>
-                        <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                        <tgroup cols="4" align="left" colsep="1" rowsep="1">
                             <colspec colnum="1" colname="col1" colwidth="2*"/>
                             <colspec colnum="2" colname="col2" colwidth="1*"/>
                             <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1565,10 +1565,10 @@
             <title>Remove Web Server</title>
             <section>
                 <title>Call</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>DELETE /environments/&lt;id&gt;/services/&lt;service_id&gt; Call</title>
-                    <tgroup cols='3' align='left' colsep='1'
-                            rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1"
+                            rowsep="1">
                         <colspec colnum="1" colname="col1"
                                  colwidth="1*"/>
                         <colspec colnum="2" colname="col2"
@@ -1602,15 +1602,15 @@
                 <para>None</para>
             </section>
         </section>
-        <section>
+        <section xml:id="shared-specs">
             <title>Shared Attributes</title>
             <para>This section describes attributes common to all services.
             </para>
             <section>
                 <title>Request Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Service Object Specs</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -1667,9 +1667,9 @@
             </section>
             <section>
                 <title>Create Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Service Object Specs</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -1715,11 +1715,13 @@
             <title>Active Directory Specs</title>
             <para>This section describes objects specs for Active Directory service.
             </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
             <section>
                 <title>Request Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Active Directory Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -1754,9 +1756,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>Active Directory Unit Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -1786,9 +1788,9 @@
             </section>
             <section>
                 <title>Create Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Active Directory Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1831,9 +1833,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>Active Directory Unit Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1869,11 +1871,13 @@
         <section>
             <title>Web Server Specs</title>
             <para>This section describes API calls for managing Windows web-server software – IIS.</para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
             <section>
                 <title>Request Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -1916,9 +1920,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Unit Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -1941,9 +1945,9 @@
             </section>
             <section>
                 <title>Create Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -1978,9 +1982,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Unit Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2010,11 +2014,13 @@
             <para>This section describes API calls for managing ASP.NET
                 Applications
             </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
             <section>
                 <title>Request Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2066,9 +2072,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Unit Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2091,9 +2097,9 @@
             </section>
             <section>
                 <title>Create Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2136,9 +2142,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Unit Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2164,15 +2170,17 @@
             </section>
         </section>
         <section>
-            <title>Web Server Farm API</title>
+            <title>Web Server Farm Specs</title>
             <para>This section describes API calls for managing Web Server
                 (IIS) Web Farm services
             </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
             <section>
                 <title>Request Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Farm Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2222,9 +2230,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Farm Unit Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2247,9 +2255,9 @@
             </section>
             <section>
                 <title>Create Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Farm Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2290,9 +2298,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>Web Server Farm Unit Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2318,15 +2326,17 @@
             </section>
         </section>
         <section>
-            <title>ASP.NET Application Farm API</title>
+            <title>ASP.NET Application Farm Specs</title>
             <para>This section describes API calls for managing ASP.NET
                 Web Farm Application Services
             </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
             <section>
                 <title>Request Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Farm Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2383,9 +2393,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Farm Unit Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2408,9 +2418,9 @@
             </section>
             <section>
                 <title>Create Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Farm Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2459,9 +2469,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Farm Unit Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2487,13 +2497,15 @@
             </section>
         </section>
         <section>
-            <title>MS SQL Server API</title>
-            <para>This section describes API calls for managing MS SQL Server Service</para>
+            <title>MS SQL Server Specs</title>
+            <para>This section describes API calls for managing MS SQL Server Service.</para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
             <section>
                 <title>Request Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>MS SQL Server Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2546,9 +2558,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Farm Unit Object</title>
-                    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="4*"/>
@@ -2571,9 +2583,9 @@
             </section>
             <section>
                 <title>Create Object Specs</title>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Farm Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>
@@ -2626,9 +2638,9 @@
                         </tbody>
                     </tgroup>
                 </table>
-                <table frame='all'>
+                <table frame="all">
                     <title>ASP.NET Application Farm Unit Object</title>
-                    <tgroup cols='4' align='left' colsep='1' rowsep='1'>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
                         <colspec colnum="3" colname="col3" colwidth="1*"/>

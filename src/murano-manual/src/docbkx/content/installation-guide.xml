@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright (c) 2013 Mirantis, Inc.
 
@@ -254,7 +254,7 @@ signing_dir = /tmp/keystone-signing-muranoapi
                     <para>Register murano-api service in Openstack
                         (note: you need to be authorized in Openstack to run this commands)
                     </para>
-                    <anchor id="murano_api_endpoint"></anchor>
+                    <anchor xml:id="murano_api_endpoint"></anchor>
                     <programlisting>
                         <![CDATA[
 user@work:~/$ keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
@@ -302,7 +302,7 @@ service murano-api start
                 </listitem>
                 <listitem>
                     <para>OpenStack Heat require Key Pair for Load Balancer instances. Murano Conductor uses
-                        LoadBalancer for IIS Farms and ASP.NET Farms. The default name for Key Pair is 'murano-lb-key',
+                        LoadBalancer for IIS Farms and ASP.NET Farms. The default name for Key Pair is "murano-lb-key",
                         you can change this parameter in file
                         <![CDATA[
     /etc/murano-conductor/data/templates/cf/Windows.template
@@ -424,7 +424,7 @@ service murano-api start
                     </para>
                 </listitem>
                 <listitem>
-                    <para>If there is no OpenStack Dashboard (horizon) you'll need to install it. See
+                    <para>If there is no OpenStack Dashboard (horizon) you"ll need to install it. See
                         <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/yum/content/ch_install-dashboard.html">
                             here
                         </link>
@@ -510,16 +510,16 @@ service murano-api start
 
     HORIZON_CONFIG = {
     ...
-        'exceptions': {'recoverable': EXTENDED_RECOVERABLE_EXCEPTIONS,
-                       'not_found': EXTENDED_NOT_FOUND_EXCEPTIONS,
-                       'unauthorized': EXTENDED_UNAUTHORIZED_EXCEPTIONS},
-        'customization_module': 'muranodashboard.panel.overrides'
+        "exceptions": {"recoverable": EXTENDED_RECOVERABLE_EXCEPTIONS,
+                       "not_found": EXTENDED_NOT_FOUND_EXCEPTIONS,
+                       "unauthorized": EXTENDED_UNAUTHORIZED_EXCEPTIONS},
+        "customization_module": "muranodashboard.panel.overrides"
 
     }
     ...
     INSTALLED_APPS = (
     ...
-        'muranodashboard',
+        "muranodashboard",
     ...
     )
                         ]]>
@@ -537,7 +537,7 @@ service murano-api start
             </programlisting>
         </section>
     </section>
-    <section id="ssl">
+    <section xml:id="ssl">
         <title>SSL configuration</title>
         <section>
             <title>HTTPS for Murano API</title>
@@ -578,7 +578,7 @@ service murano-api start
             </itemizedlist>
             <para>
                 The use of SSL is automatically started after point to HTTPS protocol instead of HTTP during registration Murano API service in endpoints
-                (Change publicurl argument to start with https://). See <link linkend='murano_api_endpoint'>here</link>
+                (Change publicurl argument to start with https://). See <link linkend="murano_api_endpoint">here</link>
                 how to register Murano API in Openstack Keystone.
             </para>
             <simpara>
