@@ -1011,7 +1011,8 @@
                     Use the glance image-create command to import your disk image to Glance:
                     <screen>
     $ glance image-create --name "NAME" --is-public IS_PUBLIC --disk-format DISK_FORMAT
-    --container-format CONTAINER_FORMAT --file IMAGE
+    --container-format CONTAINER_FORMAT --file IMAGE --property IMAGE_METADATA
+
                     </screen>
                 </para>
                 <para>
@@ -1045,16 +1046,34 @@
                             Replace IMAGE with the local path to the image file to upload.
                         </para>
                     </listitem>
+                    <listitem>
+                        <para>
+                            Replace IMAGE_METADATA with the following property:
+                            <emphasis>murano_image_info="{'title': 'Windows 2012 Core edition', 'id': NAME }"</emphasis>,
+                            where <emphasis>title </emphasis>- full image description for user and
+                            <emphasis>id</emphasis> is an image name.
+                            <warning>
+                                <para>Setting <emphasis>murano_image_info</emphasis>  property is
+                                    required to pick up image from Murano Dashboard.</para>
+                            </warning>
+                        </para>
+                    </listitem>
                 </itemizedlist>
             </listitem>
             <listitem>
-                <para>Next update image metadata by performing this command:</para>
+                <para>To update image metadata perform this command:</para>
                 <screen>
-    $ glance image-update IMAGE-ID --property murano_enabled=True
+    $ glance image-update IMAGE-ID --property IMAGE_MATADATA
                 </screen>
                 <itemizedlist>
                     <listitem>
                         <para>Replace IMAGE-ID with image id from the previous command output.</para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Replace IMAGE_METADATA with murano_image_info property, e.g.<emphasis>
+                            murano_image_info="{'title': 'Windows 2012 Core edition','id': 'win2k12core'}"</emphasis>,
+                        </para>
                     </listitem>
                 </itemizedlist>
             </listitem>
