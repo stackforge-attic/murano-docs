@@ -524,6 +524,10 @@ service murano-api start
     INSTALLED_APPS = (
     ...
         'muranodashboard',
+        'djblets',
+        'djblets.datagrid',
+        'djblets.util',
+        'floppyforms',
     ...
     )
                         ]]>
