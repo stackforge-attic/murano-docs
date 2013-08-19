@@ -216,16 +216,8 @@ ca_file = /path/to/cafile
                     <para> For more information how to configure SSL take a look at <link linkend="ssl"> SSL configuration chapter </link></para>
                 </listitem>
                 <listitem>
-                    <para>Edit one more configuration file:</para>
-                    <programlisting>
-                        <![CDATA[
-vi murano-api.conf
-                        ]]>
-                    </programlisting>
-                </listitem>
-                <listitem>
                     <para>Configure keystone auth_token in
-                        <emphasis>[filter:authtoken]</emphasis>
+                        <emphasis>[keystone_authtoken]</emphasis>
                         section.
                         For more information see
                         <link xlink:href="http://docs.openstack.org/developer/keystone/configuringservices.html">
@@ -234,15 +226,7 @@ vi murano-api.conf
                     </para>
                     <programlisting>
                         <![CDATA[
-[pipeline:murano-api]
-pipeline = authtoken context apiv1app
-[app:apiv1app]
-paste.app_factory = muranoapi.api.v1.router:API.factory
-[filter:context]
-paste.filter_factory = muranoapi.api.middleware.context:ContextMiddleware.factory
-
-[filter:authtoken]
-paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+[keystone_authtoken]
 auth_host = localhost
 auth_port = 35357
 auth_protocol = http
