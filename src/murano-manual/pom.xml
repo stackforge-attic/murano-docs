@@ -41,7 +41,7 @@
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
                     <postProcess>
-                        <copy todir="target/docbkx/webhelp/murano-manual/content/figures">
+                        <copy todir="target/docbkx/webhelp/murano-manual/figures">
                             <fileset dir="src/docbkx/figures">
                                 <include name="**/*.png"/>
                             </fileset>
