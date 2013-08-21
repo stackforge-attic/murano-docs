@@ -23,14 +23,14 @@
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
     <title>Installation Guide</title>
-    <para>This chapter is about installation and configuration Murano services.</para>
+    <para>This chapter describes installation and configuration of Murano services.</para>
     <para>Note that all Murano modules can be downloaded from
         <link xlink:href="https://launchpad.net/murano/">our page</link>
         on launchpad.
     </para>
     <section>
-        <title>Common Pre-Requirements</title>
-        <para>Operation system:</para>
+        <title>Pre-Requisites</title>
+        <para>Murano supports the following operating systems:</para>
         <orderedlist>
             <listitem>
                 <para>Ubuntu</para>
@@ -39,7 +39,7 @@
                 <para>RHEL/CentOS</para>
             </listitem>
         </orderedlist>
-        <para>Packages:</para>
+        <para>Ensure that these packages are installed before Murano installation using your OS package manager:</para>
         <orderedlist>
             <listitem>
                 <para>python-dev</para>
@@ -59,14 +59,12 @@
     <section>
         <title>Murano API Service</title>
         <para>Murano API provides access to the Murano orchestration engine via API.</para>
-        <para>This chapter describes Murano API for contributors of the project, and assumes that you are already
-            familiar with Murano API from an end-user perspective.
-        </para>
+        <para>This chapter describes the procedure of installation and condiguration of Murano API.  </para>
         <section>
             <title>Install</title>
             <itemizedlist>
                 <listitem>
-                    <para>Need to work as root</para>
+                    <para>We need to have superuser privileges in order to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
 sudo su
@@ -74,14 +72,12 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Navigate to the temporary directory and clone Murano API Service from repository</para>
+                    <para>Clone Murano API Service from repository</para>
                     <para>
                         <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
 apt-get install -y git
 git clone https://github.com/stackforge/murano-api
                         ]]>
@@ -91,13 +87,10 @@ git clone https://github.com/stackforge/murano-api
                     </para>
                     <programlisting>
                         <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
-yum install -y git
+yum install -y git gcc python-paste-deploy python-routes
 git clone https://github.com/stackforge/murano-api
                        ]]>
                     </programlisting>
-
                 </listitem>
                 <listitem>
                     <para>Switch to just created directory and them perform installation</para>
@@ -107,8 +100,7 @@ git clone https://github.com/stackforge/murano-api
                     <programlisting>
                         <![CDATA[
 cd murano-api
-chmod +x setup.sh
-./setup.sh install
+sh setup.sh install
                         ]]>
                     </programlisting>
                     <para>
@@ -117,13 +109,22 @@ chmod +x setup.sh
                     <programlisting>
                         <![CDATA[
 cd murano-api
-chmod +x setup.sh
-yum install -y
-http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
-./setup-centos.sh install
+yum install -y http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
+sh setup-centos.sh install
                        ]]>
                     </programlisting>
-
+                </listitem>
+                <listitem>
+                    <para>Successful installation ends with message like this:</para>
+                    <programlisting>
+                        <![CDATA[
+Successfully installed muranoapi
+Cleaning up...
+LOG:> Making sample configuration files at "/etc/murano-api"
+LOG:> Reloading initctl
+LOG:> Please, make proper configugation,located at "/etc/murano-api", before starting the "murano-api" daemon!
+                       ]]>
+                    </programlisting>
                 </listitem>
             </itemizedlist>
         </section>
@@ -134,10 +135,10 @@ http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
                     <para>First configure rabbitMQ by adding vhost and user with administrator rights:</para>
                     <programlisting>
                         <![CDATA[
-rabbitmqctl add_user murano murano
-rabbitmqctl set_user_tags murano administrator
-rabbitmqctl add_vhost murano
-rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
+rabbitmqctl add_user muranouser murano
+rabbitmqctl set_user_tags muranouser administrator
+rabbitmqctl add_vhost muranovhost
+rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
                         ]]>
                     </programlisting>
                 </listitem>
@@ -148,6 +149,7 @@ rabbitmqctl set_permissions -p murano murano ".*" ".*" ".*"
 cd /etc/murano-api
 cp murano-api.conf.sample murano-api.conf
 cp murano-api-paste.ini.sample murano-api-paste.ini
+
 vi murano-api.conf
                         ]]>
                     </programlisting>
@@ -156,69 +158,28 @@ vi murano-api.conf
                     <para>Configure it according to your environment:
                         <itemizedlist>
                             <listitem>
-                                <para><emphasis>[DEFAULT]</emphasis>section sets up logging.
+                                <para><emphasis>[DEFAULT]</emphasis> section sets up logging.
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>
                                     <emphasis>[reports]</emphasis>
-                                    section you can set names for new rabbitMQ queues.
+                                    section allows you to set up names for new rabbitMQ queues.
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>In
                                     <emphasis>[rabbitmq]</emphasis>
-                                    section sets up host configuration where rabbitMQ
+                                    section you can set up host configuration where rabbitMQ
                                     with just created user and vhost is running.
                                 </para>
                             </listitem>
                         </itemizedlist>
                     </para>
-                    <programlisting>
-                        <![CDATA[
-[DEFAULT]
-# Show more verbose log output (sets INFO log level output)
-verbose = True
-# Show debugging output in logs (sets DEBUG log level output)
-debug = True
-# Address to bind the server to
-bind_host = 0.0.0.0
-# Port the bind the server to
-bind_port = 8082
-# Log to this file. Make sure the user running skeleton-api has
-# permissions to write to this file!
-log_file = /tmp/murano-api.log
-#A valid SQLAlchemy connection string for the metadata database
-sql_connection = sqlite:///murano.sqlite
-
-[reports]
-results_exchange = task-results
-results_queue = task-results
-reports_exchange = task-reports
-reports_queue = task-reports
-
-[rabbitmq]
-host = localhost
-port = 5672
-virtual_host = murano
-login = murano
-password = murano
-ssl = False
-ca_certs =
-
-[ssl]
-cert_file = /path/to/certfile
-key_file = /path/to/keyfile
-ca_file = /path/to/cafile
-
-                        ]]>
-                    </programlisting>
                     <para> For more information how to configure SSL take a look at <link linkend="ssl"> SSL configuration chapter </link></para>
                 </listitem>
                 <listitem>
-                    <para>Configure keystone auth_token in
-                        <emphasis>[keystone_authtoken]</emphasis>
-                        section.
+                    <para>Configure keystone auth_token in murano-api-paste.ini file.
                         For more information see
                         <link xlink:href="http://docs.openstack.org/developer/keystone/configuringservices.html">
                             Auth-Token Middleware with Username and Password
@@ -226,27 +187,47 @@ ca_file = /path/to/cafile
                     </para>
                     <programlisting>
                         <![CDATA[
-[keystone_authtoken]
+vim murano-api-paste.ini
+						
+[pipeline:muranoapi]
+pipeline = authtoken context apiv1app
+
+[app:apiv1app]
+paste.app_factory = muranoapi.api.v1.router:API.factory
+
+[filter:context]
+paste.filter_factory = muranoapi.api.middleware.context:ContextMiddleware.facto$
+
+#For more information see Auth-Token Middleware with Username and Password
+#http://docs.openstack.org/developer/keystone/configuringservices.html
+[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
 auth_host = localhost
 auth_port = 35357
 auth_protocol = http
 admin_tenant_name = admin
 admin_user = admin
 admin_password = password
-signing_dir = /tmp/keystone-signing-muranoapi
+
                         ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Register murano-api service in Openstack
-                        (note: you need to be authorized in Openstack to run this commands)
-                    </para>
+                    <para>Register murano-api service in Openstack. </para>
+                    <para>Note: you need to be authorized in Openstack to run this commands. To do this, you can run something like (having changed variables to appropriate values)</para>
+                    <programlisting>
+                        <![CDATA[
+source $(YOUR_OPENSTACK_DIR)/openrc $(LOGIN) $(PASSWORD)
+                        ]]>
+                    </programlisting>
+
+                        
                     <anchor xml:id="murano_api_endpoint"></anchor>
                     <programlisting>
                         <![CDATA[
-user@work:~/$ keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
+keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
 
-user@work:~/$ keystone endpoint-create
+keystone endpoint-create
 
     --region RegionOne
     --service-id The ID field returned by the keystone service-create
@@ -260,12 +241,27 @@ user@work:~/$ keystone endpoint-create
         </section>
         <section>
             <title>Run</title>
-            <para>Run Murano API and supply valid configuration file:</para>
-            <programlisting>
-                <![CDATA[
+			<itemizedlist>
+				<listitem>
+					<para>Run Murano API service:</para>
+					<para>
+						<emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
 service murano-api start
-                ]]>
-            </programlisting>
+						]]>
+					</programlisting>
+					<para>
+						<emphasis>CentOS 6.x</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
+initctl start murano-api
+						]]>
+					</programlisting>
+				</listitem>
+			</itemizedlist>
         </section>
     </section>
     <section>
@@ -297,32 +293,59 @@ service murano-api start
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Project source code can be checked out from git repository (see below) or downloaded from
-                        <link xlink:href="http://tarballs.openstack.org/murano-conductor/">here.</link>
-
-                        <programlisting>
-                            <![CDATA[
-    user@work:~/$ git clone https://github.com/stackforge/murano-conductor.git
-                            ]]>
-                        </programlisting>
-
-                    </para>
-
-                </listitem>
-                <listitem>
-                    <para>Switch to just created directory</para>
+                    <para>Need to work as root</para>
                     <programlisting>
                         <![CDATA[
-    user@work:~/cd murano-conductor
+sudo su
                         ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>And install Conductor Service to the system:</para>
+                    <para>Navigate to the temporary directory and clone Murano Conductor Service from repository</para>
+                    <para>
+                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+                    </para>
                     <programlisting>
                         <![CDATA[
-    user@work:~/murano-conductor$ chmod +x setup.sh ; sudo ./setup.sh install
+mkdir -p /tmp/murano
+cd /tmp/murano
+apt-get install -y git
+git clone https://github.com/stackforge/murano-conductor
                         ]]>
+                    </programlisting>
+                    <para>
+                        <emphasis>CentOS 6.x</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
+mkdir -p /tmp/murano
+cd /tmp/murano
+yum install -y git 
+git clone https://github.com/stackforge/murano-conductor
+                       ]]>
+                    </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Switch to just created directory and then perform installation</para>
+                    <para>
+                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
+cd murano-conductor
+sh setup.sh install
+                        ]]>
+                    </programlisting>
+                    <para>
+                        <emphasis>CentOS 6.x</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
+cd murano-conductor
+yum install -y
+http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
+sh setup-centos.sh install
+                       ]]>
                     </programlisting>
                 </listitem>
             </itemizedlist>
@@ -331,16 +354,21 @@ service murano-api start
             <title>Configure</title>
             <itemizedlist>
                 <listitem>
-                    <para>Edit configuration file:</para>
+                    <para>Edit configuration file where each parameter has a comment:</para>
                     <programlisting>
                         <![CDATA[
-    user@work:~/murano-conductor$ nano /etc/murano-conductor/conductor.conf
+cd /etc/murano-conductor
+cp conductor.conf.sample conductor.conf
                         ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>
-                        Change it according to your environment.
+                    <para>Change configuration file according to your environment.
+					<programlisting>
+                        <![CDATA[
+vi conductor.conf
+                        ]]>
+                    </programlisting>
                         <itemizedlist>
                             <listitem>
                                 <para><emphasis>[DEFAULT]</emphasis>section is responsible for logging.
@@ -350,7 +378,6 @@ service murano-api start
                                 <para><emphasis>[heat]</emphasis>points where heat is running.
                                 </para>
                             </listitem>
-
                             <listitem>
                                 <para><emphasis>[rabbitmq]</emphasis>section points where your rabbitMQ installed and
                                     configured.
@@ -360,20 +387,55 @@ service murano-api start
                     </para>
                     <programlisting>
                         <![CDATA[
-    [DEFAULT]
-    log_file = logs/conductor.log
-    debug=True
-    verbose=True
+[DEFAULT]
 
-    [heat]
-    auth_url = http://localhost:5000/v2.0
+# Path where log will be written
+log_file = /var/log/murano-conductor.log
+# Log verbosity
+debug=True
+verbose=True
+data_dir = /etc/murano-conductor
+# Maximum number of environments that can be processed simultaneously
+max_environments = 20
 
-    [rabbitmq]
-    host = localhost
-    port = 5672
-    virtual_host = murano
-    login = murano
-    password = murano
+[keystone]
+auth_url = http://localhost:5000/v2.0
+ca_file =
+cert_file =
+key_file =
+insecure = False
+
+[heat]
+# Heat SSL parameters
+# Optional CA cert file to use in SSL connections
+ca_file =
+# Optional PEM-formatted certificate chain file
+cert_file =
+# Optional PEM-formatted file that contains the private key
+key_file =
+# If set then the server's certificate will not be verified
+insecure = False
+# Valid endpoint types: publicURL (default), internalURL, adminURL
+endpoint_type = publicURL
+
+[rabbitmq]
+# Connection parameters to RabbitMQ service
+# Hostname or IP address where RabbitMQ is located.
+# !!! Change localhost to your real IP or hostname as this address must be reachable from VMs  !!!
+host = localhost
+# RabbitMQ port (5672 is a default)
+port = 5672
+# Use SSL for RabbitMQ connections (True or False)
+ssl = False
+# Path to SSL CA certificate or empty to allow self signed server certificate
+ca_certs =
+# RabbitMQ credentials. Fresh RabbitMQ installation has "guest" account with "guest" password.
+# It is recommended to create dedicated user account for Murano using RabbitMQ web console or command line utility
+login = muranouser
+password = murano
+# RabbitMQ virtual host (vhost). Fresh RabbitMQ installation has "/" vhost preconfigured.
+# It is recommended to create dedicated vhost for Murano using RabbitMQ web console or command line utility
+virtual_host = muranovhost
                         ]]>
                     </programlisting>
                 </listitem>
@@ -381,152 +443,90 @@ service murano-api start
         </section>
         <section>
             <title>Run</title>
-            <para>Run Conductor and supply valid configuration file:</para>
-            <programlisting>
-                <![CDATA[
-    user@work:~/murano-conductor$ sudo service murano-conductor start
-                ]]>
-            </programlisting>
-        </section>
-    </section>
+			<itemizedlist>
+				<listitem>
+					<para>Run Murano Conductor service:</para>
+					<para>
+						<emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
+service murano-conductor start
+						]]>
+					</programlisting>
+					<para>
+						<emphasis>CentOS 6.x</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
+initctl start murano-conductor
+						]]>
+					</programlisting>
+				</listitem>
+			</itemizedlist>
+		</section>
+	</section>	
     <section>
         <title>Murano Dashboard</title>
         <para>Murano Dashboard provides Web UI for Murano Project.</para>
         <section>
-            <title>Pre-Requirements</title>
-            <itemizedlist>
-                <listitem>
-                    <para>To setup Murano Dashboard on a host with Openstack Dashbord already installed you just need to
-                        install<emphasis>
-                            the python-muranoclient</emphasis>. You can download it from
-                        <link xlink:href="http://tarballs.openstack.org/python-muranoclient/">here.</link>
-                    </para>
-                    <para>And then perform installation with pip:
-                        <programlisting>
-                            <![CDATA[
-    user@work:~/$ sudo pip install
-                            ]]>
-                            <emphasis>just_downloaded</emphasis>.tar.gz
-                        </programlisting>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>If there is no OpenStack Dashboard (horizon) you"ll need to install it. See
-                        <link xlink:href="http://docs.openstack.org/trunk/openstack-compute/install/yum/content/ch_install-dashboard.html">
-                            here
-                        </link>
-                        how to do that.
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </section>
-        <section>
             <title>Install</title>
             <itemizedlist>
                 <listitem>
-                    <para>Project source code can be checked out from git repository (see below) or downloaded from
-                        <link xlink:href="http://tarballs.openstack.org/murano-dashboard/">here.</link>
+                    <para>Need to work as root</para>
+                    <programlisting>
+                        <![CDATA[
+sudo su
+                        ]]>
+                    </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Navigate to the temporary directory and clone Murano Dashboard Service from repository</para>
+                    <para>
+                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
-    user@work:~/$ git clone https://github.com/stackforge/murano-dashboard.git
+mkdir -p /tmp/murano
+cd /tmp/murano
+apt-get install -y git
+git clone https://github.com/stackforge/murano-dashboard
                         ]]>
+                    </programlisting>
+                    <para>
+                        <emphasis>CentOS 6.x</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
+mkdir -p /tmp/murano
+cd /tmp/murano
+yum install -y git 
+git clone https://github.com/stackforge/murano-dashboard
+                       ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Switch to just created directory</para>
+                    <para>Switch to just created directory and run installation script</para>
+                    <para>
+                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+                    </para>
                     <programlisting>
                         <![CDATA[
-    user@work:~/$ cd murano-dashboard
+cd /tmp/murano/murano-dashboard
+sh setup.sh install
                         ]]>
                     </programlisting>
-                </listitem>
-                <listitem>
-                    <para>And perform installation</para>
+                    <para>
+                        <emphasis>CentOS 6.x</emphasis>
+                    </para>
                     <programlisting>
                         <![CDATA[
-    user@work:~/murano-dashboard$ sudo python setup.py install
-                        ]]>
+cd /tmp/murano/murano-dashboard
+sh setup-centos.sh install
+                       ]]>
                     </programlisting>
                 </listitem>
             </itemizedlist>
-        </section>
-        <section>
-            <title>Configure</title>
-            <itemizedlist>
-                <listitem>
-                    <para>Open Django configuration file:</para>
-                    <programlisting>
-                        <![CDATA[
-    user@work:~/$ cd <Horizon Installation Dir> && nano settings.py
-                        ]]>
-                    </programlisting>
-                    <para>Please, make sure that no local/local_settings.py file exists.</para>
-                </listitem>
-                <listitem>
-                    <para>Add to import section</para>
-                    <programlisting>
-                        <![CDATA[
-    from muranoclient.common import exceptions as muranoclient
-                        ]]>
-                    </programlisting>
-                </listitem>
-                <listitem>
-                    <para>And this so muranoclient exceptions can be safely handle by horizon:</para>
-                    <programlisting>
-                        <![CDATA[
-    RECOVERABLE_EXC = (muranoclient.HTTPException,
-                       muranoclient.CommunicationError,
-                       muranoclient.Forbidden)
-    EXTENDED_RECOVERABLE_EXCEPTIONS = tuple(
-        exceptions.RECOVERABLE + RECOVERABLE_EXC)
-
-    NOT_FOUND_EXC = (muranoclient.HTTPNotFound, muranoclient.EndpointNotFound)
-    EXTENDED_NOT_FOUND_EXCEPTIONS = tuple(exceptions.NOT_FOUND + NOT_FOUND_EXC)
-
-    UNAUTHORIZED_EXC = (muranoclient.HTTPUnauthorized, )
-    EXTENDED_UNAUTHORIZED_EXCEPTIONS = tuple(
-        exceptions.UNAUTHORIZED + UNAUTHORIZED_EXC)
-                        ]]>
-                    </programlisting>
-                </listitem>
-                <listitem>
-                    <para>And finally edit HORIZON_CONFIG and INSTALLED_APPS sections</para>
-                    <programlisting>
-                        <![CDATA[
-
-    HORIZON_CONFIG = {
-    ...
-        'exceptions': {'recoverable': EXTENDED_RECOVERABLE_EXCEPTIONS,
-                       'not_found': EXTENDED_NOT_FOUND_EXCEPTIONS,
-                       'unauthorized': EXTENDED_UNAUTHORIZED_EXCEPTIONS},
-        'customization_module': 'muranodashboard.panel.overrides'.
-    ...
-
-    }
-    ...
-    INSTALLED_APPS = (
-    ...
-        'muranodashboard',
-        'djblets',
-        'djblets.datagrid',
-        'djblets.util',
-        'floppyforms',
-    ...
-    )
-                        ]]>
-                    </programlisting>
-                </listitem>
-            </itemizedlist>
-        </section>
-        <section>
-            <title>Run</title>
-            <para>Run Horizon:</para>
-            <programlisting>
-                <![CDATA[
-    user@work:~/$ sudo service apache2 restart
-                ]]>
-            </programlisting>
         </section>
     </section>
     <section xml:id="ssl">

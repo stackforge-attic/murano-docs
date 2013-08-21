@@ -1002,8 +1002,9 @@
     <chapter xml:id="_post_building_setup">
         <title>Image registration</title>
         <para>
-            Murano is one of the Openstack services which communicates with other Openstack components. Therefore just
-            created image should be registered in Openstack Glance - image operation service.
+            Services deployed by Murano require specially prepared images, that can be created manually or via
+            automated scripts. Please refer to corresponding chapters of this book to create image. After images are
+            created they should be registered in Openstack Glance - image operation service.
         </para>
         <orderedlist>
             <listitem>
@@ -1025,8 +1026,7 @@
                     </listitem>
                     <listitem>
                         <para>Replace IS_PUBLIC with true or false. Setting this value to true means that all users will
-                            be able
-                            to view and use the image.
+                            be able to view and use the image.
                         </para>
                     </listitem>
                     <listitem>
@@ -1049,9 +1049,11 @@
                     <listitem>
                         <para>
                             Replace IMAGE_METADATA with the following property:
-                            <emphasis>murano_image_info="{'title': 'Windows 2012 Core edition', 'id': NAME }"</emphasis>,
+                            <emphasis>murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"}'</emphasis>,
                             where <emphasis>title </emphasis>- full image description for user and
-                            <emphasis>id</emphasis> is an image name.
+                            <emphasis>type</emphasis> - one of the following: ws-2012-std (Windows Server 2012 Standart Edition),
+                            ws-2012-core (Windows 2012 Core Edition), ws-2008r2-std (Windows Server 2008R2 Standart
+                            Edition), ws-2008r2  (Windows Server 2012R2)
                             <warning>
                                 <para>Setting <emphasis>murano_image_info</emphasis>  property is
                                     required to pick up image from Murano Dashboard.</para>
@@ -1072,7 +1074,7 @@
                     <listitem>
                         <para>
                             Replace IMAGE_METADATA with murano_image_info property, e.g.<emphasis>
-                            murano_image_info="{'title': 'Windows 2012 Core edition','id': 'win2k12core'}"</emphasis>,
+                            murano_image_info='{"title": "Windows 2012 Core Edition","type": "ws-2012-core"}'</emphasis>,
                         </para>
                     </listitem>
                 </itemizedlist>
