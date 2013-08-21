@@ -1,335 +1,110 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <title>Documentation | Murano</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Murano Documentation</title>
 
-    <link rel="stylesheet" type="text/css" href="http://mirantis.com/wp-content/themes/carrington-jam-1.4/css/style.css" />
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic' rel='stylesheet' type='text/css' />
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption' rel='stylesheet' type='text/css' />
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css' />
+    <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
+    <link href="css/lightbox.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 
-    <meta name="description" content="Mirantis Inc. - OpenStack Experts On-Demand. Openstack outsourcing and consulting. Openstack engineers and development for openstack software."/>
-    <meta name="keywords" content="openstack development, software, consulting, engineers, outsourcing, open cloud, murano, windows, services"/>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="js/lightbox-2.6.min.js"></script>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
 
-    <style type="text/css">
-        html, body {
-            height: 100%;
-            background:url(http://www.mirantis.com/wp-content/themes/carrington-jam-1.4/img/bginner.jpg) repeat-x;
-            font-family: 'PT Sans', arial, sans-serif;
-            font-size: 14px;
-            color:#41454d;
-        }
 
-        h1 {
-            font-family: 'PT Sans Caption', arial, sans-serif;
-            font-weight: normal;
-            font-style: normal;
-            font-size: 27px;
-            color: black;
-            line-height: 1.4em;
-        }
+<!-- Load the CloudCarousel JavaScript file -->
+<script type="text/JavaScript" src="js/cloud-carousel.1.0.5.min.js"></script>
 
-        h1.logo-company-name { display: none; }
+<script type="text/javascript">
+$(document).ready(function(){
 
-        h2 {
-            color: #D3301A;
-            font-family: 'PT Sans', arial, sans-serif;
-            font-size: 19px;
-            font-style: italic;
-            font-weight: normal;
-            letter-spacing: 0;
-            word-spacing: 0;
-            line-height: 35px;
-            margin-top: 5px;
-            margin-bottom: 8px;
-        }
+	// This initialises carousels on the container elements specified, in this case, carousel1.
+	$("#carousel1").CloudCarousel(
+		{
+			reflHeight: 40,
+			reflGap:2,
+			titleBox: $('#da-vinci-title'),
+			altBox: $('#da-vinci-alt'),
+			buttonLeft: $('#slider-left-but'),
+			buttonRight: $('#slider-right-but'),
+			yRadius:30,
+			xPos: 480,
+			yPos: 32,
+			speed:0.15,
+		}
+	);
+});
 
-        h3 {
-            font-family: 'PT Sans Narrow', 'Arial Narrow', arial, sans-serif;
-            font-size: 19px;
-            font-weight: normal;
-            margin-top: 15px;
-            margin-bottom: 14px;
-            color: black;
-        }
+</script>
 
-        h4 {
-            font-family: 'PT Sans Narrow', 'Arial Narrow', arial, sans-serif;
-            font-size: 17px;
-            font-weight: normal;
-            margin-top: 15px;
-            margin-bottom: 14px;
-            color: #2366AB;
-        }
-
-        #topdynamicinner {
-            margin-bottom: -160px;
-            margin-top: 7px;
-            width: 960px;
-            height: 310px;
-            padding-right: 12px;
-        }
-
-        #topdynamicinner h3 {
-            font-family: 'PT Sans Narrow', 'Arial Narrow', arial, sans-serif;
-            font-weight: bold;
-            font-style: normal;
-            font-size: 35px;
-            color: #5E6771;
-            padding-top: 30px;
-            text-shadow: 1px 1px 0 #fff;
-            margin: 0px;
-        }
-
-        #topdynamicinner p {
-            padding-top: 0px;
-            font-family: 'PT Serif Caption', georgia, serif;
-            font-weight: normal;
-            font-style: italic;
-            font-size: 21px;
-            color: #647280;
-            line-height: 1.2em;
-            text-shadow: 1px 1px 0 #fff;
-        }
-
-        img {
-            border:0px;
-        }
-
-        a {
-            color:#D32F1A;
-            text-decoration:none;
-        }
-
-        a:hover {
-            color:#F00;
-        }
-
-        ul {
-            list-style-image: url("http://mirantis.com/wp-content/themes/carrington-jam-1.4/img/bullet.png");
-            margin-left:30px;
-            font-size:14px;
-            padding-right: 80px;
-            margin-bottom: 4px;
-        }
-
-        ul ul {
-            list-style-image: url("http://mirantis.com/wp-content/themes/carrington-jam-1.4/img/bull_l2.png");
-            margin-top: 8px;
-        }
-
-        ul.lv2 {
-            list-style-image: url("http://mirantis.com/wp-content/themes/carrington-jam-1.4/img/bull_l2.png");
-            margin-top: 8px;
-        }
-
-        li {
-            margin-bottom:8px;
-        }
-
-        p {
-            font-size: 15px;
-            color: #41454D;
-            font-style: regular;
-            margin:6px 0px 15px 0px;
-        }
-
-        .glink {margin: 0; border:0;}
-
-        .subglobalNav {margin-top: -5px !important; border:0;}
-
-        a:hover h1 {color: #D3301A;}
-
-        /* For the MAIN MENU */
-        #main-menu {
-            height:47px;
-            margin-top:30px;
-            text-align: right;
-            position:relative;
-        }
-
-        a.glink {
-            color: black;
-            font-family: 'PT Sans Narrow','Arial Narrow',arial,sans-serif;
-            font-size: 19px;
-            padding: 5px 5px 5px 12px;
-            white-space: nowrap;
-            text-decoration:none;
-        }
-
-        a.glink:hover {
-            color:#d3301a;
-        }
-
-        .subglobalNav {
-            color: black;
-            position:absolute;
-            font-family: 'PT Sans Narrow','Arial Narrow',arial,sans-serif;
-            font-size: 14px;
-            white-space: nowrap;
-            text-decoration:none;
-            right:0px;
-            padding-top: 10px;
-        }
-
-        .subglobalNav a{
-            color: black;
-            text-decoration:none;
-            padding: 2px 7px 2px 7px;
-            margin-left:12px;
-        }
-
-        .subglobalNav a:hover {
-            color: #fff;
-            background: #CB2E19;
-            -moz-border-radius: 2px;
-            border-radius: 2px;
-            margin-left:12px;
-            text-shadow: -1px -1px 0px #7F2114;
-        }
-
-        a.act {
-            color:#d3301a !important;
-        }
-
-        a.act:hover { color: #fff  !important; background: #CB2E19; }
-
-        a.active { color:#d3301a; }
-
-        span.hs-footer-company-copyright { display: none; }
-
-        div.page-header.section-header { min-height: 80px; padding-top: 20px; }
-
-        div.body-container-wrapper {margin-bottom: 100px;}
-    </style>
-
-    <style type="text/css" media="screen">
-        html { margin-top: 28px !important; }
-        * html body { margin-top: 28px !important; }
-    </style>
-
-    <script type='text/javascript' src='http://www.mirantis.com/wp-content/themes/carrington-jam-1.4/js/menu.js'></script>
 </head>
 
-<body style="background:url(http://www.mirantis.com/wp-content/themes/carrington-jam-1.4/img/bginner.jpg) repeat-x; margin:0 !important;">
-    <div id="content" style="width:960px; margin:auto; min-height: 100%;">
-    <table width="100%" cellpadding="0" cellspacing="0">
-    <tbody>
-        <tr>
-            <td width="167px" height="107px">
-                <a href="http://www.mirantis.com/" title="Home" rel="home"><img src="http://www.mirantis.com/wp-content/themes/carrington-jam-1.4/img/logo.gif" alt="Mirantis" border="0" /></a>
-            </td>
-            <td>
-                <div id="top-menu" style="height: 30px;">
-                    <div class="textwidget">
-                        <table align="right">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div style="margin-top:5px; margin-right:10px;">
-                                        <a href="https://twitter.com/MirantisIT" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @MirantisIT</a>
-                                        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } } (document, 'script', 'twitter-wjs');</script>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div id="ttopmenu" style="float: right; height: 20px; overflow: hidden; margin-top: 10px;">
-                                        <a class="top" href="http://www.mirantis.com/blog/" style="font-size: 13px; font-style: italic; color:#A7B6C3;">Blog</a> &nbsp;
-                                        <a class="top" href="http://www.mirantis.com/careers/" style="font-size: 13px; font-style: italic; color:#A7B6C3;">Careers</a> &nbsp;
-                                        <a class="top" href="http://www.mirantis.com/contact/"  style="font-size: 13px; font-style: italic; color:#A7B6C3;">Contact Us</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!--#top-menu-->
-                <div id="main-menu">
-                    <div id="masthead">
-                        <div id="globalNav">
-                            <div id="globalLink">
-                                <a href="http://www.mirantis.com/openstack-services/" id="gl1" class="glink" name="gl1">OpenStack Services</a>
-                                <a href="http://www.mirantis.com/openstack-training/" id="gl2" class="glink" name="gl2">Training</a>
-                                <a href="http://fuel.mirantis.com" id="gl3" class="glink" name="gl3">Fuel for OpenStack</a>
-                                <a href="http://www.mirantis.com/openstack-use-cases/" id="gl4" class="glink" name="gl4">Use Cases </a>
-                                <a href="http://www.mirantis.com/why-mirantis/" id="gl5" class="glink" name="gl5">Why Mirantis</a>
-                                <a href="http://www.mirantis.com/company/" id="gl6" class="glink" name="gl6">Company</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <!--#main-menu-->
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div id="topdynamicinner" style="background:url(http://www.mirantis.com/wp-content/themes/carrington-jam-1.4/img/inner1.jpg) no-repeat top right;">
-        <h3>Murano Project</h3>
-        <p>Windows Services upon OpenStack</p>
+<body id="home">
+<div id="templatemo_header_wrapper">
+	<div id="site_title"><h1><a href="http://murano.github.io">Murano Documentation</a></h1></div>
+     <div id="templatemo_menu" class="ddsmoothmenu">
+        <ul>
+            <li><a href="index.html" class="selected">Docs</a></li>
+            <li><a href="http://wiki.openstack.org">Wiki</a>
+            <li><a href="http://launchpad.net/murano">Launchpad</a></li>
+        </ul>
+        <br style="clear: left" />
+    </div> <!-- end of templatemo_menu -->
+    <div class="cleaner"></div>
+</div>	<!-- END of templatemo_header_wrapper -->
+<div id="templatemo_slider">
+	<!-- This is the container for the carousel. -->
+    <div id = "carousel1" style="width:960px; height:280px;background:none;overflow:scroll; margin-top: 20px">
+        <!-- All images with class of "cloudcarousel" will be turned into carousel items -->
+        <!-- You can place links around these images -->
+        <a href="images/slider/01.png" data-lightbox="image-01"><img class="cloudcarousel" src="images/slider/01_small.png" /></a>
+        <a href="images/slider/01.png" data-lightbox="image-02"><img class="cloudcarousel" src="images/slider/02_small.png" /></a>
+        <a href="images/slider/01.png" data-lightbox="image-03"><img class="cloudcarousel" src="images/slider/03_small.png" /></a>
+        <a href="images/slider/01.png" data-lightbox="image-04"><img class="cloudcarousel" src="images/slider/04_small.png" /></a>
+        <a href="images/slider/01.png" data-lightbox="image-05"><img class="cloudcarousel" src="images/slider/05_small.png" /></a>
+        <a href="images/slider/01.png" data-lightbox="image-06"><img class="cloudcarousel" src="images/slider/06_small.png" /></a>
+        <a href="images/slider/01.png" data-lightbox="image-07"><img class="cloudcarousel" src="images/slider/07_small.png" /></a>
+        <a href="images/slider/01.png" data-lightbox="image-08"><img class="cloudcarousel" src="images/slider/08_small.png" /></a>
     </div>
-    <h1>Murano for OpenStack</h1>
-    <h2>Overview</h2>
-    <p>
-        Mirantis proposes to introduce a new service which will allow a non-experienced user to deploy
-        reliable Windows based environments in a “push-the-button” manner. The key goal is to provide a UI
-        and API enabling the deployment and operation of Windows Environments at the Windows Services
-        abstraction level. The service should be able to orchestrate complex circular dependent cases in
-        order to set up a complex Windows Environment with multiple dependant services.
-    </p>
-    <p>
-        The Key Features of the Service are the following:
-    </p>
-    <ul>
-        <li><p>Native to OpenStack</p></li>
-        <li><p>Introduces abstraction level for Windows Environments</p></li>
-        <li><p>Supports Availability Zones and Disaster Recovery scenarios</p></li>
-        <li><p>Uses native Windows features for HA solutions</p></li>
-    </ul>
-    <h2>Manuals</h2>
-    <ul>
-        <li><a href="docs/murano-manual/content/ch01.html">User Manual</a> (<a href="docs/murano-manual/murano-manual.pdf">download pdf</a>)</li>
-        <li><a href="docs/murano-deployment-guide/content/ch01.html">Deployment Guide</a> (<a href="docs/murano-deployment-guide/murano-deployment-guide.pdf">download pdf</a>)</li>
-    </ul>
-    <h2>Links</h2>
-    <ul>
-        <li><a href="http://launchpad.net/murano">Launchpad</a></li>
-        <li><a href="http://wiki.openstack.org/Murano">Wiki</a></li>
-    </ul>
 
-    <div id="dummy" style="height: 115px;margin-top: 20px;width: 100%;"></div>
+    <!-- Define left and right buttons. -->
+    <center>
+    <input id="slider-left-but" type="button" value="" />
+    <input id="slider-right-but" type="button" value="" />
+    </center>
+</div>
+<div id="templatemo_main">
 
+    <div class="col one_third fp_services">
+        <h2>Overview</h2>
+        <p>
+            Mirantis proposes to introduce a new service which will allow a non-experienced user to deploy
+            reliable Windows based environments in a “push-the-button” manner. The key goal is to provide a UI
+            and API enabling the deployment and operation of Windows Environments at the Windows Services
+            abstraction level. The service should be able to orchestrate complex circular dependent cases in
+            order to set up a complex Windows Environment with multiple dependant services.
+        </p>
     </div>
-    <div id="footer" style="height:115px; margin-top:-120px; background:url(http://mirantis.com/wp-content/themes/carrington-jam-1.4/img/footer_tile.jpg) repeat-x; font-family: 'PT Sans Narrow', 'Arial Narrow', arial, sans-serif; font-size: 17px; line-height: 21px; text-shadow: 1px 1px 0px white;">
-        <div id="footer_content" style="width:960px; margin:4px auto auto auto; height:110px;">
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" id="foottable">
-                <tr>
-                    <td valign="top" style="padding-top: 20px;">
-                        <span class="fgeneral" style="color: black;">Mirantis Inc.<br>
-                            <span class="fslogan" style="font-family: 'PT Sans', arial, sans-serif; font-style: italic; color: #43678a; font-size: 13px;">OpenStack Clouds. Delivered.</span>
-                        </span>
-                    </td>
-                    <td valign="top" style="padding-top: 20px;">
-                        <span class="fgeneral" style="color: black;">&copy 2005&ndash;2013</span>  <span class="fgeneralblue">All Rights Reserved</span></span>
-                    </td>
-                    <td valign="top" style="padding-top: 20px;">
-                        <div id="fbox" style="padding-left: 10px; border-left: 1px solid #d5dbe1;">
-                            <span class="fgeneral" style="color: black;">615 National Avenue, Suite 100<br>
-                                Mountain View, CA 94043
-                            </span>
-                        </div>
-                    </td>
-                    <td valign="top" style="padding-top: 20px;">
-                        <div id="fbox" style="padding-left: 10px; border-left: 1px solid #d5dbe1;">
-                            <span class="fgeneralblue" style="color: #43678a;">Phone</span> <span class="fgeneral">650-963-9828</span><br>
-                            <span class="fgeneralblue" style="color: #43678a;">Fax</span> <span class="fgeneral">650-968-2997</span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="clear"></div>
-        </div>
+    <div class="col one_third fp_services">
+        <h2>Key Features</h2>
+        <ul>
+            <li><p>Native to OpenStack</p></li>
+            <li><p>Introduces abstraction level for Windows Environments</p></li>
+            <li><p>Supports Availability Zones and Disaster Recovery scenarios</p></li>
+            <li><p>Uses native Windows features for HA solutions</p></li>
+        </ul>
     </div>
+    <div class="col one_third no_margin_right fp_services">
+        <h2>Manuals</h2>
+        <ul>
+            <li><a href="docs/murano-manual/content/ch01.html">User Manual</a> (<a href="docs/murano-manual/murano-manual.pdf">download pdf</a>)</li>
+            <li><a href="docs/murano-deployment-guide/content/ch01.html">Deployment Guide</a> (<a href="docs/murano-deployment-guide/murano-deployment-guide.pdf">download pdf</a>)</li>
+        </ul>
+    </div>
+
+    <div class="cleaner"></div>
+</div> <!-- END of templatemo_main -->
 </body>
 </html>
