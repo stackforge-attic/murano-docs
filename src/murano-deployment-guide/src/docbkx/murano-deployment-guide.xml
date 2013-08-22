@@ -1051,7 +1051,7 @@
                             Replace IMAGE_METADATA with the following property:
                             <emphasis>murano_image_info="{'title': 'Windows 2012 Core edition', 'id': NAME }"</emphasis>,
                             where <emphasis>title </emphasis>- full image description for user and
-                            <emphasis>id</emphasis> is an image name.
+                            <emphasis>id</emphasis> is one of an image service names: ws-2012-std, ws-2012-core, ws-2008r2-std, ws-2008r2
                             <warning>
                                 <para>Setting <emphasis>murano_image_info</emphasis>  property is
                                     required to pick up image from Murano Dashboard.</para>
@@ -1072,7 +1072,7 @@
                     <listitem>
                         <para>
                             Replace IMAGE_METADATA with murano_image_info property, e.g.<emphasis>
-                            murano_image_info="{'title': 'Windows 2012 Core edition','id': 'win2k12core'}"</emphasis>,
+                            murano_image_info='{"title": "Windows 2012 Core edition","id": "ws-2012-std"}'</emphasis>,
                         </para>
                     </listitem>
                 </itemizedlist>
