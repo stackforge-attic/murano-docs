@@ -65,6 +65,7 @@
     <xi:include href="./content/blueprint.xml" xlink:title="Blueprint" />
     <xi:include href="./content/roadmap.xml" xlink:title="Roadmap" />
     <xi:include href="./content/specification.xml" xlink:title="API Specification" />
+    <xi:include href="./content/workflows.xml" xlink:title="Workflows XML DSL" />
     <xi:include href="./content/installation-guide.xml" xlink:title="Installation Guide" />
     <xi:include href="./content/screenshots.xml" xlink:title="Screenshots" />
     <xi:include href="./content/knownissues.xml" xlink:title="Known Issues" />

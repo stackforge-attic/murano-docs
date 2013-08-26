@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2013 Mirantis, Inc.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0">
+    <title>Workflows XML DSL</title>
+    <section>
+        <title>XML DSL</title>
+        <para>
+            Workflows are written using XML markup language. This XML has no fixed structure but instead XML tags are translated into Python function calls. Thus such XML can be considered as a simplified programming language.
+        </para>
+        <para>
+            Consider the following XML fragment:
+            <programlisting><![CDATA[ <func arg1="value1" arg2="value2" /> ]]></programlisting>
+            This is an equivalent to <code>func(arg1='value1', arg2='value2')</code> in Python. Tag name is mapped to a function name, one that Murano Conductor knows. Each attribute corresponds to function argument.
+        </para>
+        <para>
+            XML functions may also have a body. It is evaluated to "body" argument. Thus
+            <programlisting><![CDATA[
+    <func arg1="value1" arg2="value2">some text</func>
+ ]]></programlisting>is translated to <code>func(arg1='value1', arg2='value2', body='some text')</code>
+        </para>
+        <para>
+            In example above all function arguments were constant values. But they also can be evaluated:
+            <programlisting><![CDATA[
+    <foo arg="value">
+        <bar/>
+    </foo>
+            ]]> </programlisting>turns to
+            <programlisting>
+    body_value = bar()
+    foo(arg='value', body=body_value)
+            </programlisting>
+        </para>
+        <para>
+            Tag body may consist of several function invocations. In such case all values would be concatenated.
+
+            For example if
+            <programlisting>
+    def foo(**kwargs):
+      return "foo"
+
+    def bar(**kwargs):
+      return "bar"
+            </programlisting>then <code><![CDATA[ <func><foo/> - <bar/></func> ]]></code> will result in <code>foo(body = 'foo - bar')</code>
+        </para>
+        <para>
+            Function parameters can also be function calls using <![CDATA[<parameter>]]> tag
+
+<programlisting><![CDATA[
+    <foo arg="value"/>
+]]></programlisting>
+    can be rewritten as
+<programlisting><![CDATA[
+    <foo>
+        <parameter name="arg">value</parameter>
+    </foo>
+]]></programlisting>
+
+while that later form is more verbose it allows having dynamically evaluated values as function arguments:
+<programlisting><![CDATA[
+    <foo>
+        <parameter name="arg"><bar/></parameter>
+    </foo>
+]]></programlisting>
+        </para>
+        <para>
+            Functions may also have other custom tags in their body that interpreted in a way different from plain function invocation.
+        </para>
+
+    </section>
+    <section>
+        <title>DSL functions</title>
+        <para>
+            There are a number of functions in Murano Conductor that can be used in XML DSL:
+            <itemizedlist>
+                <listitem>
+                    <code><![CDATA[ <true/> ]]></code> - returns True
+                </listitem>
+                <listitem>
+                    <code><![CDATA[ <false/> ]]></code> - False
+                </listitem>
+                <listitem>
+                    <code><![CDATA[ <null/> ]]></code> - None
+                </listitem>
+                <listitem>
+                    <code><![CDATA[ <text><foo/></text> ]]></code> - converts body to string <code>(str(foo()))</code>
+                </listitem>
+                <listitem>
+                    list - form list (array) object -
+<programlisting><![CDATA[<list>
+	<item>item1</item>
+	<item>item2</item>
+	<item><true/></item>
+</list>
+]]></programlisting> equals to <code>["item1", "item2", True]</code>
+                </listitem>
+                <listitem>
+                    map - form dictionary (map) object
+<programlisting><![CDATA[
+	<map>
+		<item name="key1">value1</item>
+		<item name="key2">value2</item>
+	</map>
+]]></programlisting> equals to <code>{ "key1": "value1", "key2": "value2" }</code>
+For both list and map functions names of item nodes ("item" in examples above) is irrelevant and can be changed to better match structure usage. For example
+<programlisting><![CDATA[
+<map>
+	<set name="key"><null/></set>
+</map>
+]]></programlisting>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            Structures can be nested:
+<programlisting><![CDATA[
+    <list>
+        <item>
+            <map>
+                <item name="name 1">value 1</item>
+                <item name="name 2">value 2</item>
+            </map>
+        </item>
+        <item>
+            <map>
+                <item name="name 1">value 3</item>
+                <item name="name 2">value 4</item>
+            </map>
+        </item>
+    </list>
+]]></programlisting> equals to
+<programlisting>
+    [
+        { 'name 1': 'value 1', 'name 2': 'value 2' },
+        { 'name 1': 'value 3', 'name 2': 'value 4' }
+    ]
+</programlisting>
+        </para>
+    </section>
+    <section>
+        <title>Workflows</title>
+        <section>
+            <title>About workflows</title>
+            <para>
+                Workflows are XML DSL scripts that describe the steps that conductor need to perform in order to deploy specified environment. All workflow constructs are just ordinary DSL functions similar to those described above.
+            </para>
+            <para>
+                Usually workflows extract some data from input environment definition (Object Model) and then invoke one of the actions with these data as a input arguments.
+            </para>
+            <para>
+                Actions are:
+                <itemizedlist>
+                    <listitem>
+                        Heat commands that update or delete Heat Stack: <![CDATA[ <update-cf-stack>, <delete-cf-stack> ]]>
+                    </listitem>
+                    <listitem>
+                        Send command to Murano Agent: <![CDATA[ <send-command> ]]>
+                    </listitem>
+                    <listitem>
+                        Report state to API: <![CDATA[ <report> ]]>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                Workflow logic can be described in 6 steps:
+                <orderedlist>
+                    <listitem>
+                        Choose a node (set of nodes) to update. If none of the nodes can be updated we are done.
+                    </listitem>
+                    <listitem>
+                        According to the current state of node (that is a part of input Object Model) choose appropriate command to execute (update Heat stack or issue PowerShell command)
+                    </listitem>
+                    <listitem>
+                        Select appropriate information from Object Model and substitute it into chosen template
+                    </listitem>
+                    <listitem>
+                        Execute command
+                    </listitem>
+                    <listitem>
+                        Update Object Model according to command execution result
+                    </listitem>
+                    <listitem>
+                        Go to step 1
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+        <section>
+            <title>Accessing Object Model</title>
+            <para>Object Model is a definition of environment that Murano Conductor was asked to deploy.</para>
+            <para>Lets take the following Object Model that describes Active Directory service with single controller for our further examples:
+<programlisting><![CDATA[
+    {
+        "name": "MyDataCenter",
+        "id": "adc6d143f9584d10808c7ef4d07e4802",
+        "services": [ {
+            "name": "TestAD",
+                "type": "activeDirectory",
+                "osImage": {"name": "ws-2012-std", "type": "ws-2012-std"},
+                "availabilityZone": "nova",
+                "flavor": "m1.medium",
+                "id": "9571747991184642B95F430A014616F9",
+            "domain": "acme.loc",
+            "adminPassword": "SuperP@ssw0rd",
+        "units": [ {
+                "id": "273c9183b6e74c9c9db7fdd532c5eb25",
+                "name": "dc01",
+                "isMaster": true,
+                "recoveryPassword": "SuperP@ssw0rd!2"
+            } ]
+         } ]
+    }
+]]></programlisting>
+            </para>
+            <para>
+                There are several functions to select values from Object Model and function to modify it so that the Workflow can persist the changes made during deployment.
+            </para>
+            <para>
+                All reads and writes to Object Model are relative to some cursor position which is managed by workflow rule. Lets call it current cursor position.
+            </para>
+            <para>
+                The simplest method of accessing Object Model is a select function.
+                Suppose current cursor position points to a single unit of our single service. Then <code><![CDATA[ <select path="name"/> ]]></code> is "dc01" and <code><![CDATA[ <select path="isMaster"/> ]]></code> is True.
+            </para>
+            <para>
+                Path parameter may start with colon to indicate navigation to one level up or slash to go to Model root:
+<programlisting><![CDATA[ <select path=":"/> ]]></programlisting>is<programlisting><![CDATA[
+[
+    {
+        "id": "273c9183b6e74c9c9db7fdd532c5eb25",
+        "name": "dc01",
+        "isMaster": true,
+        "recoveryPassword": "SuperP@ssw0rd!2"
+   }
+]
+]]></programlisting>
+<code><![CDATA[ <select path="::domain"> ]]></code> is "acme.loc" and <code><![CDATA[ <select path="/name"> ]]></code> is "MyDataCenter"
+            </para>
+            <para>
+                The path also supports drill-down notation:
+                <code><![CDATA[ <select path="::osImage.name"> ]]></code> is "ws-2012-std"
+                <code><![CDATA[ <select path="::units.0.name"> ]]></code> equals to <code><![CDATA[ <select path="/services.0.units.0.name"> ]]></code> that is "dc01"
+            </para>
+            <para>
+                If the path does not exist then result of a select would be None:
+                <code><![CDATA[ <select path="::noSuchProperty"/>  ]]></code> = None
+            </para>
+            <para>
+                <code><![CDATA[ <select/>  ]]></code> without path results in object pointed by current cursor position.
+            </para>
+            <para>
+                It also possible to select multiple values using JSONPath selection language (<ulink url="http://goessner.net/articles/JsonPath/"/>):
+                <programlisting><![CDATA[ <select-all path="/$.services[?(@.type == 'activeDirectory')].units[*]"/>  ]]></programlisting> - returns array of all units of all services of type 'activeDirectory'
+            </para>
+            <para>
+                JSONPath expressions by default select data relative to current cursor position and has no way for navigating up the Model tree. But Conductor has several improvements to JSONPath language:
+                <itemizedlist>
+                    <listitem>
+                        JSONPath expression may start with one or more colon characters to perform query relative to current cursor parent (grandparent etc.)
+                    </listitem>
+                    <listitem>
+                        JSONPath expression may also start with slash as in example above to query the whole Model from the tree root
+                    </listitem>
+                    <listitem>
+                        Expressions may reference nonexistent Model attributes in the same way as <code><![CDATA[ <select/> ]]></code>function does. Such attributes considered to have None values
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <code><![CDATA[ <select-single path="JSONPath expression"/> ]]></code> is similar to <code><![CDATA[ <select-all/> ]]></code>, but returns only the first value matched by a JSONPath query or None.
+            </para>
+            <para>
+                Object Model can also be modified using <code><![CDATA[ <set/> ]]></code>function. <code><![CDATA[ <set/> ]]></code>is very similar to <code><![CDATA[ <select/> ]]></code>with the only difference in that is writes value while <code><![CDATA[ <select/> ]]></code>reads it:
+<code><![CDATA[ <set path="name">dc02</set> ]]></code>  changes unit name (eg. the object pointed by current cursor position) to "dc02".
+<code><![CDATA[ <set> ]]></code> can also introduce new attributes, event nested ones:
+<code><![CDATA[ <set path="newProperty">value</set> ]]></code> creates new attribute "newProperty" with given value,
+<code><![CDATA[ <set path="state.property">value</set> ]]></code> makes current unit have property <code>"state": { "property": "value" }</code>
+            </para>
+            <para>
+                In this case "state" is just a convention - a reserved property that would never be used for service our units input properties. There is a also a special property called "temp". The contents of this property (on all services and units and environment itself) if wiped after each deployment.
+            </para>
+        </section>
+        <section>
+            <title>Function context</title>
+            <para>Function context is an equivalent to Python stack frame. This allows functions to have local variables that are visible only to the function XML body. </para>
+            <para>Function context may be considered as a key-value storage. If a key does not exist in current context then parent context is searched for the key.</para>
+            <para>
+                Data may be published to function context using ordinary <code><![CDATA[ <set/> ]]></code>function by using path in a form of "#key":
+                <code><![CDATA[ <set path="#myKey>value</set> ]]></code>sets "myKey" function context value to "value".
+                This value may be later accessed in inner block using select:
+                <code><![CDATA[ <select path="#myKey"/> ]]></code>
+            </para>
+            <para>
+                Values is function context may be not just scalars but a whole objects:
+                <code><![CDATA[ <set path="#myKey"><select/><set/> ]]></code>sets myKey local variable to an object pointed by current cursor position. Because this is a reference to a model part rather than its copy if ones edits its content the changes will be also present in original Model.
+                To edit content of local variable (eg. value in function context) "target" argument of <code><![CDATA[ <set/> ]]></code>function is used: <code><![CDATA[ <set path="property" target="myKey">value</set> ]]></code>. Because target always denotes a key in function context there is no need for # sign.
+            </para>
+            <para>
+                Function context values may also be the source for the <code><![CDATA[ <select/> ]]></code>and other selection functions:
+                <code><![CDATA[ <select path="property" source="myKey"/> ]]></code>
+            </para>
+        </section>
+        <section>
+            <title>Workflow rules</title>
+            <para>
+                Workflow consists of rules. Rule is a function with the following parameters:
+                <itemizedlist>
+                    <listitem>
+                        <emphasis role="bold">match</emphasis> - JSONPath expression to be executed relative to current cursor position
+                    </listitem>
+                    <listitem>
+                        <emphasis role="bold">desc</emphasis> - optional human-readable free-form rule description
+                    </listitem>
+                    <listitem>
+                        <emphasis role="bold">id</emphasis> - optional rule ID (auto-generated if not provided)
+                    </listitem>
+                </itemizedlist>
+                for example
+<programlisting><![CDATA[
+    <rule match="$.services[?(@.type == 'msSqlClusterServer' and @.domain)].units[*]" desc="Units of SQL Server Cluster services which are part of the domain">
+        <set path="domain">
+             <select path="::domain"/>
+        </set>
+    </rule>
+]]></programlisting>
+            </para>
+            <para>
+                The logic of rule is simple:
+                <orderedlist>
+                    <listitem>Execute given JSONPath expression</listitem>
+                    <listitem>For each of matched objects make current cursor position point to it and then execute function XML body</listitem>
+                    <listitem>If JSONPath hasn't matched any object execute <code><![CDATA[ <empty>...</empty> ]]></code> block if present</listitem>
+                </orderedlist>
+            </para>
+            <para>
+                Rules can be nested. In this case nested rule's JSONPath expression would be executed relative to parent's rule current cursor position. For outermost rules current cursor position is the Object Model itself.
+            </para>
+            <para>
+                Rules are grouped into workflows:
+<programlisting><![CDATA[
+    <workflow>
+        <rule id="rule1" match="...">
+            …
+        </rule>
+
+        <rule id="rule2" match="...">
+            …
+        </rule>
+    </workflow>
+]]></programlisting>
+            </para>
+            <para>
+                Workflow which is happen to be a XML DSL function and also a root element of workflow XML files. Workflow function executes rules one by one. If one of the rules has modified some part of Object Model then all rules executed once again. This repeats until there are no more actions that can be performed by workflow. At this point all pending actions (e.g. all the invocations of update-cf-stack, send-command etc.) got executed and the workflow loop is repeated.
+                When there no more actions that can be performed by workflow and also no pending commands then we are done and Object Model with all modifications made by workflows (except for "temp" attributes) returned back to Murano API service.
+            </para>
+        </section>
+        <section>
+            <title>Workflow actions</title>
+            <para>
+                There are several actions (functions) that can be invoked by rules to do the actual deployment. When action is invoked it is not executed immediately but enqueued and executed later when there are no more actions that can be performed by workflow.
+            </para>
+            <para>
+                The following actions are available for workflow rules:
+                <itemizedlist>
+                    <listitem>
+                        <emphasis role="bold">update-cf-stack</emphasis> - updates Heat stack by substituting values into Heat template and merging it into Heat stack definition. It has the following parameters:
+                        <itemizedlist>
+                            <listitem>
+                                <emphasis role="bold">template</emphasis> - Heat template filename without extension
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">error</emphasis> - function context variable to be populated with command error info in case of command failure
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">mappings</emphasis> - dictionary to be used for values substitution into template. All values in JSON template file in the form of "$myKey" are replaced with a value under key "myKey" in this parameter
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">arguments</emphasis> - optional dictionary of Heat template arguments ("Parameters" section of Heat templates)
+                            </listitem>
+                        </itemizedlist>
+                        <para>
+                            update-cf-stack function also searches for 2 predefined tags in its body:
+                            <itemizedlist>
+                                <listitem>
+                                    <emphasis role="bold">&lt;success&gt;</emphasis> - a block to be executed after successfull stack update
+                                </listitem>
+                                <listitem>
+                                    <emphasis role="bold">&lt;failure&gt;</emphasis> - block that would be executed in case of function failure
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                        <para>Templates are located in data/cf directory</para>
+                    </listitem>
+                    <listitem>
+                        <emphasis role="bold">send-command</emphasis> - sends an execution plan to Murano Agent on specific VM. It has the following parameters:
+                        <itemizedlist>
+                            <listitem>
+                                <emphasis role="bold">template</emphasis> - execution plan template filename without extension
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">error</emphasis> - function context variable to be populated with command error info in case of command failure
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">service</emphasis> - ID of a service that target units belongs to
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">unit</emphasis> - ID of target unit (VM)
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">mappings</emphasis> - dictionary to be used for values substitution into template. All values in JSON template file in the form of "$myKey" are replaced with a value under key "myKey" in this parameter
+                            </listitem>
+                        </itemizedlist>
+                        <para>
+                            send-command function also searches for 2 predefined tags in its body:
+                            <itemizedlist>
+                                <listitem>
+                                    <emphasis role="bold">&lt;success&gt;</emphasis> - a block to be executed after successfull stack update
+                                </listitem>
+                                <listitem>
+                                    <emphasis role="bold">&lt;failure&gt;</emphasis> - block that would be executed in case of function failure
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                        <para>Templates are located in data/agent directory</para>
+                    </listitem>
+                    <listitem>
+                        <emphasis role="bold">report</emphasis> - sends status report back to REST API service. It has the following parameters:
+                        <itemizedlist>
+                            <listitem>
+                                <emphasis role="bold">entity</emphasis> - entity type ("unit", "service", "environment")
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">level</emphasis> - log level
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">id</emphasis> - ID of unit/service/environment
+                            </listitem>
+                            <listitem>
+                                <emphasis role="bold">text</emphasis> - reported status text
+                            </listitem>
+                        </itemizedlist>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </section>
+        <section>
+            <title>Workflow control</title>
+            <para>
+                There are several functions that affect workflow execution.
+                <code><![CDATA[ <stop/> ]]></code>stops execution of workflows causing Conductor returning current result back to REST API service and stop deployment activities.
+            </para>
+            <para>
+                <code><![CDATA[ <mute/> ]]></code>excludes current object from being processed by the current rule during next workflow rounds. Mutes table tracks items using pairs or rule id (that is rule function argument, auto-generated if not provided) and object ID ("id" attribute of current object. If object has no such attribute it cannot be muted). It is possible to explicitly specify rule id via "rule" argument and object id via "id" argument. Missing parameters are auto-guest from current context - current cule ID and current object ID.
+            </para>
+            <para>
+                Note that objects are automatically muted for every object that matched by the rule but the mutes get reseted after each workflow loop round. <code><![CDATA[ <mute/> ]]></code> places a permanent mute on the object
+            </para>
+            <para>
+                Mutes can be removed by <code><![CDATA[ <unmute/> ]]></code> function which has exactly the same arguments as <code><![CDATA[ <mute/> ]]></code> command but is only usable with explicit specification of rule and id because otherwise if the current object is already muted the rule body would not be executed for the object and thus <code><![CDATA[ <unmute/> ]]></code> would not be executed either.
+            </para>
+            <para>
+                When referencing id of a nested rule IDs of all rule chain must be joined by dot. E.g.
+<programlisting><![CDATA[
+    <rule id="id1">
+        <rule id="id2">
+            <mute rule="id1.id2"/>
+        </rule>
+    </rule>
+]]></programlisting>
+            </para>
+        </section>
+        <section>
+            <title>Execution Plans</title>
+            <para>
+                Execution plans are a description of what should be executed on Murano Agent at VM to perform some deployment step.
+            </para>
+            <para>
+                Execution plans is a JSON document that has 3 keys:
+                <itemizedlist>
+                    <listitem>
+                        <emphasis role="bold">Commands</emphasis> array - list of functions to be executed. Each function has a "Name" property and "Arguments" dictionary which maps function argument names to parameter values.
+                    </listitem>
+                    <listitem>
+                        <emphasis role="bold">Scripts</emphasis> - list of PowerShell script file names to be included into execution plans. The scripts contain function implementations that can be referenced in Command array.Script files need to be located in data/templates/agent/scripts directory.
+                    </listitem>
+                    <listitem>
+                        <emphasis role="bold">RebootOnCompletion</emphasis> - 0 = do not reboot, 1 = reboot only upon successful plan execution, 2 = reboot always. Murano Agent send execution result after system reboot.
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                As for other Murano JSON templates keys and values starting with $ sign will be replaced with a values provided in Workflow.
+            </para>
+            <para>
+                Example of execution plan:
+<programlisting><![CDATA[
+{
+  "Scripts": [
+    "ImportCoreFunctions.ps1",
+    "DeployWebApp.ps1"
+  ],
+  "Commands": [
+    {
+          "Name": "Deploy-WebAppFromGit",
+      "Arguments": {
+                "URL": "$repository"
+          }
+    }
+  ],
+  "RebootOnCompletion": 0
+}
+]]></programlisting>
+            </para>
+            <para>
+                Result of execution plan has the following format:
+<programlisting><![CDATA[
+{
+    "IsException": false,
+    "Result": [
+        {
+            "IsException": false,
+            "Result": [ "result value" ]
+        }
+    ]
+}
+]]></programlisting>
+            </para>
+            <para>
+                There are result entry for each source command. Each result can have many values - all the outputs of PowerShell function. If IsException is set to true then Result is an array in form of <code>["Exception type", "Error message"]</code>. IsException at command level means exception during function invocation while root IsException means that execution plan cannot be even started (corrupted data, PowerShell engine failure etc.)
+            </para>
+        </section>
+    </section>
+</chapter>
