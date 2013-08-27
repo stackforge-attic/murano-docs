@@ -84,7 +84,7 @@
         </para>
         <para>If you want to contribute either to docs or to code, simply send us change request via
             <link xlink:href="http://review.openstack.org">review.openstack.org</link>
-            (gerrit). You can file bugs and register blueprints at Murano<link
+            (gerrit). You can file bugs and register blueprints at Murano <link
                     xlink:href="https://launchpad.net/murano">launchpad page</link>.
         </para>
     </chapter>
