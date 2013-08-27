@@ -61,7 +61,7 @@
 
     def bar(**kwargs):
       return "bar"
-            </programlisting>then <code><![CDATA[ <func><foo/> - <bar/></func> ]]></code> will result in <code>foo(body = 'foo - bar')</code>
+            </programlisting>then <code><![CDATA[ <func><foo/> - <bar/></func> ]]></code> will result in <code>func(body = 'foo - bar')</code>
         </para>
         <para>
             Function parameters can also be function calls using <![CDATA[<parameter>]]> tag
@@ -254,7 +254,7 @@ For both list and map functions names of item nodes ("item" in examples above) i
    }
 ]
 ]]></programlisting>
-<code><![CDATA[ <select path="::domain"> ]]></code> is "acme.loc" and <code><![CDATA[ <select path="/name"> ]]></code> is "MyDataCenter"
+<code><![CDATA[ <select path="::domain"> ]]></code> is "acme.loc" and <code><![CDATA[ <select path="/name" /> ]]></code> is "MyDataCenter"
             </para>
             <para>
                 The path also supports drill-down notation:
@@ -290,7 +290,7 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 <code><![CDATA[ <select-single path="JSONPath expression"/> ]]></code> is similar to <code><![CDATA[ <select-all/> ]]></code>, but returns only the first value matched by a JSONPath query or None.
             </para>
             <para>
-                Object Model can also be modified using <code><![CDATA[ <set/> ]]></code>function. <code><![CDATA[ <set/> ]]></code>is very similar to <code><![CDATA[ <select/> ]]></code>with the only difference in that is writes value while <code><![CDATA[ <select/> ]]></code>reads it:
+                Object Model can also be modified using <code><![CDATA[ <set/> ]]></code>function. <code><![CDATA[ <set/> ]]></code>is very similar to <code><![CDATA[ <select/> ]]></code>with the only difference in that <code><![CDATA[ <select/> ]]></code> writes values while <code><![CDATA[ <select/> ]]></code>reads them:
 <code><![CDATA[ <set path="name">dc02</set> ]]></code>  changes unit name (eg. the object pointed by current cursor position) to "dc02".
 <code><![CDATA[ <set> ]]></code> can also introduce new attributes, event nested ones:
 <code><![CDATA[ <set path="newProperty">value</set> ]]></code> creates new attribute "newProperty" with given value,
@@ -306,7 +306,7 @@ For both list and map functions names of item nodes ("item" in examples above) i
             <para>Function context may be considered as a key-value storage. If a key does not exist in current context then parent context is searched for the key.</para>
             <para>
                 Data may be published to function context using ordinary <code><![CDATA[ <set/> ]]></code>function by using path in a form of "#key":
-                <code><![CDATA[ <set path="#myKey>value</set> ]]></code>sets "myKey" function context value to "value".
+                <code><![CDATA[ <set path="#myKey">value</set> ]]></code>sets "myKey" function context value to "value".
                 This value may be later accessed in inner block using select:
                 <code><![CDATA[ <select path="#myKey"/> ]]></code>
             </para>
@@ -515,19 +515,22 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 Example of execution plan:
 <programlisting><![CDATA[
 {
-  "Scripts": [
-    "ImportCoreFunctions.ps1",
-    "DeployWebApp.ps1"
-  ],
-  "Commands": [
-    {
-          "Name": "Deploy-WebAppFromGit",
-      "Arguments": {
+    "Scripts":
+    [
+        "ImportCoreFunctions.ps1",
+        "DeployWebApp.ps1"
+    ],
+    "Commands":
+    [
+        {
+            "Name": "Deploy-WebAppFromGit",
+            "Arguments":
+            {
                 "URL": "$repository"
-          }
-    }
-  ],
-  "RebootOnCompletion": 0
+            }
+        }
+    ],
+    "RebootOnCompletion": 0
 }
 ]]></programlisting>
             </para>
@@ -536,7 +539,8 @@ For both list and map functions names of item nodes ("item" in examples above) i
 <programlisting><![CDATA[
 {
     "IsException": false,
-    "Result": [
+    "Result":
+    [
         {
             "IsException": false,
             "Result": [ "result value" ]
