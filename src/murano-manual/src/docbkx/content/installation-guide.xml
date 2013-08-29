@@ -278,25 +278,27 @@ keystone endpoint-create
         </section>
         <section>
             <title>Run</title>
-            <listitem>
-                <para>Run Murano API service:</para>
-                <para>
-                    <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
-                </para>
-                <programlisting>
-                    <![CDATA[
+			<itemizedlist>
+				<listitem>
+					<para>Run Murano API service:</para>
+					<para>
+						<emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
 service murano-api start
-                    ]]>
-                </programlisting>
-                <para>
-                    <emphasis>CentOS 6.x</emphasis>
-                </para>
-                <programlisting>
-                    <![CDATA[
+						]]>
+					</programlisting>
+					<para>
+						<emphasis>CentOS 6.x</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
 initctl start murano-api
-                    ]]>
-                </programlisting>
-            </listitem>
+						]]>
+					</programlisting>
+				</listitem>
+			</itemizedlist>
         </section>
     </section>
     <section>
@@ -478,25 +480,27 @@ virtual_host = muranovhost
         </section>
         <section>
             <title>Run</title>
-            <listitem>
-                <para>Run Murano Conductor service:</para>
-                <para>
-                    <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
-                </para>
-                <programlisting>
-                    <![CDATA[
+			<itemizedlist>
+				<listitem>
+					<para>Run Murano Conductor service:</para>
+					<para>
+						<emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
 service murano-conductor start
-                    ]]>
-                </programlisting>
-                <para>
-                    <emphasis>CentOS 6.x</emphasis>
-                </para>
-                <programlisting>
-                    <![CDATA[
+						]]>
+					</programlisting>
+					<para>
+						<emphasis>CentOS 6.x</emphasis>
+					</para>
+					<programlisting>
+						<![CDATA[
 initctl start murano-conductor
-                    ]]>
-                </programlisting>
-            </listitem>
+						]]>
+					</programlisting>
+				</listitem>
+			</itemizedlist>
 		</section>
 	</section>	
     <section>
