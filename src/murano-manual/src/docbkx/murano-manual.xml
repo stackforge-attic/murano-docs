@@ -22,7 +22,7 @@
       xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
       version="5.0">
-    <title>Murano Project Documentation</title>
+    <title>Murano User Guide</title>
     <info>
         <author>
             <personname>
@@ -62,10 +62,10 @@
         </cover>
     </info>
     <xi:include href="./content/overview.xml" xlink:title="Overview" />
+    <xi:include href="./content/installation-guide.xml" xlink:title="Installation Guide" />
     <xi:include href="./content/blueprint.xml" xlink:title="Blueprint" />
     <xi:include href="./content/specification.xml" xlink:title="API Specification" />
     <xi:include href="./content/workflows.xml" xlink:title="Workflows XML DSL" />
-    <xi:include href="./content/installation-guide.xml" xlink:title="Installation Guide" />
     <xi:include href="./content/screenshots.xml" xlink:title="Screenshots" />
     <xi:include href="./content/knownissues.xml" xlink:title="Known Issues" />
     <chapter>
