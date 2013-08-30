@@ -23,14 +23,14 @@
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
     <title>Installation Guide</title>
-    <para>This chapter is about installation and configuration Murano services.</para>
+    <para>This chapter describes installation and configuration of Murano services.</para>
     <para>Note that all Murano modules can be downloaded from
         <link xlink:href="https://launchpad.net/murano/">our page</link>
         on launchpad.
     </para>
     <section>
-        <title>Common Pre-Requirements</title>
-        <para>Operation system:</para>
+        <title>Pre-Requisites</title>
+        <para>Murano supports the following operating systems:</para>
         <orderedlist>
             <listitem>
                 <para>Ubuntu</para>
@@ -39,7 +39,7 @@
                 <para>RHEL/CentOS</para>
             </listitem>
         </orderedlist>
-        <para>Packages:</para>
+        <para>Ensure that these packages are installed before Murano installation using your OS package manager:</para>
         <orderedlist>
             <listitem>
                 <para>python-dev</para>
@@ -59,14 +59,12 @@
     <section>
         <title>Murano API Service</title>
         <para>Murano API provides access to the Murano orchestration engine via API.</para>
-        <para>This chapter describes Murano API for contributors of the project, and assumes that you are already
-            familiar with Murano API from an end-user perspective.
-        </para>
+        <para>This chapter describes the procedure of installation and condiguration of Murano API.  </para>
         <section>
             <title>Install</title>
             <itemizedlist>
                 <listitem>
-                    <para>Need to work as root</para>
+                    <para>We need to have superuser privileges in order to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
 sudo su
@@ -74,14 +72,12 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Navigate to the temporary directory and clone Murano API Service from repository</para>
+                    <para>Clone Murano API Service from repository</para>
                     <para>
                         <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
 apt-get install -y git
 git clone https://github.com/stackforge/murano-api
                         ]]>
@@ -91,8 +87,6 @@ git clone https://github.com/stackforge/murano-api
                     </para>
                     <programlisting>
                         <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
 yum install -y git gcc python-paste-deploy python-routes
 git clone https://github.com/stackforge/murano-api
                        ]]>
