@@ -114,6 +114,18 @@ sh setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
+                <listitem>
+                    <para>Successful installation ends with message like this:</para>
+                    <programlisting>
+                        <![CDATA[
+Successfully installed muranoapi
+Cleaning up...
+LOG:> Making sample configuration files at "/etc/murano-api"
+LOG:> Reloading initctl
+LOG:> Please, make proper configugation,located at "/etc/murano-api", before starting the "murano-api" daemon!
+                       ]]>
+                    </programlisting>
+                </listitem>
             </itemizedlist>
         </section>
         <section>
@@ -146,73 +158,24 @@ vi murano-api.conf
                     <para>Configure it according to your environment:
                         <itemizedlist>
                             <listitem>
-                                <para><emphasis>[DEFAULT]</emphasis>section sets up logging.
+                                <para><emphasis>[DEFAULT]</emphasis> section sets up logging.
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>
                                     <emphasis>[reports]</emphasis>
-                                    section you can set names for new rabbitMQ queues.
+                                    section allows you to set up names for new rabbitMQ queues.
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>In
                                     <emphasis>[rabbitmq]</emphasis>
-                                    section sets up host configuration where rabbitMQ
+                                    section you can set up host configuration where rabbitMQ
                                     with just created user and vhost is running.
                                 </para>
                             </listitem>
                         </itemizedlist>
                     </para>
-                    <programlisting>
-                        <![CDATA[
-[DEFAULT]
-# Show more verbose log output (sets INFO log level output)
-verbose = True
-# Show debugging output in logs (sets DEBUG log level output)
-debug = True
-# Address to bind the server to
-bind_host = 0.0.0.0
-# Port the bind the server to
-bind_port = 8082
-# Log to this file. Make sure the user has permissions to write to this file!
-log_file = /var/log/murano-api.log
-
-[database]
-#A valid SQLAlchemy connection string for the metadata database
-#connection = mysql://root:password@localhost:3306/murano
-connection = sqlite:///murano.sqlite
-#A boolean that determines if the database will be automatically created
-auto_create = True
-
-[reports]
-#Change this params only when you know what you are doing
-results_exchange = task-results
-results_queue = task-results
-reports_exchange = task-reports
-reports_queue = task-reports
-
-[rabbitmq]
-# Connection parameters to RabbitMQ service
-# Hostname or IP address where RabbitMQ is located.
-host = localhost
-# RabbitMQ port (5672 is a default)
-port = 5672
-# Use SSL for RabbitMQ connections (True or False)
-ssl = False
-# Path to SSL CA certificate or empty to allow self signed server certificate
-ca_certs =
-# RabbitMQ credentials. Fresh RabbitMQ installation has "guest" account with "guest" password
-# It is recommended to create dedicated user account for Murano using RabbitMQ web console or command line utility
-login = muranouser
-password = murano
-#RabbitMQ virtual host (vhost). Fresh RabbitMQ installation has "/" vhost preconfigured.
-# It is recommended to create dedicated vhost for Murano using RabbitMQ web console or command line utility
-virtual_host = muranovhost
-
-
-                        ]]>
-                    </programlisting>
                     <para> For more information how to configure SSL take a look at <link linkend="ssl"> SSL configuration chapter </link></para>
                 </listitem>
                 <listitem>
@@ -250,9 +213,15 @@ admin_password = password
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Register murano-api service in Openstack
-                        (note: you need to be authorized in Openstack to run this commands)
-                    </para>
+                    <para>Register murano-api service in Openstack. </para>
+                    <para>Note: you need to be authorized in Openstack to run this commands. To do this, you can run something like (having changed variables to appropriate values)</para>
+                    <programlisting>
+                        <![CDATA[
+source $(YOUR_OPENSTACK_DIR)/openrc $(LOGIN) $(PASSWORD)
+                        ]]>
+                    </programlisting>
+
+                        
                     <anchor xml:id="murano_api_endpoint"></anchor>
                     <programlisting>
                         <![CDATA[
