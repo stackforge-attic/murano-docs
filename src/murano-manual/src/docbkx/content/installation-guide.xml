@@ -72,14 +72,14 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Clone Murano API Service from repository</para>
+                    <para>Clone Murano API Service from repository. We can clone the master branch by default, with the latest non-stable version of Murano or clone the stable version, for example 'release-0.2'. Please, do not forget to edit the branch name (with key -b)</para>
                     <para>
                         <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
 apt-get install -y git
-git clone https://github.com/stackforge/murano-api
+git clone https://github.com/stackforge/murano-api -b release-0.2
                         ]]>
                     </programlisting>
                     <para>
@@ -88,7 +88,7 @@ git clone https://github.com/stackforge/murano-api
                     <programlisting>
                         <![CDATA[
 yum install -y git gcc python-paste-deploy python-routes
-git clone https://github.com/stackforge/murano-api
+git clone https://github.com/stackforge/murano-api - b release-0.2
                        ]]>
                     </programlisting>
                 </listitem>
@@ -301,7 +301,7 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Navigate to the temporary directory and clone Murano Conductor Service from repository</para>
+                    <para>Navigate to the temporary directory and clone Murano Conductor Service from repository. We can clone the master branch by default, with the latest non-stable version of Murano or clone the stable version, for example 'release-0.2'. Please, do not forget to edit the branch name (with key -b)</para>
                     <para>
                         <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
                     </para>
@@ -310,7 +310,7 @@ sudo su
 mkdir -p /tmp/murano
 cd /tmp/murano
 apt-get install -y git
-git clone https://github.com/stackforge/murano-conductor
+git clone https://github.com/stackforge/murano-conductor -b release-0.2
                         ]]>
                     </programlisting>
                     <para>
@@ -321,7 +321,7 @@ git clone https://github.com/stackforge/murano-conductor
 mkdir -p /tmp/murano
 cd /tmp/murano
 yum install -y git 
-git clone https://github.com/stackforge/murano-conductor
+git clone https://github.com/stackforge/murano-conductor -b release-0.2
                        ]]>
                     </programlisting>
                 </listitem>
@@ -342,8 +342,7 @@ sh setup.sh install
                     <programlisting>
                         <![CDATA[
 cd murano-conductor
-yum install -y
-http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
+yum install -y http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
 sh setup-centos.sh install
                        ]]>
                     </programlisting>
@@ -481,7 +480,7 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Navigate to the temporary directory and clone Murano Dashboard Service from repository</para>
+                    <para>Navigate to the temporary directory and clone Murano Dashboard Service from repository. We can clone the master branch by default, with the latest non-stable version of Murano or clone the stable version, for example 'release-0.2'. Please, do not forget to edit the branch name (with key -b)</para>
                     <para>
                         <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
                     </para>
@@ -490,7 +489,7 @@ sudo su
 mkdir -p /tmp/murano
 cd /tmp/murano
 apt-get install -y git
-git clone https://github.com/stackforge/murano-dashboard
+git clone https://github.com/stackforge/murano-dashboard -b release-0.2
                         ]]>
                     </programlisting>
                     <para>
@@ -501,7 +500,7 @@ git clone https://github.com/stackforge/murano-dashboard
 mkdir -p /tmp/murano
 cd /tmp/murano
 yum install -y git 
-git clone https://github.com/stackforge/murano-dashboard
+git clone https://github.com/stackforge/murano-dashboard -b release-0.2
                        ]]>
                     </programlisting>
                 </listitem>
