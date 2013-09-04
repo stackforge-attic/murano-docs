@@ -62,7 +62,7 @@
         <para>This chapter describes the procedure of installation and condiguration of Murano API.  </para>
         <section>
             <title>Install</title>
-            <itemizedlist>
+            <itemizedlist spacing="compact">
                 <listitem>
                     <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
@@ -123,7 +123,7 @@ LOG:> Please, make proper configuration,located at "/etc/murano-api", before sta
         </section>
         <section>
             <title>Configure</title>
-            <itemizedlist>
+            <itemizedlist spacing="compact">
                 <listitem>
                     <para>First configure rabbitMQ by adding vhost and user with administrator rights:</para>
                     <programlisting>
@@ -214,7 +214,6 @@ source $(YOUR_OPENSTACK_DIR)/openrc $(LOGIN) $(PASSWORD)
                         ]]>
                     </programlisting>
 
-                        
                     <anchor xml:id="murano_api_endpoint"></anchor>
                     <programlisting>
                         <![CDATA[
@@ -265,7 +264,7 @@ initctl start murano-api
         <para>This chapter describes Conductor for contributors of the project.</para>
         <section>
             <title>Install</title>
-            <itemizedlist>
+            <itemizedlist spacing="compact">
                 <listitem>
                     <para>Murano Condutor uses OpenStack Heat for new virtual machines creation, therefore Heat should
                         been installed and configured. Some services require the Internet access for virtual machines to
@@ -333,11 +332,11 @@ sh setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
-            </itemizedlist>
+            </itemizedlist >
         </section>
         <section>
             <title>Configure</title>
-            <itemizedlist>
+            <itemizedlist spacing="compact">
                 <listitem>
                     <para>Edit configuration file and take a look at inline comments:</para>
                     <programlisting>
@@ -354,7 +353,7 @@ cp conductor.conf.sample conductor.conf
 vi conductor.conf
                         ]]>
                     </programlisting>
-                        <itemizedlist>
+                        <itemizedlist spacing="compact">
                             <listitem>
                                 <para><emphasis>[DEFAULT]</emphasis>section is responsible for logging.
                                 </para>
@@ -456,7 +455,7 @@ initctl start murano-conductor
         <para>Murano Dashboard provides Web UI for Murano Project.</para>
         <section>
             <title>Install</title>
-            <itemizedlist>
+            <itemizedlist spacing="compact">
                 <listitem>
                     <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>

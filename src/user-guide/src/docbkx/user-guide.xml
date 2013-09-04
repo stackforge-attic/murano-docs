@@ -61,28 +61,5 @@
         </cover>
     </info>
     <xi:include href="./content/overview.xml" xlink:title="Overview" />
-    <xi:include href="./content/installation-guide.xml" xlink:title="Installation Guide" />
-    <xi:include href="./content/blueprint.xml" xlink:title="Blueprint" />
-    <xi:include href="./content/specification.xml" xlink:title="API Specification" />
-    <xi:include href="./content/workflows.xml" xlink:title="Workflows XML DSL" />
-    <xi:include href="./content/knownissues.xml" xlink:title="Known Issues" />
-    <chapter>
-        <title>How To Participate</title>
-        <para>If you would like to ask some questions or make proposals, feel free to reach us on #murano irc channel at
-            FreeNode. Typically somebody from our team will be online at irc from 6:00 to 20:00 UTC. You can also
-            contact
-            Murano community directly by
-            <link xlink:href="mailto:openstack-dev@lists.openstack.org">openstack-dev@lists.openstack.org</link>
-            (please, note that your email address should be registered in launchpad, otherwise your mail will be ignored
-            by mailing system).
-        </para>
-        <para>
-            We’re going to hold public weekly meetings on Mondays at 15:00 UTC on #openstack-meeting-alt irc channel.
-        </para>
-        <para>If you want to contribute either to docs or to code, simply send us change request via
-            <link xlink:href="http://review.openstack.org">review.openstack.org</link>
-            (gerrit). You can file bugs and register blueprints at Murano <link
-                    xlink:href="https://launchpad.net/murano">launchpad page</link>.
-        </para>
-    </chapter>
+    <xi:include href="./content/murano-dashboard.xml" xlink:title="Murano Dashboard" />
 </book>

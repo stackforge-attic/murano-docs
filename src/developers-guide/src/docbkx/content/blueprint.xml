@@ -57,7 +57,7 @@
         </para>
         <section>
             <title>Proposal</title>
-            <para>Mirantis proposes to introduce a new service which will allow a non-experienced user to deploy
+            <para>Murano is intended to get opportunity for a non-experienced user to deploy
                 reliable Windows based environments in a “push-the-button” manner. The key goal is to provide a UI
                 and API enabling the deployment and operation of Windows Environments at the Windows Services
                 abstraction level. The service should be able to orchestrate complex circular dependent cases in
@@ -152,11 +152,11 @@
             <title>Architecture</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="figures/architecture_diagram.png"
+                    <imagedata fileref="../figures/architecture_diagram.png"
                                contentwidth="5in"/>
                 </imageobject>
                 <imageobject role="html">
-                    <imagedata fileref="figures/architecture_diagram.png"/>
+                    <imagedata fileref="../figures/architecture_diagram.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -179,9 +179,7 @@
             <title>Orchestration Engine</title>
             <para>This is the core component which evaluates Object Model changes and creates a plan for
                 implementing these changes on the instances or in the cloud. This component will support extensions
-                via plug-ins. Plugins can add new services and extend existing services for integration. Currently
-                there are two services which are already implemented as plugins. They are Active Directory and IIS
-                Service.
+                via plug-ins. Plugins can add new services and extend existing services for integration.
             </para>
         </section>
     </section>
@@ -190,7 +188,7 @@
         <itemizedlist>
             <listitem>
                 <para> <emphasis>Release-0.1</emphasis>
-                    has 0.1 tag in all Murano repositories. Released 2013-06-19.
+                    has 0.1 tag in all Murano repositories. Released 2013-09-05.
                 </para>
             </listitem>
             <listitem>
