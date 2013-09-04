@@ -36,7 +36,7 @@
                 <td colspan="4">
                     <itemizedlist spacing="compact">
                         <listitem>
-                            <para>Initial document creation</para>
+                            <para>Initial</para>
                         </listitem>
                     </itemizedlist>
                 </td>
@@ -2584,7 +2584,7 @@
                     </tgroup>
                 </table>
                 <table frame="all">
-                    <title>ASP.NET Application Farm Unit Object</title>
+                    <title>SQL Server Unit object</title>
                     <tgroup cols="3" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
@@ -2609,7 +2609,7 @@
             <section>
                 <title>Create Object Specs</title>
                 <table frame="all">
-                    <title>ASP.NET Application Farm Object</title>
+                    <title>SQL Server Unit object</title>
                     <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>

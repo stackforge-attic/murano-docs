@@ -46,10 +46,16 @@
             </para>
         </listitem>
         <listitem>
-            <para>Active Directory service can not be created on Win2008 image.</para>
+            <para>Murano-Conductor doesn't work with python-heatclient>0.2.1.</para>
         </listitem>
         <listitem>
-            <para>Murano-Conductor doesn't work with python-heatclient>0.2.1.</para>
+            <para>
+                Farm services can't be deployed without KeyPair. If KeyPair is not set
+                load balancer won't be created and these messages will show up in logs:
+2013-08-06 09:10:07 - Unable to deploy instance ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
+2013-08-06 09:10:07 - Unable to create a Server Farm load balancer on unit ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
+                And deploy will hang up.
+            </para>
         </listitem>
     </itemizedlist>
 
