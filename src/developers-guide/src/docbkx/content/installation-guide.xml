@@ -33,13 +33,13 @@
         <para>Murano supports the following operating systems:</para>
         <orderedlist>
             <listitem>
-                <para>Ubuntu</para>
+                <para>Ubuntu 12.04</para>
             </listitem>
             <listitem>
-                <para>RHEL/CentOS</para>
+                <para>RHEL/CentOS 6.4</para>
             </listitem>
         </orderedlist>
-        <para>Ensure that these packages are installed before Murano installation using your OS package manager:</para>
+        <para>These system packages are requred for Murano:</para>
         <orderedlist>
             <listitem>
                 <para>python-dev</para>
@@ -64,7 +64,7 @@
             <title>Install</title>
             <itemizedlist>
                 <listitem>
-                    <para>We need to have superuser privileges in order to install and configure system packages. Let's switch to root account:</para>
+                    <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
 sudo su
@@ -72,30 +72,23 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Clone Murano API Service from repository</para>
-                    <para>
-                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
-                    </para>
+                    <para>Clone Murano API git repository:</para>
                     <programlisting>
                         <![CDATA[
-apt-get install -y git
 git clone https://github.com/stackforge/murano-api
                         ]]>
                     </programlisting>
-                    <para>
-                        <emphasis>CentOS 6.x</emphasis>
-                    </para>
+                    <para>Stable version one of our <link linkend="releases"> releases</link> can be checked by tag:</para>
                     <programlisting>
                         <![CDATA[
-yum install -y git gcc python-paste-deploy python-routes
-git clone https://github.com/stackforge/murano-api
-                       ]]>
+git checkout 0.2
+                        ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Switch to just created directory and them perform installation</para>
+                    <para>Switch to just created directory and then perform installation</para>
                     <para>
-                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+                        <emphasis>Ubuntu</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
@@ -104,7 +97,7 @@ sh setup.sh install
                         ]]>
                     </programlisting>
                     <para>
-                        <emphasis>CentOS 6.x</emphasis>
+                        <emphasis>CentOS</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
@@ -122,7 +115,7 @@ Successfully installed muranoapi
 Cleaning up...
 LOG:> Making sample configuration files at "/etc/murano-api"
 LOG:> Reloading initctl
-LOG:> Please, make proper configugation,located at "/etc/murano-api", before starting the "murano-api" daemon!
+LOG:> Please, make proper configuration,located at "/etc/murano-api", before starting the "murano-api" daemon!
                        ]]>
                     </programlisting>
                 </listitem>
@@ -245,7 +238,7 @@ keystone endpoint-create
 				<listitem>
 					<para>Run Murano API service:</para>
 					<para>
-						<emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+						<emphasis>Ubuntu</emphasis>
 					</para>
 					<programlisting>
 						<![CDATA[
@@ -253,7 +246,7 @@ service murano-api start
 						]]>
 					</programlisting>
 					<para>
-						<emphasis>CentOS 6.x</emphasis>
+						<emphasis>CentOS</emphasis>
 					</para>
 					<programlisting>
 						<![CDATA[
@@ -269,7 +262,7 @@ initctl start murano-api
         <para>Conductor is a Murano orchestration engine that transforms object model sent by REST API service into
             a series of Heat and Murano-Agent commands.
         </para>
-        <para>This document describes Conductor for contributors of the project.</para>
+        <para>This chapter describes Conductor for contributors of the project.</para>
         <section>
             <title>Install</title>
             <itemizedlist>
@@ -293,7 +286,7 @@ initctl start murano-api
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Need to work as root</para>
+                    <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
 sudo su
@@ -301,34 +294,26 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Navigate to the temporary directory and clone Murano Conductor Service from repository</para>
-                    <para>
-                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
-                    </para>
+                    <para>Clone Murano Conductor repository from the github.</para>
                     <programlisting>
                         <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
-apt-get install -y git
 git clone https://github.com/stackforge/murano-conductor
                         ]]>
                     </programlisting>
-                    <para>
-                        <emphasis>CentOS 6.x</emphasis>
+                    <para>Stable version one of our
+                        <link linkend="releases">releases</link>
+                        can be checked out by tag:
                     </para>
                     <programlisting>
                         <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
-yum install -y git 
-git clone https://github.com/stackforge/murano-conductor
-                       ]]>
+git checkout 0.2
+                        ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
                     <para>Switch to just created directory and then perform installation</para>
                     <para>
-                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+                        <emphasis>Ubuntu</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
@@ -337,7 +322,7 @@ sh setup.sh install
                         ]]>
                     </programlisting>
                     <para>
-                        <emphasis>CentOS 6.x</emphasis>
+                        <emphasis>CentOS</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
@@ -354,7 +339,7 @@ sh setup-centos.sh install
             <title>Configure</title>
             <itemizedlist>
                 <listitem>
-                    <para>Edit configuration file where each parameter has a comment:</para>
+                    <para>Edit configuration file and take a look at inline comments:</para>
                     <programlisting>
                         <![CDATA[
 cd /etc/murano-conductor
@@ -447,7 +432,7 @@ virtual_host = muranovhost
 				<listitem>
 					<para>Run Murano Conductor service:</para>
 					<para>
-						<emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+						<emphasis>Ubuntu</emphasis>
 					</para>
 					<programlisting>
 						<![CDATA[
@@ -455,7 +440,7 @@ service murano-conductor start
 						]]>
 					</programlisting>
 					<para>
-						<emphasis>CentOS 6.x</emphasis>
+						<emphasis>CentOS</emphasis>
 					</para>
 					<programlisting>
 						<![CDATA[
@@ -473,7 +458,7 @@ initctl start murano-conductor
             <title>Install</title>
             <itemizedlist>
                 <listitem>
-                    <para>Need to work as root</para>
+                    <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
 sudo su
@@ -481,47 +466,30 @@ sudo su
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Navigate to the temporary directory and clone Murano Dashboard Service from repository</para>
-                    <para>
-                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
-                    </para>
+                    <para>Clone Murano Dashboard repository from the github:</para>
                     <programlisting>
                         <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
-apt-get install -y git
 git clone https://github.com/stackforge/murano-dashboard
                         ]]>
-                    </programlisting>
-                    <para>
-                        <emphasis>CentOS 6.x</emphasis>
-                    </para>
-                    <programlisting>
-                        <![CDATA[
-mkdir -p /tmp/murano
-cd /tmp/murano
-yum install -y git 
-git clone https://github.com/stackforge/murano-dashboard
-                       ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
                     <para>Switch to just created directory and run installation script</para>
                     <para>
-                        <emphasis>Ubuntu Linux 12.04 / 12.10</emphasis>
+                        <emphasis>Ubuntu</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
-cd /tmp/murano/murano-dashboard
+cd murano-dashboard
 sh setup.sh install
                         ]]>
                     </programlisting>
                     <para>
-                        <emphasis>CentOS 6.x</emphasis>
+                        <emphasis>CentOS</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
-cd /tmp/murano/murano-dashboard
+cd murano-dashboard
 sh setup-centos.sh install
                        ]]>
                     </programlisting>
@@ -540,10 +508,10 @@ sh setup-centos.sh install
             </para>
             <programlisting>
                 <![CDATA[
-   [ssl]
-   cert_file = PATH
-   key_file = PATH
-   ca_file = PATH
+    [ssl]
+    cert_file = PATH
+    key_file = PATH
+    ca_file = PATH
                 ]]>
             </programlisting>
             <itemizedlist>
@@ -596,7 +564,7 @@ sh setup-centos.sh install
                     self-signed certificates.
                 </para>
                 <programlisting>
-                        <![CDATA[
+                    <![CDATA[
     [rabbitmq]
 
     # Use SSL for RabbitMQ connections (True or False)
@@ -604,7 +572,7 @@ sh setup-centos.sh install
 
     # Path to SSL CA certificate or empty to allow self signed server certificate
     ca_certs =
-    ]]>
+                    ]]>
                 </programlisting>
         </section>
         <section>
@@ -616,7 +584,7 @@ sh setup-centos.sh install
                 self-signed certificates.
             </para>
             <programlisting>
-<![CDATA[
+                <![CDATA[
     [rabbitmq]
 
     # Use SSL for RabbitMQ connections (True or False)
@@ -624,7 +592,7 @@ sh setup-centos.sh install
 
     # Path to SSL CA certificate or empty to allow self signed server certificate
     ca_certs = /home/user/certificates/example.crt
-]]>
+                ]]>
             </programlisting>
         </section>
             <section>
@@ -636,7 +604,7 @@ sh setup-centos.sh install
                     Take a look at appSettings section:
                 </para>
                 <programlisting>
-<![CDATA[
+                    <![CDATA[
     <appSettings>
         <add key="rabbitmq.host" value="%RABBITMQ_HOST%"/>
         <add key="rabbitmq.port" value="%RABBITMQ_PORT%"/>
@@ -655,7 +623,7 @@ sh setup-centos.sh install
         <add key="rabbitmq.allowInvalidCA" value="true"/>
         <add key="rabbitmq.sslServerName" value=""/>
     </appSettings>
-                ]]>
+                    ]]>
                 </programlisting>
                 <para>
                     Desired parameter should be set directly to the value of the key

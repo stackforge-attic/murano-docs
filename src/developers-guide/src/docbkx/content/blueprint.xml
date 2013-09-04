@@ -185,6 +185,24 @@
             </para>
         </section>
     </section>
+    <section xml:id="releases">
+        <title>Releases</title>
+        <itemizedlist>
+            <listitem>
+                <para> <emphasis>Release-0.1</emphasis>
+                    has 0.1 tag in all Murano repositories. Released 2013-06-19.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis>Release-0.2</emphasis>
+                    has 0.2 tag in all Murano repositories. Released
+                    2013-05-30.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+    </section>
     <section>
         <title>Integration with Heat</title>
         <para>Heat is a cloud resource management engine that allows you to manipulate resources that represent

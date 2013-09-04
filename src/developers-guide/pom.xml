@@ -19,7 +19,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mirantis.murano</groupId>
-    <artifactId>murano-manual</artifactId>
+    <artifactId>developers-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Murano Project Documentation</name>
@@ -41,7 +41,7 @@
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
                     <postProcess>
-                        <copy todir="target/docbkx/webhelp/murano-manual/figures">
+                        <copy todir="target/docbkx/webhelp/developers-guide/figures">
                             <fileset dir="src/docbkx/figures">
                                 <include name="**/*.png"/>
                             </fileset>

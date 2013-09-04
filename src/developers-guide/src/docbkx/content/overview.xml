@@ -23,6 +23,13 @@
       version="5.0">
     <title>Overview</title>
     <para>Welcome to Murano Project.
+        Murano is intended to get opportunity for non-experienced
+        users to deploy reliable Windows-based environments with 1-Click.
+        Key goal is to provide UI and API which
+        allows to deploy and operate Windows environments on the "Windows
+        Services" abstraction level. The Service should be able to orchestrate
+        complex circular dependent cases in order to setup complete Windows
+        environments with many dependant services.
     </para>
     <section>
         <title>Intended Audience</title>
@@ -57,17 +64,5 @@
                 </tr>
             </tbody>
         </informaltable>
-    </section>
-    <section>
-        <title>Additional Resources</title>
-        <itemizedlist spacing="compact">
-            <listitem>
-                <para>
-                    <link xlink:href="http://www.mirantis.com">
-                        Mirantis - Cloud Software
-                    </link>
-                </para>
-            </listitem>
-        </itemizedlist>
     </section>
 </chapter>
