@@ -6,8 +6,9 @@ Murano project. It includes:
 
  * API Specification
  * Architecture
+ * Installation
 
-For more details, see the `Murano <http://murano.mirantis.com>`_.
+For more details, see the `Murano <http://murano-docs.github.io>`_.
 
 
 Prerequisites
@@ -32,19 +33,18 @@ The different manuals are in subdirectories of the
 To build a specific guide, look for a ``pom.xml`` file within a subdirectory,
 then run the ``mvn`` command in that directory. For example::
 
-    cd docs/src/murano-manual
+    cd docs/src/developers-guide
     mvn clean generate-sources
 
 The generated PDF documentation file is::
 
-    docs/src/murano-manual/src/target/docbkx/pdf/murano-manual.pdf
+    docs/src/developers-guide/src/target/docbkx/pdf/developers-guide.pdf
 
 The root of the generated HTML documentation is::
 
-    docs/src/murano-manual/src/target/docbkx/webhelp/murano-manual/content/index.html
+    docs/src/developers-guide/src/target/docbkx/webhelp/developers-guide/content/index.html
 
 
 Installing
 ==========
-Refer to http://murano.openstack.org to see where these documents are published
-and to learn more about the Murano project.
+Refer to http://murano.openstack.org Learn more about the Murano project.
