@@ -1,0 +1,8 @@
+Verified+2: Jenkins
+Approved+1: Timur <tnurlygayanov@mirantis.com>
+Code-Review+2: Timur <tnurlygayanov@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Thu, 05 Sep 2013 08:55:17 +0000
+Reviewed-on: https://review.openstack.org/45077
+Project: stackforge/murano-docs
+Branch: refs/heads/release-0.2
