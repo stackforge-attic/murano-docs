@@ -73,8 +73,6 @@
             contact
             Murano community directly by
             <link xlink:href="mailto:openstack-dev@lists.openstack.org">openstack-dev@lists.openstack.org</link>
-            (please, note that your email address should be registered in launchpad, otherwise your mail will be ignored
-            by mailing system).
         </para>
         <para>
             We’re going to hold public weekly meetings on Mondays at 15:00 UTC on #openstack-meeting-alt irc channel.

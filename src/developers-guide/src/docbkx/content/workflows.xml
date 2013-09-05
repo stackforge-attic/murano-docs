@@ -159,8 +159,6 @@ For both list and map functions names of item nodes ("item" in examples above) i
     </section>
     <section>
         <title>Workflows</title>
-        <section>
-            <title>About workflows</title>
             <para>
                 Workflows are XML DSL scripts that describe the steps that conductor need to perform in order to deploy specified environment. All workflow constructs are just ordinary DSL functions similar to those described above.
             </para>
@@ -171,10 +169,12 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 Actions are:
                 <itemizedlist>
                     <listitem>
+                        <para>
                         Heat commands that update or delete Heat Stack: <![CDATA[ <update-cf-stack>, <delete-cf-stack> ]]>
+                        </para>
                     </listitem>
                     <listitem>
-                        Send command to Murano Agent: <![CDATA[ <send-command> ]]>
+                        <para>Send command to Murano Agent: <![CDATA[ <send-command> ]]></para>
                     </listitem>
                     <listitem>
                         Report state to API: <![CDATA[ <report> ]]>
@@ -185,26 +185,31 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 Workflow logic can be described in 6 steps:
                 <orderedlist>
                     <listitem>
-                        Choose a node (set of nodes) to update. If none of the nodes can be updated we are done.
+                        <para>
+                            Choose a node (set of nodes) to update. If none of the nodes can be updated we are done.
+                        </para>
                     </listitem>
                     <listitem>
-                        According to the current state of node (that is a part of input Object Model) choose appropriate command to execute (update Heat stack or issue PowerShell command)
+                        <para>
+                            According to the current state of node (that is a part of input Object Model) choose appropriate command to execute (update Heat stack or issue PowerShell command)
+                        </para>
                     </listitem>
                     <listitem>
-                        Select appropriate information from Object Model and substitute it into chosen template
+                        <para>
+                            Select appropriate information from Object Model and substitute it into chosen template
+                        </para>
                     </listitem>
                     <listitem>
-                        Execute command
+                        <para>Execute command</para>
                     </listitem>
                     <listitem>
-                        Update Object Model according to command execution result
+                        <para>Update Object Model according to command execution result</para>
                     </listitem>
                     <listitem>
-                        Go to step 1
+                        <para>Go to step 1</para>
                     </listitem>
                 </orderedlist>
             </para>
-        </section>
         <section>
             <title>Accessing Object Model</title>
             <para>Object Model is a definition of environment that Murano Conductor was asked to deploy.</para>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2013 Mirantis, Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+      version="5.0">
+    <title>Murano dashboard plugin</title>
+    <para>
+        For a Murano usage you should be familiar with Openstack. Murano Dashboard is just a plugin to Openstack dashboard - Horizon.
+        Please visit
+        <link xlink:href="http://docs.openstack.org/user-guide/content/"> horizon user guide </link>
+        first to see how dashboard is organized and how login to it.
+    </para>
+    <section>
+        <title>Creating environment</title>
+        <para> Once you installed all Murano components and login to horizon dashboard successfully you will see Environments panel:</para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata  fileref="../images/env_panel.png" />
+            </imageobject>
+        </mediaobject>
+        <para>
+            First you need to do is to create an environment - virtual Windows Data Center which will contain different Windows services.
+            Navigate to "Environments" page and click "Create Environment". After setting name to your virtual environment it will be created.
+            Just created environment has status <emphasis>Ready to configure</emphasis>.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/env_btn.png" />
+            </imageobject>
+        </mediaobject>
+    </section>
+    <section>
+        <title>Creating service prototype</title>
+        <para >
+            All services should be created within the framework of Environment
+            - virtual Windows Data Center. First you need to create one or more service's prototypes
+            and then send Environment to deploy process. After that one or more instances with your service be spawned on Openstack.
+            To create service prototype navigate to environment services by
+            clicking on environment name (or on "Services" button) and press on "Create Service" button.
+        </para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/service_btn.png"/>
+                </imageobject>
+            </mediaobject>
+        <para>
+            You have opportunity to create one of the following services:
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/service_list.png"/>
+            </imageobject>
+        </mediaobject>
+        <para>
+            Once you choose service that you want to create click "Next" and fill the form.
+            Forms for each service are specific.
+            To see more information about filling the form for a specified service follow one of the link below:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="bold"><link linkend="AD">Active Directory:</link></emphasis>
+                    Active Directory is a directory service implemented by Microsoft for Windows domain networks.
+                    In one installation in addition to primary Domain Controller
+                    you can add optional count of secondary Domain Controllers.
+                    Any other services you are intending to create can be
+                    joined to that domain.
+            </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">
+                        <link linkend="IIS">Internet Information Service:</link></emphasis>
+                    IIS is a web server and a set of feature extension modules.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">
+                        <link linkend="IISfarm">Internet Information Web Farm Service:</link>
+                    </emphasis>
+                    Murano installs the Web Farm Framework on the controller server,
+                    configures the primary server and prepares the secondary servers.
+                    In addition load balancer is installed to monitor service statuses.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">
+                        <link linkend="ASP">ASP.NET Service:</link>
+                    </emphasis>
+                    is a server-side Web application framework designed for Web
+                    development to produce dynamic Web pages. Service is able
+                    to install custom application onto one IIS Web Server. Murano installs
+                    all needed components and make proper configuration.
+            </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">
+                        <link linkend="ASPfarm">ASP.NET Farm Service:</link>
+                    </emphasis>
+                    ASP.NET Farm Service installs a custom application on a
+                    load-balanced array of IIS servers
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold"><link linkend="SQL">MS SQL Service:</link></emphasis>
+                    Microsoft SQL Service is a relational database management system.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">
+                        <link linkend="SQLfarm">SQL Server Failover Cluster:</link>
+                    </emphasis>
+                    Murano installs all needed components and configures your
+                    SQL Server Cluster the way you want.
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            On the last step of creating service prototype you have opportunity to set
+            the hardware flavor of the instance which will be created -
+            and the image with the operating system, which will be installed on
+            the instance. Also you may select availability zone, if there are more
+            then one in your environment.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/last_step.png"/>
+            </imageobject>
+        </mediaobject>
+        <section  xml:id="AD">
+            <title>Active Directory</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/ad.png"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+        <section xml:id="IIS">
+            <title>Internet Information Service</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/iis.png"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+        <section xml:id="IISfarm">
+            <title>Internet Information Web Farm Service</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/iis_farm.png"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+        <section xml:id="ASP">
+            <title>ASP.NET Service</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/asp_net.png"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+        <section xml:id="ASPfarm">
+            <title>ASP.NET Farm Service</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/asp_net_farm.png"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+        <section xml:id="SQL">
+            <title>MS SQL Service</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/sql.png"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+        <section xml:id="SQLfarm">
+            <title>SQL Server Failover Cluster</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/cluster1.png"/>
+                </imageobject>
+            </mediaobject>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/cluster1a.png"/>
+                </imageobject>
+            </mediaobject>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/cluster2.png"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+    </section>
+    <section>
+        <title>Deploying environment</title>
+        <para>
+            Once all services are prepared you can send environment to deploy
+            and wait while Murano installing and configuring your services.
+            Just press the "Deploy Environment" button.
+        </para>
+        <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/deploy_btn.png"/>
+                </imageobject>
+        </mediaobject>
+        <para>
+            You can monitor deploying process. Just go to the Log tab on service
+            detailed page where you can get by clicking on the service name.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/service_name.png"/>
+            </imageobject>
+        </mediaobject>
+        <para>
+            And now you can see installation progress.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/logs.png"/>
+            </imageobject>
+        </mediaobject>
+
+        <para>
+            Until installation finished environment are in deployng state.
+        </para>
+    </section>
+    <section>
+        <title>Detailed information</title>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/iis_farm_detail.png"/>
+            </imageobject>
+        </mediaobject>
+</section>
+</chapter>

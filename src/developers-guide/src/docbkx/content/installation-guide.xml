@@ -85,7 +85,7 @@
                     <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
-sudo su
+sudo su -
                         ]]>
                     </programlisting>
                 </listitem>
@@ -284,9 +284,9 @@ initctl start murano-api
             <title>Install</title>
             <itemizedlist spacing="compact">
                 <listitem>
-                    <para>Murano Condutor uses OpenStack Heat for new virtual machines creation, therefore Heat should
+                    <para>Murano Conductor uses OpenStack Heat for new virtual machines creation, therefore Heat should
                         been installed and configured. Some services require the Internet access for virtual machines to
-                        successfull deployment.
+                        successful deployment.
                     </para>
                     <para>The detailed information about Heat configuration is described
                         <link xlink:href="http://docs.openstack.org/developer/heat/getting_started/index.html">here.
@@ -306,7 +306,7 @@ initctl start murano-api
                     <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
-sudo su
+sudo su -
                         ]]>
                     </programlisting>
                 </listitem>
@@ -478,7 +478,7 @@ initctl start murano-conductor
                     <para>Superuser privileges is required to install and configure system packages. Let's switch to root account:</para>
                     <programlisting>
                         <![CDATA[
-sudo su
+sudo su -
                         ]]>
                     </programlisting>
                 </listitem>
@@ -516,6 +516,10 @@ sh setup-centos.sh install
     </section>
     <section xml:id="ssl">
         <title>SSL configuration</title>
+        <para>
+            Murano components are able to work with SSL. This chapter will
+            help your to make proper settings with SSL configuration.
+        </para>
         <section>
             <title>HTTPS for Murano API</title>
             <para>

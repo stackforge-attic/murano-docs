@@ -2664,7 +2664,7 @@
                     </tgroup>
                 </table>
                 <table frame="all">
-                    <title>ASP.NET Application Farm Unit Object</title>
+                    <title>MS SQL Server Unit Object</title>
                     <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
