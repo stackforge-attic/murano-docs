@@ -46,9 +46,6 @@
             </para>
         </listitem>
         <listitem>
-            <para>Murano-Conductor doesn't work with python-heatclient>0.2.1.</para>
-        </listitem>
-        <listitem>
             <para>
                 Farm services can't be deployed without KeyPair. If KeyPair is not set
                 load balancer won't be created and these messages will show up in logs:
