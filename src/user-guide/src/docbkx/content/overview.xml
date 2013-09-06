@@ -24,9 +24,8 @@
     <title>How can I use Murano Service?</title>
     <para>
         Murano is intended to get opportunity for non-experienced
-        users to deploy reliable Windows-based environments with 1-Click.
-        This document describes steps for creation Windows Environment with different services.
-        You'll see how it's easy with Murano.
+        users to deploy reliable Windows-based environments extremely simple.
+        This document describes process of creation virtual Windows Environment with different services.
     </para>
     <section>
         <title>Document change history</title>

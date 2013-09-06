@@ -23,42 +23,44 @@
       version="5.0">
     <title>Murano dashboard plugin</title>
     <para>
-        For a Murano usage you should be familiar with Openstack. Murano Dashboard is just a plugin to Openstack dashboard - Horizon.
+        To use Murano you should be familiar with Openstack. Murano Dashboard is just a plugin to Openstack dashboard - Horizon.
         Please visit
         <link xlink:href="http://docs.openstack.org/user-guide/content/"> horizon user guide </link>
-        first to see how dashboard is organized and how login to it.
+        first to see how dashboard is organized and how to login to it.
     </para>
     <section>
         <title>Creating environment</title>
         <para> Once you installed all Murano components and login to horizon dashboard successfully you will see Environments panel:</para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata  fileref="../images/env_panel.png" />
+                <imagedata  fileref="../images/env_panel.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
         <para>
-            First you need to do is to create an environment - virtual Windows Data Center which will contain different Windows services.
-            Navigate to "Environments" page and click "Create Environment". After setting name to your virtual environment it will be created.
+            First thing you need to do is to create an environment - virtual Windows Data Center which will contain different Windows services.
+            Navigate to the "Environments" page and click the "Create Environment". After setting name to your virtual environment it will be created.
             Just created environment has status <emphasis>Ready to configure</emphasis>.
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/env_btn.png" />
+                <imagedata fileref="../images/env_btn.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
     </section>
     <section>
         <title>Creating service prototype</title>
         <para >
-            All services should be created within the framework of Environment
-            - virtual Windows Data Center. First you need to create one or more service's prototypes
-            and then send Environment to deploy process. After that one or more instances with your service be spawned on Openstack.
+            All services should be created in the context of Environment
+            - virtual Windows Data Center. After Environment is created services prototypes
+            and then deploy the Environment. When deploy process is done instances
+            with your service will be spawned in Openstack.
             To create service prototype navigate to environment services by
-            clicking on environment name (or on "Services" button) and press on "Create Service" button.
+            clicking on the environment name (or on the "Services" button) and click
+            the "Create Service" button.
         </para>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/service_btn.png"/>
+                    <imagedata fileref="../images/service_btn.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         <para>
@@ -66,7 +68,7 @@
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/service_list.png"/>
+                <imagedata fileref="../images/service_list.png" scalefit="1" width="100%" contentdepth="50%" />
             </imageobject>
         </mediaobject>
         <para>
@@ -147,14 +149,14 @@
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/last_step.png"/>
+                <imagedata fileref="../images/last_step.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
         <section  xml:id="AD">
             <title>Active Directory</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/ad.png"/>
+                    <imagedata fileref="../images/ad.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -162,7 +164,7 @@
             <title>Internet Information Service</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/iis.png"/>
+                    <imagedata fileref="../images/iis.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -170,7 +172,7 @@
             <title>Internet Information Web Farm Service</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/iis_farm.png"/>
+                    <imagedata fileref="../images/iis_farm.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -178,7 +180,7 @@
             <title>ASP.NET Service</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/asp_net.png"/>
+                    <imagedata fileref="../images/asp_net.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -186,7 +188,7 @@
             <title>ASP.NET Farm Service</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/asp_net_farm.png"/>
+                    <imagedata fileref="../images/asp_net_farm.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -194,7 +196,7 @@
             <title>MS SQL Service</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/sql.png"/>
+                    <imagedata fileref="../images/sql.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -202,17 +204,17 @@
             <title>SQL Server Failover Cluster</title>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/cluster1.png"/>
+                    <imagedata fileref="../images/cluster1.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/cluster1a.png"/>
+                    <imagedata fileref="../images/cluster1a.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/cluster2.png"/>
+                    <imagedata fileref="../images/cluster2.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -220,14 +222,23 @@
     <section>
         <title>Deploying environment</title>
         <para>
-            Once all services are prepared you can send environment to deploy
-            and wait while Murano installing and configuring your services.
+            Once all services are prepared you can send environment to deploy.
             Just press the "Deploy Environment" button.
         </para>
         <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/deploy_btn.png"/>
+                    <imagedata fileref="../images/deploy_btn.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
+        </mediaobject>
+        <para>
+            And you'll see a message about successful start of deploying your services in Openstack. Since now all you have to do is just wait for a little bit
+            while Murano installing and configuring your services.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/deploy_started.png" scalefit="1"
+                           width="100%" contentdepth="100%"/>
+            </imageobject>
         </mediaobject>
         <para>
             You can monitor deploying process. Just go to the Log tab on service
@@ -235,7 +246,7 @@
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/service_name.png"/>
+                <imagedata fileref="../images/service_name.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
         <para>
@@ -243,20 +254,280 @@
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/logs.png"/>
+                <imagedata fileref="../images/logs.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
-
         <para>
-            Until installation finished environment are in deployng state.
+            As long as installation and configuration are in progress environment
+            is in <emphasis>Deploying</emphasis> state. Depending on how many
+            services you are deploying or how many nodes in your cluster, process of spawning instances,
+            installation and post installation settings takes from 10 minutes up to one hour.
         </para>
-    </section>
-    <section>
-        <title>Detailed information</title>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/iis_farm_detail.png"/>
+                <imagedata fileref="../images/env_deploy.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
-</section>
+        <para>
+            If installation process finished without any errors environment changes its status to
+            <emphasis>Ready:</emphasis>
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/done.png" scalefit="1" width="100%" contentdepth="100%"/>
+            </imageobject>
+        </mediaobject>
+    </section>
+    <section>
+        <title>Working with deployed environment</title>
+        <para>
+            Congratulations! After some time waiting you are able to operate with the services.
+            To get information about installed services navigate to service detailed page.
+            To do that click on the environment name and then on the name of the service you what to know about.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/iis_farm_detail.png" scalefit="1" width="100%" contentdepth="100%"/>
+            </imageobject>
+        </mediaobject>
+        <para>
+            Now you are seeing general information about the service in terms of Murano Environment.
+            To get information about the instance in Openstack terms follow the link on service instance name.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/name_link.png" scalefit="1"/>
+            </imageobject>
+        </mediaobject>
+        <para>
+            You can login to the virtual machine directly from the horizon (if you Openstack installation allows you) or by RDP protocol.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/instance_console.png" scalefit="1"
+                           width="100%" contentdepth="100%"/>
+            </imageobject>
+        </mediaobject>
+        <para>There are more things you can do with Murano Environment:</para>
+        <itemizedlist>
+            <listitem>
+                <para><link linkend="redeploy">Add new services and deploy it again;</link></para>
+            </listitem>
+            <listitem>
+                <para><link linkend="delete">Delete outdated and unnecessary environments or services;</link></para>
+            </listitem>
+            <listitem>
+                <para><link linkend="deployments">Browse deployment history and service installation logs;</link></para>
+            </listitem>
+            <listitem>
+                <para><link linkend="edit">Rename your environment.</link></para>
+            </listitem>
+        </itemizedlist>
+        <section xml:id="redeploy">
+            <title>Redeploying Murano Environment</title>
+            <para>
+                Murano gives opportunity to supplement already deployed environment.
+                If you deployed the Active Directory service and want to create
+                any other service just create desired service prototype and click on the "Deploy Environment" button.
+                During service prototype creation you can join this service to the existent Active Directory domain.
+            </para>
+        </section>
+        <section xml:id="delete">
+            <title>Deleting</title>
+            <para>Services as well as environments can be easily deleted.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>To delete an environment go to the environment index page and click "More" -> "Delete Environment" in Actions column of ready to delete environment.</para>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata fileref="../images/env_delete.png"
+                                       scalefit="1" width="100%"
+                                       contentdepth="100%"/>
+                        </imageobject>
+                    </mediaobject>
+                    <para>
+                        Environment deletion means to kill all services with instances on which they are installed.
+                        Instances will be scheduled to delete right after you choose the "Delete Environment" action.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        To delete a service go service list page and click the "Delete Service" button in Actions column. <emphasis role="bold">Note:</emphasis>
+                        If you are deleting service that was already deployed you'll need to <emphasis>Deploy</emphasis> the environment again by pressing corresponding button.
+                        In case you want to delete service prototype - it has <emphasis>"Service draft created"</emphasis> in the <emphasis>
+                        Last operation</emphasis> column (see the screenshot below) - changes applies right away.
+                    </para>
+                    <mediaobject>
+                        <imageobject role="fo">
+                            <imagedata fileref="../images/service_delete.png"
+                                       scalefit="1" width="100%"
+                                       contentdepth="100%"/>
+                        </imageobject>
+                    </mediaobject>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section xml:id="deployments">
+            <title>Browsing Murano Deployment</title>
+            <para>
+                Since Murano Environment can be deployed many times you may want
+                to see the history of its deployments. To do that click the "More-> Show deployments"
+                button on environments index page:
+            </para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/env_show.png" scalefit="1" width="100%" contentdepth="100%"/>
+                </imageobject>
+            </mediaobject>
+            <para>
+                From this page it's easy to see how many times and when Murano Environment was deployed:
+            </para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/deployments.png" scalefit="1" width="100%" contentdepth="100%"/>
+                </imageobject>
+            </mediaobject>
+            <para>
+                For each deployment you can get a detailed information by clicking the "Show Details" button.
+                You always can go back to any level using navigation string at the page header.
+                From here you can observe what services were installed during deployment:
+            </para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/deployment_configuration.png"
+                               scalefit="1" width="100%" contentdepth="100%"/>
+                </imageobject>
+            </mediaobject>
+            <para>Also deployment logs are available at the "Logs" tab:</para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata
+                            fileref="../images/deployment_logs.png"
+                            scalefit="1" width="100%" contentdepth="100%"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+        <section xml:id="edit">
+            <title>Renaming Murano Environment</title>
+            <para>
+                It's possible to change name of your environment: just click the "More-> Edit Environment" button on environment index page:
+            </para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/env_edit.png" scalefit="1" width="100%" contentdepth="100%"/>
+                </imageobject>
+            </mediaobject>
+            <para>
+                Environment name is not involved in service creation process so you can use spaces and any other
+                characters you want.
+            </para>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/env_edit2.png" scalefit="1"
+                               width="100%" contentdepth="100%"/>
+                </imageobject>
+            </mediaobject>
+        </section>
+    </section>
+    <section xml:id="trouble">
+        <title>Troubleshooting</title>
+            <para><emphasis role="bold"> How to debug OpenStack Heat?</emphasis></para>
+            <para>
+
+                If you can execute Heat command via console interface - all good. It is
+                the most simple way to check Heat state on the node - jest execute CLI
+                command 'heat list'.
+
+                See more information about Heat in openstack wiki
+                <link xlink:href="https://wiki.openstack.org/wiki/Heat/TroubleShooting"> page</link>
+            </para>
+            <para><emphasis role="bold"> If 'heat list' returns 503 error</emphasis></para>
+            <para>
+                It is means that OpenStack Heat configuration files contains incorrect
+                credentials. Need to set 'user' = 'heat' and change passwords
+                'verybadpass' in all configuration files from directory /etc/heat/
+            </para>
+            <para><emphasis role="bold">If 'heat list' hangs up</emphasis></para>
+            <para>
+                Sometimes ypu can see that 'heat list' hangs up. The root of this
+                problem - connection to the rabbitMQ.
+            </para>
+            <para><emphasis role="bold">How I can connect to LoadBalancer instance in Server Farms?</emphasis></para>
+            <para>
+                First of all you should have KeyPair file 'murano-lb-key', you can
+                create this file using commands
+                <programlisting>
+                    <![CDATA[
+nova keypair-add murano-lb-key > murano-lb-key.priv
+chmod 600 murano-lb-key.priv
+                    ]]>
+                </programlisting>
+                And after that you should create server farms with this KeyPair.
+                The second step is to 'how to connect to VM with LoadBalancer':
+                <programlisting>
+                <![CDATA[
+ssh -i murano-lb-key.priv root@10.0.0.3
+                ]]>
+              </programlisting>
+            </para>
+            <para><emphasis role="bold">Murano dashboard can not connect to Murano API. How I can fix it?</emphasis></para>
+            <para>
+                This is problem has two ways to fix:
+                Add string
+                    <programlisting>
+                        <![CDATA[
+MURANO_API_URL='http://localhost:8082'
+                                ]]>
+                    </programlisting>
+
+                to file /etc/openstack-dashboard/local_settings (or
+                /etc/openstack-dashboard/local_settings.py - it is depends on OpenStack
+                configuration)
+                and after that need to restart web server.
+                Add keystone endpoints for Murano API
+                    <programlisting>
+                        <![CDATA[
+keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
+keystone endpoint-create --region RegionOne --service-id
+--publicurl http://localhost:8082 --internalurl http://localhost:8082 --adminurl http://localhost:8082
+                    ]]>
+                </programlisting>
+            </para>
+            <para><emphasis role="bold">
+                Murano API Service does not work on CentOS 6.x. WebUI can not connect
+                to this service. How to fix this?</emphasis>
+                </para>
+            <para>
+                The problem in pip lib routes. Need to upgrade this lib and restart
+                Murano API:
+                <programlisting>
+                    <![CDATA[
+python-pip install routes --upgrade
+initctl stop murano-api
+initctl start murano-api
+                ]]>
+            </programlisting>
+            </para>
+            <para><emphasis role="bold">
+                Error 'Unexpected state' during the deployment of Web Farms. What the
+                problem? </emphasis>
+            </para>
+            <para>
+                Sometimes we can see in logs of the deployments:
+                <programlisting>
+                    <![CDATA[
+2013-08-06 09:10:07 - Unable to deploy instance ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
+2013-08-06 09:10:07 - Unable to create a Server Farm load balancer on unit ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
+                                ]]>
+                </programlisting>
+                The root of this problem in incorrect configuration - Heat can not
+                create Load Balancer instance. Please, remember that you should have
+                admin access for project in OpenStack to deploy LoadBalancer and also,
+                you should have KeyPair with default name 'murano-lb-key'.
+            </para>
+            <para><emphasis role="bold">Error in Murano API logs 'No module named helpers.token_sanitizer'</emphasis></para>
+             <para>
+                This is problem with pip version. Need to install pip 1.4 and after that reinstall murano-client, murano-common and murano-api.
+            </para>
+    </section>
 </chapter>
