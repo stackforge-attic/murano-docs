@@ -19,10 +19,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mirantis.murano</groupId>
-    <artifactId>developers-guide</artifactId>
+    <artifactId>murano-getting-started-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Murano Project Documentation</name>
+    <name>Murano Deployment Guide</name>
     <build>
         <plugins>
             <plugin>
@@ -40,13 +40,6 @@
                 <configuration>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
-                    <postProcess>
-                        <copy todir="target/docbkx/webhelp/developers-guide/figures">
-                            <fileset dir="src/docbkx/figures">
-                                <include name="**/*.png"/>
-                            </fileset>
-                        </copy>
-                    </postProcess>
                 </configuration>
             </plugin>
         </plugins>

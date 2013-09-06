@@ -300,7 +300,7 @@
             </imageobject>
         </mediaobject>
         <para>
-            You can login to the virtual machine directly from the horizon (if you Openstack installation allows you) or by RDP protocol.
+            You can login to the virtual machine directly from the horizon (if your Openstack installation allows you) or by RDP protocol.
         </para>
         <mediaobject>
             <imageobject role="fo">
