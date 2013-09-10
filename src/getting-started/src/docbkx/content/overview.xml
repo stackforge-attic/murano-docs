@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2013 Mirantis, Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+      version="5.0">
+    <title>About Murano</title>
+    <para>
+        Murano is a new service which allows a non-experienced user to deploy
+        reliable Windows based environments in a “push-the-button” manner. The
+        key goal is to provide a UI and API enabling the deployment and
+        operation of Windows Environments at the Windows Services abstraction
+        level. The service is able to orchestrate complex circular dependent
+        cases in order to set up a complex Windows Environment with multiple
+        dependant services.
+    </para>
+    <para>
+        The service addresses following use cases:
+        <itemizedlist>
+            <listitem>
+                <para>Self-provisioning of predefined Windows services with their dependencies</para>
+            </listitem>
+            <listitem>
+                <para>Automation of administrative tasks during data center roll-out</para>
+            </listitem>
+            <listitem>
+                <para>Custom windows application as a windows service</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        The solution provides higher level of abstraction for manipulation
+        Windows Environments. Key concepts are:
+        <itemizedlist>
+            <listitem>
+                <para>Windows Service - a service such as Active Directory, MSSQL, or IIS, which usually consists of multiple virtual machines and has multiple dependencies.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Windows Environment - a logical unit for all Services and represents a classical Windows Datacenter.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Windows VM instance - a VM which hosts a Windows Service. A Windows Service might be deployed over several Windows VM instances.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        The Key Features of the Service are the following:
+        <orderedlist>
+            <listitem>
+                <para>Native to OpenStack</para>
+            </listitem>
+            <listitem>
+                <para>Introduces abstraction level for Windows Environments</para>
+            </listitem>
+            <listitem>
+                <para>Supports Availability Zones and Disaster Recovery scenarios</para>
+            </listitem>
+            <listitem>
+                <para>Uses native Windows features for HA solutions</para>
+            </listitem>
+        </orderedlist>
+            </para>
+    <section>
+        <title>Document change history</title>
+        <para>The following table describes the most recent changes:</para>
+        <informaltable rules="all" frame="all">
+            <thead>
+                <tr>
+                    <td align="center" colspan="1">Revision Date</td>
+                    <td align="center" colspan="4">Summary of Changes</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="1" align="center">September. 4, 2013</td>
+                    <td colspan="4">
+                        <itemizedlist>
+                            <listitem>
+                                <para>Initial document creation.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+            </tbody>
+        </informaltable>
+    </section>
+
+</chapter>

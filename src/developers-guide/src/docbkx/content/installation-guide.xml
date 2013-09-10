@@ -224,6 +224,7 @@ admin_password = password
                     </programlisting>
                 </listitem>
                 <listitem>
+                    <anchor xml:id="murano_api_endpoint"></anchor>
                     <para>Register murano-api service in Openstack. </para>
                     <para>Note: you need to be authorized in Openstack to run this commands. To do this, you can run something like (having changed variables to appropriate values)</para>
                     <programlisting>
@@ -231,8 +232,6 @@ admin_password = password
 source $(YOUR_OPENSTACK_DIR)/openrc $(LOGIN) $(PASSWORD)
                         ]]>
                     </programlisting>
-
-                    <anchor xml:id="murano_api_endpoint"></anchor>
                     <programlisting>
                         <![CDATA[
 keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
@@ -512,6 +511,12 @@ sh setup-centos.sh install
                     </programlisting>
                 </listitem>
             </itemizedlist>
+            <para>
+                This script will supplement openstack dashboard configuration and the panel with Murano "Environments" should appear.
+                Don't forget to <link linkend="murano_api_endpoint"> register </link>
+                Murano API in keystone and set OPENSTACK_HOST in
+                <link xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html#openstack-host">horizon settings</link>.
+            </para>
         </section>
     </section>
     <section xml:id="ssl">
