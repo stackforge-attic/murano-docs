@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="user-guide.xml" type="text/css"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright (c) 2013 Mirantis, Inc.
 
@@ -23,7 +22,7 @@
       xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
       version="5.0">
-    <title>Murano User Guide</title>
+    <title>Murano Getting Started Guide</title>
     <info>
         <author>
             <personname>
@@ -51,7 +50,7 @@
         </legalnotice>
         <abstract>
             <para>This document is intended for individuals who wish to
-                use Murano Product.
+                use our product or intend to contribute.
             </para>
         </abstract>
         <cover>
@@ -62,5 +61,9 @@
         </cover>
     </info>
     <xi:include href="./content/overview.xml" xlink:title="Overview" />
-    <xi:include href="./content/murano-dashboard.xml" xlink:title="Murano Dashboard" />
+    <xi:include href="./content/before_you_begin.xml" xlink:title="Before You Begin"/>
+    <xi:include href="./content/setup_lab_environment.xml" xlink:title="Setup Lab Environment"/>
+    <xi:include href="./content/setup_devbox.xml" xlink:title="Setup Devbox"/>
+    <xi:include href="./content/troubleshooting.xml" xlink:title="Troubleshooting"/>
+    <xi:include href="./content/appendix.xml" xlink:title="Appendix"/>
 </book>

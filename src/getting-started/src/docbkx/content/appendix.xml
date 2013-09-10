@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2013 Mirantis, Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<chapter xml:id="Appendix" xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                            http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0">
+    <title>Appendix</title>
+    <para>
+        <emphasis role="bold">Murano VM</emphasis>
+        <note>
+            <para>
+                Your VM MUST be attached to the network with Internet access
+                and openstack management network (lab network) access.
+            </para>
+        </note>
+    </para>
+    <para>
+        <emphasis>Ubuntu Server 12.04 LTS x86_64</emphasis>
+    </para>
+    <para>Installation steps:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Install minimal version of the system</para>
+        </listitem>
+        <listitem>
+            <para>When prompted, mark OpenSSH Server to be installed
+            </para>
+        </listitem>
+        <listitem>
+            <para>Login as root</para>
+        </listitem>
+        <listitem>
+            <para>Enable Cloud Archive repository</para>
+        </listitem>
+        <listitem>
+            <para>Update installed OS and packages</para>
+        </listitem>
+        <listitem>
+            <para>Add lines below to the
+                <filename>/etc/apt/sources.list.d/grizzly.list</filename>
+                file
+                <programlisting>
+deb http://ubuntu-cloud.archive.canonical.com/ubuntu
+                    precise-updates/grizzly main
+deb http://archive.gplhost.com/debian grizzly main
+deb http://archive.gplhost.com/debian grizzly-backports main
+                </programlisting>
+            </para>
+        </listitem>
+        <listitem>
+            <para>Update the system
+                <programlisting>
+># apt-get update
+># apt-get install ubuntu-cloud-keyring
+># apt-get install gplhost-archive-keyring
+># apt-get upgrade
+                </programlisting>
+            </para>
+        </listitem>
+        <listitem>
+            <para>Install additional packages
+                <programlisting>
+># apt-get install mc unzip git make gcc
+                    python-setuptools python-pip
+                </programlisting>
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
+        <emphasis>CentOS 6.4 x86_64</emphasis>
+    </para>
+    <para>Installation steps:</para>
+    <itemizedlist>
+        <listitem>
+            <para>Install minimal version of the system.</para>
+        </listitem>
+        <listitem>
+            <para>When prompted, mark OpenSSH Server to be installed</para>
+        </listitem>
+        <listitem>
+            <para>Login as root</para>
+        </listitem>
+        <listitem>
+            <para>Enable RedHat Openstack and Epel repository</para>
+        </listitem>
+        <listitem>
+            <para>Update installed OS and packages</para>
+        </listitem>
+        <listitem>
+            <para>Add repositories and update OS
+                <programlisting>
+># yum install -y http://rdo.fedorapeople.org/openstack/
+    openstack-grizzly/rdo-release-grizzly.rpm
+># yum install -y http://mirror.yandex.ru/
+                    epel/6/x86_64/epel-release-6-8.noarch.rpm
+># yum update
+># yum upgrade
+                </programlisting>
+            </para>
+        </listitem>
+        <listitem>
+            <para>Install additional packages
+                <programlisting>
+                    ># yum install mc unzip git make gcc python-setuptools
+                    python-pip upstart
+                </programlisting>
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
+        Most of dependent packages will be installed
+        automatically with setup scripts.
+        <note>
+            <para>
+                Some words about pip (python-pip) version. In order to have
+                proper versions of python dependency packages installed,
+                pip version MUST be 1.4 or higher!
+            </para>
+        </note>
+    </para>
+    <para>How-to determine python-pip version:</para>
+    <programlisting>
+># pip --version
+    </programlisting>
+    <para>How-to upgrade pip to latest version:
+        <programlisting>
+># pip install --upgrade pip
+># pip install
+            https://pypi.python.org/packages/source/p/pip/pip-1.4.1.tar.gz
+        </programlisting>
+        <note>
+            <para>
+                You should pay attention to python-pip after upgrade to
+                version 1.4, because its filesystem location can change
+                from /usr/bin/pip to /usr/local/bin/pip!
+            </para>
+        </note>
+    </para>
+    <para>How to handle this situation:</para>
+    <programlisting>
+># rm /usr/bin/pip
+># ln -s /usr/local/bin/pip /usr/bin/pip
+    </programlisting>
+</chapter>
