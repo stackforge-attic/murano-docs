@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2013 Mirantis, Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                            http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0">
+        <title>Troubleshooting</title>
+        <para>
+            Set debug options to "true" in all config files - dashboard, api,
+            conductor.
+            <note>
+                <para>
+                The following debug sequence should be used when you have
+                no idea about why the system isn't working. If you have one, you
+                may skip unnecessary sections.
+                </para>
+            </note>
+            First, stop both murano-api and murano-conductor services. We
+            will start them one by one from the console.
+        </para>
+        <para><emphasis role="bold">Murano-Api</emphasis></para>
+        <itemizedlist>
+            <listitem>
+                <para>Open new console</para>
+            </listitem>
+            <listitem>
+                <para>Start api service manually</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting>
+># murano-api --config-dir /etc/murano-api \
+        > /var/log/murano-api-live.log &amp;
+># tailf /var/log/murano-api-live.log
+         </programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Open dashboard, create and send to deploy some simple
+                    environment.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Open RabbitMQ web console, open your vhost and ensure
+                    that queues were created and there is at least one message.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Check log for errors - there shouldn't be any</para>
+            </listitem>
+            <listitem>
+                <para>Keep murano-api service running.</para>
+            </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Murano-Conductor</emphasis></para>
+        <itemizedlist>
+            <listitem>
+                <para>Open new console</para>
+            </listitem>
+            <listitem>
+                <para>Start conductor from console</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting>
+># muranoconductor --config-dir /etc/murano-conductor > \
+        /var/log/murano-conductor-live.log &amp;
+># tailf /var/log/murano-conductor-live.log
+        </programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Check that there is no python exceptions in the log. Some
+                    errors like 404 are ok, as conductor tries to delete
+                    environment that doesn't exist.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Check heat stack status. It should not be in FAILED
+                    state. If it is - check heat and nova error log to find the
+                    cause.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Keep murano-conductor service running.</para>
+            </listitem>
+        </itemizedlist>
+        <para>Now, the environment should be created, and instance(s)
+            launched.
+        </para>
+        <para>
+            Next, check if instances were configured correctly by the
+            cloudbase init tool.
+        </para>
+        <para>
+            Log in to any instance and open powershell log file at <filename>
+            C:\Murano\PowerShell.log</filename>. There shouldn't be any exceptions logged.
+            Other symptoms of successful configuration is that the instance was
+            renamed and you have to press &lt;Ctrl>+&lt;Alt>+&lt;Del>
+            to log into. Unconfigured instance has autologon enabled for the
+            first logon, so if console is open, the instance is not configured
+            (yet).
+        </para>
+        <para>Check that Murano Agent has correct config file. If there is a
+            .bak file, then it was changed by the init script. Check the file,
+             ensure that it has correct values.
+        </para>
+        <para>Check Murano Agent log file. There should be logged all tasks
+            received by the agent from the conductor.
+        </para>
+        <para>Check PowerShell log. There should be messages about all
+            functions, executed on the instance.
+        </para>
+        <section>
+            <title>Log files</title>
+            <para><emphasis role="bold">Murano Log Files</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>/var/log/murano-api.log</para>
+                </listitem>
+                <listitem>
+                    <para>/var/log/murano-conductor.log</para>
+                </listitem>
+                <listitem>
+                    <para>/var/log/apache2/errors.log
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>/var/log/httpd/errors.log</para>
+                </listitem>
+            </itemizedlist>
+            <para><emphasis role="bold">Windows Log Files</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>C:\Murano\PowerShell.log</para>
+                </listitem>
+                <listitem>
+                    <para>C:\Murano\Agent\log.txt</para>
+                </listitem>
+            </itemizedlist>
+        </section>
+</chapter>

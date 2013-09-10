@@ -22,7 +22,7 @@
     <artifactId>murano-getting-started-guide</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Murano Deployment Guide</name>
+    <name>Murano Getting Started Guide</name>
     <build>
         <plugins>
             <plugin>
@@ -38,6 +38,10 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <htmlCustomization>${basedir}/src/docbkx/style/config.xsl
+                    </htmlCustomization>
+                    <htmlStylesheet>${basedir}/src/docbkx/style/getting-started.css
+                    </htmlStylesheet>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
                 </configuration>
