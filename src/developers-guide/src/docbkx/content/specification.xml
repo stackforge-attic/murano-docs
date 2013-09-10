@@ -1,0 +1,2694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2013 Mirantis, Inc.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0">
+    <title>API Specification</title>
+    <informaltable rules="all">
+        <thead>
+            <tr>
+                <td align="center" colspan="1">Revision Date</td>
+                <td align="center" colspan="4">Summary of Changes</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="1" align="center">February 4, 2013</td>
+                <td colspan="4">
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Initial</para>
+                        </listitem>
+                    </itemizedlist>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" align="center">February 22, 2013</td>
+                <td colspan="4">
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Enhance API with latest architecture
+                                changes
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" align="center">March 06, 2013</td>
+                <td colspan="4">
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>Fix specification according to remarks
+                                from Dmitry Teselkin
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" align="center">Jun 06, 2013</td>
+                <td colspan="4">
+                    <itemizedlist spacing="compact">
+                        <listitem>
+                            <para>ASP.NET Application, Web Server Farm and
+                                ASP.NET Application Farm Services Added,
+                                uri/address/endpoint corrections, hostname
+                                assignment section added
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </td>
+            </tr>
+        </tbody>
+    </informaltable>
+    <section>
+        <title>Introduction</title>
+        <para>Murano Service API is a programmatic interface used for
+            interaction
+            with Murano. Other interaction
+            mechanisms like Murano Dashboard or Murano CLI should use API
+            as underlying
+            protocol for interaction.
+        </para>
+
+        <glossary>
+            <para>For detailed information about entities and terms used in
+                this document, please refer first to architecture.
+            </para>
+            <glossentry>
+                <glossterm>Environment</glossterm>
+                <glossdef>
+                    <para>Environment is a set of logically related
+                        Services managed by a single tenant. Environment
+                        defines Windows environment boundaries.
+                    </para>
+                    <para>Services within single Environment may comprise
+                        some complex configuration while Services
+                        in different Environments are always independent
+                        from one another. Each Environment is
+                        associated with single OpenStack project (tenant).
+                    </para>
+                </glossdef>
+            </glossentry>
+            <glossentry>
+                <glossterm>Service</glossterm>
+                <glossdef>
+                    <para>Service is building block of Windows environment.
+                        Service is a set of one or more Virtual
+                        Machines sharing a common purpose and configured
+                        together. Each service belongs to a single
+                        Environment and single Service Type.
+                    </para>
+                    <para>Services are comprised from one or more Service
+                        Units.
+                    </para>
+                </glossdef>
+            </glossentry>
+            <glossentry>
+                <glossterm>Service Type</glossterm>
+                <glossdef>
+                    <para>Service type is definition for describing set of
+                        features exposed by service.
+                    </para>
+                </glossdef>
+            </glossentry>
+            <glossentry>
+                <glossterm>Service Unit</glossterm>
+                <glossdef>
+                    <para>Service Units are the actual Windows Server VMs
+                        instantiated by OpenStack and then
+                        configured according to its Service Type (this may
+                        also correspond to one of predefined
+                        Windows Server roles).
+                    </para>
+                </glossdef>
+            </glossentry>
+            <glossentry>
+                <glossterm>Service Metadata</glossterm>
+                <glossdef>
+                    <para>Service Metadata is a JSON-encoded definition of
+                        Environment, its Services and their
+                        Service Units along with all their attributes.
+                        Service Metadata may describe both current
+                        and the intended state of the Environment.
+                    </para>
+                </glossdef>
+            </glossentry>
+            <glossentry>
+                <glossterm>Session</glossterm>
+                <glossdef>
+                    <para>All changes to environment done in scope of
+                        Session. After all changes to Environment
+                        state are accumulated, changes actually are applied
+                        only after session is deployed.
+                    </para>
+                </glossdef>
+            </glossentry>
+        </glossary>
+    </section>
+    <section>
+        <title>Return codes and errors</title>
+        <para>All REST API calls return the natural HTTP response codes for
+            the operations, e.g. a successful GET
+            returns a HTTP 200, a successful PUT returns a HTTP 201, a GET
+            for a non-existent entity returns HTTP
+            404, unauthorized operations return HTTP 401 or HTTP 403,
+            internal errors return HTTP 500.
+        </para>
+    </section>
+    <section>
+        <title>Response of POSTs and PUTs</title>
+        <para>All POST and PUT requests by convention should return the
+            created object (in the case of POST, with a
+            generated ID) as if it was requested by GET.
+        </para>
+    </section>
+    <section>
+        <title>Authentication</title>
+        <para>All requests include a Keystone authentication token header
+            (X-Auth-Token). Clients must authenticate
+            with Keystone before interacting with the Murano service.
+        </para>
+    </section>
+    <section>
+        <title>Workflow</title>
+        <figure xml:id="api_workflow">
+            <title>Sample Workflow</title>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../figures/api_workflow.png"
+                               contentwidth="5in"/>
+                </imageobject>
+                <imageobject role="html">
+                    <imagedata fileref="../figures/api_workflow.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>Let’s review a sample workflow (series of API calls) for
+            creating new Environment with Active
+            Directory Service deployment:
+            <orderedlist spacing="compact">
+                <listitem>
+                    <para>POST /environments/ - Creating new Environment
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>POST /environments/id/configure – Creating new
+                        configuration session for Environment
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>POST /environments/id/services – Creating
+                        new ActiveDirectory service
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>POST /environments/id/sessions/session_id/deploy
+                        – Saving and deploying changes
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+    </section>
+    <section>
+        <title>Hostname assignment</title>
+        <para>Each Service Object definition may have an attribute
+            "unitNamingPattern" that is used to control hostnames
+            that will be assigned to spawned VM instances of the
+            service.
+        </para>
+        <para>
+            Hostname pattern has the form of "name#" where "#"
+            character is replaced with sequential number of unit
+            within the service (starting with 1) and all other
+            characters remain intact. For example Service with
+            unitNamingPatter equal to "ad#-loc" will have units
+            with hostnames "ad1-loc", "ad2-loc" etc.
+        </para>
+        <para>
+            "unitNamingPattern" attribute is optional.
+            If it is omitted then a unique random hostname
+            would be assigned.
+        </para>
+    </section>
+    <section>
+        <title>API</title>
+        <section>
+            <title>Environment API</title>
+            <para>This section describes API calls for Environment
+                management.
+            </para>
+            <section>
+                <title>Get a List of existing Environments</title>
+                <table frame="all">
+                    <title>Environment Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>created</entry>
+                                <entry>datetime</entry>
+                                <entry>Creation date and time in ISO format
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>updated</entry>
+                                <entry>datetime</entry>
+                                <entry>Modification date and time in ISO
+                                    format
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>tenant_id</entry>
+                                <entry>string</entry>
+                                <entry>OpenStack tenant ID</entry>
+                            </row>
+                            <row>
+                                <entry>version</entry>
+                                <entry>int</entry>
+                                <entry>Current version</entry>
+                            </row>
+                            <row>
+                                <entry>status</entry>
+                                <entry>string</entry>
+                                <entry>Deployment status: ready, pending, deploying
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>GET /environments Call</title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>GET</entry>
+                                    <entry>/environments</entry>
+                                    <entry>Get a list of existing
+                                        Environments
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns list of environments. Only the
+                        basic properties are returned. For details see "Get Environment Instance Detailed Information":
+                        <programlisting>
+                            <![CDATA[
+     {
+        "environments": [
+            {
+                "id": "0ce373a477f211e187a55404a662f968",
+                "name": "dc1",
+                "created": "2010-11-30T03:23:42Z",
+                "updated": "2010-11-30T03:23:44Z",
+                "tenant_id": "0849006f7ce94961b3aab4e46d6f229a",
+                "version": 1,
+                "status": "ready"
+            },
+            {
+                "id": "c697bd2429304820a928d145aa42af59",
+                "name": "dc2",
+                "created": "2010-11-30T03:23:42Z",
+                "updated": "2010-11-30T03:23:44Z",
+                "tenant_id": "0849006f7ce94961b3aab4e46d6f229a",
+                "version": 2,
+                "status": "deploying"
+            }
+        ]
+    }
+                                        ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Create Environment instance</title>
+                <table frame="all">
+                    <title>Environment Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>POST /environments Call</title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>POST</entry>
+                                    <entry>/environments</entry>
+                                    <entry>Create new Environment</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <programlisting>
+                        <![CDATA[
+    {
+      "name": "env1"
+    }
+                                ]]>
+                    </programlisting>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns created environment:
+                        <programlisting>
+                            <![CDATA[
+    {
+        "id": "ce373a477f211e187a55404a662f968",
+        "name": "env1",
+        "created": "2010-11-30T03:23:42Z",
+        "updated": "2010-11-30T03:23:44Z",
+        "tenant_id": "0849006f7ce94961b3aab4e46d6f229a",
+        "version": 0
+    }
+                                        ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Update Environment Instance</title>
+                <table frame="all">
+                    <title>Environment Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>PUT /environments/&lt;id&gt; Call</title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>PUT</entry>
+                                    <entry>/environments/&lt;id&gt;</entry>
+                                    <entry>Update properties of Environment
+                                        instance
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Error Response Codes</title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Code</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>401</entry>
+                                    <entry>User is not authorized to access this tenant resources</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <programlisting>
+                        <![CDATA[
+    {
+      "name": "env1-changed"
+    }
+                                ]]>
+                    </programlisting>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns modified environment object:
+                        <programlisting>
+                            <![CDATA[
+    {
+        "id": "ce373a477f211e187a55404a662f968",
+        "name": "env1-changed",
+        "created": "2010-11-30T03:23:42Z",
+        "updated": "2010-11-30T03:23:44Z",
+        "tenant_id": "0849006f7ce94961b3aab4e46d6f229a",
+        "version": 0
+    }
+                                        ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Get Environment Instance Detailed Information
+                </title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>GET /environments/&lt;id&gt; Call</title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>GET</entry>
+                                    <entry>/environments/&lt;id&gt;</entry>
+                                    <entry>Returns detailed information
+                                        about Environment including child
+                                        entities
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Error Response Codes</title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Code</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>401</entry>
+                                    <entry>User is not authorized to access this tenant resources</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns environment object with underlying services:
+                        <programlisting>
+                            <![CDATA[
+    {
+        "environments": [{
+             "id": "0ce373a477f211e187a55404a662f968",
+             "name": "dc1",
+             "created": "2010-11-30T03:23:42Z",
+             "updated": "2010-11-30T03:23:44Z",
+             "tenant_id": "0849006f7ce94961b3aab4e46d6f229a",
+             "version": 1,
+             "status": "deploying",
+             "services": [
+                 "activeDirectories": [{
+                     "id": "96365940588b479294fe8e6dc073db04",
+                     "name": "acme.dc",
+                     "created": "2010-11-30T03:23:42Z",
+                     "updated": "2010-11-30T03:23:44Z",
+                     "status": "deploying",
+                     "units": [{
+                         "id": "d08887df15b94178b244904b506fe85b",
+                         "isMaster": true,
+                         "location": "west-dc"
+                     }, {
+                         "id": "dcf0de317e7046bea555539f19b8ea84",
+                         "isMaster": false,
+                         "location": "west-dc"
+                     }]
+                 }]
+             ]
+        }]
+    }
+                                        ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Remove Environment</title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>DELETE /environments/&lt;id&gt; Call</title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>DELETE</entry>
+                                    <entry>/environments/&lt;id&gt;</entry>
+                                    <entry>Remove specified Environment.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Error Response Codes</title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Code</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>401</entry>
+                                    <entry>User is not authorized to access this tenant resources</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>None</para>
+                </section>
+            </section>
+        </section>
+        <section>
+            <title>Environment Configuration API</title>
+            <para>Multiple sessions could be opened for one environment simultaneously, but only one session going
+                to be deployed. First session that starts deploying is going to be deployed; other ones become
+                invalid and could not be deployed at all. User could not open new session for environment that in
+                `deploying` state (that’s why we call it “almost lock free” model).
+            </para>
+            <table frame="all">
+                <title>Configuration Session Object</title>
+                <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                    <colspec colnum="1" colname="col1" colwidth="2*"/>
+                    <colspec colnum="2" colname="col2" colwidth="1*"/>
+                    <colspec colnum="3" colname="col3" colwidth="4*"/>
+                    <thead>
+                        <row>
+                            <entry>Attribute</entry>
+                            <entry>Type</entry>
+                            <entry>Description</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>id</entry>
+                            <entry>string</entry>
+                            <entry>Session unique ID</entry>
+                        </row>
+                        <row>
+                            <entry>environment_id</entry>
+                            <entry>string</entry>
+                            <entry>Environment that going to be modified
+                                during this session
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>created</entry>
+                            <entry>datetime</entry>
+                            <entry>Creation date and time in ISO format
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>updated</entry>
+                            <entry>datetime</entry>
+                            <entry>Modification date and time in ISO
+                                format
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>user_id</entry>
+                            <entry>string</entry>
+                            <entry>Session owner ID</entry>
+                        </row>
+                        <row>
+                            <entry>version</entry>
+                            <entry>int</entry>
+                            <entry>Environment version for which configuration session is opened</entry>
+                        </row>
+                        <row>
+                            <entry>state</entry>
+                            <entry>string</entry>
+                            <entry>Session state. Could be: open,
+                                deploying, deployed
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <section>
+                <title>Configure Environment / Open session</title>
+                <para>During this call new working session is created, and session ID should be sent in header
+                    (X-Configuration-Session) to all next API calls.
+                </para>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>POST /environments/&lt;id&gt;/configure
+                            Call
+                        </title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>POST</entry>
+                                    <entry>/environments/&lt;id&gt;/configure</entry>
+                                    <entry>Creating new configuration session
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Error Response Codes</title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Code</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>403</entry>
+                                    <entry>Could not open session for environment, environment has deploying
+                                        status
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns created session:
+                        <programlisting>
+                            <![CDATA[
+    {
+        "id": "4aecdc2178b9430cbbb8db44fb7ac384",
+        "environment_id": "4dc8a2e8986fa8fa5bf24dc8a2e8986fa8",
+        "created": "2010-11-30T03:23:42Z",
+        "updated": "2010-11-30T03:23:54Z",
+        "user_id": "d7b501094caf4daab08469663a9e1a2b",
+        "version": 12,
+        "state": "open"
+    }
+                                        ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Deploy changes from Session</title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>POST /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;/deploy
+                            Call
+                        </title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>POST</entry>
+                                    <entry>/environments/&lt;id&gt;/sessions/&lt;sessionId&gt;/deploy</entry>
+                                    <entry>Deploying changes made in
+                                        session with specified &lt;sessionId&gt;</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Error Response Codes</title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Code</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>403</entry>
+                                    <entry>Session is invalid</entry>
+                                </row>
+                                <row>
+                                    <entry>403</entry>
+                                    <entry>Session is already deployed or deployment is in progress</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>None</para>
+                </section>
+            </section>
+            <section>
+                <title>Get session information</title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>GET /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;
+                            Call
+                        </title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>GET</entry>
+                                    <entry>/environments/&lt;id&gt;/sessions/&lt;sessionId&gt;</entry>
+                                    <entry>Getting details about session
+                                        with specified
+                                        &lt;sessionId&gt;</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Error Response Codes</title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Code</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>401</entry>
+                                    <entry>User is not authorized to access this session</entry>
+                                </row>
+                                <row>
+                                    <entry>403</entry>
+                                    <entry>Session is invalid</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns session information:
+                        <programlisting>
+                            <![CDATA[
+    {
+        "id": "4aecdc2178b9430cbbb8db44fb7ac384",
+        "environment_id": "4dc8a2e8986fa8fa5bf24dc8a2e8986fa8",
+        "created": "2010-11-30T03:23:42Z",
+        "updated": "2010-11-30T03:23:54Z",
+        "user_id": "d7b501094caf4daab08469663a9e1a2b",
+        "version": 0,
+        "state": "deploying"
+    }
+                                        ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Delete Session</title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>DELETE /environments/&lt;id&gt;/sessions/&lt;sessionId&gt;
+                            Call
+                        </title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>DELETE</entry>
+                                    <entry>/environments/&lt;id&gt;/sessions/&lt;sessionId&gt;</entry>
+                                    <entry>Delete session with specified
+                                        &lt;sessionId&gt;</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Error Response Codes</title>
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Code</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>401</entry>
+                                    <entry>User is not authorized to access this session</entry>
+                                </row>
+                                <row>
+                                    <entry>403</entry>
+                                    <entry>Session is in deploying state and could not be deleted</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>None</para>
+                </section>
+            </section>
+        </section>
+        <section>
+            <title>Services API</title>
+            <para>This section describes API calls for managing all types of services.</para>
+            <section>
+                <title>Calls and Endpoints</title>
+                <section>
+                    <title>GET</title>
+                    <para>Using GET calls to services endpoint user works with list containing all services for
+                        specified environment. User can request whole list, specific service, or specific attribute of
+                        specific service using tree traversing.
+
+                        To request specific service user should add to endpoint part with service id, e.g.:
+                        <emphasis>/environments/&lt;id&gt;/services/&lt;service_id&gt;</emphasis>. For selection of
+                        specific attribute on service, simply appending part with attribute name will work. For example
+                        to request service name, user should use next endpoint:
+                        <emphasis>/environments/&lt;id&gt;/services/&lt;service_id&gt;/name</emphasis>
+                    </para>
+                    <section>
+                        <title>Call</title>
+                        <table frame="all">
+                            <title>GET /environments/&lt;id&gt;/services
+                                Call
+                            </title>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>GET</entry>
+                                        <entry>/environments/&lt;id&gt;/services</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame="all">
+                            <title>Headers</title>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>no</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <para>None</para>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>Json Object</para>
+                    </section>
+                </section>
+                <section>
+                    <title>PUT</title>
+                    <para>Using PUT calls user can update or add any attribute on any service.</para>
+                    <section>
+                        <title>Call</title>
+                        <table frame="all">
+                            <title>PUT /environments/&lt;id&gt;/services
+                                Call
+                            </title>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>PUT</entry>
+                                        <entry>/environments/&lt;id&gt;/services</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame="all">
+                            <title>Headers</title>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>yes</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <para>Json Object</para>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>Json Object</para>
+                    </section>
+                </section>
+                <section>
+                    <title>POST</title>
+                    <para>POST calls used for adding new elements to lists with objectes.</para>
+                    <section>
+                        <title>Call</title>
+                        <table frame="all">
+                            <title>POST /environments/&lt;id&gt;/services
+                                Call
+                            </title>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>POST</entry>
+                                        <entry>/environments/&lt;id&gt;/services</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame="all">
+                            <title>Headers</title>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>yes</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <para>Json Object</para>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>Json Object</para>
+                    </section>
+                </section>
+                <section>
+                    <title>DELETE</title>
+                    <para>User can remove any attribute or list item using DELETE calls.</para>
+                    <section>
+                        <title>Call</title>
+                        <table frame="all">
+                            <title>DELETE /environments/&lt;id&gt;/services
+                                Call
+                            </title>
+                            <tgroup cols="2" align="left" colsep="1"
+                                    rowsep="1">
+                                <colspec colnum="1" colname="col1"
+                                         colwidth="1*"/>
+                                <colspec colnum="2" colname="col2"
+                                         colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Method</entry>
+                                        <entry>URI</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>DELETE</entry>
+                                        <entry>/environments/&lt;id&gt;/services</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                        <table frame="all">
+                            <title>Headers</title>
+                            <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                                <colspec colnum="1" colname="col1" colwidth="2*"/>
+                                <colspec colnum="2" colname="col2" colwidth="1*"/>
+                                <colspec colnum="3" colname="col3" colwidth="1*"/>
+                                <colspec colnum="4" colname="col4" colwidth="4*"/>
+                                <thead>
+                                    <row>
+                                        <entry>Name</entry>
+                                        <entry>Type</entry>
+                                        <entry>Required</entry>
+                                        <entry>Description</entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>X-Configuration-Session</entry>
+                                        <entry>string</entry>
+                                        <entry>yes</entry>
+                                        <entry>ID of valid configuration session</entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </table>
+                    </section>
+                    <section>
+                        <title>Payload</title>
+                        <para>None</para>
+                    </section>
+                    <section>
+                        <title>Returns</title>
+                        <para>None</para>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <section>
+            <title>Example Calls using Web Server as example</title>
+            <para>Please use this example for constructing general CRUD calls to services.</para>
+            <section>
+                <title>Get a List of existing services</title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>GET /environments/&lt;id&gt;/services
+                            Call
+                        </title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>GET</entry>
+                                    <entry>/environments/&lt;id&gt;/services</entry>
+                                    <entry>Get a list of existing WebServers</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Headers</title>
+                        <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="2*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Name</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>X-Configuration-Session</entry>
+                                    <entry>string</entry>
+                                    <entry>no</entry>
+                                    <entry>ID of valid configuration session</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns list of services:
+                        <programlisting>
+                            <![CDATA[
+   [
+     {
+       "id": "0ce373a477f211e187a55404a662f968",
+       "name": "frontend",
+       "type": "webServer".
+       "created": "2010-11-30T03:23:42Z",
+       "updated": "2010-11-30T03:23:44Z",
+       "domain": "ACME",
+       "uri": "http://10.0.0.2",
+       "units": [{
+           "id": "1bf3491c409b4541b6f18ea5988a6437",
+           "address": "10.0.0.2",
+           "location": "west-dc"
+       }]
+     },
+     {
+       "id": "c697bd2429304820a928d145aa42af59",
+       "name": "backend",
+       "type": "webServer".
+       "created": "2010-11-30T03:23:42Z",
+       "updated": "2010-11-30T03:23:44Z",
+       "domain": "ACME",
+       "uri": "http://10.0.0.3",
+       "units": [{
+           "id": "eb32f97866d24001baa430cb34e4049f",
+           "address": "10.0.0.3",
+           "location": "west-dc"
+       }]
+     }
+                            ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Create Web Server instance</title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>POST /environments/&lt;id&gt;/services
+                            Call
+                        </title>
+                        <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="1*"/>
+                            <colspec colnum="2" colname="col2" colwidth="4*"/>
+                            <colspec colnum="3" colname="col3" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>POST</entry>
+                                    <entry>/environments/&lt;id&gt;/services</entry>
+                                    <entry>Create new Web Server</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Headers</title>
+                        <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="2*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Name</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>X-Configuration-Session</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>ID of valid configuration session</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <programlisting>
+                        <![CDATA[
+    {
+      "name": "frontend",
+      "type": "webServer",
+      "adminPassword": "password",
+      "domain": "acme.dc",
+      "units": [{
+        "location": "west-dc"
+      }]
+    }
+                        ]]>
+                    </programlisting>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>This call returns created web server:
+                        <programlisting>
+                            <![CDATA[
+    {
+        "id": "ce373a477f211e187a55404a662f968",
+        "name": "frontend",
+        "type": "webServer",
+        "created": "2010-11-30T03:23:42Z",
+        "updated": "2010-11-30T03:23:44Z",
+        "domain": "ACME",
+        "units": [{
+            "id": "1bf3491c409b4541b6f18ea5988a6437",
+            "location": "west-dc"
+        }]
+    }
+                                        ]]>
+                        </programlisting>
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Remove Web Server</title>
+                <section>
+                    <title>Call</title>
+                    <table frame="all">
+                        <title>DELETE /environments/&lt;id&gt;/services/&lt;service_id&gt; Call</title>
+                        <tgroup cols="3" align="left" colsep="1"
+                                rowsep="1">
+                            <colspec colnum="1" colname="col1"
+                                     colwidth="1*"/>
+                            <colspec colnum="2" colname="col2"
+                                     colwidth="4*"/>
+                            <colspec colnum="3" colname="col3"
+                                     colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Method</entry>
+                                    <entry>URI</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>DELETE</entry>
+                                    <entry>/environments/&lt;id&gt;/services/&lt;service_id&gt;</entry>
+                                    <entry>Remove specified service.
+                                    </entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                    <table frame="all">
+                        <title>Headers</title>
+                        <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                            <colspec colnum="1" colname="col1" colwidth="2*"/>
+                            <colspec colnum="2" colname="col2" colwidth="1*"/>
+                            <colspec colnum="3" colname="col3" colwidth="1*"/>
+                            <colspec colnum="4" colname="col4" colwidth="4*"/>
+                            <thead>
+                                <row>
+                                    <entry>Name</entry>
+                                    <entry>Type</entry>
+                                    <entry>Required</entry>
+                                    <entry>Description</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>X-Configuration-Session</entry>
+                                    <entry>string</entry>
+                                    <entry>yes</entry>
+                                    <entry>ID of valid configuration session</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>
+                </section>
+                <section>
+                    <title>Payload</title>
+                    <para>None</para>
+                </section>
+                <section>
+                    <title>Returns</title>
+                    <para>None</para>
+                </section>
+            </section>
+        </section>
+        <section xml:id="shared-specs">
+            <title>Shared Attributes</title>
+            <para>This section describes attributes common to all services.
+            </para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>Service Object Specs</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>type</entry>
+                                <entry>string</entry>
+                                <entry>Service Type</entry>
+                            </row>
+                            <row>
+                                <entry>created</entry>
+                                <entry>datetime</entry>
+                                <entry>Creation date and time in ISO
+                                    format
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>updated</entry>
+                                <entry>datetime</entry>
+                                <entry>Modification date and time in ISO
+                                    format
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>unitNamingPattern</entry>
+                                <entry>string</entry>
+                                <entry>Unit instances naming pattern</entry>
+                            </row>
+                            <row>
+                                <entry>availabilityZone</entry>
+                                <entry>string</entry>
+                                <entry>Availability where service is located</entry>
+                            </row>
+                            <row>
+                                <entry>flavor</entry>
+                                <entry>string</entry>
+                                <entry>Active Directory Unit object</entry>
+                            </row>
+                            <row>
+                                <entry>osImage</entry>
+                                <entry>string</entry>
+                                <entry>Name of image used to power instance</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>Service Object Specs</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>type</entry>
+                                <entry>string</entry>
+                                <entry>Service Type</entry>
+                            </row>
+                            <row>
+                                <entry>unitNamingPattern</entry>
+                                <entry>string</entry>
+                                <entry>Unit instances naming pattern</entry>
+                            </row>
+                            <row>
+                                <entry>availabilityZone</entry>
+                                <entry>string</entry>
+                                <entry>Availability where service is located</entry>
+                            </row>
+                            <row>
+                                <entry>flavor</entry>
+                                <entry>string</entry>
+                                <entry>Active Directory Unit object</entry>
+                            </row>
+                            <row>
+                                <entry>osImage</entry>
+                                <entry>string</entry>
+                                <entry>Name of image used to power instance</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>Active Directory Specs</title>
+            <para>This section describes objects specs for Active Directory service.
+            </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>Active Directory Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>Active Directory Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Active Directory Unit Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>isMaster</entry>
+                                <entry>boolean</entry>
+                                <entry>true for primary domain controller,
+                                    false otherwise
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>Active Directory Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>adminPassword</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>Password from domain administrator
+                                    account
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>Active Directory Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Active Directory Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>isMaster</entry>
+                                <entry>boolean</entry>
+                                <entry>yes</entry>
+                                <entry>true for primary domain controller,
+                                    false otherwise
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>recoveryPassword</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>Recovery password</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>Web Server Specs</title>
+            <para>This section describes API calls for managing Windows web-server software – IIS.</para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>Web Server Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>uri</entry>
+                                <entry>string</entry>
+                                <entry>URI of the Service</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>Web Server Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Web Server Unit Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>Web Server Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>Web Server Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Web Server Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>ASP.NET Application Specs</title>
+            <para>This section describes API calls for managing ASP.NET
+                Applications
+            </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>ASP.NET Application Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>repository</entry>
+                                <entry>string</entry>
+                                <entry>URL of git repository containing the
+                                    application source files
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>uri</entry>
+                                <entry>string</entry>
+                                <entry>URI of the Service</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>ASP.NET Application Unit
+                                    object
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>ASP.NET Application Unit Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>ASP.NET Application Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>repository</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>URL of git repository containing the
+                                    application source files
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>ASP.NET Application Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>ASP.NET Application Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>Web Server Farm Specs</title>
+            <para>This section describes API calls for managing Web Server
+                (IIS) Web Farm services
+            </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>Web Server Farm Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>uri</entry>
+                                <entry>string</entry>
+                                <entry>URI of the Service</entry>
+                            </row>
+                            <row>
+                                <entry>loadBalancerPort</entry>
+                                <entry>integer</entry>
+                                <entry>Port number of the Farm</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>Web Server Farm Unit
+                                    object
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Web Server Farm Unit Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>Web Server Farm Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>loadBalancerPort</entry>
+                                <entry>integer</entry>
+                                <entry>yes</entry>
+                                <entry>Port number for the Farm</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>Web Server Farm Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Web Server Farm Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>ASP.NET Application Farm Specs</title>
+            <para>This section describes API calls for managing ASP.NET
+                Web Farm Application Services
+            </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>ASP.NET Application Farm Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>uri</entry>
+                                <entry>string</entry>
+                                <entry>URI of the Service</entry>
+                            </row>
+                            <row>
+                                <entry>repository</entry>
+                                <entry>string</entry>
+                                <entry>URL of git repository containing the
+                                    application source files
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>loadBalancerPort</entry>
+                                <entry>integer</entry>
+                                <entry>Port number of the Farm</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>ASP.NET Application Farm Unit
+                                    object
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>ASP.NET Application Farm Unit Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>ASP.NET Application Farm Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>repository</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>URL of git repository containing the
+                                    application source files
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>loadBalancerPort</entry>
+                                <entry>integer</entry>
+                                <entry>yes</entry>
+                                <entry>Port number for the Farm</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>ASP.NET Application Farm Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>ASP.NET Application Farm Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>MS SQL Server Specs</title>
+            <para>This section describes API calls for managing MS SQL Server Service.</para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>MS SQL Server Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>mixedModeAuth</entry>
+                                <entry>bool</entry>
+                                <entry>Use LDAP to access SQL Server</entry>
+                            </row>
+                            <row>
+                                <entry>saPassword</entry>
+                                <entry>string</entry>
+                                <entry>SQL Server admin password</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>adminPassword</entry>
+                                <entry>string</entry>
+                                <entry>Domain password</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>SQL Server Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>SQL Server Unit object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>SQL Server Unit object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>mixedModeAuth</entry>
+                                <entry>bool</entry>
+                                <entry>yes</entry>
+                                <entry>Use LDAP to access SQL Server</entry>
+                            </row>
+                            <row>
+                                <entry>saPassword</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>SQL Server admin password</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>adminPassword</entry>
+                                <entry>string</entry>
+                                <entry>no</entry>
+                                <entry>Domain admin password</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>SQL Server Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>MS SQL Server Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+    </section>
+</chapter>
