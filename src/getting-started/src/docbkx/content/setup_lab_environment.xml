@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2013 Mirantis, Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                            http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0">
+    <title>Setup Lab Environment</title>
+    <section>
+            <title>Install OpenStack</title>
+            <para>
+                To install Murano you need a working copy of OpenStack.
+                If you already have a Openstack installation make sure it meets the requirements
+                described in <link linkend="LabHardware">this</link> chapter.
+                To install Openstack that will be ready to use with Murano
+                follow the instructions below.
+            </para>
+            <para><emphasis role="bold">Using Devstack</emphasis></para>
+            <para>
+                Currently the most simple way to build a lab is to use
+                devstack. The steps are quite simple:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Install and configure OS on your hardware. The
+                        recommended OS is Ubuntu Server 12.04 x64. Minimal
+                        configuration would be enough.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Install all the latest updates.</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># apt-get update
+># apt-get -y upgrade
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Create a user <emphasis>stack</emphasis></para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># adduser stack
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Add user <emphasis>stack</emphasis> to sudoers</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># echo ‘stack ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/stack
+># chmod 0440 /etc/sudoers.d/stack
+            </programlisting>            
+            <itemizedlist>
+                <listitem>
+                    <para>Create a folder for OpenStack installation files
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># mkdir /opt/stack
+># chown stack:stack /opt/stack 
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Clone the <emphasis>devstack</emphasis> repo</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># su stack
+>$ cd
+>$ git clone https://github.com/openstack-dev/devstack.git
+            </programlisting>            
+            <itemizedlist>
+                <listitem>
+                    <para>Checkout the stable/grizzly branch</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+>$ cd devstack
+>$ git checkout stable/grizzly
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Get <filename>localrc</filename> and <filename>local.sh</filename> files</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+>$ wget https://raw.github.com/stackforge/murano-deployment/release-0.2/
+                getting-started/localrc
+>$ wget https://raw.github.com/stackforge/murano-deployment/release-0.2/
+                getting-started/local.sh -O local.sh-O local.sh
+>$ chmod +x local.sh
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Start <emphasis>devstack</emphasis></para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+>$ ./stack.sh
+            </programlisting>
+            <para>
+                When stack.sh finishes execution your OpenStack
+                installation is ready.
+            </para>
+    </section>
+    <section xml:id="Samba">
+            <title>Prepare Shared Prerequisites</title>
+            <para><emphasis role="bold">Configure Samba Share</emphasis></para>
+            <para>
+            <itemizedlist>
+                <listitem>
+                    <para>Install SAMBA</para>
+                </listitem>
+            </itemizedlist>
+           <programlisting>
+># apt-get update
+># apt-get install samba
+           </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Create shared folder</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># mkdir -p /opt/samba/share
+>#chown nobody:nogroup /opt/samba/share
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Edit /etc/samba/smb.conf</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+...
+[global]    
+    ...    
+    security = user
+...
+[share]
+    comment = Deployment Share
+    path = /opt/samba/share  
+    browsable = yes
+    guest ok = yes    
+    guest account = nobody
+    read only = no
+    create mask = 0755
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Restart services</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># restart smbd># restart nmdb
+            </programlisting>
+            </para>
+            <para><emphasis role="bold">Copy Prerequisites Into The Share</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>Create folder structure</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># mkdir -p “/opt/samba/share/Prerequisites/IIS”
+># mkdir -p “/opt/samba/share/Prerequisites/SQL Server/2012”
+># mkdir -p “/opt/samba/share/Prerequisites/SQL Server/Tools”
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Add files to the folder structure under
+                        /opt/samba/share folder:
+                    </para>
+                </listitem>
+            </itemizedlist>
+    </section>
+    <section>
+            <title>Build Windows Image</title>
+            <para>A pre-built Windows Image is required to create environments
+                in Murano. Because of its size it’s better to build the image
+                on the same host where OpenStack is installed. This section describe
+                steps required to build such an image.
+            </para>
+            <para><emphasis role="bold">Prepare Build Environment</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Samba should be already installed (See <link linkend="Samba">Configure samba share</link>)
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Clone murano-deployment repository</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># cd /opt/git
+># git clone git://github.com/stackforge/murano-deployment.git
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Change directory to <filename>murano-deployment/image-builder</filename>
+                        folder
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># cd /opt/git/murano-deployment/image-builder
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Create folder structure for image builder</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># make build-root
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                       Download and put the following files to the specified paths under
+                        <filename>/opt/image-builder </filename>folder:
+                        <orderedlist>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://technet.microsoft.com/en-us/evalcenter/hh670538.aspx">
+                                        Windows 2012 Server ISO evaluation version</link>: libvirt/images/ws­2012­eval.iso
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/stable/virtio-win-0.1-52.iso">
+                                        VirtIO drivers
+                                    </link>
+                                    should be placed to libvirt/images/virtio-win-0.1-52.iso
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+
+                                    <link xlink:href=" http://www.cloudbase.it/downloads/CloudbaseInitSetup_Beta.msi">
+                                        CloudBase-Init for Windows:
+                                    </link>
+                                    share/files/CloudbaseInitSetup_Beta.msi
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.farmanager.com/files/Far30b3525.x64.20130717.msi">
+                                        Far Manager:
+                                    </link>
+                                    share/files/Far30b3367.x64.20130426.msi
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="https://msysgit.googlecode.com/files/Git-1.8.3-preview20130601.exe">
+                                        Git client
+                                    </link>
+                                    share/files/Git-1.8.1.2-preview20130201.exe
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://download.sysinternals.com/files/SysinternalsSuite.zip">
+                                        Sysinternals
+                                    </link>
+                                    Suiteshare/files/SysinternalsSuite.zip
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR">
+                                        unzip.exe tool
+                                    </link>
+                                    share/files/unzip.exe
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=34595">
+                                        PowerShell v3
+                                    </link>
+                                    share/files/Windows6.1-KB2506143-x64.msu
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=17718">
+                                        .NET 4.0:
+                                    </link>
+                                    share/files/dotNetFx40_Full_x86_x64.exe
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=30653">
+                                        .NET 4.5:
+                                    </link>
+                                    share/files/dotNetFx45_Full_setup.exe
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR ">
+                                         Murano Agent
+                                    </link>
+                                    share/files/MuranoAgent.zip
+                                </para>
+                            </listitem>
+                        </orderedlist>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Test that all required files are in place</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># make test-build-files
+            </programlisting>
+
+            <para>
+            <emphasis role="bold">Build The Image</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>Get list of supported images</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># make
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Run image build process</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+ ># make ws-2012-std
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Wait until process finishes</para>
+                </listitem>
+                <listitem>
+                    <para>The image file ws-2012-std.qcow2 will be stored in <filename>
+                        /opt/image-builder/share/images </filename> folder.
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para><emphasis role="bold">Import Windows Image Into Glance</emphasis></para>
+            <para>Now when you’ve built a Windows Image it must be imported into Glance.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>Import openrc file which contains environment
+                        variables definitions required by OpenStack components
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+>$ source openrc
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Import the Windows Server 2012 image into Glance
+                        <programlisting>
+>$ cd /opt/image-builder/share/images
+>$ glance image-create --name ws-2012-std --disk-format qcow2  \
+                --container-type bare --file ws-2012-std.qcow2 \
+                --is-public true  \
+                --property murano_image_info='{"type":"ws-2012-std",\
+                    "title":"Windows Server 2012 Standard"}'
+                        </programlisting>
+                    </para>
+                    <warning>
+                        <para>
+                        The value of the --property argument named
+                        murano_image_info is a JSON string. Only double quotes are
+                        valid in JSON, so please type the string exactly as in the
+                        example above.
+                        </para>
+                    </warning>
+                </listitem>
+            </itemizedlist>
+   </section>
+</chapter>
