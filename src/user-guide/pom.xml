@@ -38,6 +38,10 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <htmlCustomization>${basedir}/src/docbkx/style/config.xsl
+                    </htmlCustomization>
+                    <htmlStylesheet>${basedir}/src/docbkx/style/user-guide.css
+                    </htmlStylesheet>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
                     <postProcess>

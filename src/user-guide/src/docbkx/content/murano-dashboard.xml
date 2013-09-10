@@ -53,8 +53,8 @@
             All services should be created in the context of Environment
             - virtual Windows Data Center. After Environment is created services prototypes
             and then deploy the Environment. When deploy process is done instances
-            with your service will be spawned in Openstack.
-            To create service prototype navigate to environment services by
+            with your services will be spawned in Openstack.
+            To create a service prototype navigate to environment services by
             clicking on the environment name (or on the "Services" button) and click
             the "Create Service" button.
         </para>
@@ -64,7 +64,7 @@
                 </imageobject>
             </mediaobject>
         <para>
-            You have opportunity to create one of the following services:
+            You have an opportunity to create one of the following services:
         </para>
         <mediaobject>
             <imageobject role="fo">
@@ -74,14 +74,14 @@
         <para>
             Once you choose service that you want to create click "Next" and fill the form.
             Forms for each service are specific.
-            To see more information about filling the form for a specified service follow one of the link below:
+            To see more information about filling the form for a specific service follow one of the link below:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
                     <emphasis role="bold"><link linkend="AD">Active Directory:</link></emphasis>
                     Active Directory is a directory service implemented by Microsoft for Windows domain networks.
-                    In one installation in addition to primary Domain Controller
+                    In one installation, in addition to primary Domain Controller,
                     you can add optional count of secondary Domain Controllers.
                     Any other services you are intending to create can be
                     joined to that domain.
@@ -154,11 +154,105 @@
         </mediaobject>
         <section  xml:id="AD">
             <title>Active Directory</title>
+            <para>
+                After you picked the Active Directory service in service creation
+                wizard you'll see the following form:
+            </para>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/ad.png" scalefit="1" width="100%" contentdepth="100%"/>
+                    <imagedata fileref="../images/ad.png" width="100%" contentdepth="100%" format="PDF" />
                 </imageobject>
             </mediaobject>
+            <para>
+                Enter or select values for this fields:
+            </para>
+            <informaltable rules="all" frame="border"
+                           width="100%" cellpadding="3" cellspacing="3">
+                <col width="25%" align="left" style="font-weight:bold" valign="top"/>
+                <col width="70%" style="padding:6px"/>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <para>Domain name</para>
+                        </td>
+                        <td >
+                            <para>
+                                Enter a desired name for a new domain. This name should fit to
+                                DNS Domain Name requirements: it should contain
+                                only A-Z, a-z, 0-9, (.) and (-) and should not end with a dash.
+                                DNS server will be automatically set up on each of the Domain
+                                Controller instances.
+                                Period characters are allowed only when they
+                                are used to delimit the components of domain style
+                                names. Single-level domain is not appropriate.
+                                Note: Only first 15 characters or characters
+                                before first period is used as NetBIOS name.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>Instance Count</para></td>
+                        <td>
+                            <para>
+                                You can create several Active Directory instances by setting
+                                instance number larger than one. One primary
+                                Domain Controller                                and a few secondary DCs will be created.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>Account Name</para></td>
+                        <td >
+                            <para>
+                               You account will have Active Directory administrator rights.
+                               So initial value is "Administrator" but you can change it to any name you like.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>Administrator password</para></td>
+                        <td>
+                            <para>
+                                Windows requires strong password for service administration.
+                                Your password should have at least one letter
+                                in each
+                                register, a number and a special character.
+                                Password length should be
+                                a minimum of 7 characters.
+
+                                Once you forget your password you won't be able
+                                to
+                                operate the service until recovery password
+                                would be entered. So it's
+                                better for Recovery and Administrator password
+                                to be different.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>Confirm password</para></td>
+                        <td>
+                            <para>Password confirmation is required.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>Recovery password</para></td>
+                        <td>
+                            <para>
+                                Restrictions are the same as for the Administrator password.
+                                Please provide password that is  different from Administrator.
+                                It's not required for form validation though.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><para>Confirm password</para></td>
+                        <td>
+                            <para>Password confirmation is required.</para>
+                        </td>
+                    </tr>
+                </tbody>
+            </informaltable>
         </section>
         <section xml:id="IIS">
             <title>Internet Information Service</title>
@@ -207,14 +301,135 @@
                     <imagedata fileref="../images/cluster1.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
+            <para>Enter or select values for the following fields:</para>
+            <informaltable rules="all" frame="border" width="100%" cellpadding="3"
+                           cellspacing="3">
+                <col width="25%" align="left" style="font-weight:bold"
+                     valign="top"/>
+                <col width="70%" style="padding:6px"/>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <para>Service Name</para>
+                        </td>
+                        <td>
+                            <para>
+                                Enter a desired name for a service. Just A-Z,
+                                a-z, 0-9, dash and underline are allowed.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Administrator password</para>
+                        </td>
+                        <td>
+                            <para>
+                                Windows requires strong password for service
+                                administration.
+                                Your password should have at least one letter
+                                in each register, a number and a special character.
+                                Password length should be a minimum of 7 characters.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Confirm password</para>
+                        </td>
+                        <td>
+                            <para>Password confirmation is required.</para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Active Directory is configured by the System Administrator
+                            </para>
+                        </td>
+                        <td>
+                            <para>
+                                Enable this option only if you have properly configured rules
+                                that will include service to the domain, that already exists in you environment.
+                                Once you set this option to true, additional fields will appear. (See information below)
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Domain</para>
+                        </td>
+                        <td>
+                            <para>
+                                Service should be joined to the Active
+                                Directory
+                                domain. Please, create Active Directory Service
+                                prototype first.
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>Mixed-mode Authentication</para>
+                        </td>
+                        <td>
+                            <para>
+                                Mixed authentication mode allows the use of Windows
+                                credentials but supplements them with local SQL
+                                Server user accounts that the administrator may create and
+                                maintain within SQL Server. If this mode is on SA password is required
+                            </para>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <para>SA Password</para>
+                        </td>
+                        <td>
+                            <para>
+                                Set system administrator password for the MS SQL Server.
+                                Password requirements are the same as previous.
+                            </para>
+                        </td>
+                    </tr>
+                </tbody>
+            </informaltable>
+            <para>
+                In case pre-configured AD is enabled following fields will appeared:
+            </para>
             <mediaobject>
                 <imageobject role="fo">
                     <imagedata fileref="../images/cluster1a.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
+            <informaltable rules="all" frame="border" width="100%" cellpadding="3"
+                           cellspacing="3">
+                <col width="25%" align="left" style="font-weight:bold"
+                     valign="top"/>
+                <col width="70%" style="padding:6px"/>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <para>Active Directory User</para>
+                            <para>Active Directory Password</para>
+                        </td>
+                        <td>
+                            <para>
+                                Specify administrator user credentials to the existent AD domain
+                                (to which service service will be join according to your system automation setup)
+                            </para>
+                        </td>
+                    </tr>
+                </tbody>
+            </informaltable>
             <mediaobject>
                 <imageobject role="fo">
                     <imagedata fileref="../images/cluster2.png" scalefit="1" width="100%" contentdepth="100%"/>
+                </imageobject>
+            </mediaobject>
+            <mediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="../images/cluster3.png" scalefit="1"
+                               width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         </section>
@@ -242,7 +457,7 @@
         </mediaobject>
         <para>
             You can monitor deploying process. Just go to the Log tab on service
-            detailed page where you can get by clicking on the service name.
+            detailed page, where you can get by clicking on the service name.
         </para>
         <mediaobject>
             <imageobject role="fo">
@@ -258,7 +473,7 @@
             </imageobject>
         </mediaobject>
         <para>
-            As long as installation and configuration are in progress environment
+            As long as installation and configuration are in progress, environment
             is in <emphasis>Deploying</emphasis> state. Depending on how many
             services you are deploying or how many nodes in your cluster, process of spawning instances,
             installation and post installation settings takes from 10 minutes up to one hour.
@@ -269,7 +484,7 @@
             </imageobject>
         </mediaobject>
         <para>
-            If installation process finished without any errors environment changes its status to
+            If installation process finished without any errors, environment changes its status to
             <emphasis>Ready:</emphasis>
         </para>
         <mediaobject>
@@ -282,7 +497,7 @@
         <title>Working with deployed environment</title>
         <para>
             Congratulations! After some time waiting you are able to operate with the services.
-            To get information about installed services navigate to service detailed page.
+            To get information about installed services, navigate to service detailed page.
             To do that click on the environment name and then on the name of the service you what to know about.
         </para>
         <mediaobject>
@@ -326,9 +541,9 @@
         <section xml:id="redeploy">
             <title>Redeploying Murano Environment</title>
             <para>
-                Murano gives opportunity to supplement already deployed environment.
-                If you deployed the Active Directory service and want to create
-                any other service just create desired service prototype and click on the "Deploy Environment" button.
+                Murano gives an opportunity to supplement already deployed environment.
+                Thus if you already deployed the Active Directory service and want to add
+                any other services just create desired service prototype and click the "Deploy Environment" button.
                 During service prototype creation you can join this service to the existent Active Directory domain.
             </para>
         </section>
@@ -410,7 +625,7 @@
         <section xml:id="edit">
             <title>Renaming Murano Environment</title>
             <para>
-                It's possible to change name of your environment: just click the "More-> Edit Environment" button on environment index page:
+                It's possible to change a name of your environment: just click the "More-> Edit Environment" button on environment index page:
             </para>
             <mediaobject>
                 <imageobject role="fo">
@@ -433,7 +648,6 @@
         <title>Troubleshooting</title>
             <para><emphasis role="bold"> How to debug OpenStack Heat?</emphasis></para>
             <para>
-
                 If you can execute Heat command via console interface - all good. It is
                 the most simple way to check Heat state on the node - jest execute CLI
                 command 'heat list'.
@@ -443,18 +657,18 @@
             </para>
             <para><emphasis role="bold"> If 'heat list' returns 503 error</emphasis></para>
             <para>
-                It is means that OpenStack Heat configuration files contains incorrect
+                It means that OpenStack Heat configuration files contain incorrect
                 credentials. Need to set 'user' = 'heat' and change passwords
                 'verybadpass' in all configuration files from directory /etc/heat/
             </para>
             <para><emphasis role="bold">If 'heat list' hangs up</emphasis></para>
             <para>
-                Sometimes ypu can see that 'heat list' hangs up. The root of this
+                Sometimes you can see that 'heat list' hangs up. The root of this
                 problem - connection to the rabbitMQ.
             </para>
             <para><emphasis role="bold">How I can connect to LoadBalancer instance in Server Farms?</emphasis></para>
             <para>
-                First of all you should have KeyPair file 'murano-lb-key', you can
+                First of all you should have KeyPair file 'murano-lb-key'. You can
                 create this file using commands
                 <programlisting>
                     <![CDATA[
@@ -462,7 +676,7 @@ nova keypair-add murano-lb-key > murano-lb-key.priv
 chmod 600 murano-lb-key.priv
                     ]]>
                 </programlisting>
-                And after that you should create server farms with this KeyPair.
+                And after that server farms need to be created with this KeyPair.
                 The second step is to 'how to connect to VM with LoadBalancer':
                 <programlisting>
                 <![CDATA[
@@ -472,18 +686,17 @@ ssh -i murano-lb-key.priv root@10.0.0.3
             </para>
             <para><emphasis role="bold">Murano dashboard can not connect to Murano API. How I can fix it?</emphasis></para>
             <para>
-                This is problem has two ways to fix:
+                This problem has two ways to fix:
                 Add string
                     <programlisting>
                         <![CDATA[
 MURANO_API_URL='http://localhost:8082'
                                 ]]>
                     </programlisting>
-
-                to file /etc/openstack-dashboard/local_settings (or
-                /etc/openstack-dashboard/local_settings.py - it is depends on OpenStack
+                to the /etc/openstack-dashboard/local_settings (or
+                /etc/openstack-dashboard/local_settings.py - it depends on OpenStack
                 configuration)
-                and after that need to restart web server.
+                and after that web server restart is needed.
                 Add keystone endpoints for Murano API
                     <programlisting>
                         <![CDATA[
@@ -513,21 +726,21 @@ initctl start murano-api
                 problem? </emphasis>
             </para>
             <para>
-                Sometimes we can see in logs of the deployments:
+                Sometimes we can see in deployments logs:
                 <programlisting>
                     <![CDATA[
 2013-08-06 09:10:07 - Unable to deploy instance ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
 2013-08-06 09:10:07 - Unable to create a Server Farm load balancer on unit ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
                                 ]]>
                 </programlisting>
-                The root of this problem in incorrect configuration - Heat can not
+                The root of this problem is incorrect configuration - Heat can not
                 create Load Balancer instance. Please, remember that you should have
-                admin access for project in OpenStack to deploy LoadBalancer and also,
+                admin access for the project in OpenStack to deploy LoadBalancer and also,
                 you should have KeyPair with default name 'murano-lb-key'.
             </para>
             <para><emphasis role="bold">Error in Murano API logs 'No module named helpers.token_sanitizer'</emphasis></para>
              <para>
-                This is problem with pip version. Need to install pip 1.4 and after that reinstall murano-client, murano-common and murano-api.
+                This pip version problem. Need to install pip 1.4 and after that reinstall murano-client, murano-common and murano-api.
             </para>
     </section>
 </chapter>
