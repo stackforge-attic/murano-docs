@@ -38,9 +38,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <htmlCustomization>${basedir}/src/docbkx/style/config.xsl
+                    <htmlCustomization>../style/config.xsl
                     </htmlCustomization>
-                    <htmlStylesheet>${basedir}/src/docbkx/style/user-guide.css
+                    <htmlStylesheet>../style/user-guide.css
                     </htmlStylesheet>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
@@ -48,6 +48,12 @@
                         <copy todir="target/docbkx/webhelp/user-guide/images">
                             <fileset dir="src/docbkx/images">
                                 <include name="**/*.png"/>
+                            </fileset>
+                        </copy>
+                        <copy todir="target/docbkx/webhelp/user-guide/style">
+                            <fileset dir="src/docbkx/style">
+                                <include name="**/*.css"/>
+                                <include name="**/*.xsl"/>
                             </fileset>
                         </copy>
                     </postProcess>
