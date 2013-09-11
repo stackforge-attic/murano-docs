@@ -1,0 +1,8 @@
+Verified+2: Jenkins
+Approved+1: Timur Sufiev <tsufiev@mirantis.com>
+Code-Review+2: Timur Sufiev <tsufiev@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Wed, 11 Sep 2013 13:34:12 +0000
+Reviewed-on: https://review.openstack.org/46070
+Project: stackforge/murano-docs
+Branch: refs/heads/master
