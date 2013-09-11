@@ -51,7 +51,7 @@
         <title>Creating service prototype</title>
         <para >
             All services should be created in the context of Environment
-            - virtual Windows Data Center. After Environment is created services prototypes
+            - virtual Windows Data Center. After Environment is created, you need to create services prototypes
             and then deploy the Environment. When deploy process is done instances
             with your services will be spawned in Openstack.
             To create a service prototype navigate to environment services by

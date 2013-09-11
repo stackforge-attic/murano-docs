@@ -40,7 +40,7 @@
       <para><emphasis role="bold"> Use Appropriate Branch</emphasis></para>
       <para>There are a few branches that can be found in all Murano repositories: master, release-0.1,
             release-0.2 and so on. Branch master is the most recent between the releases, but not as stable as release-x.x branches.</para>
-      <para><emphasis role="bold">Use Separate vHost in <link linkend="Rabbit"></link>RabbitMQ</emphasis></para>
+      <para><emphasis role="bold">Use Separate vHost in <link linkend="Rabbit">RabbitMQ</link></emphasis></para>
       <para>
             In general it is OK to configure Murano services to use the root (‘/’) vHost in RabbitMQ and use the same user credentials as OpenStack services use.
             However, we recommend to create a separate vHost with separate user for each Murano devbox. There are a few reasons for that:
