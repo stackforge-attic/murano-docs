@@ -38,12 +38,20 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <htmlCustomization>${basedir}/src/docbkx/style/config.xsl
+                    <htmlCustomization>../style/config.xsl
                     </htmlCustomization>
-                    <htmlStylesheet>${basedir}/src/docbkx/style/getting-started.css
+                    <htmlStylesheet>../style/getting-started.css
                     </htmlStylesheet>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
+                    <postProcess>
+                        <copy todir="target/docbkx/webhelp/getting-started/style">
+                            <fileset dir="src/docbkx/style">
+                                <include name="**/*.css"/>
+                                <include name="**/*.xsl"/>
+                            </fileset>
+                        </copy>
+                    </postProcess>
                 </configuration>
             </plugin>
         </plugins>

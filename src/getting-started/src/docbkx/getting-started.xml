@@ -25,21 +25,13 @@
     <title>Murano Getting Started Guide</title>
     <info>
         <author>
-            <personname>
-                <firstname/>
-                <surname/>
-            </personname>
             <affiliation>
-                <orgname>Mirantis, Inc.</orgname>
+                <orgname></orgname>
             </affiliation>
         </author>
-        <copyright>
-            <year>2013</year>
-            <holder>Mirantis, Inc.</holder>
-        </copyright>
-        <releaseinfo>v0.1</releaseinfo>
-        <productname>Murano™</productname>
-        <pubdate>2013-09-04</pubdate>
+        <releaseinfo>v0.2</releaseinfo>
+        <productname>Murano</productname>
+        <pubdate>2013-09-09</pubdate>
         <legalnotice role="apache2">
             <annotation>
                 <remark>Copyright details are filled in by the template. Change

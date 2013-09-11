@@ -143,7 +143,7 @@
             </itemizedlist>
             <programlisting>
 ># mkdir -p /opt/samba/share
->#chown nobody:nogroup /opt/samba/share
+># chown nobody:nogroup /opt/samba/share
             </programlisting>
             <itemizedlist>
                 <listitem>
@@ -171,7 +171,8 @@
                 </listitem>
             </itemizedlist>
             <programlisting>
-># restart smbd># restart nmdb
+># restart smbd
+># restart nmdb
             </programlisting>
             </para>
             <para><emphasis role="bold">Copy Prerequisites Into The Share</emphasis></para>
@@ -187,8 +188,55 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Add files to the folder structure under
-                        /opt/samba/share folder:
+                    <para>Download and put the following files into the specified paths under
+                        <filename>/opt/samba/share</filename> folder:
+                        <orderedlist>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.asp.net/mvc/mvc4">
+                                        ASP .NET MVC 4 setup package</link>:
+                                    <filename>Prerequisites/AspNetMVC4Setup.exe</filename>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/Y8gxbIZGF_/WebApplications.exe">
+                                        Additional files to build ASP application
+                                    </link>: should be placed to <filename>Prerequisites/WebApplications.exe</filename>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=29066">
+                                        MS SQL Server 2012</link>: Extract the content of the ISO/EXE file
+                                        to the <filename>Prerequisites/SQL Server/2012/</filename>.
+                                        After that <filename>setup.exe</filename> should be located inside this directory.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://go.microsoft.com/fwlink/?LinkID=239656&amp;clcid=0x409">
+                                        Microsoft® Windows PowerShell Extensions for Microsoft® SQL Server®2012</link>:
+                                    <filename>Prerequisites/SQL Server/Tools/PowerShellTools.msi</filename>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://go.microsoft.com/fwlink/?LinkID=239659&amp;clcid=0x409">
+                                        Microsoft® SQL Server® 2012 Shared
+                                        Management Objects</link>:
+                                    <filename>Prerequisites/SQL Server/Tools/SharedManagementObjects.msi</filename>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <link xlink:href="http://www.asp.net/mvc/mvc4">
+                                        Microsoft® System CLR Types for Microsoft® SQL Server® 2012
+                                    </link>:
+                                    <filename>Prerequisites/SQL Server/Tools/SQLSysClrTypes.msi</filename>
+                                </para>
+                            </listitem>
+                        </orderedlist>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -236,7 +284,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                       Download and put the following files to the specified paths under
+                       Download and put the following files into the specified paths under
                         <filename>/opt/image-builder </filename>folder:
                         <orderedlist>
                             <listitem>
@@ -320,7 +368,7 @@
                             </listitem>
                             <listitem>
                                 <para>
-                                    <link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR ">
+                                    <link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR">
                                          Murano Agent
                                     </link>
                                     share/files/MuranoAgent.zip
@@ -382,24 +430,24 @@
                 <listitem>
                     <para>
                         Import the Windows Server 2012 image into Glance
-                        <programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
 >$ cd /opt/image-builder/share/images
 >$ glance image-create --name ws-2012-std --disk-format qcow2  \
                 --container-type bare --file ws-2012-std.qcow2 \
                 --is-public true  \
                 --property murano_image_info='{"type":"ws-2012-std",\
                     "title":"Windows Server 2012 Standard"}'
-                        </programlisting>
-                    </para>
-                    <warning>
-                        <para>
-                        The value of the --property argument named
-                        murano_image_info is a JSON string. Only double quotes are
-                        valid in JSON, so please type the string exactly as in the
-                        example above.
-                        </para>
-                    </warning>
-                </listitem>
-            </itemizedlist>
+            </programlisting>
+            <warning>
+                <para>
+                The value of the --property argument named
+                murano_image_info is a JSON string. Only double quotes are
+                valid in JSON, so please type the string exactly as in the
+                example above.
+                </para>
+            </warning>
    </section>
 </chapter>

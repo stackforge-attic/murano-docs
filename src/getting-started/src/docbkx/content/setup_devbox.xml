@@ -44,7 +44,7 @@
         </note>
     <section>
         <title>Vagrant Way</title>
-        <para>The simplest way to get working Murano devbox is Vagrant tool.</para>
+        <para>The simplest way to get working Murano devbox is Vagrant tool. This tool is available for Ubuntu only.</para>
         <para><emphasis role="bold">Prepare Environment (Ubuntu)</emphasis></para>
         <itemizedlist>
             <listitem>
@@ -153,7 +153,8 @@ LAB_HOST='***.***.***.***'
             </listitem>
         </itemizedlist>
         <programlisting>
-># cd /opt/git># git clone git://github.com/stackforge/murano-deployment.git
+># cd /opt/git
+># git clone git://github.com/stackforge/murano-deployment.git
         </programlisting>
         <itemizedlist>
             <listitem>
@@ -252,23 +253,27 @@ BRANCH_NAME='release-0.2'
         <itemizedlist>
             <listitem>
                 <para>Install the component</para>
+
+                <para>
+                    <emphasis>Ubuntu</emphasis>
+                </para>
+                <programlisting>
+># ./murano-api/setup.sh install
+                </programlisting>
+                <para>
+                    <emphasis>CentOS</emphasis>
+                </para>
+                <programlisting>
+># ./murano-api/setup-centos.sh install
+                </programlisting>
             </listitem>
         </itemizedlist>
-        <programlisting>
-># murano-api/setup.sh install
-        </programlisting>        
-        <itemizedlist>
-            <listitem/>
-        </itemizedlist>
-        <programlisting>
-># murano-api/setup-centos.sh install
-        </programlisting>        
         <para>Configuration:</para>
         <programlisting>
 ># cd /etc/murano-api &amp;&amp; cp murano-api-paste.ini.sample \
                                         murano-api-paste.ini
 ># cd /etc/murano-api &amp;&amp; cp murano-api.conf.sample murano-api.conf
-        </programlisting>        
+        </programlisting>
         <note>
             <para>
                 Before start service, set proper configuration values in
@@ -298,19 +303,20 @@ BRANCH_NAME='release-0.2'
         <itemizedlist>
             <listitem>
                 <para>Install the component</para>
+                <para>
+                    <emphasis>Ubuntu</emphasis>
+                </para>
+                <programlisting>
+># ./murano-conductor/setup.sh install
+             </programlisting>
+                <para>
+                    <emphasis>CentOS</emphasis>
+                </para>
+                <programlisting>
+># ./murano-conductor/setup-centos.sh install
+                </programlisting>
             </listitem>
         </itemizedlist>
-        <programlisting>
-># murano-conductor/setup.sh install
-         </programlisting>
-<itemizedlist>
-            <listitem>
-                <para><emphasis>on CentOS</emphasis></para>
-            </listitem>
-        </itemizedlist>
-        <programlisting>
-># murano-conductor/setup-centos.sh install
-        </programlisting>        
         <para>Configuration</para>
         <programlisting>
 ># cd /etc/murano-conductor &amp;&amp; cp \
@@ -339,9 +345,8 @@ BRANCH_NAME='release-0.2'
         <para>How-to do this:</para>
         <itemizedlist>
             <listitem>
-                <para><emphasis>On Ubuntu</emphasis></para>
-            </listitem>
-        </itemizedlist>
+                <para><emphasis>Ubuntu</emphasis></para>
+
         <programlisting>
 ># apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard
 ># dpkg --purge openstack-dashboard-ubuntu-theme # optional step
@@ -349,12 +354,10 @@ BRANCH_NAME='release-0.2'
         <para>After installation is complete, openstack dashboard should be
             available at: http://&lt;your VM IP>/horizon
         </para>
-        <itemizedlist>
-            <listitem>
-                <para><emphasis>on CentOS</emphasis></para>
             </listitem>
-        </itemizedlist>
-        <programlisting>
+            <listitem>
+                <para><emphasis>CentOS</emphasis></para>
+                <programlisting>
 ># yum install python-netaddr.noarch \
             python-keystoneclient.noarch \
             python-django-horizon.noarch \
@@ -362,33 +365,33 @@ BRANCH_NAME='release-0.2'
              httpd.x86_64 mod_wsgi.x86_64 \
             openstack-dashboard.noarch --assumeyes
 ># chkconfig httpd on
-        </programlisting>        
-        <para>After installation is complete, openstack dashboard should be available
-            at: http://&lt;your VM IP>/dashboard
-        </para>
-        <para>Installation of the murano-dashboard is described below.</para>
+                </programlisting>
+                <para>After installation is complete, openstack dashboard should be available
+                    at: http://&lt;your VM IP>/dashboard
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>Installation of the murano-dashboard described below.</para>
         <itemizedlist>
             <listitem>
                 <para>Get source code</para>
-            </listitem>
-        </itemizedlist>
         <programlisting>
 ># git clone https://github.com/stackforge/murano-dashboard
                                 -b release-0.2
 ># chmod +x murano-dashboard/setup*.sh
          </programlisting>
-        <itemizedlist>
+            </listitem>
             <listitem>
                 <para>Install the component</para>
-                <para><emphasis>On Ubuntu</emphasis>
+                <para><emphasis>Ubuntu</emphasis>
                 <programlisting>
-># murano-dashboard/setup.sh install
+># ./murano-dashboard/setup.sh install
                 </programlisting>
                 </para>
                 <para>
-                    <emphasis>on CentOS</emphasis>
+                    <emphasis>CentOS</emphasis>
         <programlisting>
-># murano-dashboard/setup-centos.sh install
+># ./murano-dashboard/setup-centos.sh install
         </programlisting>
                 </para>
             </listitem>
