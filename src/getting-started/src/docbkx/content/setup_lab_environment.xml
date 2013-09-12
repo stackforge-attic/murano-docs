@@ -143,7 +143,7 @@
             </itemizedlist>
             <programlisting>
 ># mkdir -p /opt/samba/share
->#chown nobody:nogroup /opt/samba/share
+># chown nobody:nogroup /opt/samba/share
             </programlisting>
             <itemizedlist>
                 <listitem>
@@ -171,7 +171,8 @@
                 </listitem>
             </itemizedlist>
             <programlisting>
-># restart smbd># restart nmdb
+># restart smbd
+># restart nmdb
             </programlisting>
             </para>
             <para><emphasis role="bold">Copy Prerequisites Into The Share</emphasis></para>

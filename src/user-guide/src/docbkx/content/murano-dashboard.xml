@@ -38,12 +38,21 @@
         </mediaobject>
         <para>
             First thing you need to do is to create an environment - virtual Windows Data Center which will contain different Windows services.
-            Navigate to the "Environments" page and click the "Create Environment". After setting name to your virtual environment it will be created.
+            To do this, navigate to the "Environments" page and click the "Create Environment". After setting name to your virtual environment it will be created.
+        </para>
+        <mediaobject>
+            <imageobject role="fo">
+                <imagedata fileref="../images/env_btn.png" scalefit="1"
+                           width="100%" contentdepth="100%"/>
+            </imageobject>
+        </mediaobject>
+        <para>
             Just created environment has status <emphasis>Ready to configure</emphasis>.
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/env_btn.png" scalefit="1" width="100%" contentdepth="100%"/>
+                <imagedata fileref="../images/env_created.png" scalefit="1"
+                           width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
     </section>
@@ -54,8 +63,8 @@
             - virtual Windows Data Center. After Environment is created, you need to create services prototypes
             and then deploy the Environment. When deploy process is done instances
             with your services will be spawned in Openstack.
-            To create a service prototype navigate to environment services by
-            clicking on the environment name (or on the "Services" button) and click
+            To create a service prototype navigate to page with the list of environment services by
+            clicking on the environment name (or on the "Services" button) and then, click
             the "Create Service" button.
         </para>
             <mediaobject>
@@ -112,7 +121,7 @@
                     is a server-side Web application framework designed for Web
                     development to produce dynamic Web pages. Service is able
                     to install custom application onto one IIS Web Server. Murano installs
-                    all needed components and make proper configuration.
+                    all needed components and makes proper configuration.
             </para>
             </listitem>
             <listitem>
@@ -474,7 +483,7 @@
         </mediaobject>
         <para>
             As long as installation and configuration are in progress, environment
-            is in <emphasis>Deploying</emphasis> state. Depending on how many
+            is in <emphasis>Deploy in progress</emphasis> state. Depending on how many
             services you are deploying or how many nodes in your cluster, process of spawning instances,
             installation and post installation settings takes from 10 minutes up to one hour.
         </para>
@@ -543,7 +552,7 @@
             <para>
                 Murano gives an opportunity to supplement already deployed environment.
                 Thus if you already deployed the Active Directory service and want to add
-                any other services just create desired service prototype and click the "Deploy Environment" button.
+                any other services just create desired service prototype and click the "Deploy This Environment" button.
                 During service prototype creation you can join this service to the existent Active Directory domain.
             </para>
         </section>
@@ -649,7 +658,7 @@
             <para><emphasis role="bold"> How to debug OpenStack Heat?</emphasis></para>
             <para>
                 If you can execute Heat command via console interface - all good. It is
-                the most simple way to check Heat state on the node - jest execute CLI
+                the most simple way to check Heat state on the node - just execute CLI
                 command 'heat list'.
 
                 See more information about Heat in openstack wiki
