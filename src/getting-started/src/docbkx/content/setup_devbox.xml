@@ -44,7 +44,7 @@
         </note>
     <section>
         <title>Vagrant Way</title>
-        <para>The simplest way to get working Murano devbox is Vagrant tool.</para>
+        <para>The simplest way to get working Murano devbox is Vagrant tool. This tool is available for Ubuntu only.</para>
         <para><emphasis role="bold">Prepare Environment (Ubuntu)</emphasis></para>
         <itemizedlist>
             <listitem>
@@ -258,13 +258,13 @@ BRANCH_NAME='release-0.2'
                     <emphasis>Ubuntu</emphasis>
                 </para>
                 <programlisting>
-># murano-api/setup.sh install
+># ./murano-api/setup.sh install
                 </programlisting>
                 <para>
                     <emphasis>CentOS</emphasis>
                 </para>
                 <programlisting>
-># murano-api/setup-centos.sh install
+># ./murano-api/setup-centos.sh install
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -307,13 +307,13 @@ BRANCH_NAME='release-0.2'
                     <emphasis>Ubuntu</emphasis>
                 </para>
                 <programlisting>
-># murano-conductor/setup.sh install
+># ./murano-conductor/setup.sh install
              </programlisting>
                 <para>
                     <emphasis>CentOS</emphasis>
                 </para>
                 <programlisting>
-># murano-conductor/setup-centos.sh install
+># ./murano-conductor/setup-centos.sh install
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -385,13 +385,13 @@ BRANCH_NAME='release-0.2'
                 <para>Install the component</para>
                 <para><emphasis>Ubuntu</emphasis>
                 <programlisting>
-># murano-dashboard/setup.sh install
+># ./murano-dashboard/setup.sh install
                 </programlisting>
                 </para>
                 <para>
                     <emphasis>CentOS</emphasis>
         <programlisting>
-># murano-dashboard/setup-centos.sh install
+># ./murano-dashboard/setup-centos.sh install
         </programlisting>
                 </para>
             </listitem>
