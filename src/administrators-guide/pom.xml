@@ -40,6 +40,14 @@
                 <configuration>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
+                    <postProcess>
+                        <copy todir="target/docbkx/webhelp/administrators-guide/style">
+                            <fileset dir="src/docbkx/style">
+                                <include name="**/*.css"/>
+                                <include name="**/*.xsl"/>
+                            </fileset>
+                        </copy>
+                    </postProcess>
                 </configuration>
             </plugin>
         </plugins>

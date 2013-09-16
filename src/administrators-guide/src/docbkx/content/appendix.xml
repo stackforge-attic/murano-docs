@@ -48,39 +48,26 @@
         </listitem>
         <listitem>
             <para>Enable Cloud Archive repository</para>
-        </listitem>
-        <listitem>
-            <para>Update installed OS and packages</para>
-        </listitem>
-        <listitem>
-            <para>Add lines below to the
-                <filename>/etc/apt/sources.list.d/grizzly.list</filename>
-                file
-                <programlisting>
-deb http://ubuntu-cloud.archive.canonical.com/ubuntu
+                <para>Create and add the following lines to the
+                    <filename>/etc/apt/sources.list.d/grizzly.list</filename>
+                    file
+                    <programlisting>
+deb http://ubuntu-cloud.archive.canonical.com/ubuntu \
                     precise-updates/grizzly main
 deb http://archive.gplhost.com/debian grizzly main
 deb http://archive.gplhost.com/debian grizzly-backports main
-                </programlisting>
-            </para>
+                    </programlisting>
+                </para>
         </listitem>
         <listitem>
-            <para>Update the system
+            <para>Update installed OS and packages</para>
                 <programlisting>
 ># apt-get update
 ># apt-get install ubuntu-cloud-keyring
 ># apt-get install gplhost-archive-keyring
+># apt-get install mc unzip git make gcc python-setuptools python-pip
 ># apt-get upgrade
                 </programlisting>
-            </para>
-        </listitem>
-        <listitem>
-            <para>Install additional packages
-                <programlisting>
-># apt-get install mc unzip git make gcc
-                    python-setuptools python-pip
-                </programlisting>
-            </para>
         </listitem>
     </itemizedlist>
     <para>
@@ -101,25 +88,15 @@ deb http://archive.gplhost.com/debian grizzly-backports main
             <para>Enable RedHat Openstack and Epel repository</para>
         </listitem>
         <listitem>
-            <para>Update installed OS and packages</para>
-        </listitem>
-        <listitem>
-            <para>Add repositories and update OS
+            <para>Update system and add repositories and update OS
                 <programlisting>
-># yum install -y http://rdo.fedorapeople.org/openstack/
+># yum install -y http://rdo.fedorapeople.org/openstack/\
     openstack-grizzly/rdo-release-grizzly.rpm
-># yum install -y http://mirror.yandex.ru/
+># yum install -y http://mirror.us.leaseweb.net/\
                     epel/6/x86_64/epel-release-6-8.noarch.rpm
+># yum install -y mc unzip git make gcc python-setuptools python-pip upstart
 ># yum update
 ># yum upgrade
-                </programlisting>
-            </para>
-        </listitem>
-        <listitem>
-            <para>Install additional packages
-                <programlisting>
-># yum install mc unzip git make gcc python-setuptools
-                python-pip upstart
                 </programlisting>
             </para>
         </listitem>
@@ -139,11 +116,9 @@ deb http://archive.gplhost.com/debian grizzly-backports main
     <programlisting>
 ># pip --version
     </programlisting>
-    <para>How-to upgrade pip to latest version:
+    <para>To upgrade pip to latest version use
         <programlisting>
 ># pip install --upgrade pip
-># pip install
-            https://pypi.python.org/packages/source/p/pip/pip-1.4.1.tar.gz
         </programlisting>
         <note>
             <para>
@@ -153,7 +128,7 @@ deb http://archive.gplhost.com/debian grizzly-backports main
             </para>
         </note>
     </para>
-    <para>How to handle this situation:</para>
+    <para>To handle this situation:</para>
     <programlisting>
 ># rm /usr/bin/pip
 ># ln -s /usr/local/bin/pip /usr/bin/pip

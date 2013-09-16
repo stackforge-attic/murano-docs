@@ -57,5 +57,4 @@
     <xi:include href="./content/setup_lab_environment.xml" xlink:title="Setup Lab Environment"/>
     <xi:include href="./content/setup_devbox.xml" xlink:title="Setup Devbox"/>
     <xi:include href="./content/troubleshooting.xml" xlink:title="Troubleshooting"/>
-    <xi:include href="./content/appendix.xml" xlink:title="Appendix"/>
 </book>
