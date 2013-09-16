@@ -214,7 +214,7 @@ done                        </screen>
                     environment.</para>
                 <para><emphasis role="bold">Avg. Time</emphasis> refers to the lab with recommended
                     hardware configuration, while <emphasis role="bold">Max. Time</emphasis> refers
-                    to minimal hardvare configuration.</para>
+                    to minimal hardware configuration.</para>
                 <informaltable
                         frame="all"
                         rowsep="1" colsep="1"
@@ -322,7 +322,7 @@ LOGFILE=$SCREEN_LOGDIR/stack.sh.log                    </screen>
             </formalpara>
             <para>If you need to image builder only, then install only packages required to run
                 <emphasis role="strong">KVM</emphasis>
-                (see below).
+                .
             </para>
         </section>
         <section xml:id="_configure_openstack_installation">
@@ -640,15 +640,15 @@ LOGFILE=$SCREEN_LOGDIR/stack.sh.log                    </screen>
                         xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/stable/">
                         http://alt.fedoraproject.org/pub/alt/virtio-win/stable/ </link>
                 </para>
-                <para>Please, choose stable version instead of latest, We&#8217;ve got errors with
+                <para>Please, choose stable version instead of latest, we&#8217;ve got errors with
                     unstable drivers during guest unattended install. </para>
             </section>
             <section xml:id="_create_floppy_drive_image">
                 <title>Floppy Image With Unattended File</title>
-                <para>Run followinf commands as root:</para>
+                <para>Run following commands as root:</para>
                 <orderedlist numeration="arabic">
                     <listitem>
-                        <para> Create emtpy floppy image in your home folder </para>
+                        <para> Create empty floppy image in your home folder </para>
                         <screen>># dd bs=512 count=2880 \
    if=/dev/zero of=~/floppy.img \
    mkfs.msdos ~/floppy.img                        </screen>
@@ -752,7 +752,7 @@ create mask = 0755                        </screen>
         </warning>
         <section xml:id="_get_windows_post_install_script">
             <title>Get Windows Post Install script</title>
-            <para>All post-install actions are performed by script named<emphasis role="strong"
+            <para>All post-install actions are performed by script named <emphasis role="strong"
                     >wpi.ps1</emphasis>. You may download it using the link <link
                     xlink:href="https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/wpi.ps1"
                     >
@@ -767,7 +767,7 @@ create mask = 0755                        </screen>
                 </link>
             </para>
             <note>
-                <para>There are a few scripts named<emphasis role="strong">wpi.ps1</emphasis>, each
+                <para>There are a few scripts named <emphasis role="strong">wpi.ps1</emphasis>, each
                     supports only one version of Windows image. The script above is intended to be
                     used to create Windows Server 2012 Standard. To build other version of Windows
                     please use appropriate script from <emphasis role="strong">scripts</emphasis>
