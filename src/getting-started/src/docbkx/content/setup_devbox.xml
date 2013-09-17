@@ -358,12 +358,7 @@ BRANCH_NAME='release-0.2'
             <listitem>
                 <para><emphasis>CentOS</emphasis></para>
                 <programlisting>
-># yum install python-netaddr.noarch \
-            python-keystoneclient.noarch \
-            python-django-horizon.noarch \
-            python-django-openstack-auth.noarch \
-             httpd.x86_64 mod_wsgi.x86_64 \
-            openstack-dashboard.noarch --assumeyes
+># yum install make gcc memcached python-memcached mod_wsgi openstack-dashboard python-netaddr.noarch --assumeyes
 ># chkconfig httpd on
                 </programlisting>
                 <para>After installation is complete, openstack dashboard should be available
