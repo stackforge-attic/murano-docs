@@ -136,16 +136,13 @@ LAB_HOST='***.***.***.***'
     </section>
     <section xml:id="AutomatedWay">
         <title>Automated Way</title>
-        <para>
-            Build your VM using instructions from <link linkend="Appendix">Murano VM</link> first.
-        </para>
         <itemizedlist>
             <listitem>
-                <para>Create a folder to hold cloned repositories</para>
+                <para>Create a folder to hold git repositories</para>
             </listitem>
         </itemizedlist>
         <programlisting>
-># mkdir -p /opt/git
+># mkdir -p /opt/git cd /opt/git &amp;&amp; cd /opt/git
         </programlisting>
         <itemizedlist>
             <listitem>
@@ -153,7 +150,6 @@ LAB_HOST='***.***.***.***'
             </listitem>
         </itemizedlist>
         <programlisting>
-># cd /opt/git
 ># git clone git://github.com/stackforge/murano-deployment.git
         </programlisting>
         <itemizedlist>
@@ -169,7 +165,7 @@ LAB_HOST='***.***.***.***'
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>Install prerequisites</para>
+                <para>Install prerequisites. On this step some additional system packages will be installed</para>
             </listitem>
         </itemizedlist>
         <programlisting>
@@ -210,190 +206,6 @@ BRANCH_NAME='release-0.2'
         <itemizedlist>
             <listitem>
                 <para>Login to the Dashboard using URL http://uth_port = 35357;your VM IP>/dashboard</para>
-            </listitem>
-        </itemizedlist>
-    </section>
-    <section>
-        <title>Manual Way</title>
-        <para>Build your VM using instructions from
-            <link linkend="Appendix">Murano VM</link>
-            first.
-        </para>
-        <para>
-            Package for Ubuntu and CentOS already in progress and will soon
-            be accessible for users. While they are not available, we provide
-            information about how to get and install all murano services from
-            source code below. We made setup scripts for automated installation
-            of our products which accepts install and uninstall command line
-            arguments. Service startup jobs are handled by Upstart.
-        </para>
-        <para>At first we need to create a working directory.</para>
-
-        <note> <para>All installation steps require the superuser rights.</para></note>
-        <programlisting>
-># mkdir -p /opt/git &amp;&amp; cd /opt/git
-        </programlisting>
-        <note>
-            <para>
-            Please, track actual projects stable branch, at the time of
-            writing current stable branch is - release-0.2
-            </para>
-        </note>
-        <para>
-        <emphasis role="bold">Murano-Api</emphasis></para>
-        <itemizedlist>
-            <listitem>
-                <para>Get source code</para>
-            </listitem>
-        </itemizedlist>
-        <programlisting>
-># git clone https://github.com/stackforge/murano-api -b release-0.2
-># chmod +x murano-api/setup*.sh
-        </programlisting>
-        <itemizedlist>
-            <listitem>
-                <para>Install the component</para>
-
-                <para>
-                    <emphasis>Ubuntu</emphasis>
-                </para>
-                <programlisting>
-># ./murano-api/setup.sh install
-                </programlisting>
-                <para>
-                    <emphasis>CentOS</emphasis>
-                </para>
-                <programlisting>
-># ./murano-api/setup-centos.sh install
-                </programlisting>
-            </listitem>
-        </itemizedlist>
-        <para>Configuration:</para>
-        <programlisting>
-># cd /etc/murano-api &amp;&amp; cp murano-api-paste.ini.sample \
-                                        murano-api-paste.ini
-># cd /etc/murano-api &amp;&amp; cp murano-api.conf.sample murano-api.conf
-        </programlisting>
-        <note>
-            <para>
-                Before start service, set proper configuration values in
-                configuration files mentioned above.
-            </para>
-        </note>
-        <para>
-            Service control:
-        </para>
-        <programlisting>
-># start murano-api
-># stop murano-api
-># restart murano-api
-># status murano-api
-        </programlisting>
-        <para><emphasis role="bold">Murano-Conductor</emphasis></para>
-        <itemizedlist>
-            <listitem>
-                <para>Get source code</para>
-            </listitem>
-        </itemizedlist>
-        <programlisting>
-># git clone https://github.com/stackforge/murano-conductor \
-                                -b release-0.2
-># chmod +x murano-conductor/setup*.sh
-        </programlisting>                            
-        <itemizedlist>
-            <listitem>
-                <para>Install the component</para>
-                <para>
-                    <emphasis>Ubuntu</emphasis>
-                </para>
-                <programlisting>
-># ./murano-conductor/setup.sh install
-             </programlisting>
-                <para>
-                    <emphasis>CentOS</emphasis>
-                </para>
-                <programlisting>
-># ./murano-conductor/setup-centos.sh install
-                </programlisting>
-            </listitem>
-        </itemizedlist>
-        <para>Configuration</para>
-        <programlisting>
-># cd /etc/murano-conductor &amp;&amp; cp \
-                                conductor-paste.ini.sample conductor-paste.ini
-># cd /etc/murano-conductor &amp;&amp; cp \
-                                conductor.conf.sample conductor.conf
-        </programlisting>        
-        <note>
-            <para>
-            Before starting the service, set proper configuration values in
-            configuration files mentioned above.
-            </para>
-        </note>
-        <para>Service control:</para>
-        <programlisting>
-># start murano-conductor
-># stop murano-conductor
-># restart murano-conductor
-># status murano-conductor
-        </programlisting>
-        <para>
-        <emphasis role="bold">Murano-Dashboard</emphasis></para>
-        <para>At first, Install OpenStack dashboard(Horizon)  and dependent
-            packages.
-        </para>
-        <para>How-to do this:</para>
-        <itemizedlist>
-            <listitem>
-                <para><emphasis>Ubuntu</emphasis></para>
-
-        <programlisting>
-># apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard
-># dpkg --purge openstack-dashboard-ubuntu-theme # optional step
-        </programlisting>
-        <para>After installation is complete, openstack dashboard should be
-            available at: http://&lt;your VM IP>/horizon
-        </para>
-            </listitem>
-            <listitem>
-                <para><emphasis>CentOS</emphasis></para>
-                <programlisting>
-># yum install python-netaddr.noarch \
-            python-keystoneclient.noarch \
-            python-django-horizon.noarch \
-            python-django-openstack-auth.noarch \
-             httpd.x86_64 mod_wsgi.x86_64 \
-            openstack-dashboard.noarch --assumeyes
-># chkconfig httpd on
-                </programlisting>
-                <para>After installation is complete, openstack dashboard should be available
-                    at: http://&lt;your VM IP>/dashboard
-                </para>
-            </listitem>
-        </itemizedlist>
-        <para>Installation of the murano-dashboard described below.</para>
-        <itemizedlist>
-            <listitem>
-                <para>Get source code</para>
-        <programlisting>
-># git clone https://github.com/stackforge/murano-dashboard
-                                -b release-0.2
-># chmod +x murano-dashboard/setup*.sh
-         </programlisting>
-            </listitem>
-            <listitem>
-                <para>Install the component</para>
-                <para><emphasis>Ubuntu</emphasis>
-                <programlisting>
-># ./murano-dashboard/setup.sh install
-                </programlisting>
-                </para>
-                <para>
-                    <emphasis>CentOS</emphasis>
-        <programlisting>
-># ./murano-dashboard/setup-centos.sh install
-        </programlisting>
-                </para>
             </listitem>
         </itemizedlist>
     </section>

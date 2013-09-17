@@ -135,8 +135,6 @@
                   backup your VM easily.
                   Any type of hypervisor software which supports linux as guest OS
                   could be used. KVM, VMWare and VirtualBox were tested with success.
-                  There is a <link linkend="Appendix">Murano VM Appendix</link>
-                  which contains steps to build your own VM.
               </para>
               <para>
                   <emphasis role="bold">Supported OS</emphasis>

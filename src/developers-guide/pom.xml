@@ -38,12 +38,20 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <htmlCustomization>../style/config.xsl</htmlCustomization>
+                    <htmlStylesheet>../style/developers-guide.css</htmlStylesheet>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
                     <postProcess>
                         <copy todir="target/docbkx/webhelp/developers-guide/figures">
                             <fileset dir="src/docbkx/figures">
                                 <include name="**/*.png"/>
+                            </fileset>
+                        </copy>
+                        <copy todir="target/docbkx/webhelp/developers-guide/style">
+                            <fileset dir="src/docbkx/style">
+                                <include name="**/*.css"/>
+                                <include name="**/*.xsl"/>
                             </fileset>
                         </copy>
                     </postProcess>

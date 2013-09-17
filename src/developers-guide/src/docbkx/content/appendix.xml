@@ -108,7 +108,7 @@ deb http://archive.gplhost.com/debian grizzly-backports main
                 <programlisting>
 ># yum install -y http://rdo.fedorapeople.org/openstack/
     openstack-grizzly/rdo-release-grizzly.rpm
-># yum install -y http://mirror.yandex.ru/
+># yum install -y mirror.us.leaseweb.net/
                     epel/6/x86_64/epel-release-6-8.noarch.rpm
 ># yum update
 ># yum upgrade
@@ -139,11 +139,9 @@ deb http://archive.gplhost.com/debian grizzly-backports main
     <programlisting>
 ># pip --version
     </programlisting>
-    <para>How-to upgrade pip to latest version:
+    <para>To upgrade pip to latest version use
         <programlisting>
 ># pip install --upgrade pip
-># pip install
-            https://pypi.python.org/packages/source/p/pip/pip-1.4.1.tar.gz
         </programlisting>
         <note>
             <para>
@@ -153,7 +151,7 @@ deb http://archive.gplhost.com/debian grizzly-backports main
             </para>
         </note>
     </para>
-    <para>How to handle this situation:</para>
+    <para>To handle this situation:</para>
     <programlisting>
 ># rm /usr/bin/pip
 ># ln -s /usr/local/bin/pip /usr/bin/pip

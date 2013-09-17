@@ -23,10 +23,18 @@
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
     <title>Installation Guide</title>
-    <para>This chapter describes installation and configuration of Murano services.</para>
+    <para>This chapter describes manual installation and configuration of Murano services.</para>
     <para>Note that all Murano modules can be downloaded from
         <link xlink:href="https://launchpad.net/murano/">our page</link>
         on launchpad.
+    </para>
+    <para>
+        <note>
+            <title>Automatic installation</title> Murano can be installed in automatic way. Script will install all
+            necessary packages to your system. Find out more about this in
+            <link xlink:href='http://murano-docs.github.io/0.2/getting-started/content/ch04s02.html'>
+                Getting Started Guide</link>
+        </note>
     </para>
     <section>
         <title>Pre-Requisites</title>
@@ -42,6 +50,12 @@
         <para>These system packages are required for Murano:</para>
         <para><emphasis>Ubuntu</emphasis></para>
         <orderedlist>
+            <listitem>
+                <para>gcc</para>
+            </listitem>
+            <listitem>
+                <para>python-pip</para>
+            </listitem>
             <listitem>
                 <para>python-dev</para>
             </listitem>
@@ -60,6 +74,12 @@
         </para>
         <orderedlist>
             <listitem>
+                <para>gcc</para>
+            </listitem>
+            <listitem>
+            <para>python-pip</para>
+            </listitem>
+            <listitem>
                 <para>python-devel</para>
             </listitem>
             <listitem>
@@ -72,6 +92,10 @@
                 <para>libffi-devel</para>
             </listitem>
         </orderedlist>
+        <para>
+            All these packages will be installed in murano-installation scripts. In addition to these packages some repositories are required.
+            Please follow the instructions in <link linkend="Appendix">the appendix</link> to prepare your environment for murano installation.
+        </para>
 
     </section>
     <section>
@@ -88,6 +112,10 @@
 sudo su -
                         ]]>
                     </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Make sure that additional linux repositories are installed. See <link linkend="Appendix">the appendix</link> for information about preparing a virtual machine for murano installation.
+                    </para>
                 </listitem>
                 <listitem>
                     <para>Clone Murano API git repository:</para>
@@ -120,7 +148,6 @@ sh setup.sh install
                     <programlisting>
                         <![CDATA[
 cd murano-api
-yum install -y http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
 sh setup-centos.sh install
                        ]]>
                     </programlisting>
@@ -310,6 +337,13 @@ sudo su -
                     </programlisting>
                 </listitem>
                 <listitem>
+                    <para>Make sure that additional repositories are installed.
+                        See
+                        <link linkend="Appendix">the appendix</link>
+                        for information about preparing a virtual machine for murano installation.
+                    </para>
+                </listitem>
+                <listitem>
                     <para>Clone Murano Conductor repository from the github.</para>
                     <programlisting>
                         <![CDATA[
@@ -344,7 +378,6 @@ sh setup.sh install
                         <![CDATA[
 cd murano-conductor
 yum install -y
-http://mirror.yandex.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm
 sh setup-centos.sh install
                        ]]>
                     </programlisting>
@@ -479,6 +512,27 @@ initctl start murano-conductor
                         <![CDATA[
 sudo su -
                         ]]>
+                    </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Make sure that additional repositories are installed.
+                        See <link linkend="Appendix">the appendix</link>
+                        for information about preparing a virtual machine for murano installation.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>If there is no openstack dashboard package in your environment install it now with all dependencies:</para>
+                    <para><emphasis>CentOS</emphasis></para>
+                    <programlisting>
+yum install -y make gcc memcached python-memcached
+        mod_wsgi openstack-dashboard python-netaddr.noarch --assumeyes
+                    </programlisting>
+                    <para>
+                        <emphasis>Ubuntu</emphasis>
+                    </para>
+                    <programlisting>
+apt-get install -y memcached libapache2-mod-wsgi
+                        openstack-dashboard
                     </programlisting>
                 </listitem>
                 <listitem>
