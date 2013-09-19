@@ -36,7 +36,7 @@
                 Getting Started Guide</link>
         </note>
     </para>
-    <section>
+    <section xml:id="prerequisites">
         <title>Pre-Requisites</title>
         <para>Murano supports the following operating systems:</para>
         <orderedlist>
@@ -164,7 +164,7 @@ LOG:> Please, make proper configuration,located at "/etc/murano-api", before sta
                 </listitem>
             </itemizedlist>
         </section>
-        <section>
+        <section xml:id="configure_api">
             <title>Configure</title>
             <itemizedlist spacing="compact">
                 <listitem>
@@ -379,7 +379,7 @@ sh murano-conductor/setup-centos.sh install
                 </listitem>
             </itemizedlist >
         </section>
-        <section>
+        <section xml:id="configure_conductor">
             <title>Configure</title>
             <itemizedlist spacing="compact">
                 <listitem>
@@ -577,6 +577,26 @@ sh murano-dashboard/setup-centos.sh install
                 </listitem>
             </itemizedlist>
         </section>
+<<<<<<< HEAD
+    <section xml:id="configure_dashboard">
+        <title>Configure</title>
+        <itemizedlist spacing="compact">
+        <listitem>
+            <para>
+                Murano installation script makes all needed changes in horizon (openstack dashboard) configs.
+                All you have to do is to configure horizon in appropriate way. Set OPENSTACK_HOST in your horizon local settings.
+                <link xlink:href="http://docs.openstack.org/developer/horizon/">
+                For more information visit official horizon documentation. </link>
+            </para>
+        </listitem>
+        </itemizedlist>
+    </section>
+        <section>
+            <title>Run</title>
+            <para>
+                Since all required settings are made Apache service need to be restarted to apply all changes.
+            </para>
+=======
     <section>
         <title>Configure</title>
         <itemizedlist spacing="compact">
@@ -595,6 +615,7 @@ sh murano-dashboard/setup-centos.sh install
             <para>
                 Since all required settings are made Apache service need to be restarted to apply all changes.
             </para>
+>>>>>>> 33f5a6d52739bea6bc661c7b12c37b0b4dcb5b84
             <itemizedlist>
                 <listitem>
                     <para>
@@ -617,12 +638,156 @@ sh murano-dashboard/setup-centos.sh install
                         Check that "Environments" panel appears at the horizon "Project" tab.
                         To see how to operate with Murano dashboard plugin check out
                         <link xlink:href="http://murano-docs.github.io/latest/user-guide/content/ch01.html">
+<<<<<<< HEAD
+                        Murano User Guide.
+=======
                         Murano User Guide
+>>>>>>> 33f5a6d52739bea6bc661c7b12c37b0b4dcb5b84
                         </link>
                     </para>
                 </listitem>
             </itemizedlist>
         </section>
+    </section>
+    <section xml:id="venv">
+        <title>Installing with virtual environment</title>
+        <para>
+            For local development, all Murano components can be installed in
+            a virtual environment.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Install virtaulenv packege if you don't have one:
+                        <programlisting>
+sudo pip install virtualenv
+                        </programlisting>
+
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Check out git repository with murano component:
+                    </para>
+                    <itemizedlist>
+                        <listitem>
+                                <programlisting>
+git clone https://github.com/stackforge/murano-api
+                                </programlisting>
+                        </listitem>
+                        <listitem>
+                                <programlisting>
+git clone https://github.com/stackforge/murano-conductor
+                                </programlisting>
+                        </listitem>
+                        <listitem>
+                                <programlisting>
+git clone https://github.com/stackforge/murano-dashboard
+                                </programlisting>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+                <listitem>
+                    <para>
+                        Make sure that required system packages are installed.
+                        Check list from <link linkend="prerequisites"> prerequisites page</link>
+                    </para>
+                </listitem>
+                <listitem>
+                        <para>
+                            Execute a script in the <filename>tools</filename> directory
+                                to create virtual environment automatically:
+                            <programlisting>
+$ python tools/install_venv.py
+                            </programlisting>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        For <emphasis role="bold"> Murano Dashboard </emphasis>additional installation need to be done:
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    Openstack dashboard (horizon).:
+                                    <programlisting>
+./tools/with_venv.sh pip install https://github.com/openstack/horizon/archive/grizzly-2.tar.gz
+                                    </programlisting>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Install openstack-dashboard dependency:
+                                    <itemizedlist>
+                                        <listitem>
+                                            <para>
+                                                <emphasis>Ubuntu</emphasis>
+                                                <programlisting>
+# apt-get install nodejs
+                                                </programlisting>
+                                            </para>
+                                        </listitem>
+                                        <listitem>
+                                            <para>
+                                                <emphasis>CentOS</emphasis>
+                                                <programlisting>
+# yum install nodejs
+                                                </programlisting>
+                                            </para>
+                                        </listitem>
+                                    </itemizedlist>
+
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Customized Djblets package to support datagrid element (installation by pip is not supported):
+                                <programlisting>
+./tools/with_venv.sh easy_install https://github.com/tsufiev/djblets/archive/master.zip
+                                </programlisting>
+                                </para>
+                            </listitem>
+
+                        </itemizedlist>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Config files for the development infrastructure of murano-api and murano-conductor can be found at <filename>etc</filename>
+                        under folder with component repository. Follow the links to see how config files should be configured:
+                        <link linkend="configure_api">Murano API</link> and <link linkend="configure_conductor">Murano Conductor</link>.
+                        To configure Murano Dashboard copy
+                        <programlisting>
+# cp muranodashboard/local/local_settings.py.example muranodashboard/local/local_settings.py
+                        </programlisting>
+                        set the actual IP address of the OpenStack end-point.
+                        If you haven't register murano-api service in the keystone catalog you can set MURANO_API_URL in the same settings file.
+                        Note that local murano-api service will be using by default.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Run Murano API:
+                        <programlisting>
+./tools/with_venv.sh python api/cmd/api.py --config-file=./etc/murano-api.conf
+                        </programlisting>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Run Murano Conductor:
+                        <programlisting>
+./tools/with_venv.sh python muranoconductor/cmd/run.py --config-file=./etc/conductor.conf
+                        </programlisting>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para><emphasis>Run Murano Dashboard:</emphasis>
+                        To start the Murano development server use the Django
+                        manage.py utility with the context of the virtual
+                        environment:
+                        <programlisting>
+./tools/with_venv.sh ./manage.py runserver 0.0.0.0:8080
+                        </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist>
     </section>
     <section xml:id="ssl">
         <title>SSL configuration</title>
@@ -639,10 +804,10 @@ sh murano-dashboard/setup-centos.sh install
             </para>
             <programlisting>
                 <![CDATA[
-    [ssl]
-    cert_file = PATH
-    key_file = PATH
-    ca_file = PATH
+[ssl]
+cert_file = PATH
+key_file = PATH
+ca_file = PATH
                 ]]>
             </programlisting>
             <itemizedlist>

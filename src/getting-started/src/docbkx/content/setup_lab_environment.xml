@@ -433,7 +433,7 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            <programlisting>
+            <programlisting width="200">
 >$ cd /opt/image-builder/share/images
 >$ glance image-create --name ws-2012-std --disk-format qcow2           \
     --container-type bare --file ws-2012-std.qcow2 --is-public true     \
