@@ -869,9 +869,11 @@ create mask = 0755                        </screen>
         <orderedlist>
             <listitem>
                 <para> Use the glance image-create command to import your disk image to Glance:
-                    <screen>>$ glance image-create --name &lt;NAME> --is-public true       \
-                        --disk-format qcow2 --container-format bare --file &lt;IMAGE_FILE> \
-                        --property &lt;IMAGE_METADATA></screen>
+                    <screen>>$ glance image-create --name &lt;NAME> \
+     --is-public true --disk-format qcow2 \
+     --container-format bare \
+     --file &lt;IMAGE_FILE> \
+     --property &lt;IMAGE_METADATA></screen>
                 </para>
                 <para>
                     Replace the command line arguments to glance image-create with the
@@ -932,7 +934,8 @@ create mask = 0755                        </screen>
                     <listitem>
                         <para> Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with
                             murano_image_info property,
-                            e.g.<screen>murano_image_info='{"title": "Windows 2012 Core Edition","type": "ws-2012-core"}'</screen></para>
+                            e.g.<screen>murano_image_info='{"title": "Windows 2012 Core Edition",\
+"type": "ws-2012-core"}'</screen></para>
                     </listitem>
                 </itemizedlist>
             </listitem>
