@@ -70,7 +70,7 @@
               </listitem>
               <listitem>
                   <para>
-                      <emphasis>Devbox</emphasis> - a mahine where all murano components and services are running.
+                      <emphasis>Devbox</emphasis> - a machine where all murano components and services are running.
                       This machine should have access to the Openstack Lab.
                   </para>
               </listitem>
