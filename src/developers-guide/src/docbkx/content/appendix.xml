@@ -53,11 +53,11 @@
             <para>Update installed OS and packages</para>
         </listitem>
         <listitem>
-            <para>Add lines below to the
+            <para>Create and add  the following lines to the
                 <filename>/etc/apt/sources.list.d/grizzly.list</filename>
                 file
                 <programlisting>
-deb http://ubuntu-cloud.archive.canonical.com/ubuntu
+deb http://ubuntu-cloud.archive.canonical.com/ubuntu \
                     precise-updates/grizzly main
 deb http://archive.gplhost.com/debian grizzly main
 deb http://archive.gplhost.com/debian grizzly-backports main
@@ -106,9 +106,9 @@ deb http://archive.gplhost.com/debian grizzly-backports main
         <listitem>
             <para>Add repositories and update OS
                 <programlisting>
-># yum install -y http://rdo.fedorapeople.org/openstack/
+># yum install -y http://rdo.fedorapeople.org/openstack/\
     openstack-grizzly/rdo-release-grizzly.rpm
-># yum install -y mirror.us.leaseweb.net/
+># yum install -y http://mirror.us.leaseweb.net/\
                     epel/6/x86_64/epel-release-6-8.noarch.rpm
 ># yum update
 ># yum upgrade
@@ -118,7 +118,7 @@ deb http://archive.gplhost.com/debian grizzly-backports main
         <listitem>
             <para>Install additional packages
                 <programlisting>
-># yum install mc unzip git make gcc python-setuptools
+># yum install -y mc unzip git make gcc python-setuptools      \
                 python-pip upstart
                 </programlisting>
             </para>

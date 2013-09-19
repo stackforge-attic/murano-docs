@@ -138,8 +138,7 @@ git checkout 0.2
                     </para>
                     <programlisting>
                         <![CDATA[
-cd murano-api
-sh setup.sh install
+sh murano-api/setup.sh install
                         ]]>
                     </programlisting>
                     <para>
@@ -147,8 +146,7 @@ sh setup.sh install
                     </para>
                     <programlisting>
                         <![CDATA[
-cd murano-api
-sh setup-centos.sh install
+sh murano-api/setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
@@ -367,8 +365,7 @@ git checkout 0.2
                     </para>
                     <programlisting>
                         <![CDATA[
-cd murano-conductor
-sh setup.sh install
+sh murano-conductor/setup.sh install
                         ]]>
                     </programlisting>
                     <para>
@@ -376,9 +373,7 @@ sh setup.sh install
                     </para>
                     <programlisting>
                         <![CDATA[
-cd murano-conductor
-yum install -y
-sh setup-centos.sh install
+sh murano-conductor/setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
@@ -503,6 +498,9 @@ initctl start murano-conductor
     <section>
         <title>Murano Dashboard</title>
         <para>Murano Dashboard provides Web UI for Murano Project.</para>
+        <warning>
+            <para>This installation is not capable with Horizon installed by devstack</para>
+        </warning>
         <section>
             <title>Install</title>
             <itemizedlist>
@@ -521,18 +519,24 @@ sudo su -
                     </para>
                 </listitem>
                 <listitem>
-                    <para>If there is no openstack dashboard package in your environment install it now with all dependencies:</para>
+                    <para>If there is no openstack dashboard package in your environment install it now with all dependencies.
+                        Deleting an Ubuntu theme is an optional step but recommended.</para>
+                    <note>
+                        <para>
+                            Horizon installed by devstack is not capable for a murano installation.
+                        </para>
+                    </note>
                     <para><emphasis>CentOS</emphasis></para>
                     <programlisting>
-yum install -y make gcc memcached python-memcached
-        mod_wsgi openstack-dashboard python-netaddr.noarch --assumeyes
+yum install -y make gcc memcached python-memcached          \
+        mod_wsgi openstack-dashboard python-netaddr.noarch
                     </programlisting>
                     <para>
                         <emphasis>Ubuntu</emphasis>
                     </para>
                     <programlisting>
-apt-get install -y memcached libapache2-mod-wsgi
-                        openstack-dashboard
+apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard
+dpkg --purge openstack-dashboard-ubuntu-theme
                     </programlisting>
                 </listitem>
                 <listitem>
@@ -544,14 +548,22 @@ git clone https://github.com/stackforge/murano-dashboard
                     </programlisting>
                 </listitem>
                 <listitem>
+                    <para>Stable version one of our
+                        <link linkend="releases">releases</link>
+                        can be checked out by tag:
+                    </para>
+                    <programlisting>
+git checkout 0.2
+                    </programlisting>
+                    </listitem>
+                <listitem>
                     <para>Switch to just created directory and run installation script</para>
                     <para>
                         <emphasis>Ubuntu</emphasis>
                     </para>
                     <programlisting>
                         <![CDATA[
-cd murano-dashboard
-sh setup.sh install
+sh murano-dashboard/setup.sh install
                         ]]>
                     </programlisting>
                     <para>
@@ -559,18 +571,57 @@ sh setup.sh install
                     </para>
                     <programlisting>
                         <![CDATA[
-cd murano-dashboard
-sh setup-centos.sh install
+sh murano-dashboard/setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
             </itemizedlist>
+        </section>
+    <section>
+        <title>Configure</title>
+        <itemizedlist spacing="compact">
+        <listitem>
             <para>
-                This script will supplement openstack dashboard configuration and the panel with Murano "Environments" should appear.
-                Don't forget to <link linkend="murano_api_endpoint"> register </link>
-                Murano API in keystone and set OPENSTACK_HOST in
-                <link xlink:href="http://docs.openstack.org/developer/horizon/topics/settings.html#openstack-host">horizon settings</link>.
+                Murano installation script makes all needed changes in horizon (openstack dashboard) configs.
+                All you have to do is to configure horizon in appropriate way. Set OPENSTACK_HOST in your horizon local settings.
+                <link xlink:href="http://docs.openstack.org/developer/horizon/">
+                For more information visit official horizon documentation. </link>
             </para>
+        </listitem>
+        </itemizedlist>
+    </section>
+        <section>
+            <title>Run</title>
+            <para>
+                Since all required settings are made Apache service need to be restarted to apply all changes.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis>CentOS</emphasis>
+                        <programlisting>
+# service httpd restart
+                        </programlisting>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>Ubuntu</emphasis>
+                        <programlisting>
+# service apache2 restart
+                        </programlisting>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Check that "Environments" panel appears at the horizon "Project" tab.
+                        To see how to operate with Murano dashboard plugin check out
+                        <link xlink:href="http://murano-docs.github.io/latest/user-guide/content/ch01.html">
+                        Murano User Guide
+                        </link>
+                    </para>
+                </listitem>
+            </itemizedlist>
         </section>
     </section>
     <section xml:id="ssl">
