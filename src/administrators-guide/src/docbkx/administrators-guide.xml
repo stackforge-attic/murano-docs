@@ -168,7 +168,8 @@
                             Make 5 copies of Windows image file:
                         </para>
 <screen>
-># for i in $(seq 5); do cp ws-2012-std.qcow2 ws-2012-std-$i.qcow2; done
+># for i in $(seq 5); do \
+   cp ws-2012-std.qcow2 ws-2012-std-$i.qcow2; done
 </screen>
                     </listitem>
                     <listitem>
@@ -339,7 +340,7 @@ done
             <formalpara>
                 <title>localrc example</title>
                 <para>
-<screen>
+<screen width="80">
 HOST_IP=
 FLAT_INTERFACE=
 FLOATING_RANGE=
@@ -353,7 +354,8 @@ SERVICE_TOKEN=tokentoken
 ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng
 
 # Image's cache is in $TOP_DIR/files
-IMAGE_URLS+=",http://fedorapeople.org/groups/heat/prebuilt-jeos-images/F17-x86_64-cfntools.qcow2"
+IMAGE_URLS+=",http://fedorapeople.org/groups/heat/prebuilt-jeos-images/"
+IMAGE_URLS+="F17-x86_64-cfntools.qcow2"
 
 # /etc/nova/nova.conf
 EXTRA_OPTS=(force_config_drive=true libvirt_images_type=qcow2 force_raw_images=false)
@@ -480,7 +482,7 @@ LOGFILE=$SCREEN_LOGDIR/stack.sh.log
                     <listitem>
                         <para>Login to the Dashboard using URL <emphasis role="bold">http://&lt;your
                                 VM IP>/dashboard</emphasis> or <emphasis role="bold">http://&lt;your
-                                VM IP>/dashboard</emphasis></para>
+                                VM IP>/horizon</emphasis></para>
                     </listitem>
                 </itemizedlist></para>
         </section>
@@ -1199,7 +1201,7 @@ LOGFILE=$SCREEN_LOGDIR/stack.sh.log
                         <para> Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with the
                                 following property string
                                 <screen>
-murano_image_info='{"title": "Windows 2012 Core Edition","type": "ws-2012-core"}
+murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"}
 </screen>
                                 where <itemizedlist>
                                     <listitem>
