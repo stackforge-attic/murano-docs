@@ -1,0 +1,8 @@
+Verified+2: Jenkins
+Approved+1: Anastasia Kuznetsova <akuznetsova@mirantis.com>
+Code-Review+2: Anastasia Kuznetsova <akuznetsova@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Fri, 20 Sep 2013 12:40:35 +0000
+Reviewed-on: https://review.openstack.org/47550
+Project: stackforge/murano-docs
+Branch: refs/heads/master
