@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2013 Mirantis, Inc.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0">
+    <title>General Deployment Steps</title>
+    <section>
+        <title>Prepare A Lab For Murano</title>
+        <para>
+            This section provides basic information about lab's system requirements. It also contains a description
+            of a test which you may use to check if your hardware fits the requirements. To do this, run the test
+            and compare the results with baseline data provided.
+        </para>
+        <section>
+            <title>Lab Requirements</title>
+            <table xml:id="_hardware_requirements" frame="all">
+                <title>Hardware requirements</title>
+                <tgroup cols="3" align="left" rowsep="1" colsep="1">
+                    <colspec colname="col1" colwidth="1*"/>
+                    <colspec colname="col2" colwidth="3*"/>
+                    <colspec colname="col3" colwidth="3*"/>
+                    <thead>
+                        <row>
+                            <entry>Criteria</entry>
+                            <entry>Minimal</entry>
+                            <entry>Recommended</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>CPU</entry>
+                            <entry>4 core @ 2.4 GHz</entry>
+                            <entry>24 core @ 2.67 GHz</entry>
+                        </row>
+                        <row>
+                            <entry>RAM</entry>
+                            <entry>8 GB</entry>
+                            <entry>24 GB or more</entry>
+                        </row>
+                        <row>
+                            <entry>HDD</entry>
+                            <entry>2 x 500 GB (7200 rpm)</entry>
+                            <entry>4 x 500 GB (7200 rpm)</entry>
+                        </row>
+                        <row>
+                            <entry>RAID</entry>
+                            <entry>Software RAID-1 (use mdadm as it will improve read performance almost two times)</entry>
+                            <entry>Hardware RAID-10</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <para>
+                There are a few possible storage configurations except the shown above. All of them were tested and were working well.
+            </para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            1x SSD 500+ GB
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            1x HDD (7200 rpm) 500+ GB and 1x SSD 250+ GB (install the system onto the HDD and mount the SSD drive to folder where VM images are)
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            1x HDD (15000 rpm) 500+ GB
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                The list of OSes which we used in our lab is shown below.
+            </para>
+            <table xml:id="_software_requirements" frame="all">
+                <title>OS Requirements</title>
+                <tgroup cols="1" align="left" rowsep="1" colsep="1">
+                    <colspec colname="col1" colwidth="1*"/>
+                    <thead>
+                        <row>
+                            <entry>List</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>Ubuntu Server 12.04 LTS</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </section>
+        <section>
+            <title>Test Your Lab Host Performance</title>
+            <para>
+                We have measured time required to boot 1 to 5 instances of Windows system simultaneously. You can use
+                this data as the baseline to check if your system is fast enough.
+            </para>
+            <para>
+                You should use sysprepped images for this test, to simulate VM first boot.
+            </para>
+            <para>
+                Steps to reproduce test:
+            </para>
+            <orderedlist numeration="arabic">
+                <listitem>
+                    <para>
+                        Prepare Windows 2012 Standard (with GUI) image in QCOW2 format. Let's assume that its name is ws-2012-std.qcow2
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Ensure that there is NO KVM PROCESSES on the host. To do this, run command:
+<screen>
+># ps aux | grep kvm
+</screen>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Make 5 copies of Windows image file:
+                    </para>
+<screen>
+># for i in $(seq 5); do \
+cp ws-2012-std.qcow2 ws-2012-std-$i.qcow2; done
+</screen>
+                </listitem>
+                <listitem>
+                    <para>
+                        Create script start-vm.sh in the folder with .qcow2 files:
+                    </para>
+<screen>
+#!/bin/bash
+[ -z $1 ] || echo "VM count not provided!"; exit 1
+for i in $(seq $1); do
+echo "Starting VM $i ..."
+kvm \
+  -m 1024 \
+  -drive file=ws-2012-std-$i.qcow2,if=virtio \
+  -net user -net nic,model=virtio \
+  -nographic \
+  -usbdevice tablet \
+  -vnc :$i &amp;
+done
+</screen>
+                </listitem>
+                <listitem>
+                    <para>
+                        Start ONE instance with command below (as root) and measure time between VM&#8217;s launch and
+                        the moment when Server Manager window appears. To view VM&#8217;s desktop, connect with VNC viewer to your host to VNC screen :1 (port 5901):
+                    </para>
+<screen>
+># ./start-vm.sh 1
+</screen>
+                </listitem>
+                <listitem>
+                    <para>
+                        Turn VM off. You may simply kill all KVM processes by
+                    </para>
+<screen>
+># killall kvm
+</screen>
+                </listitem>
+                <listitem>
+                    <para>
+                        Start FIVE instances with command below (as root) and measure time interval between ALL VM&#8217;s
+                        launch and the moment when LAST Server Manager window appears. To view VM&#8217;s desktops, connect with
+                        VNC viewer to your host to VNC screens :1 thru :5 (ports 5901-5905):
+                    </para>
+<screen>
+># ./start-vm.sh 5
+</screen>
+                </listitem>
+                <listitem>
+                    <para>
+                        Turn VMs off. You may simply kill all KVM processes by
+                    </para>
+<screen>
+># killall kvm
+</screen>
+                </listitem>
+            </orderedlist>
+        </section>
+        <section>
+            <title>Baseline Bata</title>
+            <para>
+                The table below provides baseline data which we've got in our environment.
+            </para>
+            <para>
+                <emphasis role="bold">Avg. Time</emphasis> refers to the lab with recommended hardware configuration, while
+                <emphasis role="bold">Max. Time</emphasis> refers to minimal hardware configuration.
+            </para>
+            <informaltable
+                    frame="all"
+                    rowsep="1" colsep="1"
+                    >
+                <tgroup cols="3">
+                    <colspec colname="col_1" colwidth="33*"/>
+                    <colspec colname="col_2" colwidth="33*"/>
+                    <colspec colname="col_3" colwidth="33*"/>
+                    <thead>
+                        <row>
+                            <entry/>
+                            <entry>Boot ONE instance</entry>
+                            <entry>Boot FIVE instances</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry align="left" valign="top">
+                                <para>Avg. Time</para>
+                            </entry>
+                            <entry align="left" valign="top">
+                                <para>3m:40s</para>
+                            </entry>
+                            <entry align="left" valign="top">
+                                <para>8m</para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry align="left" valign="top">
+                                <para>Max. Time</para>
+                            </entry>
+                            <entry align="left" valign="top">
+                                <para>5m</para>
+                            </entry>
+                            <entry align="left" valign="top">
+                                <para>20m</para>
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </section>
+        <section>
+            <title>Host Optimizations</title>
+            <para>
+                Default KVM installation could be improved to provide better performance.
+            </para>
+            <para>
+                The following optimizations may improve host performance up to 30%:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        change default scheduler from <emphasis role="strong">CFQ</emphasis> to
+                        <emphasis role="strong">Deadline</emphasis>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        use <emphasis role="strong">ksm</emphasis>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        use <emphasis role="strong">vhost-net</emphasis>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
+    <section>
+        <title>Install OpenStack</title>
+        <para>
+            We use Devstack (<link xlink:href="http://devstack.org/">http://devstack.org/</link>) to build our lab environment.
+        </para>
+        <para>
+            Devstack is a set of scripts to automate OpenStack installation using sources from Git repositories.
+            No packages are built and installed during this process, all OpenStack components are executed in separate consoles (via screen utility).
+        </para>
+        <para>
+            It is a great tool to quickly install and start to develop OpenStack on you server. However, it has a few caveats that should be kept in mind:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Devstack scripts must be executed each time the host reboots. This also reset your OpenStack environment to it’s ‘just installed’ state.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Multi-node configurations are not as easy in installation as single-node.
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            Below are the general steps that required to install OpenStack using Devstack in a Single-node mode.
+        </para>
+        <para>
+            Use Devstack's guide to install single VM OpenStack (<link xlink:href="http://devstack.org/guides/single-vm.html"> http://devstack.org/guides/single-vm.html</link>)
+        </para>
+        <formalpara>
+            <title>localrc example</title>
+            <para>
+                <screen width="80">
+HOST_IP=
+FLAT_INTERFACE=
+FLOATING_RANGE=
+
+ADMIN_PASSWORD=swordfish
+MYSQL_PASSWORD=swordfish
+RABBIT_PASSWORD=swordfish
+SERVICE_PASSWORD=swordfish
+SERVICE_TOKEN=tokentoken
+
+ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng
+
+# Image's cache is in $TOP_DIR/files
+IMAGE_URLS+=",http://fedorapeople.org/groups/heat/prebuilt-jeos-images/"
+IMAGE_URLS+="F17-x86_64-cfntools.qcow2"
+
+# /etc/nova/nova.conf
+EXTRA_OPTS=(force_config_drive=true libvirt_images_type=qcow2 force_raw_images=false)
+
+# Logging
+SCREEN_LOGDIR=/opt/stack/log/
+LOGFILE=$SCREEN_LOGDIR/stack.sh.log
+                </screen>
+            </para>
+        </formalpara>
+        <para>
+            If you need to image builder only, then install only packages required to run <emphasis role="strong">KVM</emphasis> (see below).
+        </para>
+    </section>
+    <section>
+        <title>Configure OpenStack</title>
+        <note>
+            <para>
+                Additional OpenStack configuration usually doesn't required in case you've installed OpenStack with Devstack scripts.
+            </para>
+        </note>
+        <para>
+            To configure OpenStack is not a simple task and depends on various options (hardware configuration, network layout, and so on) and in general is out of scope of this document.
+        </para>
+    </section>
+</chapter>

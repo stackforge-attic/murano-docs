@@ -75,5 +75,4 @@
                     xlink:href="https://launchpad.net/murano">launchpad page</link>.
         </para>
     </chapter>
-    <xi:include href="./content/appendix.xml" xlink:title="Appendix"/>
 </book>
