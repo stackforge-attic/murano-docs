@@ -22,7 +22,216 @@
          xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
-    <title>Installation Guide</title>
+    <title>Install Murano Components</title>
+    <para>This chapter describes how to install Murano components on a
+        separate devbox. We
+        strongly recommend to use a separate host (virtual machine or real
+        host) for Murano
+        devbox as it prevents you from various dependency conflicts.
+    </para>
+    <section>
+        <title>Automatic Installation</title>
+        <para>There is a script to automate Murano installation onto
+            devbox.
+            <itemizedlist>
+                <listitem>
+                    <para>Create a folder to hold cloned
+                        repositories
+                        <screen>># mkdir -p /opt/git</screen>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Clone murano-deployment
+                        repository
+                        <screen>
+># cd /opt/git
+># git clone git://github.com/stackforge/murano-deployment.git
+                        </screen>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Change directory to
+                        <emphasis role="bold">murano-deployment</emphasis>
+                        and switch to required branch (e.g.<emphasis
+                                role="bold"
+                                >master</emphasis>)
+                        <screen>
+># cd /opt/git/murano-deployment
+># git checkout -b master origin/master
+                        </screen>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Install
+                        prerequisites
+                        <screen>
+># cd /opt/git/murano-deployment/devbox-scripts
+># ./murano-git-install.sh prerequisites
+                        </screen>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Configure the following parameters in lab binding
+                        configuration file
+                        <emphasis role="bold"
+                                >/etc/murano-deployment/lab-binding.rc
+                        </emphasis>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">LAB_HOST
+                                    </emphasis>
+                                    - IP or nostname
+                                    of the lab. Actually, this address/name
+                                    should point to the
+                                    host where Keystone is installed.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">ADMIN_USER
+                                    </emphasis>
+                                    - OpenStack
+                                    <emphasis role="bold">admin</emphasis>
+                                    user
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">ADMIN_PASSWORD
+                                    </emphasis>
+                                    - A  password for OpenStack
+                                    <emphasis role="bold"
+                                            >admin
+                                    </emphasis>
+                                    user
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">RABBITMQ_USER
+                                    </emphasis>
+                                    - User to connect to RabbitMQ host
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">
+                                        RABBITMQ_PASSWORD
+                                    </emphasis>
+                                    - Password for that user
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">RABBITMQ_VHOST
+                                    </emphasis>
+                                    - vHost
+                                    which will be used by Murano
+                                    components. Provides additional
+                                    layer of isolation from other devboxes.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">RABBITMQ_HOST
+                                    </emphasis>
+                                    -
+                                    (optional) IP address or hostname of
+                                    the host where RabbitMQ
+                                    is installed IF it is not the same host
+                                    as LAB_HOST points
+                                    to
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">
+                                        RABBITMQ_HOST_ALT
+                                    </emphasis>
+                                    -
+                                    (optional) IP address or hostname of
+                                    the RabbitMQ host to
+                                    connect from inside the Windows
+                                    instance. In some cases the
+                                    addresses like LAB_HOST or
+                                    RABBITMQ_HOST are inaccessible
+                                    from instances, and they must use
+                                    different address.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">FILE_SHARE_HOST
+                                    </emphasis>
+                                    -
+                                    (optional) IP address or hostname of
+                                    the host where file
+                                    share with prerequisites is located IF
+                                    it is not the same
+                                    host as LAB_HOST points to.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">BRANCH_NAME
+                                    </emphasis>
+                                    - branch name
+                                    from which all Murano components will
+                                    be fetched for
+                                    installation
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">SSL_ENABLED
+                                    </emphasis>
+                                    - Set
+                                    <emphasis role="bold">'true'</emphasis>
+                                    if OpenStack is
+                                    configured with SSL support and
+                                    <emphasis role="bold"
+                                            >'false'
+                                    </emphasis>
+                                    otherwise.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">SSL_CA_FILE
+                                    </emphasis>
+                                    - Path to CA
+                                    certificate for certificate validation
+                                    on client
+                                    side.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Install Murano
+                        components
+                        <screen>
+># ./murano-git-install.sh install</screen>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Login to the Dashboard using URL
+                        <emphasis role="bold">http://&lt;your
+                            VM IP>/dashboard
+                        </emphasis>
+                        or
+                        <emphasis role="bold">http://&lt;your
+                            VM IP>/horizon
+                        </emphasis>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </section>
+    <section>
+        <title>Manual Installation</title>
     <para>This chapter describes manual installation and configuration of Murano services.</para>
     <para>Note that all Murano modules can be downloaded from
         <link xlink:href="https://launchpad.net/murano/">our page</link>
@@ -124,7 +333,7 @@ sudo su -
 git clone https://github.com/stackforge/murano-api
                         ]]>
                     </programlisting>
-                    <para>Stable version one of our <link linkend="releases"> releases</link> can be checked by tag:</para>
+                    <para>Stable version one of our <link xlink:href="http://murano-docs.github.io/latest/developers-guide/content/ch03s02.html"> releases</link> can be checked by tag:</para>
                     <programlisting>
                         <![CDATA[
 git checkout 0.2
@@ -168,17 +377,6 @@ LOG:> Please, make proper configuration,located at "/etc/murano-api", before sta
             <title>Configure</title>
             <itemizedlist spacing="compact">
                 <listitem>
-                    <para>First configure rabbitMQ by adding vhost and user with administrator rights:</para>
-                    <programlisting>
-                        <![CDATA[
-rabbitmqctl add_user muranouser murano
-rabbitmqctl set_user_tags muranouser administrator
-rabbitmqctl add_vhost muranovhost
-rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
-                        ]]>
-                    </programlisting>
-                </listitem>
-                <listitem>
                     <para>Copy and edit configuration files:</para>
                     <programlisting>
                         <![CDATA[
@@ -208,45 +406,38 @@ vi murano-api.conf
                                     <emphasis>[rabbitmq]</emphasis>
                                     section you can set up host configuration where rabbitMQ
                                     with just created user and vhost is running.
+                                   If you consider to use Murano in production it;sbetter to use seperate vhosts in RabbitMQ.
+                                    To add new vhost and user with
+                                            administrator rights preform:
+                                        </para>
+                                        <programlisting>
+                                            <![CDATA[
+rabbitmqctl add_user muranouser murano
+rabbitmqctl set_user_tags muranouser administrator
+rabbitmqctl add_vhost muranovhost
+rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
+                                                            ]]>
+                                        </programlisting>
+                            </listitem>
+                            <listitem>
+                                <para>In <emphasis>[filter:authtoken]</emphasis>
+                                    configure keystone auth_token. For more information see
+                                    <link xlink:href="http://docs.openstack.org/developer/keystone/configuringservices.html">
+                                        Auth-Token Middleware with Username and Password
+                                    </link>
+                                </para>
+
+                            </listitem>
+                            <listitem>
+                                <para>Another murano-api configuration file located at
+                                    <filename>./etc/murano-api-paste.ini
+                                    </filename>
+                                    not requires any changes.
                                 </para>
                             </listitem>
                         </itemizedlist>
                     </para>
                     <para> For more information how to configure SSL take a look at <link linkend="ssl"> SSL configuration chapter </link></para>
-                </listitem>
-                <listitem>
-                    <para>Configure keystone auth_token in murano-api-paste.ini file.
-                        For more information see
-                        <link xlink:href="http://docs.openstack.org/developer/keystone/configuringservices.html">
-                            Auth-Token Middleware with Username and Password
-                        </link>
-                    </para>
-                    <programlisting>
-                        <![CDATA[
-vim murano-api-paste.ini
-						
-[pipeline:muranoapi]
-pipeline = authtoken context apiv1app
-
-[app:apiv1app]
-paste.app_factory = muranoapi.api.v1.router:API.factory
-
-[filter:context]
-paste.filter_factory = muranoapi.api.middleware.context:ContextMiddleware.facto$
-
-#For more information see Auth-Token Middleware with Username and Password
-#http://docs.openstack.org/developer/keystone/configuringservices.html
-[filter:authtoken]
-paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-auth_host = localhost
-auth_port = 35357
-auth_protocol = http
-admin_tenant_name = admin
-admin_user = admin
-admin_password = password
-
-                        ]]>
-                    </programlisting>
                 </listitem>
                 <listitem>
                     <anchor xml:id="murano_api_endpoint"></anchor>
@@ -275,27 +466,27 @@ keystone endpoint-create
         </section>
         <section>
             <title>Run</title>
-			<itemizedlist>
-				<listitem>
-					<para>Run Murano API service:</para>
-					<para>
-						<emphasis>Ubuntu</emphasis>
-					</para>
-					<programlisting>
-						<![CDATA[
+            <itemizedlist>
+                <listitem>
+                    <para>Run Murano API service:</para>
+                    <para>
+                        <emphasis>Ubuntu</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
 service murano-api start
-						]]>
-					</programlisting>
-					<para>
-						<emphasis>CentOS</emphasis>
-					</para>
-					<programlisting>
-						<![CDATA[
+                        ]]>
+                    </programlisting>
+                    <para>
+                        <emphasis>CentOS</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
 initctl start murano-api
-						]]>
-					</programlisting>
-				</listitem>
-			</itemizedlist>
+                        ]]>
+                    </programlisting>
+                </listitem>
+            </itemizedlist>
         </section>
     </section>
     <section>
@@ -349,7 +540,7 @@ git clone https://github.com/stackforge/murano-conductor
                         ]]>
                     </programlisting>
                     <para>Stable version one of our
-                        <link linkend="releases">releases</link>
+                        <link xlink:href="http://murano-docs.github.io/latest/developers-guide/content/ch03s02.html">releases</link>
                         can be checked out by tag:
                     </para>
                     <programlisting>
@@ -393,7 +584,7 @@ cp conductor.conf.sample conductor.conf
                 </listitem>
                 <listitem>
                     <para>Change configuration file according to your environment.
-					<programlisting>
+                    <programlisting>
                         <![CDATA[
 vi conductor.conf
                         ]]>
@@ -460,11 +651,11 @@ ssl = False
 ca_certs =
 # RabbitMQ credentials. Fresh RabbitMQ installation has "guest" account with "guest" password.
 # It is recommended to create dedicated user account for Murano using RabbitMQ web console or command line utility
-login = muranouser
-password = murano
+login = quest
+password = quest
 # RabbitMQ virtual host (vhost). Fresh RabbitMQ installation has "/" vhost preconfigured.
-# It is recommended to create dedicated vhost for Murano using RabbitMQ web console or command line utility
-virtual_host = muranovhost
+# It is recommended to create dedicated vhost for production use
+virtual_host = /
                         ]]>
                     </programlisting>
                 </listitem>
@@ -472,29 +663,29 @@ virtual_host = muranovhost
         </section>
         <section>
             <title>Run</title>
-			<itemizedlist>
-				<listitem>
-					<para>Run Murano Conductor service:</para>
-					<para>
-						<emphasis>Ubuntu</emphasis>
-					</para>
-					<programlisting>
-						<![CDATA[
+            <itemizedlist>
+                <listitem>
+                    <para>Run Murano Conductor service:</para>
+                    <para>
+                        <emphasis>Ubuntu</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
 service murano-conductor start
-						]]>
-					</programlisting>
-					<para>
-						<emphasis>CentOS</emphasis>
-					</para>
-					<programlisting>
-						<![CDATA[
+                        ]]>
+                    </programlisting>
+                    <para>
+                        <emphasis>CentOS</emphasis>
+                    </para>
+                    <programlisting>
+                        <![CDATA[
 initctl start murano-conductor
-						]]>
-					</programlisting>
-				</listitem>
-			</itemizedlist>
-		</section>
-	</section>	
+                        ]]>
+                    </programlisting>
+                </listitem>
+            </itemizedlist>
+        </section>
+    </section>
     <section>
         <title>Murano Dashboard</title>
         <para>Murano Dashboard provides Web UI for Murano Project.</para>
@@ -549,7 +740,7 @@ git clone https://github.com/stackforge/murano-dashboard
                 </listitem>
                 <listitem>
                     <para>Stable version one of our
-                        <link linkend="releases">releases</link>
+                        <link xlink:href="http://murano-docs.github.io/latest/developers-guide/content/ch03s02.html">releases</link>
                         can be checked out by tag:
                     </para>
                     <programlisting>
@@ -583,7 +774,9 @@ sh murano-dashboard/setup-centos.sh install
         <listitem>
             <para>
                 Murano installation script makes all needed changes in horizon (openstack dashboard) configs.
-                All you have to do is to configure horizon in appropriate way. Set OPENSTACK_HOST in your horizon local settings.
+                All you have to do is to configure horizon in appropriate way. Set OPENSTACK_HOST in your
+                horizon local settings which located in
+                <filename>/etc/openstack-dashboard/local_settings.py.</filename>.
                 <link xlink:href="http://docs.openstack.org/developer/horizon/">
                 For more information visit official horizon documentation. </link>
             </para>
@@ -623,146 +816,6 @@ sh murano-dashboard/setup-centos.sh install
                 </listitem>
             </itemizedlist>
         </section>
-    </section>
-    <section xml:id="venv">
-        <title>Installing with virtual environment</title>
-        <para>
-            For local development, all Murano components can be installed in
-            a virtual environment.
-            </para>
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        Install virtaulenv packege if you don't have one:
-                        <programlisting>
-sudo pip install virtualenv
-                        </programlisting>
-
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Check out git repository with murano component:
-                    </para>
-                    <itemizedlist>
-                        <listitem>
-                                <programlisting>
-git clone https://github.com/stackforge/murano-api
-                                </programlisting>
-                        </listitem>
-                        <listitem>
-                                <programlisting>
-git clone https://github.com/stackforge/murano-conductor
-                                </programlisting>
-                        </listitem>
-                        <listitem>
-                                <programlisting>
-git clone https://github.com/stackforge/murano-dashboard
-                                </programlisting>
-                        </listitem>
-                    </itemizedlist>
-                </listitem>
-                <listitem>
-                    <para>
-                        Make sure that required system packages are installed.
-                        Check list from <link linkend="prerequisites"> prerequisites page</link>
-                    </para>
-                </listitem>
-                <listitem>
-                        <para>
-                            Execute a script in the <filename>tools</filename> directory
-                                to create virtual environment automatically:
-                            <programlisting>
-$ python tools/install_venv.py
-                            </programlisting>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        For <emphasis role="bold"> Murano Dashboard </emphasis>additional installation need to be done:
-                        <itemizedlist>
-                            <listitem>
-                                <para>
-                                    Openstack dashboard (horizon).:
-                                    <programlisting>
-./tools/with_venv.sh pip install https://github.com/openstack/horizon/archive/grizzly-2.tar.gz
-                                    </programlisting>
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    Install openstack-dashboard dependency:
-                                    <itemizedlist>
-                                        <listitem>
-                                            <para>
-                                                <emphasis>Ubuntu</emphasis>
-                                                <programlisting>
-# apt-get install nodejs
-                                                </programlisting>
-                                            </para>
-                                        </listitem>
-                                        <listitem>
-                                            <para>
-                                                <emphasis>CentOS</emphasis>
-                                                <programlisting>
-# yum install nodejs
-                                                </programlisting>
-                                            </para>
-                                        </listitem>
-                                    </itemizedlist>
-
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    Customized Djblets package to support datagrid element (installation by pip is not supported):
-                                <programlisting>
-./tools/with_venv.sh easy_install https://github.com/tsufiev/djblets/archive/master.zip
-                                </programlisting>
-                                </para>
-                            </listitem>
-
-                        </itemizedlist>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        Config files for the development infrastructure of murano-api and murano-conductor can be found at <filename>etc</filename>
-                        under folder with component repository. Follow the links to see how config files should be configured:
-                        <link linkend="configure_api">Murano API</link> and <link linkend="configure_conductor">Murano Conductor</link>.
-                        To configure Murano Dashboard copy
-                        <programlisting>
-# cp muranodashboard/local/local_settings.py.example muranodashboard/local/local_settings.py
-                        </programlisting>
-                        set the actual IP address of the OpenStack end-point.
-                        If you haven't register murano-api service in the keystone catalog you can set MURANO_API_URL in the same settings file.
-                        Note that local murano-api service will be using by default.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Run Murano API:
-                        <programlisting>
-./tools/with_venv.sh python api/cmd/api.py --config-file=./etc/murano-api.conf
-                        </programlisting>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Run Murano Conductor:
-                        <programlisting>
-./tools/with_venv.sh python muranoconductor/cmd/run.py --config-file=./etc/conductor.conf
-                        </programlisting>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para><emphasis>Run Murano Dashboard:</emphasis>
-                        To start the Murano development server use the Django
-                        manage.py utility with the context of the virtual
-                        environment:
-                        <programlisting>
-./tools/with_venv.sh ./manage.py runserver 0.0.0.0:8080
-                        </programlisting>
-                    </para>
-                </listitem>
-            </itemizedlist>
     </section>
     <section xml:id="ssl">
         <title>SSL configuration</title>
@@ -838,11 +891,11 @@ ca_file = PATH
                     <![CDATA[
     [rabbitmq]
 
-    # Use SSL for RabbitMQ connections (True or False)
-    ssl = True
+# Use SSL for RabbitMQ connections (True or False)
+ssl = True
 
-    # Path to SSL CA certificate or empty to allow self signed server certificate
-    ca_certs =
+# Path to SSL CA certificate or empty to allow self signed server certificate
+ca_certs =
                     ]]>
                 </programlisting>
         </section>
@@ -858,11 +911,11 @@ ca_file = PATH
                 <![CDATA[
     [rabbitmq]
 
-    # Use SSL for RabbitMQ connections (True or False)
-    ssl = True
+# Use SSL for RabbitMQ connections (True or False)
+ssl = True
 
-    # Path to SSL CA certificate or empty to allow self signed server certificate
-    ca_certs = /home/user/certificates/example.crt
+# Path to SSL CA certificate or empty to allow self signed server certificate
+ca_certs = /home/user/certificates/example.crt
                 ]]>
             </programlisting>
         </section>
@@ -906,4 +959,5 @@ ca_file = PATH
             </section>
         </section>
     </section>
+</section>
 </chapter>
