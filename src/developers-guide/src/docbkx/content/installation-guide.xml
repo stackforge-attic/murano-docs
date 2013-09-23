@@ -22,22 +22,11 @@ limitations under the License.
          xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
 http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
-    <title>Installation Guide</title>
-    <para>This chapter describes manual installation and configuration of Murano services.</para>
+    <title>Install Murano</title>
+    <para>This chapter describes Murano services installation in virtual environment.</para>
     <para>Note that all Murano modules can be downloaded from
         <link xlink:href="https://launchpad.net/murano/">our page</link>
         on launchpad.
-    </para>
-    <para>
-        <note>
-            <title>Automatic installation</title>
-            <para>
-            Murano can be installed in automatic way. Script will install all
-            necessary packages to your system. Find out more about this in
-            <link xlink:href='http://murano-docs.github.io/0.2/getting-started/content/ch04s02.html'>
-                Getting Started Guide</link>
-            </para>
-        </note>
     </para>
     <section xml:id="prerequisites">
         <title>Pre-Requisites</title>
@@ -103,13 +92,13 @@ http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
     <section xml:id="venv">
         <title>Installing with virtual environment</title>
         <para>
-            For local development, all Murano components can be installed in
+            For a local development, all Murano components can be installed in
             a virtual environment.
             </para>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Install virtaulenv packege if you don't have one:
+                        Install virtaulenv package if you don't have one:
                         <programlisting>
 sudo pip install virtualenv
                         </programlisting>
@@ -148,7 +137,9 @@ git clone https://github.com/stackforge/murano-dashboard
                             Execute a script in the <filename>tools</filename> directory
                                 to create virtual environment automatically:
                             <programlisting>
-$ python tools/install_venv.py
+$ python murano-api/tools/install_venv.py
+$ python murano-conductor/tools/install_venv.py
+$ python murano-dashboard/tools/install_venv.py
                             </programlisting>
                     </para>
                 </listitem>
