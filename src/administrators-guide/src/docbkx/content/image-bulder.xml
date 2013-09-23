@@ -725,7 +725,7 @@
                         <para> Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with the
                                 following property string
                                 <screen>
-murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"}
+murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"}'
 </screen>
                                 where <itemizedlist>
                                     <listitem>
