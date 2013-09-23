@@ -203,7 +203,7 @@ done
             </orderedlist>
         </section>
         <section>
-            <title>Baseline Bata</title>
+            <title>Baseline Data</title>
             <para>
                 The table below provides baseline data which we've got in our environment.
             </para>
@@ -284,37 +284,36 @@ done
     <section>
         <title>Install OpenStack</title>
         <para>
-            We use Devstack (<link xlink:href="http://devstack.org/">http://devstack.org/</link>) to build our lab environment.
-        </para>
-        <para>
-            Devstack is a set of scripts to automate OpenStack installation using sources from Git repositories.
-            No packages are built and installed during this process, all OpenStack components are executed in separate consoles (via screen utility).
-        </para>
-        <para>
-            It is a great tool to quickly install and start to develop OpenStack on you server. However, it has a few caveats that should be kept in mind:
+            Murano works great with Openstack packages installation as well as devstack installation.
+            For now we support Openstack Grizzly and working on Havana integration.
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    Devstack scripts must be executed each time the host reboots. This also reset your OpenStack environment to it’s ‘just installed’ state.
+                    For Openstack Grizzly installation follow
+                    <link xlink:href="https://github.com/mseknibilel/OpenStack-Grizzly-Install-Guide">
+                        the documentation</link>.
                 </para>
             </listitem>
+
             <listitem>
                 <para>
-                    Multi-node configurations are not as easy in installation as single-node.
+                     For a  Devstack installation take a look at<link xlink:href="http://devstack.org/">
+                    this page</link>.
+                    <warning>
+                        <para>Murano Dashboard component should be
+                            installed on a separate node in case of devstack installation</para>
+                    </warning>
                 </para>
-            </listitem>
-        </itemizedlist>
-        <para>
-            Below are the general steps that required to install OpenStack using Devstack in a Single-node mode.
-        </para>
-        <para>
-            Use Devstack's guide to install single VM OpenStack (<link xlink:href="http://devstack.org/guides/single-vm.html"> http://devstack.org/guides/single-vm.html</link>)
-        </para>
-        <formalpara>
-            <title>localrc example</title>
-            <para>
-                <screen width="80">
+                 <para>
+                    Use Devstack's guide to install single VM OpenStack (<link
+                xlink:href="http://devstack.org/guides/single-vm.html">
+                    http://devstack.org/guides/single-vm.html</link>)
+                </para>
+                <formalpara>
+                    <title>localrc example</title>
+                    <para>
+                    <screen width="80">
 HOST_IP=
 FLAT_INTERFACE=
 FLOATING_RANGE=
@@ -338,21 +337,20 @@ EXTRA_OPTS=(force_config_drive=true libvirt_images_type=qcow2 force_raw_images=f
 SCREEN_LOGDIR=/opt/stack/log/
 LOGFILE=$SCREEN_LOGDIR/stack.sh.log
                 </screen>
-            </para>
+                </para>
         </formalpara>
         <para>
             If you need to image builder only, then install only packages required to run <emphasis role="strong">KVM</emphasis> (see below).
         </para>
-    </section>
-    <section>
+        </listitem>
+    </itemizedlist>
+</section>
+<section>
         <title>Configure OpenStack</title>
         <note>
             <para>
                 Additional OpenStack configuration usually doesn't required in case you've installed OpenStack with Devstack scripts.
             </para>
         </note>
-        <para>
-            To configure OpenStack is not a simple task and depends on various options (hardware configuration, network layout, and so on) and in general is out of scope of this document.
-        </para>
-    </section>
+</section>
 </chapter>

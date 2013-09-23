@@ -436,7 +436,7 @@
             <programlisting width="200">
 >$ cd /opt/image-builder/share/images
 >$ glance image-create --name ws-2012-std --disk-format qcow2           \
-    --container-type bare --file ws-2012-std.qcow2 --is-public true     \
+    --container-format bare --file ws-2012-std.qcow2 --is-public true     \
     --property murano_image_info='{"type":"ws-2012-std", "title":"Windows Server 2012 Standard"}'
             </programlisting>
             <warning>
