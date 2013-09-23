@@ -719,14 +719,14 @@ sudo su -
                     </note>
                     <para><emphasis>CentOS</emphasis></para>
                     <programlisting>
-yum install -y make gcc memcached python-memcached          \
+yum install make gcc memcached python-memcached          \
         mod_wsgi openstack-dashboard python-netaddr.noarch
                     </programlisting>
                     <para>
                         <emphasis>Ubuntu</emphasis>
                     </para>
                     <programlisting>
-apt-get install -y memcached libapache2-mod-wsgi openstack-dashboard
+apt-get install memcached libapache2-mod-wsgi openstack-dashboard
 dpkg --purge openstack-dashboard-ubuntu-theme
                     </programlisting>
                 </listitem>
