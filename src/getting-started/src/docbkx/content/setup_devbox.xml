@@ -99,8 +99,9 @@
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>IMPORTANT STEP: Edit the lab-binding.rc file - replace
-                    all the markers ‘***’  to your settings. For example:
+                <para>IMPORTANT STEP:  RabbitMQ credentials are specified to default in lab-binding.rc so don't forget to change them if necessary.
+                    For example: - replace all the markers ‘***’  to your settings:
+
                 </para>
             </listitem>
         </itemizedlist>
