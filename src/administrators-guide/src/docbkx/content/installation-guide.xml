@@ -441,19 +441,13 @@ rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
                 </listitem>
                 <listitem>
                     <anchor xml:id="murano_api_endpoint"></anchor>
-                    <para>Register murano-api service in Openstack. </para>
-                    <para>Note: you need to be authorized in Openstack to run this commands. To do this, you can run something like (having changed variables to appropriate values)</para>
+                    <para>Register murano-api service in Openstack. To do that perform the folowwing commands:</para>
+                    <note><para>You need to be authorized in Openstack to run this commands</para></note>
                     <programlisting>
                         <![CDATA[
-source $(YOUR_OPENSTACK_DIR)/openrc $(LOGIN) $(PASSWORD)
-                        ]]>
-                    </programlisting>
-                    <programlisting>
-                        <![CDATA[
-keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
+$ keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
 
-keystone endpoint-create
-
+$ keystone endpoint-create
     --region RegionOne
     --service-id The ID field returned by the keystone service-create
     --publicurl http://x.x.x.x:8082 (where x.x.x.x - host ip where murano-api installed)
@@ -704,9 +698,32 @@ sudo su -
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Make sure that additional repositories are installed.
-                        See <link linkend="Appendix">the appendix</link>
-                        for information about preparing a virtual machine for murano installation.
+                    <para>Make sure that additional repositories are installed and prerequisites are satisfied.
+                        Note that your system should be updated and upgraded. Some additional packages need to be installed.
+                        For a best result preform the following commands:
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    <emphasis>Ubuntu</emphasis>
+                                    <programlisting>
+># apt-get update
+># apt-get install ubuntu-cloud-keyring
+># apt-get install gplhost-archive-keyring
+># apt-get upgrade
+                                    </programlisting>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis>CentOS</emphasis>
+                                <programlisting>
+># yum update
+># yum upgrade
+                                </programlisting>
+                                </para>
+                            </listitem>
+
+                        </itemizedlist>
                     </para>
                 </listitem>
                 <listitem>
