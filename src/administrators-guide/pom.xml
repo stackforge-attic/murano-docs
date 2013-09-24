@@ -38,6 +38,10 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <htmlCustomization>../style/config.xsl
+                    </htmlCustomization>
+                    <htmlStylesheet>../style/administrators-guide.css
+                    </htmlStylesheet>
                     <xincludeSupported>true</xincludeSupported>
                     <chunkSectionDepth>100</chunkSectionDepth>
                     <postProcess>
