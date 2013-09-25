@@ -93,134 +93,80 @@ http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
         <para>
             For a local development, all Murano components can be installed in
             a virtual environment.
-            </para>
+            First thing you need to do is to install check that
+            <link linkend="prerequisites"> prerequisites</link> are installed, system is updated and upgraded.
+            Next, install virtualenv package if you don't have one:
+            <programlisting>
+sudo pip install virtualenv
+            </programlisting>
+        </para>
+        <para><emphasis role="bold" >Murano Api</emphasis>
+            <itemizedlist>
+            <listitem>
+                <para>
+                    Check out git repository with murano component:
+                    <programlisting>
+git clone https://github.com/stackforge/murano-api
+                    </programlisting>
+                </para>
+            </listitem>
+                <listitem>
+                    <para>
+                        Execute a script located at the <filename>murano-api/tools</filename>directory
+                        to create virtual environment automatically:
+                        <programlisting>
+cd murano-api &amp;&amp; python ./tools/install_venv.py
+                        </programlisting>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Config files are <filename>etc/murano-api.conf</filename>
+                        where you just need to point out IP address where your RabbitMQ is
+                        running, and <filename>etc/murano-api-paste.ini</filename>, which doesn't require any changes.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>And finally run Murano API:
+                        <programlisting>
+./tools/with_venv.sh python muranoapi/cmd/api.py --config-file=./etc/murano-api.conf
+                        </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            <emphasis role="bold">Murano Conductor</emphasis>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Install virtualenv package if you don't have one:
+                        Check out git repository with murano component:
                         <programlisting>
-sudo pip install virtualenv
-                        </programlisting>
-
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Check out git repository with murano component:
-                    </para>
-                    <itemizedlist>
-                        <listitem>
-                                <programlisting>
-git clone https://github.com/stackforge/murano-api
-                                </programlisting>
-                        </listitem>
-                        <listitem>
-                                <programlisting>
 git clone https://github.com/stackforge/murano-conductor
-                                </programlisting>
-                        </listitem>
-                        <listitem>
-                                <programlisting>
-git clone https://github.com/stackforge/murano-dashboard
-                                </programlisting>
-                        </listitem>
-                    </itemizedlist>
-                </listitem>
-                <listitem>
-                    <para>
-                        Make sure that required system packages are installed.
-                        Check list from <link linkend="prerequisites"> prerequisites page</link>
-                    </para>
-                </listitem>
-                <listitem>
-                        <para>
-                            Execute a script in the <filename>tools</filename> directory
-                                to create virtual environment automatically:
-                            <programlisting>
-$ python murano-api/tools/install_venv.py
-$ python murano-conductor/tools/install_venv.py
-$ python murano-dashboard/tools/install_venv.py
-                            </programlisting>
+                        </programlisting>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        For <emphasis role="bold"> Murano Dashboard </emphasis>additional installation need to be done:
-                        <itemizedlist>
-                            <listitem>
-                                <para>
-                                    Openstack dashboard (horizon).:
-                                    <programlisting>
-./tools/with_venv.sh pip install https://github.com/openstack/horizon/archive/grizzly-2.tar.gz
-                                    </programlisting>
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    Install openstack-dashboard dependency:
-                                    <itemizedlist>
-                                        <listitem>
-                                            <para>
-                                                <emphasis>Ubuntu</emphasis>
-                                                <programlisting>
-# apt-get install nodejs
-                                                </programlisting>
-                                            </para>
-                                        </listitem>
-                                        <listitem>
-                                            <para>
-                                                <emphasis>CentOS</emphasis>
-                                                <programlisting>
-# yum install nodejs
-                                                </programlisting>
-                                            </para>
-                                        </listitem>
-                                    </itemizedlist>
-
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    Customized Djblets package to support datagrid element (installation by pip is not supported):
-                                <programlisting>
-./tools/with_venv.sh easy_install https://github.com/tsufiev/djblets/archive/master.zip
-                                </programlisting>
-                                </para>
-                            </listitem>
-
-                        </itemizedlist>
+                        Execute a script located at the<filename>
+                        murano-conductor/tools</filename>directory
+                        to create virtual environment automatically:
+                        <programlisting>
+cd murano-conductor &amp;&amp; python ./tools/install_venv.py
+                        </programlisting>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>
-                        Config files for the development infrastructure of murano-api and murano-conductor can be found at <filename>etc</filename>
-                        under folder with component repository. In murano-api and murano-conductor config file (located under ./etc directory)
-                        just point out IP address where your RabbitMQ is running.
-                        For a murano-conductor local development comment data_dir parameter in <filename>./etc/config.conf</filename>:
+                    <para>Murano Conductor config file located at <filename> etc/conductor.conf</filename>
+                        For a local development comment data_dir parameter in this file:
                         <programlisting>
 # Directory where conductor's data directory located.
 # "data" must be subdirectory to this.
 # data_dir = /etc/murano-conductor
                         </programlisting>
-                        After that local <filename>data</filename> directory, which contain all necessary files will be used.
-                        All other possible configuration described in the Murano Admin Guide.
-                        </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        To configure Murano Dashboard copy
-                        <programlisting>
-# cp muranodashboard/local/local_settings.py.example muranodashboard/local/local_settings.py
-                        </programlisting>
-                        and set in just copied file the the actual IP address of the OpenStack end-point.
-                        If you haven't register murano-api service in the keystone catalog you can set MURANO_API_URL in the same settings file.
-                        Note that local murano-api service will be using by default.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Run Murano API:
-                        <programlisting>
-./tools/with_venv.sh python muranoapi/cmd/api.py --config-file=./etc/murano-api.conf
-                        </programlisting>
+                        After that local <filename>data</filename>
+                        directory, which contain all necessary files will be
+                        used. All other possible configuration described in the Murano Admin Guide.
                     </para>
                 </listitem>
                 <listitem>
@@ -230,7 +176,69 @@ $ python murano-dashboard/tools/install_venv.py
                         </programlisting>
                     </para>
                 </listitem>
-                <listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            <emphasis role="bold">Murano Dashboard</emphasis>
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>Check out git repository with murano component:
+                    <programlisting>
+git clone https://github.com/stackforge/murano-dashboard
+                    </programlisting>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Execute a script located at the<filename>
+                    murano-conductor/tools</filename>directory
+                    to create virtual environment automatically:
+                    <programlisting>
+cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
+                    </programlisting>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Murano is a plugin for a Openstack dashboard. So need to install it and it's dependency:
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                <programlisting>
+# ./tools/with_venv.sh pip install https://github.com/openstack/horizon/archive/grizzly-2.tar.gz
+                                </programlisting>
+                                <emphasis>Ubuntu</emphasis>
+                                <programlisting>
+# apt-get install nodejs
+                                </programlisting>
+                                <emphasis>CentOS</emphasis>
+                                <programlisting>
+# yum install nodejs
+                                </programlisting>
+                            </para>
+                           <para>
+                                Customized Djblets package to support datagrid element (installation by pip is not supported):
+                                <programlisting>
+# ./tools/with_venv.sh easy_install https://github.com/tsufiev/djblets/archive/master.zip
+                                </programlisting>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </listitem>
+            <listitem>
+                   <para>
+                       To configure Murano Dashboard copy example config file:
+                        <programlisting>
+# cp muranodashboard/local/local_settings.py.example muranodashboard/local/local_settings.py
+                        </programlisting>
+                        and set in just copied file the the actual IP address of the OpenStack end-point.
+                        If you haven't register murano-api service in the keystone catalog you can set MURANO_API_URL in the same settings file.
+                        Note that local murano-api service will be using by default.
+                    </para>
+            </listitem>
+            <listitem>
                     <para><emphasis>Run Murano Dashboard:</emphasis>
                         To start the Murano development server use the Django
                         manage.py utility with the context of the virtual
