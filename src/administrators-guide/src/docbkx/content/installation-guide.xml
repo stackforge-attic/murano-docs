@@ -429,10 +429,25 @@ rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
 
                             </listitem>
                             <listitem>
-                                <para>Another murano-api configuration file located at
-                                    <filename>/etc/murano-api/murano-api-paste.ini
-                                    </filename>
-                                    not requires any changes.
+                                <para>Update configuration in <filename>/etc/murano-api/murano-api-paste.ini
+                                    </filename>:
+                                    <programlisting>
+...
+[filter.authtoken]
+...
+# auth_host should point to the host where Keyston servive is installed
+auth_host = 
+...
+# For auth_protocol use 'http' in general and 'https' if Keystone supports SSL.
+auth_protocol = http
+# A name for OpenStack admin tenant name ('admin' by default)
+admin_tenant_name = admin
+# A name for OpenStack admin user ('admin' by default)
+admin_user = admin
+# A pasword for admin user
+admin_password = 
+...
+                                    </programlisting>
                                 </para>
                             </listitem>
                         </itemizedlist>

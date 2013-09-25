@@ -106,31 +106,29 @@ deb http://archive.gplhost.com/debian grizzly-backports main
         automatically with setup scripts.
         <note>
             <para>
-                Some words about pip (python-pip) version. In order to have
-                proper versions of python dependency packages installed,
+                In order to have proper versions of python dependency packages installed,
                 pip version MUST be 1.4 or higher!
             </para>
         </note>
     </para>
-    <para>How-to determine python-pip version:</para>
+    <para>View version of pip on your system:</para>
     <programlisting>
 ># pip --version
     </programlisting>
-    <para>To upgrade pip to latest version use
+    <para>Upgrade pip to latest version if it is older than 1.4:
         <programlisting>
 ># pip install --upgrade pip
         </programlisting>
         <note>
             <para>
-                You should pay attention to python-pip after upgrade to
-                version 1.4, because its filesystem location can change
-                from /usr/bin/pip to /usr/local/bin/pip!
+                During upgrade the location of pip  executable could be changed.
+                If this is happened, you have to create a simlink pointing to the
+                new location:
+                    <programlisting>
+># rm /usr/bin/pip
+># ln -s /usr/local/bin/pip /usr/bin/pip
+                    </programlisting>
             </para>
         </note>
     </para>
-    <para>To handle this situation:</para>
-    <programlisting>
-># rm /usr/bin/pip
-># ln -s /usr/local/bin/pip /usr/bin/pip
-    </programlisting>
 </chapter>
