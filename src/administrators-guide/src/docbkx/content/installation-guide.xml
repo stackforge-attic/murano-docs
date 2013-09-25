@@ -699,7 +699,7 @@ sudo su -
                 </listitem>
                 <listitem>
                     <para>Make sure that additional repositories are installed and your system is updated and upgraded.
-                        Please check from with steps in the <link linked="Appendix">appendix</link>.
+                        Please check from with steps in the <link linkend="Appendix">appendix</link>.
                     </para>
                 </listitem>
                 <listitem>
@@ -712,7 +712,7 @@ sudo su -
                     </note>
                     <para><emphasis>CentOS</emphasis></para>
                     <programlisting>
-yum install make gcc memcached python-memcached          \
+yum install make gcc memcached python-memcached
         mod_wsgi openstack-dashboard python-netaddr.noarch
                     </programlisting>
                     <para>
