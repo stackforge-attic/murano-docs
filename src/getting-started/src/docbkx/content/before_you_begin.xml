@@ -52,7 +52,7 @@
                   <para>this prevents message stealing from queues</para>
               </listitem>
               <listitem>
-                  <para>this simplify debugging</para>
+                  <para>this simplifies debugging</para>
               </listitem>
           </itemizedlist>
       </para>

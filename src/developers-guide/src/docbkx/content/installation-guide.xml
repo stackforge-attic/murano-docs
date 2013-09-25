@@ -84,10 +84,9 @@ http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
                 <para>libffi-devel</para>
             </listitem>
         </orderedlist>
-        <para>
-            All these packages will be installed in murano-installation scripts. In addition to these packages some repositories are required.
-            Please follow the instructions in the appendix to admin guide to prepare your environment for murano installation.
-        </para>
+        <note>
+            <para>Before installing any packages make sure that your system is updated and upgraded.</para>
+        </note>
     </section>
     <section xml:id="venv">
         <title>Installing with virtual environment</title>
@@ -195,7 +194,19 @@ $ python murano-dashboard/tools/install_venv.py
                     <para>
                         Config files for the development infrastructure of murano-api and murano-conductor can be found at <filename>etc</filename>
                         under folder with component repository. In murano-api and murano-conductor config file (located under ./etc directory)
-                        just point out IP address where your RabbitMQ is running. All other possible configuration described in the Murano Admin Guide.
+                        just point out IP address where your RabbitMQ is running.
+                        For a murano-conductor local development comment data_dir parameter in <filename>./etc/config.conf</filename>:
+                        <programlisting>
+# Directory where conductor's data directory located.
+# "data" must be subdirectory to this.
+# data_dir = /etc/murano-conductor
+                        </programlisting>
+                        After that local <filename>data</filename> directory, which contain all necessary files will be used.
+                        All other possible configuration described in the Murano Admin Guide.
+                        </para>
+                </listitem>
+                <listitem>
+                    <para>
                         To configure Murano Dashboard copy
                         <programlisting>
 # cp muranodashboard/local/local_settings.py.example muranodashboard/local/local_settings.py
