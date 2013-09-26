@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright (c) 2013 Mirantis, Inc.
 
@@ -24,7 +24,7 @@
     <title>About Murano</title>
     <para>
         Murano is a new service which allows a non-experienced user to deploy
-        reliable Windows based environments in a “push-the-button” manner. The
+        reliable Windows based environments in OpenStack with the "One Click". The
         key goal is to provide a UI and API enabling the deployment and
         operation of Windows Environments at the Windows Services abstraction
         level. The service is able to orchestrate complex circular dependent
@@ -35,7 +35,7 @@
         The service addresses following use cases:
         <itemizedlist>
             <listitem>
-                <para>Self-provisioning of predefined Windows services with their dependencies</para>
+                <para>Self-deploying of predefined Windows services with their dependencies</para>
             </listitem>
             <listitem>
                 <para>Automation of administrative tasks during data center roll-out</para>
@@ -50,7 +50,7 @@
         Windows Environments. Key concepts are:
         <itemizedlist>
             <listitem>
-                <para>Windows Service - a service such as Active Directory, MSSQL, or IIS, which usually consists of multiple virtual machines and has multiple dependencies.
+                <para>Windows Service - a service such as Active Directory, MsSQL, or IIS, which usually consists of multiple virtual machines (VM) and has multiple dependencies.
                 </para>
             </listitem>
             <listitem>
@@ -75,7 +75,7 @@
                 <para>Supports Availability Zones and Disaster Recovery scenarios</para>
             </listitem>
             <listitem>
-                <para>Uses native Windows features for HA solutions</para>
+                <para>Uses native Windows features for High Availabillity (HA) solutions</para>
             </listitem>
         </orderedlist>
             </para>
@@ -86,12 +86,14 @@
             <thead>
                 <tr>
                     <td align="center" colspan="1">Revision Date</td>
+                    <td align="center" colspan="3">Version of Murano</td>
                     <td align="center" colspan="4">Summary of Changes</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td colspan="1" align="center">September. 4, 2013</td>
+                    <td colspan="3" align="center">Release-0.2</td>
                     <td colspan="4">
                         <itemizedlist>
                             <listitem>
