@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright (c) 2013 Mirantis, Inc.
 
@@ -21,25 +21,28 @@
          xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                             http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
-      <title>Before You Begin</title>
+      <title>Before you begin</title>
       <para><emphasis role="bold">Naming Conventions</emphasis>
       </para>
       <para>To clearly separate commands and parts of configuration files we use boxes, like shown below:</para>
       <programlisting>
+[Some config]
 ...
-# Part of config file here
+some_key1 = some_value1
+some_key2 = some_value2
+...
+      </programlisting>
+      <programlisting>
+&gt;$ echo ‘Execute this command as regular user’
+&gt;# echo ‘Execute this command as root’
       </programlisting>
       <para>
             All commands start either with ‘&gt;$’ mark or with ‘&gt;#’ mark.
             The difference is that first should be executed as regular user, while second - as superuser (‘root’).
       </para>
-      <programlisting>
-&gt;$ echo ‘Execute this command as regular user’
-&gt;# echo ‘Execute this command as root’
-      </programlisting>
       <para><emphasis role="bold"> Use Appropriate Branch</emphasis></para>
-      <para>There are a few branches that can be found in all Murano repositories: master, release-0.1,
-            release-0.2 and so on. Branch master is the most recent between the releases, but not as stable as release-x.x branches.</para>
+      <para>Master is a brunch for a development purposes. For stable releases appropriate branch names are using: 
+            release-0.1, release-0.2 and so on.</para>
       <para><emphasis role="bold">Use Separate vHost in <link linkend="Rabbit">RabbitMQ</link></emphasis></para>
       <para>
             In general it is OK to configure Murano services to use the root (‘/’) vHost in RabbitMQ and use the same user credentials as OpenStack services use.
@@ -52,33 +55,22 @@
                   <para>this prevents message stealing from queues</para>
               </listitem>
               <listitem>
-                  <para>this simplifies debugging</para>
+                  <para>this simplify debugging</para>
               </listitem>
           </itemizedlist>
       </para>
       <para>
-          If you are planning to use only one devbox then you may stay with ‘/’
-          vHost.
-          Steps required to configure your own vHost are described in <link
+          If you are planning to use only one devbox then you may stay vHost with ‘/’.
+          Required steps to configure your own vHost are described in <link
               linkend="Rabbit">RabbitMQ Configuration Notes</link>.
       </para>
       <section>
-          <title>System Requirements</title>
+          <title>System requirements</title>
           <itemizedlist>
               <listitem>
-                  <para><emphasis>OpenStack Lab</emphasis> - a single node Openstack environment.</para>
-              </listitem>
-              <listitem>
-                  <para>
-                      <emphasis>Devbox</emphasis> - a machine where all murano components and services are running.
-                      This machine should have access to the Openstack Lab.
-                  </para>
-              </listitem>
-          </itemizedlist>
-          <section>
-              <title>OpenStack Lab</title>
+                  <para><emphasis role="bold">OpenStack Lab</emphasis> - a single node Openstack environment. See <link linkend="Setup Lab Environment">setup lab environment</link></para>
               <para>
-                  <emphasis role="bold">Supported OS</emphasis>
+                  <emphasis>Supported OS:</emphasis>
               </para>
               <itemizedlist>
                   <listitem>
@@ -86,7 +78,7 @@
                   </listitem>
               </itemizedlist>
               <para>
-                  <emphasis role="bold"><anchor xml:id="LabHardware"></anchor>Hardware Requirements</emphasis>
+                  <emphasis><anchor xml:id="LabHardware"></anchor>Hardware requirements:</emphasis>
               </para>
               <itemizedlist>
                   <listitem>
@@ -96,40 +88,53 @@
                       <para>RAM: 12+ GB</para>
                   </listitem>
                   <listitem>
-                      <para>HDD (select any option)</para>
-                  </listitem>
+                      <para>HDD:</para>
+                       <itemizedlist>
+                       <listitem>
+                       <para>1x SSD 500+ GB</para>
+                       </listitem>
+                       <listitem>
+                       <para>1x HDD (7200 rpm) 500+ GB and 1x SSD 250+ GB (system onto the HDD and SSD drive for VM images)</para>
+                       </listitem>
+                       <listitem>
+                       <para>    1x HDD (15000 rpm) 500+ GB </para>
+                       </listitem>
+                     </itemizedlist>
+                </listitem>
                   <listitem>
-                      <para>NIC: 1x Ethernet 1+ Gbps</para>
+                      <para>NIC: 1x Ethernet 100Мbps (recommended 1Gbps)</para>
                   </listitem>
               </itemizedlist>
               <para>
-                  <emphasis role="bold">Software Requirements</emphasis>
+                  <emphasis>Software requirements:</emphasis>
               </para>
               <itemizedlist>
                   <listitem>
-                      <para>Heat installed</para>
+                      <para>Heat</para>
                   </listitem>
                   <listitem>
                       <para>
-                          RabbitMQ configured (+ additional vhosts and user
-                          accounts)
+                          RabbitMQ 
                       </para>
                   </listitem>
                   <listitem>
-                      <para>Windows Server 2012 Standard image imported into Glance
-                          (described later)
+                      <para>Windows Server 2012 Standard image imported into Glance.
+                          See <link linkend="Build Windows Image">Build Windows Image</link> chapter.
                       </para>
                   </listitem>
                   <listitem>
-                      <para>Samba share with prerequisites (described later)</para>
+                      <para>Samba share with prerequisites. See <link linkend="Samba">Install Samba</link></para>
                   </listitem>
                   <listitem>
                       <para>OpenStack metadata service.</para>
                   </listitem>
               </itemizedlist>
-          </section>
-          <section>
-              <title>Devbox</title>
+              </listitem>
+              <listitem>
+                  <para>
+                      <emphasis role="bold">Devbox</emphasis> - a machine where all murano services will be running.
+                      This machine should have access to the Openstack Lab. See <link linkend="Setup Devbox">Setup Devbox</link> chapter.
+                  </para>
               <para>
                   We suggest to use virtual machine for Murano, as it allows you to
                   backup your VM easily.
@@ -137,7 +142,7 @@
                   could be used. KVM, VMWare and VirtualBox were tested with success.
               </para>
               <para>
-                  <emphasis role="bold">Supported OS</emphasis>
+                  <emphasis>Supported OS:</emphasis>
               </para>
               <itemizedlist>
                   <listitem>
@@ -148,7 +153,7 @@
                   </listitem>
               </itemizedlist>
               <para>
-                  <emphasis role="bold">Hardware Requirements</emphasis>
+                  <emphasis>"Hardware" requirements:</emphasis>
               </para>
               <itemizedlist>
                   <listitem>
@@ -161,22 +166,65 @@
                       <para>HDD: 20 GB</para>
                   </listitem>
                   <listitem>
-                      <para>1 NIC</para>
+                      <para>NIC: 1x Ethernet 100Мbps</para>
                   </listitem>
               </itemizedlist>
               <para>
-                  <emphasis role="bold">Software Requirements</emphasis>
+                  <emphasis>Software Requirements:</emphasis>
               </para>
               <itemizedlist>
                   <listitem>
                       <para>Packages:</para>
+        <para><emphasis>Ubuntu:</emphasis></para>
+        <itemizedlist>
+            <listitem>
+                <para>gcc</para>
+            </listitem>
+            <listitem>
+                <para>python-pip</para>
+            </listitem>
+            <listitem>
+                <para>python-dev</para>
+            </listitem>
+            <listitem>
+                <para>libxml2-dev</para>
+            </listitem>
+            <listitem>
+                <para>libxslt-dev</para>
+            </listitem>
+            <listitem>
+                <para>libffi-dev</para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            <emphasis>CentOS</emphasis>
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>gcc</para>
+            </listitem>
+            <listitem>
+            <para>python-pip</para>
+            </listitem>
+            <listitem>
+                <para>python-devel</para>
+            </listitem>
+            <listitem>
+                <para>libxml2-devel</para>
+            </listitem>
+            <listitem>
+                <para>libxslt-devel</para>
+            </listitem>
+            <listitem>
+                <para>libffi-devel</para>
+            </listitem>
+        </itemizedlist>
                   </listitem>
                   <listitem>
-                      <para>X Server is NOT required and system runlevel 3 is
-                          preferred.
-                      </para>
+                      <para>X Server is NOT required and system runlevel 3 is preferred.</para>
                   </listitem>
               </itemizedlist>
-          </section>
+              </listitem>
+          </itemizedlist>
       </section>
 </chapter>
