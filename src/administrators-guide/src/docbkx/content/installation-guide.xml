@@ -335,9 +335,7 @@ git clone https://github.com/stackforge/murano-api
                     </programlisting>
                     <para>Stable version one of our <link xlink:href="http://murano-docs.github.io/latest/developers-guide/content/ch03s02.html"> releases</link> can be checked by tag:</para>
                     <programlisting>
-                        <![CDATA[
-git checkout 0.2
-                        ]]>
+cd murano-api &amp;&amp; git checkout 0.2
                     </programlisting>
                 </listitem>
                 <listitem>
@@ -347,7 +345,7 @@ git checkout 0.2
                     </para>
                     <programlisting>
                         <![CDATA[
-sh murano-api/setup.sh install
+sh setup.sh install
                         ]]>
                     </programlisting>
                     <para>
@@ -355,7 +353,7 @@ sh murano-api/setup.sh install
                     </para>
                     <programlisting>
                         <![CDATA[
-sh murano-api/setup-centos.sh install
+sh setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
@@ -383,13 +381,11 @@ LOG:> Please, make proper configuration,located at "/etc/murano-api", before sta
 cd /etc/murano-api
 cp murano-api.conf.sample murano-api.conf
 cp murano-api-paste.ini.sample murano-api-paste.ini
-
-vi murano-api.conf
                         ]]>
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Configure it according to your environment:
+                    <para>Configure <file>murano-api.conf</file> it according to your environment:
                         <itemizedlist>
                             <listitem>
                                 <para><emphasis>[DEFAULT]</emphasis> section sets up logging.
@@ -402,13 +398,10 @@ vi murano-api.conf
                                 </para>
                             </listitem>
                             <listitem>
-                                <para>In
-                                    <emphasis>[rabbitmq]</emphasis>
+                                <para>In <emphasis>[rabbitmq]</emphasis>
                                     section you can set up host configuration where rabbitMQ
-                                    with just created user and vhost is running.
-                                   If you consider to use Murano in production it;sbetter to use seperate vhosts in RabbitMQ.
-                                    To add new vhost and user with
-                                            administrator rights preform:
+                                    with just created user and vhost is running. If you consider to use Murano in production it's better to use separate vhosts in RabbitMQ.
+                                    To add new vhost and user with  administrator rights perform:
                                         </para>
                                         <programlisting>
                                             <![CDATA[
@@ -553,9 +546,7 @@ git clone https://github.com/stackforge/murano-conductor
                         can be checked out by tag:
                     </para>
                     <programlisting>
-                        <![CDATA[
-git checkout 0.2
-                        ]]>
+cd murano-conductor &amp;&amp; git checkout 0.2
                     </programlisting>
                 </listitem>
                 <listitem>
@@ -565,7 +556,7 @@ git checkout 0.2
                     </para>
                     <programlisting>
                         <![CDATA[
-sh murano-conductor/setup.sh install
+sh setup.sh install
                         ]]>
                     </programlisting>
                     <para>
@@ -573,7 +564,7 @@ sh murano-conductor/setup.sh install
                     </para>
                     <programlisting>
                         <![CDATA[
-sh murano-conductor/setup-centos.sh install
+sh setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
@@ -714,7 +705,7 @@ sudo su -
                 </listitem>
                 <listitem>
                     <para>Make sure that additional repositories are installed and your system is updated and upgraded.
-                        Please check from with steps in the <link linked="Appendix">appendix</link>.
+                        Please check from with steps in the <link linkend="Appendix">appendix</link>.
                     </para>
                 </listitem>
                 <listitem>
@@ -725,17 +716,19 @@ sudo su -
                             Horizon installed by devstack is not capable for a murano installation.
                         </para>
                     </note>
-                    <para><emphasis>CentOS</emphasis></para>
-                    <programlisting>
-yum install make gcc memcached python-memcached          \
-        mod_wsgi openstack-dashboard python-netaddr.noarch
-                    </programlisting>
                     <para>
                         <emphasis>Ubuntu</emphasis>
                     </para>
                     <programlisting>
 apt-get install memcached libapache2-mod-wsgi openstack-dashboard
 dpkg --purge openstack-dashboard-ubuntu-theme
+                    </programlisting>
+                    <para>
+                        <emphasis>CentOS</emphasis>
+                    </para>
+                    <programlisting>
+yum install make gcc memcached python-memcached \
+mod_wsgi openstack-dashboard python-netaddr.noarch
                     </programlisting>
                 </listitem>
                 <listitem>
@@ -752,7 +745,7 @@ git clone https://github.com/stackforge/murano-dashboard
                         can be checked out by tag:
                     </para>
                     <programlisting>
-git checkout 0.2
+cd murano-dashboard &amp;&amp; git checkout 0.2
                     </programlisting>
                     </listitem>
                 <listitem>
@@ -762,7 +755,7 @@ git checkout 0.2
                     </para>
                     <programlisting>
                         <![CDATA[
-sh murano-dashboard/setup.sh install
+sh setup.sh install
                         ]]>
                     </programlisting>
                     <para>
@@ -770,7 +763,7 @@ sh murano-dashboard/setup.sh install
                     </para>
                     <programlisting>
                         <![CDATA[
-sh murano-dashboard/setup-centos.sh install
+sh setup-centos.sh install
                        ]]>
                     </programlisting>
                 </listitem>
@@ -799,17 +792,17 @@ sh murano-dashboard/setup-centos.sh install
             <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis>CentOS</emphasis>
+                        <emphasis>Ubuntu</emphasis>
                         <programlisting>
-# service httpd restart
+# service apache2 restart
                         </programlisting>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>Ubuntu</emphasis>
+                        <emphasis>CentOS</emphasis>
                         <programlisting>
-# service apache2 restart
+                            # service httpd restart
                         </programlisting>
                     </para>
                 </listitem>

@@ -90,10 +90,8 @@ deb http://archive.gplhost.com/debian grizzly-backports main
         <listitem>
             <para>Update system and add repositories and update OS
                 <programlisting>
-># yum install -y http://rdo.fedorapeople.org/openstack/\
-    openstack-grizzly/rdo-release-grizzly.rpm
-># yum install -y http://mirror.us.leaseweb.net/\
-                    epel/6/x86_64/epel-release-6-8.noarch.rpm
+># yum install -y http://rdo.fedorapeople.org/openstack/openstack-grizzly/rdo-release-grizzly.rpm
+># yum install -y http://mirror.us.leaseweb.net/epel/6/x86_64/epel-release-6-8.noarch.rpm
 ># yum install -y mc unzip git make gcc python-setuptools python-pip upstart
 ># yum update
 ># yum upgrade
