@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright (c) 2013 Mirantis, Inc.
 
@@ -26,26 +26,23 @@
             <title>Install OpenStack</title>
             <para>
                 To install Murano you need a working copy of OpenStack.
-                If you already have a Openstack installation make sure it meets the requirements
-                described in <link linkend="LabHardware">this</link> chapter.
-                To install Openstack that will be ready to use with Murano
-                follow the instructions below.
+                If you already have a Openstack installation make sure it meets the <link linkend="System Requirements">system requirements</link>.
+                To install Openstack that will be ready to use with Murano follow the instructions below.
             </para>
             <para><emphasis role="bold">Using Devstack</emphasis></para>
             <para>
-                Currently the most simple way to build a lab is to use
-                devstack. The steps are quite simple:
+                Currently the most simple way to build a lab is to use devstack. 
+                The steps are quite simple:
             </para>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Install and configure OS on your hardware. The
-                        recommended OS is Ubuntu Server 12.04 x64. Minimal
-                        configuration would be enough.
+                        Install and configure OS on your hardware. The supported OS is Ubuntu Server 12.04 x64. 
+                        Minimal OS configuration would be enough.
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Install all the latest updates.</para>
+                    <para>Install all the latest updates:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -54,7 +51,7 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Create a user <emphasis>stack</emphasis></para>
+                    <para>Create a user <emphasis role="bold">stack</emphasis>:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -62,7 +59,7 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Add user <emphasis>stack</emphasis> to sudoers</para>
+                    <para>Add user <emphasis role="bold">stack</emphasis> to sudoers:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -71,7 +68,7 @@
             </programlisting>            
             <itemizedlist>
                 <listitem>
-                    <para>Create a folder for OpenStack installation files
+                    <para>Create a folder for OpenStack installation files:
                     </para>
                 </listitem>
             </itemizedlist>
@@ -81,7 +78,7 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Clone the <emphasis>devstack</emphasis> repo</para>
+                    <para>Clone the <emphasis role="bold">devstack</emphasis> repo</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -91,7 +88,7 @@
             </programlisting>            
             <itemizedlist>
                 <listitem>
-                    <para>Checkout the stable/grizzly branch</para>
+                    <para>Checkout the <emphasis role="bold">stable/grizzly</emphasis> branch</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -129,7 +126,7 @@
             <para>
             <itemizedlist>
                 <listitem>
-                    <para>Install SAMBA</para>
+                    <para>Install SAMBA:</para>
                 </listitem>
             </itemizedlist>
            <programlisting>
@@ -138,7 +135,7 @@
            </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Create shared folder</para>
+                    <para>Create shared folder:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -147,7 +144,7 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Edit /etc/samba/smb.conf</para>
+                    <para>Edit /etc/samba/smb.conf:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -167,7 +164,7 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Restart services</para>
+                    <para>Restart services:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -178,7 +175,7 @@
             <para><emphasis role="bold">Copy Prerequisites Into The Share</emphasis></para>
             <itemizedlist>
                 <listitem>
-                    <para>Create folder structure</para>
+                    <para>Create folder structure:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -230,7 +227,7 @@
                             </listitem>
                             <listitem>
                                 <para>
-                                    <link xlink:href="http://www.asp.net/mvc/mvc4">
+                                    <link xlink:href="http://go.microsoft.com/fwlink/?LinkID=239644&amp;clcid=0x409">
                                         Microsoft® System CLR Types for Microsoft® SQL Server® 2012
                                     </link>:
                                     <filename>Prerequisites/SQL Server/Tools/SQLSysClrTypes.msi</filename>
@@ -241,7 +238,7 @@
                 </listitem>
             </itemizedlist>
     </section>
-    <section>
+    <section xml:id="Build Windows Image">
             <title>Build Windows Image</title>
             <para>A pre-built Windows Image is required to create environments
                 in Murano. Because of its size it’s better to build the image
@@ -256,7 +253,7 @@
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Clone murano-deployment repository</para>
+                    <para>Clone <emphasis role="bold">murano-deployment</emphasis> repository:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -266,7 +263,7 @@
             <itemizedlist>
                 <listitem>
                     <para>Change directory to <filename>murano-deployment/image-builder</filename>
-                        folder
+                        folder:
                     </para>
                 </listitem>
             </itemizedlist>
@@ -275,7 +272,7 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Create folder structure for image builder</para>
+                    <para>Create folder structure for image builder:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -378,7 +375,7 @@
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Test that all required files are in place</para>
+                    <para>Test that all required files are in place:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -389,7 +386,7 @@
             <emphasis role="bold">Build The Image</emphasis></para>
             <itemizedlist>
                 <listitem>
-                    <para>Get list of supported images</para>
+                    <para>Get list of supported images:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -397,7 +394,7 @@
             </programlisting>
             <itemizedlist>
                 <listitem>
-                    <para>Run image build process</para>
+                    <para>Run image build process:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -408,7 +405,7 @@
                     <para>Wait until process finishes</para>
                 </listitem>
                 <listitem>
-                    <para>The image file ws-2012-std.qcow2 will be stored in <filename>
+                    <para>The image file <filename>ws-2012-std.qcow2</filename> will be stored in <filename>
                         /opt/image-builder/share/images </filename> folder.
                     </para>
                 </listitem>
@@ -418,8 +415,8 @@
             </para>
             <itemizedlist>
                 <listitem>
-                    <para>Import openrc file which contains environment
-                        variables definitions required by OpenStack components
+                    <para>Import <filename>openrc</filename> file which contains environment
+                        variables definitions required by OpenStack components:
                     </para>
                 </listitem>
             </itemizedlist>
@@ -429,7 +426,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        Import the Windows Server 2012 image into Glance
+                        Import the Windows Server 2012 image into Glance:
                     </para>
                 </listitem>
             </itemizedlist>
@@ -448,4 +445,46 @@
                 </para>
             </warning>
    </section>
+        <section xml:id="Rabbit">
+            <title>RabbitMQ Configuration Notes</title>
+            <para>OpenStack rabbitMQ default credentials could be used for murano services,
+                but prefered way is to make additional changes into rabbitMQ
+                configuration, like own vhost, login and password. These steps
+                require superuser rights and should be run only on the OpenStack
+                controller node where rabbitMQ service resides.
+            </para>
+            <para>How to do this:
+            <programlisting>
+># rabbitmqctl add_user muranouser muranopassword
+># rabbitmqctl set_user_tags muranouser administrator
+># rabbitmqctl add_vhost muranovhost
+># rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
+            </programlisting>
+            </para>
+        </section>
+        <section xml:id="Keystone">
+            <title>Keystone Configuration Notes</title>
+            <para>Service entry for murano-api and endpoint associated with it
+                could also be configured in the keystone. If there is no record
+                about murano-api in the keystone murano-dashboard would try to
+                reach murano-api service at localhost on the default murano-api
+                port 8082.
+            </para>
+            <para>How to add service record into the keystone using python keystone
+                client:
+            <programlisting>
+># keystone service-create --name muranoapi --type murano \
+                --description "Murano-Api Service"
+            </programlisting>
+            This command returns UUID of the created service record, which
+            should be used below.
+            <programlisting>
+># keystone endpoint-create \
+              --service-id UUID_from_above \
+              --publicurl http://murano_vm_address:8082 \
+              --internalurl http://murano_vm_address:8082 \
+              --adminurl http://murano_vm_address:8082 \
+            </programlisting>
+            </para>
+        </section>
 </chapter>

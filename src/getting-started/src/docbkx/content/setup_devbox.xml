@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright (c) 2013 Mirantis, Inc.
 
@@ -36,16 +36,13 @@
             </listitem>
         </itemizedlist>
         <note>
-            <para>
-                The preferred way is to use script for automated
-                installation. It is described in
+                The preferred way is to use script for automated installation. It is described in
                 <link linkend="AutomatedWay">Automated Way </link>section below.
-            </para>
         </note>
     <section>
         <title>Vagrant Way</title>
-        <para>The simplest way to get working Murano devbox is Vagrant tool. This tool is available for Ubuntu only.</para>
-        <para><emphasis role="bold">Prepare Environment (Ubuntu)</emphasis></para>
+        <para>The simplest way to get working Murano devbox is Vagrant tool. On this page describes how to create the Murano DevBox on Ubuntu Desktop.</para>
+        <para><emphasis role="bold">Prepare Environment</emphasis></para>
         <itemizedlist>
             <listitem>
                 <para>Install VirtualBox:</para>
@@ -56,7 +53,8 @@
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>Install VirtualBox Extension Pack.
+                <para>Install VirtualBox Extension Pack.</para> 
+                <para>To install Extension Pack please go to the Dowload section on virtualbox.org (https://www.virtualbox.org/wiki/Downloads), then select and download appropriate Extension Pack package. When downloaded, open it with VirtualBox (you could simply double-click the file) and install the package.
                 </para>
             </listitem>
             <listitem>
@@ -75,34 +73,31 @@
 ># wget http://files.vagrantup.com/
             packages/7ec0ee1d00a916f80b109a298bab08e391945243/
             vagrant_1.2.7_x86_64.deb
-        </programlisting>
-        <programlisting>
 ># dpkg --install vagrant_1.2.7_x86_64.deb
         </programlisting>
         <para><emphasis role="bold">Launch The Box</emphasis></para>
         <itemizedlist>
             <listitem>
-                <para>Clone murano-vagrant repository</para>
+                <para>Clone murano-deployment repository:</para>
             </listitem>
         </itemizedlist>
        <programlisting>
->$ git clone https://github.com/stackforge/murano-deployment.git
+># git clone https://github.com/stackforge/murano-deployment.git
        </programlisting>
         <itemizedlist>
             <listitem>
-                <para>Change directory to cloned repository folder</para>
+                <para>Change directory to cloned repository folder:</para>
             </listitem>
         </itemizedlist>
         <programlisting>
->$ cd murano-deployment/getting-started
->$ git checkout -b release-0.2 origin/release-0.2
+># cd murano-deployment/getting-started
+># git checkout -b release-0.2 origin/release-0.2
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>IMPORTANT STEP:  RabbitMQ credentials are specified to default in lab-binding.rc so don't forget to change them if necessary.
-                    For example: - replace all the markers ‘***’  to your settings:
-
-                </para>
+                <para><emphasis role="bold">IMPORTANT STEP</emphasis>:  RabbitMQ credentials are specified to default in 
+                      <filename>murano-deployment/getting-started/localrc</filename> so don't forget to change them by 
+                      replacing all the markers ‘***’  to your settings:</para>
             </listitem>
         </itemizedlist>
         <programlisting>
@@ -125,48 +120,43 @@ LAB_HOST='***.***.***.***'
         <itemizedlist>
             <listitem>
                 <para>The script will do the following:</para>
+                <para>- Download the predefined vagrnat box with Ubuntu Server 12.04;</para>
+                <para>- Register it in Vagrant;</para>
+                <para>- Start the box using vagrant.</para>
             </listitem>
             <listitem>
-                <para>Vagrant will do the rest:</para>
+                <para>- Vagrant will do the rest:</para>
+                <para>- Launch and initialize the box;</para>
+                <para>- Execute the provision.sh script which will install Murano onto the box.</para>
             </listitem>
             <listitem>
-                <para>When everything is done open the http://127.0.0.1:8080/horizon link.
+                <para>When everything is done open the link http://127.0.0.1:8080/horizon
                 </para>
             </listitem>
         </itemizedlist>
     </section>
     <section xml:id="AutomatedWay">
         <title>Automated Way</title>
+        <para>This easy way can be used on Ubuntu Server 12.04 x86-64 and CentOS 6.4 x86-64. Also, you can use virtual machines on VMWare, VirtualBox, KVM with these operating systems.</para>
         <itemizedlist>
             <listitem>
-                <para>Create a folder to hold git repositories</para>
+                <para>Create a folder to hold git repositories:</para>
             </listitem>
         </itemizedlist>
         <programlisting>
-># mkdir -p /opt/git cd /opt/git &amp;&amp; cd /opt/git
+># mkdir -p /opt/git &amp;&amp; cd /opt/git
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>Clone murano-deployment repository</para>
+                <para>Clone murano-deployment repository from branch release-0.2:</para>
             </listitem>
         </itemizedlist>
         <programlisting>
-># git clone git://github.com/stackforge/murano-deployment.git
+># git clone git://github.com/stackforge/murano-deployment.git -b release-0.2
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>
-                    Change directory to murano-deployment and switch to release-0.2 branch
-                </para>
-            </listitem>
-        </itemizedlist>
-        <programlisting>
-># cd /opt/git/murano-deployment
-># git checkout -b release-0.2 origin/release-0.2
-        </programlisting>
-        <itemizedlist>
-            <listitem>
-                <para>Install prerequisites. On this step some additional system packages will be installed</para>
+                <para>Install prerequisites and configure devbox.</para>
             </listitem>
         </itemizedlist>
         <programlisting>
@@ -175,8 +165,7 @@ LAB_HOST='***.***.***.***'
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>Configure lab binding configuration file
-                    <filename>/etc/murano-deployment/lab-binding.rc</filename>
+                <para>Press Enter to configure lab binding configuration file <filename>/etc/murano-deployment/lab-binding.rc</filename>
                 </para>
             </listitem>
         </itemizedlist>
@@ -193,9 +182,8 @@ RABBITMQ_PASSWORD='murano'
 RABBITMQ_VHOST='muranovhost'
 BRANCH_NAME='release-0.2'
     </programlisting>
-        <para>It's recommended to use separate vHost in
-            <link linkend="Rabbit">RabbitMQ</link>
-        </para>
+        <para>It's recommended to use separate vHost in <link linkend="Rabbit">RabbitMQ</link></para>
+        <para>Then some additional system packages will be installed by script</para>
         <itemizedlist>
             <listitem>
                 <para>Install Murano components</para>
@@ -206,65 +194,58 @@ BRANCH_NAME='release-0.2'
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>Login to the Dashboard using URL http://uth_port = 35357;your VM IP>/dashboard</para>
+                <para>When everything is done login to the Dashboard using URL http://your_IP/horizon for Ubuntu and http://your_IP/dashboard for CentOS </para>
             </listitem>
         </itemizedlist>
     </section>
-    <section>
-        <title>Murano Services Configuration</title>
-        <para>This chapter descrides how to configure Murano services
-            and services communicating with Murano.</para>
-        <section xml:id="Rabbit">
-            <title>RabbitMQ Configuration Notes</title>
-            <para>OpenStack rabbitMQ credentials could be used for murano services,
-                but prefered way is to make additional changes into rabbitMQ
-                configuration, like own vhost, login and password. These steps
-                require superuser rights and should be run on the OpenStack
-                controller node where rabbitMQ service resides.
-            </para>
-            <para>How to do this:
-            <programlisting>
-># rabbitmqctl add_user muranouser muranopassword
-># rabbitmqctl set_user_tags muranouser administrator
-># rabbitmqctl add_vhost muranovhost
-># rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
-            </programlisting>
-            </para>
-        </section>
+      <section xml:id="ManualWay">
+        <title>Manual Way</title>
+        <para>By this way you can install and configure all Murano services separately</para>
         <section>
-            <title>Keystone Configuration Notes</title>
-            <para>Service entry for murano-api and endpoint associated with it
-                could also be  configured in the keystone. If there is no record
-                about murano-api in the keystone murano-dashboard would try to
-                reach murano-api service at localhost on the default murano-api
-                port 8082.
-            </para>
-            <para>How to add service record into the keystone using python keystone
-                client:
-            <programlisting>
-># keystone service-create --name muranoapi --type murano \
-                --description "Murano-Api Service"
-            </programlisting>
-            This command returns UUID of the created service record, which
-            should be used below.
-            <programlisting>
-># keystone endpoint-create \
-              --service-id UUID_from_above \
-              --publicurl http://murano_vm_address:8082 \
-              --internalurl http://murano_vm_address:8082 \
-              --adminurl http://murano_vm_address:8082 \
-            </programlisting>
-            </para>
-        </section>
-        <section>
-            <title>Murano-Api Configuration</title>
+            <title>Murano-API</title>
+            <para>Make sure the  <link linkend="Rabbit">RabbitMQ</link> and  <link linkend="Keystone">Keystone</link> is configured correctly</para>
+        <itemizedlist>
+            <listitem>
+                <para>Create a folder to hold git repositories:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting>
+># mkdir -p /opt/git &amp;&amp; cd /opt/git
+        </programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Clone murano-api repository from branch release-0.2:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting>
+># git clone git://github.com/stackforge/murano-api.git -b release-0.2 &amp;&amp; cd /opt/git/murano-api
+        </programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Install Murano-API:</para>
+                <para><emphasis>On Ubuntu:</emphasis></para>
+        <programlisting>
+># sh setup.sh install
+        </programlisting>
+                <para><emphasis>On CentOS:</emphasis></para>
+        <programlisting>
+># sh setup-centos.sh install
+        </programlisting>
+         <para>Successful installation ends with message like this:</para>
+         <programlisting>
+Successfully installed muranoapi
+Cleaning up...
+LOG:> Making sample configuration files at "/etc/murano-api"
+LOG:> Reloading initctl
+LOG:> Please, make proper configuration,located at "/etc/murano-api", before starting the "murano-api" daemon!
+          </programlisting>
             <para>Configuration files of the murano-api service reside at <filename>
                 /etc/murano-api</filename> directory. Basic configuration parameters are
                 listed below.
             </para>
             <itemizedlist>
                 <listitem>
-                    <para>murano-api.conf</para>
+                    <para>murano-api.conf:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -274,26 +255,23 @@ bind_host = 0.0.0.0
 bind_port = 8082
 log_file = /var/log/murano-api.log
 ...
-…
 [database]
 ...
-#connection = mysql://mysqluser:mysqlpassword@mysqlhost:3306/murano
-
-connection = sqlite:////etc/murano-api/murano.sqlite
-
-…
+connection = sqlite:///murano.sqlite
 ...
 [rabbitmq]
-host = &lt;rabbitmq ip>
+host = &lt;rabbitmq_ip>
 port = 5672
+ssl = False
 login = &lt;rabbitmq login>
 password = &lt;rabbitmq password>
 virtual_host = &lt;rabbitmq vhost>
 ...
              </programlisting>
+
             <itemizedlist>
                 <listitem>
-                    <para>murano-api-paste.ini</para>
+                    <para>murano-api-paste.ini:</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
@@ -302,14 +280,63 @@ virtual_host = &lt;rabbitmq vhost>
 auth_host = &lt;keystone_ip>
 auth_port = 35357
 auth_protocol = http
-admin_tenant_name = admin
+admin_tenant_name = &lt;tenant_name>
 admin_user = admin
-admin_password = admin_password
+admin_password = &lt;admin_keystone_password>
+signing_dir = /tmp/keystone-signing-muranoapi
 ...
             </programlisting>
-        </section>
+          </listitem>
+         </itemizedlist>
+
+        <itemizedlist>
+            <listitem>
+               <para>Start Murano-API:</para>
+               <para><emphasis>On Ubuntu:</emphasis></para>
+               <programlisting>
+># service murano-api start
+               </programlisting>
+               <para><emphasis>On CentOS:</emphasis></para>
+               <programlisting>
+># initctl start murano-api
+               </programlisting>
+            </listitem>
+        </itemizedlist>
+
+         </section>
         <section>
             <title>Murano-Conductor</title>
+        <itemizedlist>
+            <listitem>
+                <para>Go to a git folder:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting>
+># cd /opt/git
+        </programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Clone murano-conductor repository from branch release-0.2:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting>
+># git clone git://github.com/stackforge/murano-conductor.git -b release-0.2 &amp;&amp; cd /opt/git/murano-conductor
+        </programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Install Murano-Conductor:</para>
+                <para><emphasis>On Ubuntu:</emphasis></para>
+        <programlisting>
+># sh setup.sh install
+        </programlisting>
+                <para><emphasis>On CentOS:</emphasis></para>
+        <programlisting>
+># sh setup-centos.sh install
+        </programlisting>
+            </listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem>
             <para>
                 Configuration files of the murano-conductor service reside at
                 <filename>/etc/murano-conductor </filename>directory. Basic configuration parameters are
@@ -348,13 +375,80 @@ virtual_host = &lt;rabbitmq vhost>
             <itemizedlist>
                 <listitem>
                     <para>conductor-paste.ini</para>
+                    <para>It’s empty but must exist.</para>
                 </listitem>
             </itemizedlist>
-            <para>It’s empty but must exist.</para>
+            </listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem>
+               <para>Start Murano-Conductor:</para>
+               <para><emphasis>On Ubuntu:</emphasis></para>
+               <programlisting>
+># service murano-conductor start
+               </programlisting>
+               <para><emphasis>On CentOS:</emphasis></para>
+               <programlisting>
+># initctl start murano-conductor
+               </programlisting>
+            </listitem>
+        </itemizedlist>
         </section>
+
         <section>
             <title>Murano-Dashboard</title>
-            <para> Murano-dashboard does not need to be configured, but we need to
+            <para>Murano-Dashboard required additional repositories are installed and your system is updated and upgraded. 
+                  It can be checked with steps in the appendix of administrator guide.</para>
+            <warning>
+                <para>This installation is not capable with Horizon installed by devstack</para>
+            </warning>
+            <itemizedlist>
+                <listitem>
+                    <para>If there is no openstack dashboard package in your environment install it now with all dependencies:</para>
+                    <para><emphasis>On Ubuntu:</emphasis></para>
+                    <para>Deleting an Ubuntu theme is an optional step but recommended. </para>
+            <programlisting>
+># apt-get install memcached libapache2-mod-wsgi openstack-dashboard
+># dpkg --purge openstack-dashboard-ubuntu-theme
+            </programlisting>
+                    <para><emphasis>On CentOS:</emphasis></para>
+            <programlisting>
+># yum install make gcc memcached python-memcached mod_wsgi openstack-dashboard python-netaddr.noarch
+            </programlisting>
+                </listitem>
+            </itemizedlist>
+            <itemizedlist>
+                <listitem>
+                    <para>Go to a git folder:</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># cd /opt/git
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Clone murano-dashboard  repository from branch release-0.2:</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting>
+># git clone git://github.com/stackforge/murano-dashboard .git -b release-0.2 &amp;&amp; cd /opt/git/murano-dashboard
+            </programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Install Murano-Dashboard:</para>
+                    <para><emphasis>On Ubuntu:</emphasis></para>
+            <programlisting>
+># sh setup.sh install
+            </programlisting>
+                    <para><emphasis>On CentOS:</emphasis></para>
+            <programlisting>
+># sh setup-centos.sh install
+            </programlisting>
+                </listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem>
+        <para> Murano-dashboard does not need to be configured, but we need to
                 set up proper OPENSTACK_HOST variable in the OpenStack dashboard
                 configuration file, which resides at
                 <filename> /etc/openstack-dashboard </filename>
@@ -369,6 +463,35 @@ OPENSTACK_HOST =
     “openstack_controller_address”
 ...
             </programlisting>
+            </listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem>
+               <para>Start Murano-Dashboard:</para>
+               <para><emphasis>On Ubuntu:</emphasis></para>
+               <programlisting>
+># service apache2 restart
+               </programlisting>
+               <para><emphasis>On CentOS:</emphasis></para>
+               <programlisting>
+># service httpd restart
+               </programlisting>
+            </listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem>
+               <para>Open your browser:</para>
+               <para><emphasis>For Ubuntu:</emphasis></para>
+               <programlisting>
+http://your_devbox_ip/horizon
+               </programlisting>
+               <para><emphasis>For CentOS:</emphasis></para>
+               <programlisting>
+http://your_devbox_ip/dashboard
+               </programlisting>
+            </listitem>
+        </itemizedlist>
+        Login with Keystone credentials and check that "Environments" panel appears at the horizon "Project" tab.
         </section>
     </section>
 </chapter>
