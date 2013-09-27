@@ -333,13 +333,13 @@ sudo su -
 git clone https://github.com/stackforge/murano-api
                         ]]>
                     </programlisting>
-                    <para>Stable version one of our <link xlink:href="http://murano-docs.github.io/latest/developers-guide/content/ch03s02.html"> releases</link> can be checked by tag:</para>
+                    <para>Stable version one of our <link xlink:href="http://murano-docs.github.io/latest/developers-guide/content/ch03s02.html"> releases</link> can be checked by the tag:</para>
                     <programlisting>
 cd murano-api &amp;&amp; git checkout 0.2
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Switch to just created directory and then perform installation</para>
+                    <para>And perform installation:</para>
                     <para>
                         <emphasis>Ubuntu</emphasis>
                     </para>
@@ -385,7 +385,7 @@ cp murano-api-paste.ini.sample murano-api-paste.ini
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Configure <file>murano-api.conf</file> it according to your environment:
+                    <para>Configure <filename>murano-api.conf</filename> it according to your environment:
                         <itemizedlist>
                             <listitem>
                                 <para><emphasis>[DEFAULT]</emphasis> section sets up logging.
@@ -413,34 +413,18 @@ rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
                                         </programlisting>
                             </listitem>
                             <listitem>
-                                <para>In <emphasis>[filter:authtoken]</emphasis>
-                                    configure keystone auth_token. For more information see
+                                <para>In <emphasis>[keystone_authtoken]</emphasis>
+                                    configure parameters of Openstack Keystone service. For more information see
                                     <link xlink:href="http://docs.openstack.org/developer/keystone/configuringservices.html">
                                         Auth-Token Middleware with Username and Password
                                     </link>
                                 </para>
-
                             </listitem>
                             <listitem>
-                                <para>Update configuration in <filename>/etc/murano-api/murano-api-paste.ini
-                                    </filename>:
-                                    <programlisting>
-...
-[filter.authtoken]
-...
-# auth_host should point to the host where Keyston servive is installed
-auth_host = 
-...
-# For auth_protocol use 'http' in general and 'https' if Keystone supports SSL.
-auth_protocol = http
-# A name for OpenStack admin tenant name ('admin' by default)
-admin_tenant_name = admin
-# A name for OpenStack admin user ('admin' by default)
-admin_user = admin
-# A pasword for admin user
-admin_password = 
-...
-                                    </programlisting>
+                                <para>
+                                Another murano-api configuration file located at
+                                <filename>/etc/murano-api/murano-api-paste.ini</filename> and does
+                                not require any changes.
                                 </para>
                             </listitem>
                         </itemizedlist>
@@ -550,7 +534,7 @@ cd murano-conductor &amp;&amp; git checkout 0.2
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Switch to just created directory and then perform installation</para>
+                    <para>And then perform installation</para>
                     <para>
                         <emphasis>Ubuntu</emphasis>
                     </para>
@@ -828,7 +812,7 @@ sh setup-centos.sh install
             <title>HTTPS for Murano API</title>
             <para>
                  SSL for Murano API service can be configured in <emphasis>ssl</emphasis> section in
-                <emphasis>/etc/murano-api/murano-api.conf</emphasis>. Just point to a valid SSL certificate.
+                <filename>/etc/murano-api/murano-api.conf</filename>. Just point to a valid SSL certificate.
                See the example below:
             </para>
             <programlisting>
@@ -880,15 +864,14 @@ ca_file = PATH
                 default all messages in Rabbit MQ are not encrypted.
                 Each RabbitMQ Exchange should be configured separately.
             </para>
-            <section>
-                <title>Murano API -> Rabbit MQ exchange</title>
-                <para>
-                    Edit <emphasis>rabbitmq</emphasis> section in <emphasis>/etc/murano-api/murano-api.conf</emphasis>
-                    and set ssl option to True to enable SSL. Specify the path to the
-                    SSL CA certificate in regular format: /path/to/file without quotes or leave it empty to allow
-                    self-signed certificates.
-                </para>
-                <programlisting>
+            <para><emphasis role="bold">Murano API -> Rabbit MQ exchange</emphasis></para>
+            <para>
+                Edit <emphasis>rabbitmq</emphasis> section in <filename>/etc/murano-api/murano-api.conf</filename>
+                and set ssl option to True to enable SSL. Specify the path to the
+                SSL CA certificate in regular format: /path/to/file without quotes or leave it empty to allow
+                self-signed certificates.
+            </para>
+            <programlisting>
                     <![CDATA[
     [rabbitmq]
 
@@ -898,10 +881,8 @@ ssl = True
 # Path to SSL CA certificate or empty to allow self signed server certificate
 ca_certs =
                     ]]>
-                </programlisting>
-        </section>
-        <section>
-            <title>Rabbit MQ -> Murano Conductor exchange</title>
+            </programlisting>
+            <para><emphasis role="bold">Rabbit MQ -> Murano Conductor exchange</emphasis></para>
             <para>
                 Open <emphasis>/etc/murano-conductor/conductor.conf</emphasis>
                 and configure <emphasis>rabbitmq</emphasis> section in the same way:
@@ -919,16 +900,16 @@ ssl = True
 ca_certs = /home/user/certificates/example.crt
                 ]]>
             </programlisting>
-        </section>
-            <section>
-                <title>Murano Agent -> Rabbit MQ exchange</title>
-                <para>
-                    By default all Murano Conductor configuration settings apply to Murano Agent.
-                    If you want to configure Murano Agent in a different way change the default template. It can be found
-                    here:<emphasis>/etc/murano-conductor/data/templates/agent-config/Default.template.</emphasis>
-                    Take a look at appSettings section:
-                </para>
-                <programlisting>
+            <para><emphasis role="bold">
+                Murano Agent -> Rabbit MQ exchange</emphasis>
+            </para>
+            <para>
+                By default all Murano Conductor configuration settings apply to Murano Agent.
+                If you want to configure Murano Agent in a different way change the default template. It can be found
+                here:<emphasis>/etc/murano-conductor/data/templates/agent-config/Default.template.</emphasis>
+                Take a look at appSettings section:
+            </para>
+            <programlisting>
                     <![CDATA[
     <appSettings>
         <add key="rabbitmq.host" value="%RABBITMQ_HOST%"/>
@@ -949,16 +930,23 @@ ca_certs = /home/user/certificates/example.crt
         <add key="rabbitmq.sslServerName" value=""/>
     </appSettings>
                     ]]>
-                </programlisting>
+            </programlisting>
+            <para>
+                Desired parameter should be set directly to the value of the key
+                that you want to change. Quotes are need to be kept.
+                Thus you can change "rabbitmq.ssl" and "rabbitmq.port" values to
+                make Rabbit MQ work with this exchange in a different from
+                Murano-Conductor way.
+            </para>
+        </section>
+        <section>
+                <title>SSL for Murano Dashboard</title>
                 <para>
-                    Desired parameter should be set directly to the value of the key
-                    that you want to change. Quotes are need to be kept.
-                    Thus you can change "rabbitmq.ssl" and "rabbitmq.port" values to
-                    make Rabbit MQ work with this exchange in a different from
-                    Murano-Conductor way.
+                If you are going not to use self-signed certificates additional configuration do not need to be done.
+                Just point https in the URL. Otherwise, set <emphasis>MURANO_API_INSECURE = True</emphasis> on horizon config.
+                You can find it in <filename>/etc/openstack-dashboard/local_settings.py.</filename>.
                 </para>
             </section>
-        </section>
     </section>
 </section>
 </chapter>
