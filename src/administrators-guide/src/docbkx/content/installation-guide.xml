@@ -23,209 +23,113 @@
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
     <title>Install Murano Components</title>
-    <para>This chapter describes how to install Murano components on a
-        separate devbox. We
-        strongly recommend to use a separate host (virtual machine or real
-        host) for Murano
-        devbox as it prevents you from various dependency conflicts.
+    <para>This chapter describes how to install Murano components on a separate devbox. 
+    We strongly recommend to use a separate host (virtual machine or real host) for Murano 
+    devbox as it prevents you from various dependency conflicts.
     </para>
     <section>
         <title>Automatic Installation</title>
-        <para>There is a script to automate Murano installation onto
-            devbox.
+        <para>There is a script to automate Murano installation onto devbox.
             <itemizedlist>
                 <listitem>
-                    <para>Create a folder to hold cloned
-                        repositories
-                        <screen>># mkdir -p /opt/git</screen>
+                    <para>Create a folder to hold cloned repositories
+                        <programlisting>
+># mkdir -p /opt/git
+                        </programlisting>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Clone murano-deployment
-                        repository
-                        <screen>
+                    <para>Clone murano-deployment repository
+                        <programlisting>
 ># cd /opt/git
 ># git clone git://github.com/stackforge/murano-deployment.git
-                        </screen>
+                        </programlisting>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Change directory to
-                        <emphasis role="bold">murano-deployment</emphasis>
-                        and switch to required branch (e.g.<emphasis
-                                role="bold"
-                                >master</emphasis>)
-                        <screen>
-># cd /opt/git/murano-deployment
-># git checkout -b master origin/master
-                        </screen>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Install
-                        prerequisites
-                        <screen>
+                    <para>Set configuration and install prerequisites
+                        <programlisting>
 ># cd /opt/git/murano-deployment/devbox-scripts
 ># ./murano-git-install.sh prerequisites
-                        </screen>
+                        </programlisting>
+                    </para>
+                    <para>Press Enter to begin edit <filename>/etc/murano-deployment/lab-binding.rc</filename>,
+                    then 'i' to enter INSERT mode. After editing press ESC and type :wq to write and exit from VI.
+                       <programlisting>
+LAB_HOST='lab_IP_or_hostname'
+ADMIN_USER='admin'
+ADMIN_PASSWORD='admin_pass'
+RABBITMQ_LOGIN='muranouser'
+RABBITMQ_PASSWORD='murano'
+RABBITMQ_VHOST='muranovhost'
+#RABBITMQ_HOST=''
+BRANCH_NAME='master'
+SSL_ENABLED='false'
+SSL_CA_FILE=''
+SSL_CERT_FILE=''
+SSL_KEY_FILE=''
+                       </programlisting>
+                <itemizedlist>
+                    <listitem>
+                        <para><emphasis role="bold">LAB_HOST</emphasis> - IP or nostname of the lab. 
+                        Actually, this address/name should point to the host where Keystone is installed.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">ADMIN_USER</emphasis> - OpenStack admin user.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">ADMIN_PASSWORD</emphasis> - A  password for OpenStack admin user.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">RABBITMQ_USER</emphasis> - User to connect to RabbitMQ host.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">RABBITMQ_PASSWORD</emphasis> - Password for that user.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">RABBITMQ_VHOST</emphasis> - vHost which will be used by Murano
+                            components. Provides additional layer of isolation from other devboxes.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">RABBITMQ_HOST</emphasis> - (optional) IP address or hostname of
+                            the host where RabbitMQ is installed IF it is not the same host as LAB_HOST points to.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">RABBITMQ_HOST_ALT</emphasis> - (optional) IP address or hostname of
+                            the RabbitMQ host to connect from inside the Windows instance. In some cases the
+                            addresses like LAB_HOST or RABBITMQ_HOST are inaccessible from instances, and they must use
+                            different address.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">FILE_SHARE_HOST</emphasis> - (optional) IP address or hostname of
+                            the host where file share with prerequisites is located IF it is not the same host as 
+                            LAB_HOST points to.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">BRANCH_NAME</emphasis> - branch name from which all Murano 
+                        components will be fetched for installation.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">SSL_ENABLED</emphasis> - Set <emphasis role="bold">'true'</emphasis> if 
+                        OpenStack is configured with SSL support and <emphasis role="bold">'false'</emphasis> otherwise.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">SSL_CA_FILE</emphasis> - Path to CA certificate for certificate validation
+                        on client side. Leave it empty to allow self-signed certificates.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </listitem>
+                <listitem>
+                    <para>Install Murano components
+                        <programlisting>
+># ./murano-git-install.sh install
+                        </programlisting>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Configure the following parameters in lab binding
-                        configuration file
-                        <emphasis role="bold"
-                                >/etc/murano-deployment/lab-binding.rc
-                        </emphasis>
-                        <itemizedlist>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">LAB_HOST
-                                    </emphasis>
-                                    - IP or nostname
-                                    of the lab. Actually, this address/name
-                                    should point to the
-                                    host where Keystone is installed.
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">ADMIN_USER
-                                    </emphasis>
-                                    - OpenStack
-                                    <emphasis role="bold">admin</emphasis>
-                                    user
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">ADMIN_PASSWORD
-                                    </emphasis>
-                                    - A  password for OpenStack
-                                    <emphasis role="bold"
-                                            >admin
-                                    </emphasis>
-                                    user
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">RABBITMQ_USER
-                                    </emphasis>
-                                    - User to connect to RabbitMQ host
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">
-                                        RABBITMQ_PASSWORD
-                                    </emphasis>
-                                    - Password for that user
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">RABBITMQ_VHOST
-                                    </emphasis>
-                                    - vHost
-                                    which will be used by Murano
-                                    components. Provides additional
-                                    layer of isolation from other devboxes.
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">RABBITMQ_HOST
-                                    </emphasis>
-                                    -
-                                    (optional) IP address or hostname of
-                                    the host where RabbitMQ
-                                    is installed IF it is not the same host
-                                    as LAB_HOST points
-                                    to
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">
-                                        RABBITMQ_HOST_ALT
-                                    </emphasis>
-                                    -
-                                    (optional) IP address or hostname of
-                                    the RabbitMQ host to
-                                    connect from inside the Windows
-                                    instance. In some cases the
-                                    addresses like LAB_HOST or
-                                    RABBITMQ_HOST are inaccessible
-                                    from instances, and they must use
-                                    different address.
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">FILE_SHARE_HOST
-                                    </emphasis>
-                                    -
-                                    (optional) IP address or hostname of
-                                    the host where file
-                                    share with prerequisites is located IF
-                                    it is not the same
-                                    host as LAB_HOST points to.
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">BRANCH_NAME
-                                    </emphasis>
-                                    - branch name
-                                    from which all Murano components will
-                                    be fetched for
-                                    installation
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">SSL_ENABLED
-                                    </emphasis>
-                                    - Set
-                                    <emphasis role="bold">'true'</emphasis>
-                                    if OpenStack is
-                                    configured with SSL support and
-                                    <emphasis role="bold"
-                                            >'false'
-                                    </emphasis>
-                                    otherwise.
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    <emphasis role="bold">SSL_CA_FILE
-                                    </emphasis>
-                                    - Path to CA
-                                    certificate for certificate validation
-                                    on client
-                                    side.
-                                </para>
-                            </listitem>
-                        </itemizedlist>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Install Murano
-                        components
-                        <screen>
-># ./murano-git-install.sh install</screen>
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>Login to the Dashboard using URL
-                        <emphasis role="bold">http://&lt;your
-                            VM IP>/dashboard
-                        </emphasis>
-                        or
-                        <emphasis role="bold">http://&lt;your
-                            VM IP>/horizon
-                        </emphasis>
-                    </para>
+                    <para>Login to the Dashboard using URL <emphasis role="bold">http://your_VM_IP/horizon</emphasis>
+                        on Ubuntu or <emphasis role="bold">http://your_VM_IP/dashboard</emphasis> on CentOS</para>
                 </listitem>
             </itemizedlist>
         </para>
