@@ -283,37 +283,52 @@ done
     </section>
     <section>
         <title>Install OpenStack</title>
+        <warning>
+            <para>
+                Please keep in mind that in this guide we assume that Murano is installed in a separate devbox environment.
+            </para>
+        </warning>
         <para>
+            Murano devbox requires an OpenStack installed somewhere in your lab.
             Murano works great with Openstack packages installation as well as devstack installation.
             For now we support Openstack Grizzly and working on Havana integration.
         </para>
-        <itemizedlist>
-            <listitem>
-                <para>
-                    For Openstack Grizzly installation follow
-                    <link xlink:href="https://github.com/mseknibilel/OpenStack-Grizzly-Install-Guide">
-                        the documentation</link>. In addition to that
-                    <link xlink:href=" https://wiki.openstack.org/wiki/Heat">Heat</link> should be installed.
-                    Follow the link to setup Heat on
-                    <link xlink:href="http://openstack.redhat.com/Deploy_Heat_and_launch_your_first_Application">Ubuntu</link>
-                    and on <link xlink:href="http://docs.openstack.org/developer/heat/getting_started/on_ubuntu.html">CentOS</link>.
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                     For a  Devstack installation take a look at<link xlink:href="http://devstack.org/">
-                    this page</link>.
-                    <warning>
-                        <para>Murano Dashboard component should be
-                            installed on a separate node in case of devstack installation</para>
-                    </warning>
-                </para>
-                 <para>
-                    Use Devstack's guide to install single VM OpenStack (<link
-                xlink:href="http://devstack.org/guides/single-vm.html">
-                    http://devstack.org/guides/single-vm.html</link>)
-                </para>
+        <para>
+            <emphasis role="strong">Package-based Installation</emphasis>
+        </para>
+        <para>
+            To install Openstack Grizzly please consult the following sources:
+            <itemizedlist>
+                <listitem>
+                    <para>
+            <link xlink:href="https://github.com/mseknibilel/OpenStack-Grizzly-Install-Guide">OpenStack Grizzly Install Guide</link>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+            <link xlink:href="http://longgeek.com/2013/03/18/openstack-grizzly-g3-for-ubuntu-12-04-all-in-one-installation-2/?lang=en">OpenStack Grizzly-g3 for Ubuntu 12.04 all-in-one installation</link>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            In addition to that <link xlink:href=" https://wiki.openstack.org/wiki/Heat">Heat</link> should be installed.
+            Follow the link to setup Heat on
+            <link xlink:href="http://openstack.redhat.com/Deploy_Heat_and_launch_your_first_Application">Ubuntu</link>
+            and/or on <link xlink:href="http://docs.openstack.org/developer/heat/getting_started/on_ubuntu.html">CentOS</link>.
+        </para>
+        <para>
+            <emphasis role="strong">Devstack-based Installation</emphasis>
+        </para>
+        <para>
+            For a Devstack installation please vizit <link xlink:href="http://devstack.org/">Devstack Home Page</link> and clone devstack repository to your host.
+        </para>
+        <para>
+            For further installation process we recommend to use Devstack's <link xlink:href="http://devstack.org/guides/single-vm.html">Single VM Installation Guide</link>.
+        </para>
+        <para>
+            The example of localrc configuration file is provided below:
+        </para>
                 <formalpara>
                     <title>localrc example</title>
                     <para>
@@ -343,18 +358,5 @@ LOGFILE=$SCREEN_LOGDIR/stack.sh.log
                 </screen>
                 </para>
         </formalpara>
-        <para>
-            If you need to image builder only, then install only packages required to run <emphasis role="strong">KVM</emphasis> (see below).
-        </para>
-        </listitem>
-    </itemizedlist>
-</section>
-<section>
-        <title>Configure OpenStack</title>
-        <note>
-            <para>
-                Additional OpenStack configuration usually doesn't required in case you've installed OpenStack with Devstack scripts.
-            </para>
-        </note>
-</section>
+    </section>
 </chapter>
