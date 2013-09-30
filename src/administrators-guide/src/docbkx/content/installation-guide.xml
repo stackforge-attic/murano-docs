@@ -23,9 +23,10 @@
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
     <title>Install Murano Components</title>
-    <para>This chapter describes how to install Murano components on a separate devbox. 
-    We strongly recommend to use a separate host (virtual machine or real host) for Murano 
-    devbox as it prevents you from various dependency conflicts.
+    <para>This chapter describes how to install Murano components on a
+        separate devbox. We strongly recommend to use a separate host (virtual machine or real
+        host) for Murano devbox as it prevents you from various dependency conflicts.
+        You can refer <link xlink:href="https://wiki.openstack.org/wiki/Murano/Requirements"> this link</link> to check supported version of all Murano dependencies.
     </para>
     <section>
         <title>Automatic Installation</title>
