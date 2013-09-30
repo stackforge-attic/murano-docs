@@ -92,7 +92,7 @@
                 </itemizedlist>
             </para>
             <para>
-                The list of OSes which we used in our lab is shown below.
+                The list of OSes which can be used for a lab shown below:
             </para>
             <table xml:id="_software_requirements" frame="all">
                 <title>OS Requirements</title>
@@ -106,6 +106,9 @@
                     <tbody>
                         <row>
                             <entry>Ubuntu Server 12.04 LTS</entry>
+                        </row>
+                        <row>
+                            <entry>Centos 6.4</entry>
                         </row>
                     </tbody>
                 </tgroup>
