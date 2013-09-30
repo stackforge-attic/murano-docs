@@ -385,7 +385,7 @@ cp murano-api-paste.ini.sample murano-api-paste.ini
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Configure <filename>murano-api.conf</filename> it according to your environment:
+                    <para>Configure <filename>murano-api.conf</filename> according to your environment:
                         <itemizedlist>
                             <listitem>
                                 <para><emphasis>[DEFAULT]</emphasis> section sets up logging.
@@ -558,7 +558,7 @@ sh setup-centos.sh install
             <title>Configure</title>
             <itemizedlist spacing="compact">
                 <listitem>
-                    <para>Edit configuration file and take a look at inline comments:</para>
+                    <para>Copy example of the configuration file:</para>
                     <programlisting>
                         <![CDATA[
 cd /etc/murano-conductor
@@ -567,12 +567,7 @@ cp conductor.conf.sample conductor.conf
                     </programlisting>
                 </listitem>
                 <listitem>
-                    <para>Change configuration file according to your environment.
-                    <programlisting>
-                        <![CDATA[
-vi conductor.conf
-                        ]]>
-                    </programlisting>
+                    <para>Configure <filename>conductor.conf</filename> file according to your environment.
                         <itemizedlist >
                             <listitem>
                                 <para><emphasis>[DEFAULT]</emphasis>section is responsible for logging.
