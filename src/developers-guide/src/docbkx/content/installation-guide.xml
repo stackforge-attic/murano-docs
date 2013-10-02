@@ -112,7 +112,7 @@ git clone https://github.com/stackforge/murano-api
             </listitem>
                 <listitem>
                     <para>
-                        Execute a script located at the <filename>murano-api/tools</filename>directory
+                        Execute a script located at the <filename>murano-api/tools</filename> directory
                         to create virtual environment automatically:
                         <programlisting>
 cd murano-api &amp;&amp; python ./tools/install_venv.py
@@ -149,7 +149,7 @@ git clone https://github.com/stackforge/murano-conductor
                 <listitem>
                     <para>
                         Execute a script located at the<filename>
-                        murano-conductor/tools</filename>directory
+                        murano-conductor/tools</filename> directory
                         to create virtual environment automatically:
                         <programlisting>
 cd murano-conductor &amp;&amp; python ./tools/install_venv.py
@@ -192,7 +192,7 @@ git clone https://github.com/stackforge/murano-dashboard
             <listitem>
                 <para>
                     Execute a script located at the<filename>
-                    murano-conductor/tools</filename>directory
+                    murano-dashboard/tools</filename> directory
                     to create virtual environment automatically:
                     <programlisting>
 cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
