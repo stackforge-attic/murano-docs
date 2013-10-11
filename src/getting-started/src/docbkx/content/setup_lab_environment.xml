@@ -160,6 +160,15 @@
     guest account = nobody
     read only = no
     create mask = 0755
+
+[image-builder-share]
+    comment = Image Builder Share
+    path = /opt/image-builder/share
+    browsable = yes
+    guest ok = yes    
+    guest account = nobody
+    read only = no
+    create mask = 0755
             </programlisting>
             <itemizedlist>
                 <listitem>
