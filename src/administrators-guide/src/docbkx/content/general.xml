@@ -362,4 +362,180 @@ LOGFILE=$SCREEN_LOGDIR/stack.sh.log
                 </para>
         </formalpara>
     </section>
+    <section>
+        <title>RabbitMQ additional instance</title>
+        <para>
+            RabbitMQ is used for services interconnection in the OpenStack. Murano also uses RabbitMQ as "message queue" service but the separate instance. In the OpenStack normal installation "message queue" service resides in the management network segment and should not be reachable from any tenant networks to prevent of security breach.
+            Murano uses its own agent service running on deploying instance directly. Agent should have the ability to communicate with "message queue" service. Create one more "message queue" service instance in the external network, reachable from tenant networks through the OpenStack network router service (Qunatum/Neutron).
+        </para>
+        <para>
+            <emphasis role="strong">Configuration steps</emphasis>
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Create file <filename>/etc/default/rabbitmq-murano</filename> with options listed below
+                </para>
+                <screen>
+#!/bin/sh
+#
+#
+export RABBITMQ_NODENAME=murano@$(hostname)
+export RABBITMQ_CONFIG_FILE=/etc/rabbitmq/rabbitmq-murano
+export RABBITMQ_ENABLED_PLUGINS_FILE=/etc/rabbitmq/enabled_plugins.murano
+CONTROL="${CONTROL} -n ${RABBITMQ_NODENAME}"
+PID_FILE=/var/run/rabbitmq/murano.pid
+                </screen>
+            </listitem>
+            <listitem>
+                <para>
+                    Make copy of the original rabbitmq-server init script:
+                </para>
+                <screen>
+cd /etc/init.d
+cp rabbitmq-server rabbitmq-server-murano
+                </screen>
+            </listitem>
+            <listitem>
+                <para>
+                    Make changes inside new file <filename>rabbitmq-server-murano</filename>, after test calls:
+                </para>
+                <screen>
+...
+test -x $DAEMON || exit 0
+test -x $CONTROL || exit 0
+. /etc/default/rabbitmq-murano
+RETVAL=0
+...
+                </screen>
+            </listitem>
+        </itemizedlist>
+        <para>
+            <emphasis role="strong">Fill in configuration files for new RrabbitMQ instace.</emphasis>
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Modify <filename>/etc/rabbitmq/enabled_plugins.murano</filename>
+                </para>
+                <screen>
+[rabbitmq_management].
+                </screen>
+            </listitem>
+            <listitem>
+                <para>
+                    Modify <filename>/etc/rabbitmq/rabbitmq-murano.config</filename>
+                </para>
+                <screen>
+[
+    {rabbit, [
+        {tcp_listeners, [5674]},
+        {log_levels,[
+        {connection, error}
+        ]}
+    ]},
+    {rabbitmq_management, [
+        {listener, [{port, 15673}]}
+    ]},
+    {rabbitmq_mochiweb, [
+        {listeners, [{mgmt, [{port, 55673}]}]}
+    ]}
+].
+                </screen>
+            </listitem>
+            <listitem>
+                <para>
+                    Check service works fine:
+                </para>
+                <screen>
+service rabbitmq-server-murano start
+service rabbitmq-server-murano status
+service rabbitmq-server-murano stop
+                </screen>                
+            </listitem>
+            <listitem>
+                <para>
+                    Enable OS boot time service start:
+                </para>
+                <screen>
+update-rc.d rabbitmq-server-murano defaults
+                </screen>
+            </listitem>
+        </itemizedlist>
+        <warning>
+            Don't forget about firewall rules for new RabbitMQ service!
+        </warning>
+    </section>
+    <section>
+        <title>Configuring Quantum SecurityGroups quotas</title>
+        <para>
+            Default quotas driver used by quantum is - <filename>quantum.quota.ConfDriver</filename>, all limits set in <filename>/etc/quantum/
+            quantum.conf</filename> - non flexible. To extend functionality and flexibility, default quota driver should be
+            changed to - <filename>quantum.db.quota_db.DbQuotaDrive</filename>.
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Change <filename>/etc/quantum/quantum.conf</filename> with next values:
+                </para>
+                <screen>
+[QUOTAS]
+...
+#quota_driver = quantum.quota.ConfDriver
+quota_driver = quantum.db.quota_db.DbQuotaDriver
+...
+                </screen>
+            </listitem>
+            <listitem>
+                <para>
+                    Restart all quantum services:
+                </para>
+                <screen>
+cd /etc/init.d/
+for q in quantum-*; do restart $q; done
+                </screen>
+            </listitem>
+            <listitem>
+                <para>
+                    Update required quota with quantum CLI:
+                </para>
+                <screen>
+quantum quota-update --security_group 100 --tenant-id &lt;tenant_id&gt;
++---------------------+-------+
+| Field               | Value |
++---------------------+-------+
+| floatingip          |    50 |
+| network             |    10 |
+| port                |    50 |
+| router              |    10 |
+| security_group      |   100 |
+| security_group_rule |   100 |
+| subnet              |    10 |
++---------------------+-------+
+                </screen>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section>
+        <title>Reconfigure rate-limits for Nova</title>
+        <para>
+            Please reconfigure rate-limits to at least 500-1000 hits per minute.
+        </para>
+        <para>
+            API calls rate limits could be configured using <link xlink:href="http://docs.openstack.org/grizzly/openstack-
+compute/admin/content/configuring-compute-API.html">this manual</link>.
+            Or by disabling ratelimits in the <filename>/etc/nova/api-paste.ini</filename> file.
+            <screen>
+...
+[composite:openstack_compute_api_v2]
+use = call:nova.api.auth:pipeline_factory
+#noauth = faultwrap sizelimit noauth ratelimit osapi_compute_app_v2
+#keystone = faultwrap sizelimit authtoken keystonecontext ratelimit osapi_compute
+noauth = faultwrap sizelimit noauth osapi_compute_app_v2
+keystone = faultwrap sizelimit authtoken keystonecontext osapi_compute_app_v2
+keystone_nolimit = faultwrap sizelimit authtoken keystonecontext osapi_compute_ap
+...
+            </screen>
+        </para>
+    </section>
 </chapter>
