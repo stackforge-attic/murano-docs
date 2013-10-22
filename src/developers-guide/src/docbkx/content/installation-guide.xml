@@ -217,12 +217,6 @@ cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
 # yum install nodejs
                                 </programlisting>
                             </para>
-                           <para>
-                                Customized Djblets package to support datagrid element (installation by pip is not supported):
-                                <programlisting>
-# ./tools/with_venv.sh easy_install https://github.com/tsufiev/djblets/archive/master.zip
-                                </programlisting>
-                            </para>
                         </listitem>
                     </itemizedlist>
                 </para>
