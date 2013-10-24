@@ -451,7 +451,7 @@ RETVAL=0
 service rabbitmq-server-murano start
 service rabbitmq-server-murano status
 service rabbitmq-server-murano stop
-                </screen>                
+                </screen>
             </listitem>
             <listitem>
                 <para>
@@ -467,39 +467,69 @@ update-rc.d rabbitmq-server-murano defaults
         </warning>
     </section>
     <section>
-        <title>Configuring Quantum SecurityGroups quotas</title>
-        <para>
-            Default quotas driver used by quantum is - <filename>quantum.quota.ConfDriver</filename>, all limits set in <filename>/etc/quantum/
-            quantum.conf</filename> - non flexible. To extend functionality and flexibility, default quota driver should be
-            changed to - <filename>quantum.db.quota_db.DbQuotaDrive</filename>.
-        </para>
-        <itemizedlist>
-            <listitem>
-                <para>
-                    Change <filename>/etc/quantum/quantum.conf</filename> with next values:
-                </para>
-                <screen>
+        <title>Configure Quantum</title>
+        <section>
+            <title>Allow subnet ip-range overlapping</title>
+            <para>
+                When deploying environments, Murano will create dedicated network for each of them, and every such network will have a subnet created.
+                All these subnets will have identical ip-ranges. Theoretically this is perfectly fine, as these subnets belong to different isolated Networks
+                (L2 segments) and are connected to different routers.
+            </para>
+            <para>
+                However, by default Quantum does not allow overlapping IPs for different subnets - even in different Networks.
+                To override this restriction, change <filename>/etc/quantum/quantum.conf</filename>: uncomment <filename>allow_overlapping_ips</filename> parameter
+                and change its value to <filename>True</filename>:
+            </para>
+            <screen>
+[DEFAULT]
+...
+# Enable or disable overlapping IPs for subnets
+# Attention: the following parameter MUST be set to False if Neutron is
+# being used in conjunction with nova security groups
+allow_overlapping_ips = True
+            </screen>
+            <para>
+                Then, restart all quantum services:
+            </para>
+            <screen>
+cd /etc/init.d/
+for q in quantum-*; do restart $q; done
+            </screen>
+        </section>
+        <section>
+            <title>Specify SecurityGroups quotas</title>
+            <para>
+                Default quotas driver used by quantum is - <filename>quantum.quota.ConfDriver</filename>, all limits set in <filename>/etc/quantum/
+                quantum.conf</filename> - non flexible. To extend functionality and flexibility, default quota driver should be
+                changed to - <filename>quantum.db.quota_db.DbQuotaDrive</filename>.
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Change <filename>/etc/quantum/quantum.conf</filename> with next values:
+                    </para>
+                    <screen>
 [QUOTAS]
 ...
 #quota_driver = quantum.quota.ConfDriver
 quota_driver = quantum.db.quota_db.DbQuotaDriver
 ...
-                </screen>
-            </listitem>
-            <listitem>
-                <para>
-                    Restart all quantum services:
-                </para>
-                <screen>
+                    </screen>
+                </listitem>
+                <listitem>
+                    <para>
+                        Restart all quantum services:
+                    </para>
+                    <screen>
 cd /etc/init.d/
 for q in quantum-*; do restart $q; done
-                </screen>
-            </listitem>
-            <listitem>
-                <para>
-                    Update required quota with quantum CLI:
-                </para>
-                <screen>
+                    </screen>
+                </listitem>
+                <listitem>
+                    <para>
+                        Update required quota with quantum CLI:
+                    </para>
+                    <screen>
 quantum quota-update --security_group 100 --tenant-id &lt;tenant_id&gt;
 +---------------------+-------+
 | Field               | Value |
@@ -512,9 +542,10 @@ quantum quota-update --security_group 100 --tenant-id &lt;tenant_id&gt;
 | security_group_rule |   100 |
 | subnet              |    10 |
 +---------------------+-------+
-                </screen>
-            </listitem>
-        </itemizedlist>
+                    </screen>
+                </listitem>
+            </itemizedlist>
+        </section>
     </section>
     <section>
         <title>Reconfigure rate-limits for Nova</title>
