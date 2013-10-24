@@ -22,7 +22,7 @@
          xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
-        <title>Image Builder</title>
+        <title>Windows Image Build</title>
         <para>
             Murano requires a Windows Image in QCOW2 format to be builded and uploaded into Glance.
         </para>

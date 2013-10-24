@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2013 Mirantis, Inc.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0">
+    <title>Quantum Usage</title>
+    <section>
+        <title>Overview</title>
+        <para>Murano does support both Nova Network and Quantum, and support advanced network management in case of
+            Quantum. Advanced network management essentially means explicit (from Murano point of view) network
+            management per environment. Murano creates private network and attache it to the first found external
+            network for each environment. This functionality is based on Quantum deployed as
+            <link xlink:href="http://docs.openstack.org/network-admin/admin/content/use_cases_mixed.html">Per-tenant
+                Routers with Private Networks</link> and not going to work when Quantum is deployed as
+            <link xlink:href="http://docs.openstack.org/network-admin/admin/content/use_cases_mixed.html">Mixed Flat and
+                Private Network</link>.
+        </para>
+        <para><emphasis>Mixed Flat and Private Network</emphasis> supported in Nova Network and it is default configuration for
+            Murano v0.3.
+        </para>
+        <para>With advanced networking schemes like <emphasis>Per-tenant Routers with Private Networks</emphasis> additional configuration and patches for OpenStack components
+            are required. Different set of templates for Heat stacks is used in Murano Conductor.</para>
+    </section>
+    <section>
+        <title>Patching Murano</title>
+        <para>To enable support for advanced network management in Murano we need to replace default templates for
+            Heat stacks used in Murano Conductor. All necessary templates available in our git repository:</para>
+        <screen>
+git clone http://github.com/stackforge/murano-deployment
+git checkout 0.3
+        </screen>
+        <para>Templates for Heat stacks are located in <emphasis>data</emphasis> directory of Conductor. Please,
+            overwrite them with content of <emphasis>quantum_support/conductor/data/templates/cf</emphasis> directory
+            checked out above.</para>
+        <screen>
+cp -r quantum_support/conductor/data/* /etc/murano/data/
+        </screen>
+        <para>In Murano with enabled advanced networking features new service is available - MS SQL Cluster. To enable
+        MS SQL Cluster copy appropriate UI definition to the <emphasis>services</emphasis> directory of Dashboard:</para>
+        <screen>
+cp -r quantum_support/dashboard/services/* /etc/murano/services/
+        </screen>
+        <para>Please, note that folders <emphasis>/etc/murano/services/</emphasis> and <emphasis>/etc/murano/data/</emphasis>
+        may not have the same path at your Murano deployment</para>
+    </section>
+    <section>
+        <title>Patching OpenStack</title>
+        <para>OpenStack Grizzly missing a few features that already implemented in the latest Havana release, or merged
+        to Icehouse. We ported that features to OpenStack Grizzly and they available as set of .patch files. In order to
+        use advanced network management we need to apply that patches ether to sources or to already installed packages.
+        </para>
+        <para>All necessary patches are available in our git repository:</para>
+        <screen>
+git clone http://github.com/stackforge/murano-deployment
+git checkout 0.3
+cd quantum_support/patches
+        </screen>
+    </section>
+    <section>
+        <title>Configuring Quantum</title>
+        <section>
+            <title>Allow subnet ip-range overlapping</title>
+            <para>
+                When deploying environments, Murano will create dedicated network for each of them, and every such network will have a subnet created.
+                All these subnets will have identical ip-ranges. Theoretically this is perfectly fine, as these subnets belong to different isolated Networks
+                (L2 segments) and are connected to different routers.
+            </para>
+            <para>
+                However, by default Quantum does not allow overlapping IPs for different subnets - even in different Networks.
+                To override this restriction, change <filename>/etc/quantum/quantum.conf</filename>: uncomment <filename>allow_overlapping_ips</filename> parameter
+                and change its value to <filename>True</filename>:
+            </para>
+            <programlisting>
+[DEFAULT]
+...
+# Enable or disable overlapping IPs for subnets
+# Attention: the following parameter MUST be set to False if Neutron is
+# being used in conjunction with nova security groups
+allow_overlapping_ips = True
+            </programlisting>
+            <para>
+                Then, restart all quantum services:
+            </para>
+            <screen>
+cd /etc/init.d/
+for q in quantum-*; do restart $q; done
+            </screen>
+        </section>
+    </section>
+    <section>
+        <title>Known Issues</title>
+        <para>Internet Information Services Web Farm &amp; ASP.NET Application Web Farm services does not work when
+            Murano configured to support <emphasis>Per-tenant Routers with Private Networks</emphasis>. This services are
+            based on Heat, particularly on resource called AWS::ElasticLoadBalancing::LoadBalancer, that currently does
+            not support specification of any network related parameters. Without support for network configuration
+            specification LoadBalancer does not work on OpenStack deployments with Quantum deployed as
+            <emphasis>Per-tenant Routers with Private Networks</emphasis>.</para>
+    </section>
+</chapter>

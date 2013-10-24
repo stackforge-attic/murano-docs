@@ -23,33 +23,19 @@
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
       version="5.0">    <info>
         <title>Murano Administrator's Guide</title>
-        <copyright>
-            <year></year>
-            <holder></holder>
-        </copyright>
-        <releaseinfo>v0.2</releaseinfo>
-        <productname>Murano</productname>
-        <pubdate>2013-09-09</pubdate>
+        <releaseinfo>v0.3</releaseinfo>
         <legalnotice role="apache2">
             <annotation>
                 <remark> Copyright details are filled in by the template. Change the value of the
                     role attribute on the legal notice element to change the license. </remark>
             </annotation>
         </legalnotice>
-        <abstract>
-            <para> This document is intended for individuals who wish to install and use our product
-                or intend to contribute. </para>
-        </abstract>
-        <cover>
-            <para>this is a placeholder for the front cover</para>
-        </cover>
-        <cover>
-            <para>this is a placeholder for the back cover</para>
-        </cover>
     </info>
     <xi:include href="./content/general.xml" xlink:title="General Deployment Steps"/>
     <xi:include href="./content/installation-guide.xml" xlink:title="Install Murano"/>
-    <xi:include href="./content/image-bulder.xml" xlink:title="Image Builder"/>
+    <xi:include href="./content/quantum-guide.xml" xlink:title="Use Quantum"/>
+    <xi:include href="./content/windows-image-bulder.xml" xlink:title="Windows Image Build"/>
+    <xi:include href="./content/linux-image-bulder.xml" xlink:title="Linux Image Build"/>
     <xi:include href="./content/troubleshooting.xml" xlink:title="Troubleshooting"/>
     <xi:include href="./content/appendix.xml" xlink:title="Appendix"/>
 </book>

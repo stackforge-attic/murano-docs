@@ -24,14 +24,7 @@
       version="5.0">
     <title>Murano Developers Guide</title>
     <info>
-        <author>
-            <affiliation>
-                <orgname></orgname>
-            </affiliation>
-        </author>
-        <releaseinfo>v0.2</releaseinfo>
-        <productname>Murano</productname>
-        <pubdate>2013-09-09</pubdate>
+        <releaseinfo>v0.3</releaseinfo>
         <legalnotice role="apache2">
             <annotation>
                 <remark>Copyright details are filled in by the template. Change
@@ -40,21 +33,10 @@
                 </remark>
             </annotation>
         </legalnotice>
-        <abstract>
-            <para>This document is intended for individuals who wish to
-                use our product or intend to contribute.
-            </para>
-        </abstract>
-        <cover>
-            <para>this is a placeholder for the front cover</para>
-        </cover>
-        <cover>
-            <para>this is a placeholder for the back cover</para>
-        </cover>
     </info>
     <xi:include href="./content/overview.xml" xlink:title="Overview" />
     <xi:include href="./content/installation-guide.xml" xlink:title="Installation Guide" />
-    <xi:include href="content/architecture.xml" xlink:title="Blueprint" />
+    <xi:include href="./content/architecture.xml" xlink:title="Architecture" />
     <xi:include href="./content/specification.xml" xlink:title="API Specification" />
     <xi:include href="./content/workflows.xml" xlink:title="Workflows XML DSL" />
     <xi:include href="./content/knownissues.xml" xlink:title="Known Issues" />
@@ -67,7 +49,7 @@
             <link xlink:href="mailto:openstack-dev@lists.openstack.org">openstack-dev@lists.openstack.org</link>
         </para>
         <para>
-            We’re going to hold public weekly meetings on Mondays at 15:00 UTC on #openstack-meeting-alt irc channel.
+            We’re going to hold public weekly meetings on Tuesdays at 17:00 UTC on #openstack-meeting-alt irc channel.
         </para>
         <para>If you want to contribute either to docs or to code, simply send us change request via
             <link xlink:href="http://review.openstack.org">review.openstack.org</link>
