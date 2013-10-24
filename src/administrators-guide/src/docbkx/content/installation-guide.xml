@@ -483,6 +483,10 @@ cp conductor.conf.sample conductor.conf
                                 </para>
                             </listitem>
                             <listitem>
+                                <para><emphasis>[quantum]</emphasis>points where quantum is running.
+                                </para>
+                            </listitem>
+                            <listitem>
                                 <para><emphasis>[rabbitmq]</emphasis>section points where your rabbitMQ installed and
                                     configured.
                                 </para>
@@ -518,6 +522,14 @@ cert_file =
 # Optional PEM-formatted file that contains the private key
 key_file =
 # If set then the server's certificate will not be verified
+insecure = False
+# Valid endpoint types: publicURL (default), internalURL, adminURL
+endpoint_type = publicURL
+
+[quantum]
+# Optional CA cert file to use in SSL connections
+#ca_cert =
+# Allow self signed server certificate
 insecure = False
 # Valid endpoint types: publicURL (default), internalURL, adminURL
 endpoint_type = publicURL
