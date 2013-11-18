@@ -24,9 +24,7 @@
       version="5.0">
     <title>Murano Developers Guide</title>
     <info>
-        <releaseinfo>v0.2</releaseinfo>
-        <productname>Murano</productname>
-        <pubdate>2013-09-09</pubdate>
+        <releaseinfo>v0.3</releaseinfo>
         <legalnotice role="apache2">
             <annotation>
                 <remark>Copyright details are filled in by the template. Change
