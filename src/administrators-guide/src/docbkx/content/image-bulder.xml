@@ -725,32 +725,14 @@
                         <para> Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with the
                                 following property string
                                 <screen>
-murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"}'
+murano_image_info='{"title": "Windows 2012 Standart Edition", "type": "windows.2012"}'
 </screen>
                                 where <itemizedlist>
                                     <listitem>
-                                        <para> title - user-friendly description of the image
-                                        </para>
+                                        <para>title - user-friendly description of the image</para>
                                     </listitem>
                                     <listitem>
-                                        <para> type - one of possible image types <itemizedlist>
-                                                <listitem>
-                                                  <para> ws-2012-std - Windows Server 2012 Standart
-                                                  Edition </para>
-                                                </listitem>
-                                                <listitem>
-                                                  <para> ws-2012-core - Windows 2012 Core Edition
-                                                  </para>
-                                                </listitem>
-                                                <listitem>
-                                                  <para> ws-2008r2-std - Windows Server 2008R2
-                                                  Standart Edition </para>
-                                                </listitem>
-                                                <listitem>
-                                                  <para> ws-2008r2 - Windows Server 2012R2 </para>
-                                                </listitem>
-                                            </itemizedlist>
-                                        </para>
+                                        <para>type - is a image type, for example 'windows.2012'</para>
                                     </listitem>
                                 </itemizedlist>
                             </para>
@@ -772,7 +754,7 @@ murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"
                         <para> Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with
                                 murano_image_info property, e.g.
                                 <screen>
-murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"}'
+murano_image_info='{"title": "Windows 2012 Standart Edition", "type": "windows.2012"}'
 </screen>
                             </para>
                     </listitem>
@@ -790,5 +772,4 @@ murano_image_info='{"title": "Windows 2012 Core Edition", "type": "ws-2012-core"
             After these steps desired image can be chosen in Murano dashboard and used for services platform.
         </para>
     </section>
-    </chapter>
-
+</chapter>
