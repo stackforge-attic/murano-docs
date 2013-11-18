@@ -57,5 +57,18 @@
                 And deploy will hang up.
             </para>
         </listitem>
+        <listitem>
+            <para>
+                MS SQL Cluster service relies on Quantum for 'virtual-ip' (address-pair) functionality, and to work
+                on Nova Network or Quantum configured as "Mixed Flat and Private Network", anti-spoofing rules on
+                compute nodes should be disabled.
+            </para>
+            <para>Internet Information Services Web Farm &amp; ASP.NET Application Web Farm services are based on Heat,
+                particularly on resource called AWS::ElasticLoadBalancing::LoadBalancer, that currently does not support
+                specification of any network related parameters. Without support for network configuration specification
+                LoadBalancer does not work in Murano over OpenStack deployments with Quantum configured
+                as "Per-tenant Routers with Private Networks".
+            </para>
+        </listitem>
     </itemizedlist>
 </chapter>
