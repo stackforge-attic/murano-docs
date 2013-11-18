@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Approved+1: Timur Nurlygayanov <tnurlygayanov@mirantis.com>
+Code-Review+2: Timur Nurlygayanov <tnurlygayanov@mirantis.com>
+Code-Review+2: Dmitry Teselkin <dteselkin@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Mon, 18 Nov 2013 12:19:22 +0000
+Reviewed-on: https://review.openstack.org/56856
+Project: stackforge/murano-docs
+Branch: refs/heads/release-0.3
