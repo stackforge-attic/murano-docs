@@ -67,7 +67,7 @@
             <link xlink:href="mailto:openstack-dev@lists.openstack.org">openstack-dev@lists.openstack.org</link>
         </para>
         <para>
-            We’re going to hold public weekly meetings on Mondays at 15:00 UTC on #openstack-meeting-alt irc channel.
+            We’re going to hold public weekly meetings on Tuesdays at 17:00 UTC on #openstack-meeting-alt irc channel.
         </para>
         <para>If you want to contribute either to docs or to code, simply send us change request via
             <link xlink:href="http://review.openstack.org">review.openstack.org</link>
