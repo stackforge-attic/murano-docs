@@ -48,11 +48,19 @@
 git clone http://github.com/stackforge/murano-deployment
 git checkout 0.3
         </screen>
-        <para>Templates for Heat stacks are located in <emphasis>data</emphasis> directory. Please, overwrite them with
-        content of <emphasis>quantum_support/conductor/data/templates/cf</emphasis> directory checked out above.</para>
+        <para>Templates for Heat stacks are located in <emphasis>data</emphasis> directory of Conductor. Please,
+            overwrite them with content of <emphasis>quantum_support/conductor/data/templates/cf</emphasis> directory
+            checked out above.</para>
         <screen>
 cp -r quantum_support/conductor/data/* /etc/murano/data/
         </screen>
+        <para>In Murano with enabled advanced networking features new service is available - MS SQL Cluster. To enable
+        MS SQL Cluster copy appropriate UI definition to the <emphasis>services</emphasis> directory of Dashboard:</para>
+        <screen>
+cp -r quantum_support/dashboard/services/* /etc/murano/services/
+        </screen>
+        <para>Please, note that folders <emphasis>/etc/murano/services/</emphasis> and <emphasis>/etc/murano/data/</emphasis>
+        may not have the same path at your Murano deployment</para>
     </section>
     <section>
         <title>Patching OpenStack</title>
