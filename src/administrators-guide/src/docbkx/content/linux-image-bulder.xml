@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2013 Mirantis, Inc.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+	  http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+
+<chapter xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+	 version="5.0">
+	<title>Building Linux Image</title>
+	<section>
+		<title>Install Required Packages</title>
+		<note>
+			<para>
+			Please check that hardware virtualization is supported and enabled in BIOS.
+			</para>
+		</note>
+		<para>
+			The following packages should be installed on any host which will be used to build Linux Image:
+			<itemizedlist>
+			<listitem>
+				<para>
+				ipxe-qemu
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				kvm-ipxe
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				qemu-kvm
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				munin-libvirt-plugins
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				python-libvirt
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				libvirt-bin
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				libvirt0
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				munin-libvirt-plugins
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				python-libvirt
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				virt-goodies
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				virt-manager
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				virt-top
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				virt-what
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				virtinst
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				python
+				</para>
+			</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+		On Ubuntu you could install them using the command below:
+		</para>
+		<screen>
+># apt-get install ipxe-qemu kvm-ipxe qemu-kvm virt-goodies \
+	   virtinst virt-manager libvirt0 libvirt-bin \
+	   munin-libvirt-plugins python python-libvirt \
+	   python-libxml2 python-minimal python-pycurl \
+	   python-pyorbit python-requests python-six \
+	   samba samba-common openssh-server virt-top virt-what
+		</screen>
+	</section>
+	<section>
+	<title>Build Linux Image</title>
+	<para>
+		<emphasis role="strong">Create a VM</emphasis>
+	</para>
+	<para>This section describes steps required to build an image of Linux Virtual Machine
+			which could be used with Murano. There are two possible ways to create it - from
+			CLI or using GUI tools. We describe both in this section.
+	</para>
+	<note>
+		<para>
+		Run all commands as root.
+		</para>
+	</note>
+	<para>
+		<emphasis role="strong">Way 1: Using CLI Tools</emphasis>
+	</para>
+	<para>
+		This section describes the required step to launch a VM using CLI tools only.
+	</para>
+		<para>
+			<orderedlist>
+			<listitem>
+				<para>
+				Preallocate disk image
+				</para>
+				<screen>
+># qemu-img create -f qcow2 /var/lib/libvirt/images/cloud-linux.img 10G
+				</screen>
+			</listitem>
+			<listitem>
+				<para>
+				Start the VM
+				</para>
+				<screen>
+># virt-install --connect qemu:///system --hvm --name cloud-linux \
+  --ram 2048 --vcpus 2 --cdrom /PATH_TO_YOUR_LINUX.ISO \
+  --disk path=/var/lib/libvirt/images/cloud-linux.img, \
+  format=qcow2,bus=virtio,cache=none \
+  --network network=default,model=virtio \
+  --memballoon model=virtio --vnc --os-type=linux \
+  --accelerate --noapic --keymap=en-us --video=cirrus --force
+				</screen>
+			</listitem>
+			</orderedlist>
+		</para>
+	<para>
+		<emphasis role="strong">Way 2: Using virt-manager UI</emphasis>
+	</para>
+	<para>
+		A VM also could be lauched via GUI tools like virt-manager.
+	</para>
+	<para>
+		<orderedlist>
+		<listitem>
+			<para>Launch <emphasis role="italic">virt-manager</emphasis> from shell
+			as root </para>
+		</listitem>
+		<listitem>
+			<para>
+			Set a name for VM and select Local install media
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			Add one cdrom and attach your linux ISO image to it
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			Select OS type <emphasis role="bold">Linux</emphasis> and it's
+			version <emphasis role="bold">choose yours</emphasis>
+		</para>
+		</listitem>
+		<listitem>
+			<para>
+			Set CPU and RAM amount
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			Deselect option <emphasis role="bold">Enable storage for this
+			virtual machine</emphasis>
+		</para>
+		</listitem>
+		<listitem>
+			<para>
+			Select option <emphasis role="bold">Customize configuration before
+			install</emphasis>
+		</para>
+		</listitem>
+		<listitem>
+			<para>
+			Add (or create new) HDD image with Disk bus <emphasis role="bold">VirtIO</emphasis> and storage format <emphasis role="bold">QCOW2</emphasis>
+			</para>
+		</listitem>
+		<listitem>
+			<para>Set network device model <emphasis role="bold">VirtIO</emphasis>
+		</para>
+		</listitem>
+		<listitem>
+			<para>Start installation process and open guest vm screen through
+			<emphasis role="bold">Console</emphasis> button
+			</para>
+		</listitem>
+		</orderedlist>
+	</para>
+	</section>
+	<section>
+	<title>Guest VM Linux OS preparation</title>
+	<para>
+		<emphasis role="strong">Ubuntu 12.04 LTS x86_64</emphasis>
+	</para>
+	<screen>
+># for action in update upgrade dist-upgrade;do apt-get -y $action;done
+># apt-get install -y git unzip make cmake gcc python-dev python-pip openssh-server sudo
+	</screen>
+	<para>
+		<emphasis role="strong">CentOS 6.4 x86_64</emphasis>
+	</para>
+	<screen>
+># rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+># for action in update upgrade;do yum -y $action; done
+># yum install -y git unzip make cmake gcc python-devel python-pip openssh-server openssh-clients sudo
+	</screen>
+	<para>
+		<emphasis role="strong">murano-agent installation steps</emphasis>
+	</para>
+	<screen>
+># mkdir -p /opt/git
+># cd /opt/git
+># git clone https://github.com/stackforge/murano-agent.git
+># cd murano-agent/python-agent
+># git checkout release-0.3
+># chmod a+x setup*.sh
+># ./setup.sh install
+or
+># ./setup-centos.sh install
+	</screen>
+	<para>
+		<emphasis role="strong">cloud-init installation steps</emphasis>
+		<itemizedlist>
+		<listitem>
+			<para>
+			<emphasis role="bold">Ubuntu</emphasis>
+			</para>
+			<screen>
+># apt-get install -y cloud-init cloud-initramfs-growroot
+			</screen>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="bold">CentOS</emphasis>
+			</para>
+			<screen>
+># yum install -y cloud-init
+			</screen>
+			<note>
+			<para>
+				<emphasis role="bold">Ubuntu only</emphasis>
+			</para>
+			<screen>
+># dpkg-reconfigure cloud-init
+			</screen>
+			<para>
+				Mark <emphasis role="bold">EC2</emphasis> data source support, save and exit or add manualy <emphasis role="bold">Ec2</emphasis> to the datasource_list variable in the /etc/cloud/cloud.cfg.d/90_dfkg.cfg
+			</para>
+			</note>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="strong">Minimal cloud-init configuration options</emphasis>
+			</para>
+			<screen>
+># vi /etc/cloud/cloud.cfg:
+	user: ec2-user
+	disable_root: 1
+	preserve_hostname: False
+			</screen>
+		</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		<emphasis role="strong">Security setup</emphasis>
+	</para>
+	<para>
+		Create user and make it able to run commands through sudo without password prompt.
+		<itemizedlist>
+		<listitem>
+			<para>
+			<emphasis role="strong">Ubuntu</emphasis>
+			</para>
+			<screen>
+># useradd -m -G sudo -s /bin/bash ec2-user
+># passwd ec2-user
+			</screen>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="strong">CentOS</emphasis>
+			</para>
+			<screen>
+># useradd -m -G wheel -s /bin/bash ec2-user
+># passwd ec2-user
+			</screen>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="strong">Sudo</emphasis>
+			</para>
+			<screen>
+># echo "ec2-user   ALL=(ALL)  NOPASSWD: ALL" > /etc/sudoers.d/ec2-user
+># chmod 440 /etc/sudoers.d/ec2-user
+			</screen>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="strong">Disable SSH password-based logins in the /etc/ssh/sshd_config.</emphasis>
+			</para>
+			<screen>
+...
+GSSAPIAuthentication no
+PasswordAuthentication no
+PermitRootLogin no
+...
+			</screen>
+		</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		<emphasis role="strong">Network handling</emphasis>
+		<itemizedlist>
+		<listitem>
+			<para>
+			<emphasis role="strong">Ubuntu</emphasis>
+			</para>
+			<screen>
+># rm -rf /etc/udev/rules.d/70-persistent-net.rules
+			</screen>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="strong">CentOS</emphasis>
+			Remove or comment out HWADDR and UUID in /etc/sysconfig/network-scripts/ifcfg-eth*
+			</para>
+			<screen>
+># rm -rf /etc/udev/rules.d/70-persistent-net.rules
+			</screen>
+		</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		<emphasis role="strong">Shutdown VM</emphasis>
+	</para>
+	<formalpara>
+		<title>Convert the image from RAW to QCOW2 format if you made it as RAW</title>
+		<para>
+		The image must be converted from RAW format to QCOW2 before being imorted into Glance.
+		</para>
+	</formalpara>
+	<para>
+		<screen>
+># qemu-img convert -O qcow2 /var/lib/libvirt/images/cloud-linux.img \
+/var/lib/libvirt/images/cloud-linux.img.qcow2
+		</screen>
+	</para>
+	</section>
+	<section>
+	<title>Upload Image Into Glance</title>
+	<para>
+		Services deployed by Murano require specially prepared images.
+		After images are created they should be registered in Openstack Glance - image operation service.
+	</para>
+	<screen>
+># glance image-create --disk-format=qcow2 --container-format=bare --is-public=true --file=cloud-linux.img --name=cloud-linux
+	</screen>
+	<note>
+		<para>Image should be marked with an appropriate type. That could be done through the Horizon UI.
+		Navigate to Project -&gt; Environments -&gt; Marked Images -&gt; Mark Image and fill up form:
+		<itemizedlist>
+		<listitem>
+			<para>
+			<emphasis role="bold">Image</emphasis> - cloud-linux
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="bold">Title</emphasis> - My Cloud-ready Linux
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			<emphasis role="bold">Type</emphasis> - Generic Linux
+			</para>
+		</listitem>
+		</itemizedlist>
+		</para>
+	</note>
+	<para>
+		After these steps desired image can be chosen in Murano dashboard and used for services platform.
+	</para>
+	</section>
+</chapter>
