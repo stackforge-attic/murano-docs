@@ -1648,6 +1648,11 @@
                         </thead>
                         <tbody>
                             <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
                                 <entry>type</entry>
                                 <entry>string</entry>
                                 <entry>Service Type</entry>
@@ -1742,6 +1747,7 @@
             </para>
             <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
                 attributes specification.</para>
+            <para>Type: activeDirectory</para>
             <section>
                 <title>Request Object Specs</title>
                 <table frame="all">
@@ -1758,11 +1764,6 @@
                             </row>
                         </thead>
                         <tbody>
-                            <row>
-                                <entry>id</entry>
-                                <entry>string</entry>
-                                <entry>Unique ID</entry>
-                            </row>
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
@@ -1898,6 +1899,7 @@
             <para>This section describes API calls for managing Windows web-server software – IIS.</para>
             <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
                 attributes specification.</para>
+            <para>Type: webServer</para>
             <section>
                 <title>Request Object Specs</title>
                 <table frame="all">
@@ -1914,11 +1916,6 @@
                             </row>
                         </thead>
                         <tbody>
-                            <row>
-                                <entry>id</entry>
-                                <entry>string</entry>
-                                <entry>Unique ID</entry>
-                            </row>
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
@@ -2041,6 +2038,7 @@
             </para>
             <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
                 attributes specification.</para>
+            <para>Type: aspNetApp</para>
             <section>
                 <title>Request Object Specs</title>
                 <table frame="all">
@@ -2057,11 +2055,6 @@
                             </row>
                         </thead>
                         <tbody>
-                            <row>
-                                <entry>id</entry>
-                                <entry>string</entry>
-                                <entry>Unique ID</entry>
-                            </row>
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
@@ -2201,6 +2194,7 @@
             </para>
             <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
                 attributes specification.</para>
+            <para>Type: webServerFarm</para>
             <section>
                 <title>Request Object Specs</title>
                 <table frame="all">
@@ -2217,11 +2211,6 @@
                             </row>
                         </thead>
                         <tbody>
-                            <row>
-                                <entry>id</entry>
-                                <entry>string</entry>
-                                <entry>Unique ID</entry>
-                            </row>
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
@@ -2357,6 +2346,7 @@
             </para>
             <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
                 attributes specification.</para>
+            <para>Type: aspNetAppFarm</para>
             <section>
                 <title>Request Object Specs</title>
                 <table frame="all">
@@ -2373,11 +2363,6 @@
                             </row>
                         </thead>
                         <tbody>
-                            <row>
-                                <entry>id</entry>
-                                <entry>string</entry>
-                                <entry>Unique ID</entry>
-                            </row>
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
@@ -2526,6 +2511,7 @@
             <para>This section describes API calls for managing MS SQL Server Service.</para>
             <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
                 attributes specification.</para>
+            <para>Type: msSqlServer</para>
             <section>
                 <title>Request Object Specs</title>
                 <table frame="all">
@@ -2542,11 +2528,6 @@
                             </row>
                         </thead>
                         <tbody>
-                            <row>
-                                <entry>id</entry>
-                                <entry>string</entry>
-                                <entry>Unique ID</entry>
-                            </row>
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
@@ -2665,6 +2646,503 @@
                 </table>
                 <table frame="all">
                     <title>MS SQL Server Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>MS SQL Server Cluster Specs</title>
+            <para>This section describes API calls for managing MS SQL Server Cluster Service.</para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <para>Type: msSqlClusterServer</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>MS SQL Server Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>externalAD</entry>
+                                <entry>boolean</entry>
+                                <entry>Is Active Directory is configured by the System Administrator</entry>
+                            </row>
+                            <row>
+                                <entry>domainAdminUserName</entry>
+                                <entry>string</entry>
+                                <entry>Username for Active Directory user with admin role, if Active Directory is configured by the System Administrator</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>mixedModeAuth</entry>
+                                <entry>bool</entry>
+                                <entry>Use LDAP to access SQL Server</entry>
+                            </row>
+                            <row>
+                                <entry>clusterIp</entry>
+                                <entry>string</entry>
+                                <entry>A valid IPv4 fixed IP</entry>
+                            </row>
+                            <row>
+                                <entry>clusterName</entry>
+                                <entry>string</entry>
+                                <entry>Service name for new SQL Cluster service</entry>
+                            </row>
+                            <row>
+                                <entry>agGroupName</entry>
+                                <entry>string</entry>
+                                <entry>Availability Group Name</entry>
+                            </row>
+                            <row>
+                                <entry>agListenerName</entry>
+                                <entry>string</entry>
+                                <entry>FQDN name of a new DNS entry for AG Listener endpoint</entry>
+                            </row>
+                            <row>
+                                <entry>agListenerIP</entry>
+                                <entry>string</entry>
+                                <entry>Availability Group Listener IP</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>MS SQL Server Cluster Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>MS SQL Server Cluster Unit object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>id</entry>
+                                <entry>string</entry>
+                                <entry>Unique ID</entry>
+                            </row>
+                            <row>
+                                <entry>isMaster</entry>
+                                <entry>boolean</entry>
+                                <entry>Is this node master?</entry>
+                            </row>
+                            <row>
+                                <entry>isSync</entry>
+                                <entry>boolean</entry>
+                                <entry>Is this node in sync mode?</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>MS SQL Server Cluster Unit object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>User-friendly name</entry>
+                            </row>
+                            <row>
+                                <entry>adminPassword</entry>
+                                <entry>string</entry>
+                                <entry>Domain password</entry>
+                            </row>
+                            <row>
+                                <entry>externalAD</entry>
+                                <entry>boolean</entry>
+                                <entry>Is Active Directory is configured by the System Administrator</entry>
+                            </row>
+                            <row>
+                                <entry>domainAdminUserName</entry>
+                                <entry>string</entry>
+                                <entry>Username for Active Directory user with admin role, if Active Directory is configured by the System Administrator</entry>
+                            </row>
+                            <row>
+                                <entry>domainAdminPassword</entry>
+                                <entry>string</entry>
+                                <entry>Password for Active Directory user with admin role, if Active Directory is configured by the System Administrator</entry>
+                            </row>
+                            <row>
+                                <entry>domain</entry>
+                                <entry>string</entry>
+                                <entry>Domain name.
+                                    This attribute may be empty/null/omitted
+                                    if machine is not a domain member
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>mixedModeAuth</entry>
+                                <entry>bool</entry>
+                                <entry>Use LDAP to access SQL Server</entry>
+                            </row>
+                            <row>
+                                <entry>saPassword</entry>
+                                <entry>string</entry>
+                                <entry>SQL Server admin password</entry>
+                            </row>
+                            <row>
+                                <entry>clusterIp</entry>
+                                <entry>string</entry>
+                                <entry>A valid IPv4 fixed IP</entry>
+                            </row>
+                            <row>
+                                <entry>clusterName</entry>
+                                <entry>string</entry>
+                                <entry>Service name for new SQL Cluster service</entry>
+                            </row>
+                            <row>
+                                <entry>agGroupName</entry>
+                                <entry>string</entry>
+                                <entry>Availability Group Name</entry>
+                            </row>
+                            <row>
+                                <entry>agListenerName</entry>
+                                <entry>string</entry>
+                                <entry>FQDN name of a new DNS entry for AG Listener endpoint</entry>
+                            </row>
+                            <row>
+                                <entry>agListenerIP</entry>
+                                <entry>string</entry>
+                                <entry>Availability Group Listener IP</entry>
+                            </row>
+                            <row>
+                                <entry>sqlServicePassword</entry>
+                                <entry>string</entry>
+                                <entry>User password that will be created to manage cluster instances</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>SQL Server Cluster Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>MS SQL Server Cluster Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>isMaster</entry>
+                                <entry>boolean</entry>
+                                <entry>yes</entry>
+                                <entry>Is this node master?</entry>
+                            </row>
+                            <row>
+                                <entry>isSync</entry>
+                                <entry>boolean</entry>
+                                <entry>yes</entry>
+                                <entry>Is this node in sync mode?</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>Linux Apache Specs</title>
+            <para>This section describes objects specs for Active Directory service.
+            </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <para>Type: linuxApacheService</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>Linux Apache Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>deployApachePHP</entry>
+                                <entry>boolean</entry>
+                                <entry>Enable PHP support on installed service</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>Linux Apache Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Linux Apache Unit Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>Linux Apache Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>deployApachePHP</entry>
+                                <entry>boolean</entry>
+                                <entry>no</entry>
+                                <entry>Enable PHP support on installed service</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>Linux Apache Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Linux Apache Unit Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+        </section>
+        <section>
+            <title>Linux Telnet Specs</title>
+            <para>This section describes objects specs for Linux Telnet service.
+            </para>
+            <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
+                attributes specification.</para>
+            <para>Type: linuxTelnetService</para>
+            <section>
+                <title>Request Object Specs</title>
+                <table frame="all">
+                    <title>Linux Telnet Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>Linux Telnet Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Linux Telnet Unit Object</title>
+                    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                                <entry>-</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </section>
+            <section>
+                <title>Create Object Specs</title>
+                <table frame="all">
+                    <title>Linux Telnet Object</title>
+                    <tgroup cols="4" align="left" colsep="1" rowsep="1">
+                        <colspec colnum="1" colname="col1" colwidth="2*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1*"/>
+                        <colspec colnum="4" colname="col4" colwidth="4*"/>
+                        <thead>
+                            <row>
+                                <entry>Attribute</entry>
+                                <entry>Type</entry>
+                                <entry>Required</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>name</entry>
+                                <entry>string</entry>
+                                <entry>yes</entry>
+                                <entry>Domain name</entry>
+                            </row>
+                            <row>
+                                <entry>units</entry>
+                                <entry>object</entry>
+                                <entry>yes</entry>
+                                <entry>Linux Telnet Unit object</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <table frame="all">
+                    <title>Linux Telnet Unit Object</title>
                     <tgroup cols="4" align="left" colsep="1" rowsep="1">
                         <colspec colnum="1" colname="col1" colwidth="2*"/>
                         <colspec colnum="2" colname="col2" colwidth="1*"/>
