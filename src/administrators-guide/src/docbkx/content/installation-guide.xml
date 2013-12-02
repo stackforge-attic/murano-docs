@@ -63,7 +63,9 @@ ADMIN_PASSWORD='admin_pass'
 RABBITMQ_LOGIN='muranouser'
 RABBITMQ_PASSWORD='murano'
 RABBITMQ_VHOST='muranovhost'
+RABBITMQ_PORT=''
 #RABBITMQ_HOST=''
+#RABBITMQ_HOST_ALT
 BRANCH_NAME='master'
 SSL_ENABLED='false'
 SSL_CA_FILE=''
@@ -90,6 +92,10 @@ SSL_KEY_FILE=''
                     <listitem>
                         <para><emphasis role="bold">RABBITMQ_VHOST</emphasis> - vHost which will be used by Murano
                             components. Provides additional layer of isolation from other devboxes.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis role="bold">RABBITMQ_PORT</emphasis> - Port number for Murano components interconnection.
+                            It should be different from general rabbitMq port to provide SSL opportunity.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">RABBITMQ_HOST</emphasis> - (optional) IP address or hostname of
