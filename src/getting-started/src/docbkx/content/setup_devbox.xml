@@ -181,7 +181,8 @@ ADMIN_PASSWORD='***'
 RABBITMQ_LOGIN='muranouser'
 RABBITMQ_PASSWORD='murano'
 RABBITMQ_VHOST='muranovhost'
-BRANCH_NAME='release-0.2'
+RABBITMQ_PORT='****'
+BRANCH_NAME='release-0.3'
 
 SSL_ENABLED='false'
     </programlisting>
