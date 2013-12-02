@@ -1767,7 +1767,7 @@
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
-                                <entry>Domain name</entry>
+                                <entry>User-friendly name</entry>
                             </row>
                             <row>
                                 <entry>domain</entry>
@@ -1834,7 +1834,7 @@
                                 <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>yes</entry>
-                                <entry>Domain name</entry>
+                                <entry>User-friendly name</entry>
                             </row>
                             <row>
                                 <entry>adminPassword</entry>
@@ -2808,31 +2808,37 @@
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>User-friendly name</entry>
                             </row>
                             <row>
                                 <entry>adminPassword</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>Domain password</entry>
                             </row>
                             <row>
                                 <entry>externalAD</entry>
                                 <entry>boolean</entry>
+                                <entry>yes</entry>
                                 <entry>Is Active Directory is configured by the System Administrator</entry>
                             </row>
                             <row>
                                 <entry>domainAdminUserName</entry>
                                 <entry>string</entry>
+                                <entry>no</entry>
                                 <entry>Username for Active Directory user with admin role, if Active Directory is configured by the System Administrator</entry>
                             </row>
                             <row>
                                 <entry>domainAdminPassword</entry>
                                 <entry>string</entry>
+                                <entry>no</entry>
                                 <entry>Password for Active Directory user with admin role, if Active Directory is configured by the System Administrator</entry>
                             </row>
                             <row>
                                 <entry>domain</entry>
                                 <entry>string</entry>
+                                <entry>no</entry>
                                 <entry>Domain name.
                                     This attribute may be empty/null/omitted
                                     if machine is not a domain member
@@ -2841,46 +2847,55 @@
                             <row>
                                 <entry>mixedModeAuth</entry>
                                 <entry>bool</entry>
+                                <entry>yes</entry>
                                 <entry>Use LDAP to access SQL Server</entry>
                             </row>
                             <row>
                                 <entry>saPassword</entry>
                                 <entry>string</entry>
+                                <entry>no</entry>
                                 <entry>SQL Server admin password</entry>
                             </row>
                             <row>
                                 <entry>clusterIp</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>A valid IPv4 fixed IP</entry>
                             </row>
                             <row>
                                 <entry>clusterName</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>Service name for new SQL Cluster service</entry>
                             </row>
                             <row>
                                 <entry>agGroupName</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>Availability Group Name</entry>
                             </row>
                             <row>
                                 <entry>agListenerName</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>FQDN name of a new DNS entry for AG Listener endpoint</entry>
                             </row>
                             <row>
                                 <entry>agListenerIP</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>Availability Group Listener IP</entry>
                             </row>
                             <row>
                                 <entry>sqlServicePassword</entry>
                                 <entry>string</entry>
+                                <entry>yes</entry>
                                 <entry>User password that will be created to manage cluster instances</entry>
                             </row>
                             <row>
                                 <entry>units</entry>
                                 <entry>object</entry>
+                                <entry>yes</entry>
                                 <entry>SQL Server Cluster Unit object</entry>
                             </row>
                         </tbody>
@@ -2921,7 +2936,7 @@
         </section>
         <section>
             <title>Linux Apache Specs</title>
-            <para>This section describes objects specs for Active Directory service.
+            <para>This section describes objects specs for Linux Apache Service.
             </para>
             <para>Please, refer to <link linkend="shared-specs">Shared Attributes</link> article for shared/common
                 attributes specification.</para>
@@ -2945,7 +2960,7 @@
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
-                                <entry>Domain name</entry>
+                                <entry>User-friendly name</entry>
                             </row>
                             <row>
                                 <entry>deployApachePHP</entry>
@@ -3005,7 +3020,7 @@
                                 <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>yes</entry>
-                                <entry>Domain name</entry>
+                                <entry>User-friendly name</entry>
                             </row>
                             <row>
                                 <entry>deployApachePHP</entry>
@@ -3075,7 +3090,7 @@
                             <row>
                                 <entry>name</entry>
                                 <entry>string</entry>
-                                <entry>Domain name</entry>
+                                <entry>User-friendly name</entry>
                             </row>
                             <row>
                                 <entry>units</entry>
@@ -3130,7 +3145,7 @@
                                 <entry>name</entry>
                                 <entry>string</entry>
                                 <entry>yes</entry>
-                                <entry>Domain name</entry>
+                                <entry>User-friendly name</entry>
                             </row>
                             <row>
                                 <entry>units</entry>
