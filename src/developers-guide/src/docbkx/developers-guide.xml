@@ -37,7 +37,8 @@
     <xi:include href="./content/overview.xml" xlink:title="Overview" />
     <xi:include href="./content/installation-guide.xml" xlink:title="Installation Guide" />
     <xi:include href="./content/architecture.xml" xlink:title="Architecture" />
-    <xi:include href="./content/specification.xml" xlink:title="API Specification" />
+    <xi:include href="./content/api-specification.xml" xlink:title="API Specification" />
+    <xi:include href="./content/repository-specification.xml" xlink:title="Metadata API Specification" />
     <xi:include href="./content/workflows.xml" xlink:title="Workflows XML DSL" />
     <xi:include href="./content/knownissues.xml" xlink:title="Known Issues" />
     <chapter>

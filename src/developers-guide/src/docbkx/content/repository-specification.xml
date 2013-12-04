@@ -1,0 +1,1459 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License, 
+	Version 2.0 (the &quot;License&quot;); you may not use this file 
+	except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under 
+	the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
+	the License for the specific language governing permissions and 
+	limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="5.0" xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+	<title>Metadata-Repository API Specification</title>
+	<informaltable rules="all">
+		<thead>
+			<tr>
+				<td align="center" colspan="1">Revision Date</td>
+				<td align="center" colspan="4">Summary of Changes</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td align="center" colspan="1">February 2, 2013</td>
+				<td colspan="4">
+					<itemizedlist spacing="compact">
+						<listitem>
+							<para>Initial</para>
+						</listitem>
+					</itemizedlist>
+				</td>
+			</tr>
+		</tbody>
+	</informaltable>
+	<section>
+		<title>Introduction</title>
+		<para>Murano Metadata Repository is used to operate (store, display, 
+		group and use for deployment) the metadata objects. It is the 
+		simplest possible storage for metadata objects, without any 
+		significant modifications in the existing Murano components.</para>
+		<glossary>
+			<glossentry>
+				<glossterm>Metadata object type</glossterm>
+				<glossdef>
+					<para>
+						Name of supported metadata objects. For now there are 6 of them:
+						<itemizedlist>
+							<listitem>
+								<para>Service Manifest - <emphasis>manifests</emphasis></para>
+							</listitem>
+							<listitem>
+								<para>Workflow - <emphasis>workflow</emphasis></para>
+							</listitem>
+							<listitem>
+								<para>Heat templates - <emphasis>heat</emphasis></para>
+							</listitem>
+							<listitem>
+								<para>Agent templates - <emphasis>agent</emphasis></para>
+							</listitem>
+							<listitem>
+								<para>Scripts - <emphasis>scripts</emphasis></para>
+							</listitem>
+							<listitem>
+								<para>UI definitions - <emphasis>ui</emphasis></para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>Service Manifest</glossterm>
+				<glossdef>
+					<para>Defines basic properties of the services. It binds together 
+					metadata objects by defining the names of the files required for a 
+					given service. The manifest should be defined as a yaml 
+					file.</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>Workflow</glossterm>
+				<glossdef>
+					<para>Definition of workflow rules and actions needed to deploy a 
+					service</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>Heat templates</glossterm>
+				<glossdef>
+					<para>A parametrized Heat template</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>Agent templates</glossterm>
+				<glossdef>
+					<para>A template for Agent execution plan (contains script imports 
+					and commands to execute)</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>Scripts</glossterm>
+				<glossdef>
+					<para>A script which is referenced in execution plan and is 
+					executed on the Agent. Conductor loads the content of this file, 
+					base-64 encodes it and injects it into the execution plan</para>
+				</glossdef>
+			</glossentry>
+			<glossentry>
+				<glossterm>UI definitions</glossterm>
+				<glossdef>
+					<para>A definition of the dynamic User Interface for service 
+					configuration in the Dashboard.</para>
+				</glossdef>
+			</glossentry>
+		</glossary>
+		<para><emphasis role="bold">Return codes and errors</emphasis></para>
+		<para>All REST API calls return the natural HTTP response codes for 
+		the operations, e.g. a successful GET returns a HTTP 200, a 
+		successful PUT returns a HTTP 201, a GET for a non-existent entity 
+		returns HTTP 404, unauthorized operations return HTTP 401 or HTTP 
+		403, internal errors return HTTP 500.</para>
+		<para><emphasis role="bold">Authentication</emphasis></para>
+		<para>All requests include a Keystone authentication token header 
+		(X-Auth-Token). Clients must authenticate with Keystone before 
+		interacting with the Murano Repository Service.</para>
+	</section>
+	<section>
+		<title>v1</title>
+		<para>This chapter defines all available api calls for v1 version. 
+		All definitions are listed without version prefix. Just add 
+		&quot;v1&quot; to the beginning of any call. Example: 
+		v1/client/ui</para>
+		<section>
+			<title>Client API</title>
+			<para>This section describes API calls for Metadata Repository 
+			clients. </para>
+			<section>
+				<title>Get archive for a specified client</title>
+				<para><emphasis role="bold">Call</emphasis></para>
+				<table frame="all">
+					<title>Get archive for a specified client</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="3*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>GET</entry>
+								<entry>/client/&lt;client_type&gt;</entry>
+								<entry>Returns archive with all metadata objects for specified 
+								client for all active services</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>client_type</entry>
+								<entry>One of supported Murano Repository client: ui - Murano 
+								Dashboard; conductor - Murano Conductor</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>200</entry>
+								<entry>Achive with metadata objects successfully composed and 
+								sent</entry>
+							</row>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>Client_type is not supported</entry>
+							</row>
+							<row>
+								<entry>304</entry>
+								<entry>Returns empty body if the hash matches the hashsum of 
+								current version of the metadata objects archive</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>This call returns an array of bytes represents tar.gz 
+				archive</para>
+			</section>
+			<section>
+				<title>Download the service definition</title>
+				<table frame="all">
+				<title>Download the service definition</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>GET</entry>
+								<entry>/client/services/&lt;full_service_name&gt;</entry>
+								<entry>Returns a tar.gz archive containing service definition 
+								along with all referenced metadata objects, directory structure 
+								of metadata objects is preserved</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>full_service_name</entry>
+								<entry>Identifies the type service (corresponds to 
+								full_service_name in manifest)</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>Service with specified full_service_name does not 
+								exist(there is no manifest file for this service)</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>This call returns an array of bytes represents tar.gz archive 
+				with all files required for given service</para>
+			</section>
+		</section>
+		<section>
+			<title>Admin API</title>
+			<section>
+				<title>List Metadata Objects</title>
+				<table frame="all">
+				<title>List Metadata Objects</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>GET</entry>
+								<entry>/admin/&lt;object_type&gt;/&gt;path&gt;</entry>
+								<entry>Returns a json-array containing the filenames of the 
+								metadata objects of a given type in a given subdirectory. 
+								Includes all subdirectories and their content</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>object_type</entry>
+								<entry>One of supported Murano Repository objects: workflow, 
+								scripts, ui, agent, heat, manifests</entry>
+								<entry>true</entry>
+							</row>
+							<row>
+								<entry>path</entry>
+								<entry>May define a directory (which is present under the root 
+								directory of the appropriate type of metadata). If specified, 
+								the output will include only files and subdirectories of this 
+								directory (the path will be relative to it).</entry>
+								<entry>false</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>Metadata object type or directory specified in path 
+								parameter are not exist</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>This call returns list all files for specified object type 
+				and path</para>
+				<programlisting>
+{
+    &quot;ui&quot;: [
+        &quot;MsSqlClusterServer.yaml&quot;,
+        &quot;AspNetAppFarm.yaml&quot;,
+        &quot;LinuxApache.yaml&quot;,
+        &quot;WebServerFarm.yaml&quot;,
+        &quot;Demo.yaml&quot;,
+        &quot;WebServer.yaml&quot;,
+        &quot;ActiveDirectory.yaml&quot;,
+        &quot;MsSqlServer.yaml&quot;,
+        &quot;AspNetApp.yaml&quot;,
+        &quot;LinuxTelnet.yaml&quot;
+    ]
+}
+                </programlisting>
+			</section>
+			<section>
+				<title>Get Metadata Object</title>
+				<table frame="all">
+				<title>Get Metadata Object</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>GET</entry>
+								<entry>/admin/&lt;object_type&gt;/&gt;file_name&gt;</entry>
+								<entry>Returns a file containing specified metadata 
+								object.</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>object_type</entry>
+								<entry>One of supported Murano Repository objects: workflow, 
+								scripts, ui, agent, heat, manifests</entry>
+								<entry>true</entry>
+							</row>
+							<row>
+								<entry>file_name</entry>
+								<entry>Defines a filename of the file to be downloaded. Should 
+								be relative to the root folder of the given type</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="9*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>Metadata object type or directory specified in path 
+								parameter are not exist</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>This call returns an array of bytes represents a file</para>
+			</section>
+			<section>
+				<title>Upload a metadata object</title>
+				<table frame="all">
+				<title>Upload a metadata object</title>
+					<tgroup align="left" cols="4" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="2*"/>
+						<colspec colname="col4" colnum="4" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Content-Type</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>POST</entry>
+								<entry>/admin/&lt;object_type&gt;/&gt;path&gt;</entry>
+								<entry>multipart/form-data</entry>
+								<entry>Submits a new metadata file of a given type. Attribute 
+								&quot;file&quot; that points to the uploading file should be in 
+								request.FILES section</entry>
+							</row>
+							<row>
+								<entry>POST</entry>
+								<entry>
+								/admin/&lt;object_type&gt;/&gt;path&gt;?filename=test.yaml</entry>
+								<entry>application/octet-stream</entry>
+								<entry>Submits a new metadata file of a given type. Filename 
+								parameter is required</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>object_type</entry>
+								<entry>identifies the type of the new metadata object. May be 
+								one of the following: workflow, scripts, ui, agent, heat, 
+								manifests</entry>
+								<entry>true</entry>
+							</row>
+							<row>
+								<entry>path</entry>
+								<entry>May define a directory (which is present under the root 
+								directory of the appropriate type of metadata). If specified, 
+								the file will be placed into that dir. If omitted, the file 
+								will be placed into the root directory of the given metadata 
+								type. This parameter may not be defined for files of type 
+								“manifests”</entry>
+								<entry>false</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="9*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The object_type is unknown or the path is set to an 
+								non-existing directory</entry>
+							</row>
+							<row>
+								<entry>400</entry>
+								<entry>The is no parameter &apos;file&apos; in 
+								request.FILES(for multipart/form-data Content type) or there is 
+								no filename parameter in URL(for 
+								application/octet-stream)</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>File will be stored on Metadata Repository Server in a 
+				directory corresponds to given object type or in it&apos;s nested 
+				directory</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Create directory</title>
+				<table frame="all">
+				<title>Create directory</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>PUT</entry>
+								<entry>
+								/admin/&lt;object_type&gt;/&gt;full_directory_name&gt;</entry>
+								<entry>Creates a new directory in the given path</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>object_type</entry>
+								<entry>Identifies the type of the new metadata object. May be 
+								one of the following: workflow, scripts, ui, agent, 
+								heat.</entry>
+								<entry>true</entry>
+							</row>
+							<row>
+								<entry>full_directory_name</entry>
+								<entry>Defines a name of a new directory. If any components of 
+								the path are missing, they will be created. If the directory 
+								already exists, nothing will happen.</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="9*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The object_type is unknown</entry>
+							</row>
+							<row>
+								<entry>403</entry>
+								<entry>The object specified by full_path_to_object is directory 
+								and it is not empty or object_type is set to 
+								&quot;manifest&quot;</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Delete metadata object or directory</title>
+				<table frame="all">
+				<title>Delete metadata object or directory</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>DELETE</entry>
+								<entry>
+								/admin/&lt;object_type&gt;/&lt;full_path_to_object&gt;</entry>
+								<entry>Deletes a metadata object or a directory. Directory 
+								should be empty to be deleted</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>object_type</entry>
+								<entry>Identifies the type of the new metadata object. May be 
+								one of the following: workflow, scripts, ui, agent, heat, 
+								manifests.” typed cannot be specified, as subdirectories for 
+								the service manifests cannot be created</entry>
+								<entry>true</entry>
+							</row>
+							<row>
+								<entry>full_path_to_object</entry>
+								<entry>Specifies the full path a file or a directory .</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="9*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The object_type is unknown or the full_path_to_object is 
+								set to an non-existing directory or object</entry>
+							</row>
+							<row>
+								<entry>403</entry>
+								<entry>The object specified by full_path_to_object is a not 
+								empty directory</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>File or directory with the given name permanently deletes 
+				from Murano Metadata Repository Server</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>List all the services</title>
+				<table frame="all">
+				<title>List all the services</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>GET</entry>
+								<entry>/admin/services</entry>
+								<entry>Returns a json-array containing all the info (version, 
+								display name, author, etc) about each service except their 
+								references to other metadata objects</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{
+    &quot;services&quot;: [
+        {
+            &quot;author&quot;: &quot;Mirantis Inc.&quot;,
+            &quot;description&quot;: &quot;&lt;strong&gt; Demo Service &lt;/strong&gt;
+                            shows how Murano is working.&quot;,
+            &quot;enabled&quot;: true,
+            &quot;full_service_name&quot;: &quot;demoService&quot;,
+            &quot;service_display_name&quot;: &quot;Demo Service&quot;,
+            &quot;service_version&quot;: &quot;&quot;,
+            &quot;valid&quot;: true,
+            &quot;version&quot;: &quot;0.1&quot;
+        },
+        {
+            &quot;author&quot;: &quot;Mirantis Inc.&quot;,
+            &quot;description&quot;: &quot;&lt;strong&gt; The  Internet Information Service &lt;/strong&gt;
+                           sets up an IIS server and joins it into an existing domain&quot;,
+            &quot;enabled&quot;: true,
+            &quot;full_service_name&quot;: &quot;webServer&quot;,
+            &quot;service_display_name&quot;: &quot;Internet Information Services&quot;,
+            &quot;service_version&quot;: 1,
+            &quot;valid&quot;: true,
+            &quot;version&quot;: 0.1
+        }
+   ]
+}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>List metadata objects of a given service</title>
+				<table frame="all">
+				<title>List metadata objects of a given service</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>GET</entry>
+								<entry>/admin/services/&lt;full_service_name&gt;</entry>
+								<entry>Returns a json-dictionary containing the filenames of 
+								the metadata objects referenced by a given service. Filenames 
+								include all parent directories, all objects belonging to a 
+								certain %metadata_type% are grouped into an array value for of 
+								a %metadata_type% key.</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>full_service_name</entry>
+								<entry>Identifies the type service (corresponds to 
+								full_service_name in manifest)</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="9*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The full_service_name is unknown</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					This call returns a json:
+					<programlisting>
+{
+    &quot;agent&quot;: [
+        &quot;Demo.template&quot;
+    ],
+    &quot;heat&quot;: [
+        &quot;Demo.template&quot;,
+        &quot;RouterInterface.template&quot;,
+        &quot;Network.template&quot;,
+        &quot;NNSecurity.template&quot;,
+        &quot;Param.template&quot;,
+        &quot;Subnet.template&quot;,
+        &quot;InstancePortWSubnet.template&quot;,
+        &quot;InstancePort.template&quot;
+    ],
+    &quot;scripts&quot;: [],
+    &quot;ui&quot;: [
+        &quot;Demo.yaml&quot;
+    ],
+    &quot;workflows&quot;: [
+        &quot;Networking.xml&quot;,
+        &quot;Common.xml&quot;,
+        &quot;Demo.xml&quot;
+    ]
+}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>List meta information of a given service</title>
+				<table frame="all">
+				<title>List meta information of a given service</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>GET</entry>
+								<entry>/admin/services/&lt;full_service_name&gt;/info</entry>
+								<entry>Returns a json-dictionary containing information of a 
+								given service</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>full_service_name</entry>
+								<entry>Identifies the type service (corresponds to 
+								full_service_name in manifest)</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="9*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The full_service_name is unknown</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					This call returns a json:
+					<programlisting>
+{
+    &quot;author&quot;: &quot;Mirantis Inc.&quot;,
+    &quot;description&quot;: &quot;Demo Service shows how Murano is working.&quot;,
+    &quot;enabled&quot;: true,
+    &quot;full_service_name&quot;: &quot;demoService&quot;,
+    &quot;service_display_name&quot;: &quot;Demo Service&quot;,
+    &quot;service_version&quot;: &quot;&quot;,
+    &quot;version&quot;: &quot;0.1&quot;
+}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Switch service parameter: enabled/disabled</title>
+				<table frame="all">
+				<title>Switch service parameter: enabled/disabled</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>POST</entry>
+								<entry>
+								/admin/services/&lt;full_service_name&gt;/toggle_enabled</entry>
+								<entry>Toggle current state of &apos;Enabled&apos; parameter in 
+								service manifest file</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>full_service_name</entry>
+								<entry>Identifies the type service (corresponds to 
+								full_service_name in manifest)</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The full_service_name is unknown</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Upload the complete service definition</title>
+				<table frame="all">
+				<title>Upload the complete service definition</title>
+					<tgroup align="left" cols="4" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="3*"/>
+						<colspec colname="col3" colnum="3" colwidth="2*"/>
+						<colspec colname="col4" colnum="4" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Content-Type</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>POST</entry>
+								<entry>/admin/services</entry>
+								<entry>application/octet-stream</entry>
+								<entry>Uploads a tar.gz archive containing service definition 
+								to be added to catalog along with the referenced metadata 
+								objects. Metadata objects could be located in nested 
+								directories, the directory structure will be preserved on 
+								server-side</entry>
+							</row>
+							<row>
+								<entry>POST</entry>
+								<entry>/admin/services</entry>
+								<entry>multipart/form-data</entry>
+								<entry>Uploads a tar.gz archive containing service definition 
+								to be added to catalog along with the referenced metadata 
+								objects. Attribute &quot;file&quot; that points to the 
+								uploading file should be in request.FILES section</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>full_service_name</entry>
+								<entry>Identifies the type service (corresponds to 
+								full_service_name in manifest)</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The full_service_name is unknown</entry>
+							</row>
+							<row>
+								<entry>400</entry>
+								<entry>Uploading file is not tar.gz or archive is invalid 
+								(archive structure not correspond to defined in config)</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>All files from archive are copied to corresponds location in 
+				Metadata Service</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Create or modify service definition</title>
+				<table frame="all">
+					<title>Create or modify service definition</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="3*"/>
+						<colspec colname="col3" colnum="3" colwidth="3*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>PUT</entry>
+								<entry>/admin/services/&lt;full_service_name&gt;</entry>
+								<entry>Create or modify manifest file. Request data should be a 
+								json object If full_service_name is not specified new manifest 
+								file will be created. Otherwise existent service definition 
+								(manifest file) will be rewritten with the given data.</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>full_service_name</entry>
+								<entry>Identifies the type service (corresponds to 
+								full_service_name in manifest)</entry>
+								<entry>false</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The full_service_name is unknown</entry>
+							</row>
+							<row>
+								<entry>400</entry>
+								<entry>If specified full_service_name is not equivalent to that 
+								parameter in json or there is no json data in request</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>All files from archive are copied to corresponds location in 
+				Metadata Service</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Delete service from repository</title>
+				<table frame="all">
+					<title>Delete service from repository</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>DELETE</entry>
+								<entry>/admin/services/&lt;full_service_name&gt;</entry>
+								<entry>Deletes a service from repository</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Parameters</title>
+					<tgroup align="left" cols="3">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col1" colnum="1" colwidth="6*"/>
+						<colspec colname="col3" colnum="3" colwidth="1*"/>
+						<thead>
+							<row>
+								<entry>Parameter</entry>
+								<entry>Description</entry>
+								<entry>Required</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>full_service_name</entry>
+								<entry>Identifies the type service (corresponds to 
+								full_service_name in manifest)</entry>
+								<entry>true</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<table frame="all">
+					<title>Error Response Codes</title>
+					<tgroup align="left" cols="2" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Code</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>401</entry>
+								<entry>User is not authorized to access this tenant 
+								resources</entry>
+							</row>
+							<row>
+								<entry>404</entry>
+								<entry>The full_service_name is unknown</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>All files from archive are copied to corresponds location in 
+				Metadata Service</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Reset cache</title>
+				<table frame="all">
+					<title>Reset cache</title>
+					<tgroup align="left" cols="3" colsep="1" rowsep="1">
+						<colspec colname="col1" colnum="1" colwidth="1*"/>
+						<colspec colname="col2" colnum="2" colwidth="4*"/>
+						<colspec colname="col3" colnum="3" colwidth="4*"/>
+						<thead>
+							<row>
+								<entry>Method</entry>
+								<entry>URI</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>POST</entry>
+								<entry>/admin/reset_caches</entry>
+								<entry>Clear server cache in case of manual data 
+								modification</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+				<para><emphasis role="bold">Payload</emphasis></para>
+				<para>None</para>
+				<para><emphasis role="bold">Returns</emphasis></para>
+				<para>
+					In case of successful result this call returns a json:
+					<programlisting>
+{&quot;result&quot;: &quot;success&quot;}
+                    </programlisting>
+				</para>
+			</section>
+		</section>
+	</section>
+</chapter>
