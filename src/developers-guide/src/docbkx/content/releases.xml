@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License, 
+	Version 2.0 (the &amp;quot;License&amp;quot;); you may not use this 
+	file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless 
+	required by applicable law or agreed to in writing, software 
+	distributed under the License is distributed on an &amp;quot;AS 
+	IS&amp;quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+	either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="5.0" xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+	<title>Release History</title>
+		<table  xml:id="releases" frame="all">
+		<title>Murano Releases</title>
+			<tgroup align="left" cols="3" colsep="1" rowsep="1">
+				<colspec colname="col1" colnum="1" colwidth="2*"/>
+				<colspec colname="col2" colnum="2" colwidth="3*"/>
+				<colspec colname="col3" colnum="3" colwidth="4*"/>
+				<thead>
+					<row>
+						<entry>Release</entry>
+						<entry>Tag</entry>
+						<entry>Date</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>Release-0.1</entry>
+						<entry>0.1</entry>
+						<entry>2013-05-30</entry>
+					</row>
+					<row>
+						<entry>Release-0.2</entry>
+						<entry>0.2</entry>
+						<entry>2013-09-05</entry>
+					</row>
+					<row>
+						<entry>Release-0.2.11</entry>
+						<entry>0.2.11</entry>
+						<entry>2013-10-01</entry>
+					</row>
+					<row>
+						<entry>Release-0.2.12</entry>
+						<entry>0.2.12</entry>
+						<entry>2013-11-18</entry>
+					</row>
+					<row>
+						<entry>Release-0.3</entry>
+						<entry>0.3</entry>
+						<entry>2013-11-25</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+</chapter>
