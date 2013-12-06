@@ -41,6 +41,7 @@
     <xi:include href="./content/repository-specification.xml" xlink:title="Metadata API Specification" />
     <xi:include href="./content/workflows.xml" xlink:title="Workflows XML DSL" />
     <xi:include href="./content/knownissues.xml" xlink:title="Known Issues" />
+    <xi:include href="./content/releases.xml" xlink:title="Release History" />
     <chapter>
         <title>How To Participate</title>
         <para>If you would like to ask some questions or make proposals, feel free to reach us on #murano irc channel at
