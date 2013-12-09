@@ -23,7 +23,7 @@
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
     <title>Workflows XML DSL</title>
-    <section>
+    <section xml:id="workflows">
         <title>XML DSL</title>
         <para>
             Workflows are written using XML markup language. This XML has no fixed structure but instead XML tags are translated into Python function calls. Thus such XML can be considered as a simplified programming language.
@@ -94,18 +94,27 @@ while that later form is more verbose it allows having dynamically evaluated val
             There are a number of functions in Murano Conductor that can be used in XML DSL:
             <itemizedlist>
                 <listitem>
+                <para>
                     <code><![CDATA[ <true/> ]]></code> - returns True
+                </para>
                 </listitem>
                 <listitem>
+                <para>
                     <code><![CDATA[ <false/> ]]></code> - False
+                </para>
                 </listitem>
                 <listitem>
+                <para>
                     <code><![CDATA[ <null/> ]]></code> - None
+                </para>
                 </listitem>
                 <listitem>
+                <para>
                     <code><![CDATA[ <text><foo/></text> ]]></code> - converts body to string <code>(str(foo()))</code>
+                </para>
                 </listitem>
                 <listitem>
+                <para>
                     list - form list (array) object -
 <programlisting><![CDATA[<list>
     <item>item1</item>
@@ -113,8 +122,10 @@ while that later form is more verbose it allows having dynamically evaluated val
     <item><true/></item>
 </list>
 ]]></programlisting> equals to <code>["item1", "item2", True]</code>
+                </para>
                 </listitem>
                 <listitem>
+                <para>
                     map - form dictionary (map) object
 <programlisting><![CDATA[
     <map>
@@ -128,6 +139,7 @@ For both list and map functions names of item nodes ("item" in examples above) i
     <set name="key"><null/></set>
 </map>
 ]]></programlisting>
+				</para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -177,7 +189,7 @@ For both list and map functions names of item nodes ("item" in examples above) i
                         <para>Send command to Murano Agent: <![CDATA[ <send-command> ]]></para>
                     </listitem>
                     <listitem>
-                        Report state to API: <![CDATA[ <report> ]]>
+                        <para>Report state to API: <![CDATA[ <report> ]]></para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -274,20 +286,26 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 <code><![CDATA[ <select/>  ]]></code> without path results in object pointed by current cursor position.
             </para>
             <para>
-                It also possible to select multiple values using JSONPath selection language (<ulink url="http://goessner.net/articles/JsonPath/"/>):
+                It also possible to select multiple values using JSONPath selection language: 
                 <programlisting><![CDATA[ <select-all path="/$.services[?(@.type == 'activeDirectory')].units[*]"/>  ]]></programlisting> - returns array of all units of all services of type 'activeDirectory'
             </para>
             <para>
                 JSONPath expressions by default select data relative to current cursor position and has no way for navigating up the Model tree. But Conductor has several improvements to JSONPath language:
                 <itemizedlist>
                     <listitem>
+                    	<para>
                         JSONPath expression may start with one or more colon characters to perform query relative to current cursor parent (grandparent etc.)
+                        </para>
                     </listitem>
                     <listitem>
+                    	<para>
                         JSONPath expression may also start with slash as in example above to query the whole Model from the tree root
+                    	</para>
                     </listitem>
                     <listitem>
+                    	<para>
                         Expressions may reference nonexistent Model attributes in the same way as <code><![CDATA[ <select/> ]]></code>function does. Such attributes considered to have None values
+                    	</para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -331,13 +349,19 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 Workflow consists of rules. Rule is a function with the following parameters:
                 <itemizedlist>
                     <listitem>
+                    <para>
                         <emphasis role="bold">match</emphasis> - JSONPath expression to be executed relative to current cursor position
+                    </para>
                     </listitem>
                     <listitem>
+                    <para>
                         <emphasis role="bold">desc</emphasis> - optional human-readable free-form rule description
+                    </para>
                     </listitem>
                     <listitem>
+                    <para>
                         <emphasis role="bold">id</emphasis> - optional rule ID (auto-generated if not provided)
+                    </para>
                     </listitem>
                 </itemizedlist>
                 for example
@@ -352,9 +376,15 @@ For both list and map functions names of item nodes ("item" in examples above) i
             <para>
                 The logic of rule is simple:
                 <orderedlist>
-                    <listitem>Execute given JSONPath expression</listitem>
-                    <listitem>For each of matched objects make current cursor position point to it and then execute function XML body</listitem>
-                    <listitem>If JSONPath hasn't matched any object execute <code><![CDATA[ <empty>...</empty> ]]></code> block if present</listitem>
+                    <listitem>
+                    	<para>Execute given JSONPath expression</para>
+                    </listitem>
+                    <listitem>
+                    	<para>For each of matched objects make current cursor position point to it and then execute function XML body</para>
+                    	</listitem>
+                    <listitem>
+                    	<para>If JSONPath hasn't matched any object execute <code><![CDATA[ <empty>...</empty> ]]></code> block if present</para>
+                   	</listitem>
                 </orderedlist>
             </para>
             <para>
@@ -388,80 +418,110 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 The following actions are available for workflow rules:
                 <itemizedlist>
                     <listitem>
-                        <emphasis role="bold">update-cf-stack</emphasis> - updates Heat stack by substituting values into Heat template and merging it into Heat stack definition. It has the following parameters:
+                    	<para>
+                        	<emphasis role="bold">update-cf-stack</emphasis> - updates Heat stack by substituting values into Heat template and merging it into Heat stack definition. It has the following parameters:
+                        </para>
                         <itemizedlist>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">template</emphasis> - Heat template filename without extension
+                            </para>
                             </listitem>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">error</emphasis> - function context variable to be populated with command error info in case of command failure
+                            </para>
                             </listitem>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">mappings</emphasis> - dictionary to be used for values substitution into template. All values in JSON template file in the form of "$myKey" are replaced with a value under key "myKey" in this parameter
+                            </para>
                             </listitem>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">arguments</emphasis> - optional dictionary of Heat template arguments ("Parameters" section of Heat templates)
+                            </para>
                             </listitem>
                         </itemizedlist>
                         <para>
                             update-cf-stack function also searches for 2 predefined tags in its body:
                             <itemizedlist>
                                 <listitem>
+                                <para>
                                     <emphasis role="bold">&lt;success&gt;</emphasis> - a block to be executed after successfull stack update
+                                </para>
                                 </listitem>
                                 <listitem>
+                                <para>
                                     <emphasis role="bold">&lt;failure&gt;</emphasis> - block that would be executed in case of function failure
+                                </para>
                                 </listitem>
                             </itemizedlist>
-                        </para>
-                        <para>Templates are located in data/cf directory</para>
+                    	Templates are located in data/cf directory</para>
                     </listitem>
                     <listitem>
+                    <para>
                         <emphasis role="bold">send-command</emphasis> - sends an execution plan to Murano Agent on specific VM. It has the following parameters:
+                        </para>
                         <itemizedlist>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">template</emphasis> - execution plan template filename without extension
+                            </para>
                             </listitem>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">error</emphasis> - function context variable to be populated with command error info in case of command failure
+                            </para>
                             </listitem>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">service</emphasis> - ID of a service that target units belongs to
+                            </para>
                             </listitem>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">unit</emphasis> - ID of target unit (VM)
+                            </para>
                             </listitem>
                             <listitem>
+                            <para>
                                 <emphasis role="bold">mappings</emphasis> - dictionary to be used for values substitution into template. All values in JSON template file in the form of "$myKey" are replaced with a value under key "myKey" in this parameter
+                            </para>
                             </listitem>
                         </itemizedlist>
                         <para>
                             send-command function also searches for 2 predefined tags in its body:
                             <itemizedlist>
                                 <listitem>
+                                <para>
                                     <emphasis role="bold">&lt;success&gt;</emphasis> - a block to be executed after successfull stack update
+                                </para>
                                 </listitem>
                                 <listitem>
+                                <para>
                                     <emphasis role="bold">&lt;failure&gt;</emphasis> - block that would be executed in case of function failure
+                                </para>
                                 </listitem>
                             </itemizedlist>
-                        </para>
-                        <para>Templates are located in data/agent directory</para>
+                        Templates are located in data/agent directory</para>
                     </listitem>
                     <listitem>
-                        <emphasis role="bold">report</emphasis> - sends status report back to REST API service. It has the following parameters:
+                    	<para>
+                        	<emphasis role="bold">report</emphasis> - sends status report back to REST API service. It has the following parameters:
+                        </para>
                         <itemizedlist>
                             <listitem>
-                                <emphasis role="bold">entity</emphasis> - entity type ("unit", "service", "environment")
+                                <para><emphasis role="bold">entity</emphasis> - entity type ("unit", "service", "environment")</para>
                             </listitem>
                             <listitem>
-                                <emphasis role="bold">level</emphasis> - log level
+                                <para><emphasis role="bold">level</emphasis> - log level</para>
                             </listitem>
                             <listitem>
-                                <emphasis role="bold">id</emphasis> - ID of unit/service/environment
+                                <para><emphasis role="bold">id</emphasis> - ID of unit/service/environment</para>
                             </listitem>
                             <listitem>
-                                <emphasis role="bold">text</emphasis> - reported status text
+                                <para><emphasis role="bold">text</emphasis> - reported status text</para>
                             </listitem>
                         </itemizedlist>
                     </listitem>
@@ -503,13 +563,19 @@ For both list and map functions names of item nodes ("item" in examples above) i
                 Execution plans is a JSON document that has 3 keys:
                 <itemizedlist>
                     <listitem>
+                    <para>
                         <emphasis role="bold">Commands</emphasis> array - list of functions to be executed. Each function has a "Name" property and "Arguments" dictionary which maps function argument names to parameter values.
+                    </para>
                     </listitem>
                     <listitem>
+                    <para>
                         <emphasis role="bold">Scripts</emphasis> - list of PowerShell script file names to be included into execution plans. The scripts contain function implementations that can be referenced in Command array.Script files need to be located in data/templates/agent/scripts directory.
+                    </para>
                     </listitem>
                     <listitem>
+                    <para>
                         <emphasis role="bold">RebootOnCompletion</emphasis> - 0 = do not reboot, 1 = reboot only upon successful plan execution, 2 = reboot always. Murano Agent send execution result after system reboot.
+                    </para>
                     </listitem>
                 </itemizedlist>
             </para>
