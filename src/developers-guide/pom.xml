@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mirantis.murano</groupId>
     <artifactId>developers-guide</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
     <packaging>jar</packaging>
     <name>Murano Developers Guide</name>
     <build>

@@ -1,82 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
- Copyright (c) 2013 Mirantis, Inc.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
- implied.
- See the License for the specific language governing permissions and
- limitations under the License.
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License, 
+	Version 2.0 (the &quot;License&quot;); you may not use this file 
+	except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under 
+	the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
+	the License for the specific language governing permissions and 
+	limitations under the License.
 -->
-<chapter xmlns="http://docbook.org/ns/docbook"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
-                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
-      version="5.0">
-    <title>Overview</title>
-    <para>Welcome to Murano Project.
-        Full information about Murano in openstack wiki
-         <link xlink:href="https://wiki.openstack.org/wiki/Murano"> page.</link>
-    </para>
-    <para>
-        Murano is intended to get opportunity for non-experienced
-        users to deploy reliable Windows-based environments with 1-Click.
-        Key goal is to provide UI and API which
-        allows to deploy and operate Windows environments on the "Windows
-        Services" abstraction level. The Service should be able to orchestrate
-        complex circular dependent cases in order to setup complete Windows
-        environments with many dependant services.
-    </para>
-    <section>
-        <title>Intended Audience</title>
-        <para>This guide is intended to individuals who want to contribute
-            to our
-            project.
-        </para>
-    </section>
-    <section>
-        <title>Document Change History</title>
-        <para>This version of the Murano Manual replaces and obsoletes all
-            previous versions. The
-            most recent changes are described in the table below:
-        </para>
-        <informaltable rules="all">
-            <thead>
-                <tr>
-                    <td align="center" colspan="1">Revision Date</td>
-                    <td align="center" colspan="4">Summary of Changes</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="1" align="center">April. 4, 2013</td>
-                    <td colspan="4">
-                        <itemizedlist spacing="compact">
-                            <listitem>
-                                <para>Initial document creation.</para>
-                            </listitem>
-                        </itemizedlist>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1" align="center">September. 4, 2013</td>
-                    <td colspan="4">
-                        <itemizedlist spacing="compact">
-                            <listitem>
-                                <para>update for Release-0.2</para>
-                            </listitem>
-                        </itemizedlist>
-                    </td>
-                </tr>
-            </tbody>
-        </informaltable>
-    </section>
+<chapter xmlns="http://docbook.org/ns/docbook" 
+		 xmlns:xlink="http://www.w3.org/1999/xlink" 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="5.0" 
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd   
+          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+          xml:id="overview">
+	<title>Overview</title>
+	<para>Welcome to Murano Project. Full information about Murano in 
+	<link xlink:href="https://wiki.openstack.org/wiki/Murano">Openstack wiki page</link>.</para>
+	<para>Murano Project introduces an application catalog, which allows 
+	application developers and cloud administrators to publish various 
+	cloud-ready applications in a browsable categorised catalog, which may 
+	be used by the cloud users (including the unexperienced ones) to 
+	pick-up the needed applications and services and composes the reliable 
+	environments out of them in a “push-the-button” manner. Key goal is to 
+	provide UI and API which allows to compose and deploy composite 
+	environments on the Application abstraction level and then manage 
+	their lifecycle</para>
+	<section>
+		<title>Intended Audience</title>
+		<para>This guide is intended to individuals who want to contribute to 
+		our project.</para>
+	</section>
+	<section>
+		<title>Document Change History</title>
+		<para>This version of the Murano Manual replaces and obsoletes all 
+		previous versions. The most recent changes are described in the table 
+		below:</para>
+		<informaltable rules="all">
+		<tgroup cols='2'>
+        <colspec colname="col1" colnum="1" colwidth="1*"/>
+        <colspec colname="col2" colnum="2" colwidth="1*"/>
+			<thead>
+				<row>
+				<entry>Revision Date</entry>
+				<entry>Summary of Changes</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry>
+						April. 4, 2013
+					</entry>
+					<entry>
+						<itemizedlist spacing="compact">
+							<listitem>
+								<para>Initial document creation</para>
+							</listitem>
+						</itemizedlist>
+					</entry>
+				</row>
+				<row>
+					<entry>
+						September. 4, 2013
+					</entry>
+					<entry>
+						<itemizedlist spacing="compact">
+							<listitem>
+								<para>Update for Release-0.2</para>
+							</listitem>
+						</itemizedlist>
+					</entry>
+				</row>
+				<row>
+					<entry>
+						December. 9, 2013
+					</entry>
+					<entry>
+						<itemizedlist spacing="compact">
+							<listitem>
+								<para>Update for Release-0.4</para>
+							</listitem>
+						</itemizedlist>
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+		</informaltable>
+	</section>
 </chapter>

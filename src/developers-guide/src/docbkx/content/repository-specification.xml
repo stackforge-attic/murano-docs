@@ -10,28 +10,36 @@
 	the License for the specific language governing permissions and 
 	limitations under the License.
 -->
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         version="5.0" xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+<chapter xmlns="http://docbook.org/ns/docbook" 
+		 xmlns:xlink="http://www.w3.org/1999/xlink" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+                                    http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+         version="5.0" >
 	<title>Metadata-Repository API Specification</title>
 	<informaltable rules="all">
+		<tgroup align="left" cols="2" colsep="1" rowsep="1">
+		<colspec colname="col1" colnum="1" colwidth="1*"/>
+		<colspec colname="col2" colnum="2" colwidth="4*"/>
 		<thead>
-			<tr>
-				<td align="center" colspan="1">Revision Date</td>
-				<td align="center" colspan="4">Summary of Changes</td>
-			</tr>
+			<row>
+				<entry>Revision Date</entry>
+				<entry>Summary of Changes</entry>
+			</row>
 		</thead>
 		<tbody>
-			<tr>
-				<td align="center" colspan="1">February 2, 2013</td>
-				<td colspan="4">
+			<row>
+				<entry>December, 9th, 2013.</entry>
+				<entry>
 					<itemizedlist spacing="compact">
 						<listitem>
 							<para>Initial</para>
 						</listitem>
 					</itemizedlist>
-				</td>
-			</tr>
+				</entry>
+			</row>
 		</tbody>
+		</tgroup>
 	</informaltable>
 	<section>
 		<title>Introduction</title>
@@ -113,6 +121,13 @@
 				</glossdef>
 			</glossentry>
 		</glossary>
+	</section>
+	<section>
+		<title>v1</title>
+		<para>This chapter defines all available api calls for v1 version. 
+		All definitions are listed without version prefix. Just add 
+		&quot;v1&quot; to the beginning of any call. Example: 
+		v1/client/ui</para>
 		<para><emphasis role="bold">Return codes and errors</emphasis></para>
 		<para>All REST API calls return the natural HTTP response codes for 
 		the operations, e.g. a successful GET returns a HTTP 200, a 
@@ -123,13 +138,6 @@
 		<para>All requests include a Keystone authentication token header 
 		(X-Auth-Token). Clients must authenticate with Keystone before 
 		interacting with the Murano Repository Service.</para>
-	</section>
-	<section>
-		<title>v1</title>
-		<para>This chapter defines all available api calls for v1 version. 
-		All definitions are listed without version prefix. Just add 
-		&quot;v1&quot; to the beginning of any call. Example: 
-		v1/client/ui</para>
 		<section>
 			<title>Client API</title>
 			<para>This section describes API calls for Metadata Repository 
