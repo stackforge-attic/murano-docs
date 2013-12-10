@@ -92,7 +92,7 @@
         </itemizedlist>
         <programlisting>
 ># cd murano-deployment/getting-started
-># git checkout -b release-0.2 origin/release-0.2
+># git checkout -b release-0.4 origin/release-0.4
         </programlisting>
         <itemizedlist>
             <listitem>
@@ -149,11 +149,11 @@ LAB_HOST='***.***.***.***'
         </programlisting>
         <itemizedlist>
             <listitem>
-                <para>Clone murano-deployment repository from branch release-0.2:</para>
+                <para>Clone murano-deployment repository from branch release-0.4:</para>
             </listitem>
         </itemizedlist>
         <programlisting>
-># git clone git://github.com/stackforge/murano-deployment.git -b release-0.2
+># git clone git://github.com/stackforge/murano-deployment.git -b release-0.4
         </programlisting>
         <itemizedlist>
             <listitem>
@@ -171,20 +171,35 @@ LAB_HOST='***.***.***.***'
             </listitem>
         </itemizedlist>
         <programlisting>
-LAB_HOST='***.***.***.***'
+LAB_HOST=''
 
-AUTH_URL="http://$LAB_HOST:5000/v2.0"
+ADMIN_USER=''
+ADMIN_PASSWORD=''
 
-ADMIN_USER='admin'
-ADMIN_PASSWORD='***'
+RABBITMQ_LOGIN=''
+RABBITMQ_PASSWORD=''
+RABBITMQ_VHOST=''
+RABBITMQ_PORT=''
 
-RABBITMQ_LOGIN='muranouser'
-RABBITMQ_PASSWORD='murano'
-RABBITMQ_VHOST='muranovhost'
-RABBITMQ_PORT='****'
-BRANCH_NAME='release-0.3'
+# Equals to LAB_HOST by default
+#RABBITMQ_HOST=''
+#RABBITMQ_HOST_ALT=''
 
+#FILE_SHARE_HOST=''
+
+BRANCH_NAME='master'
+
+# Only 'true' or 'false' values are allowed!
 SSL_ENABLED='false'
+SSL_CA_FILE=''
+SSL_CERT_FILE=''
+SSL_KEY_FILE=''
+
+#BRANCH_MURANO_API=''
+#BRANCH_MURANO_DASHBOARD=''
+#BRANCH_MURANO_CLIENT=''
+#BRANCH_MURANO_CONDUCTOR=''
+#BRANCH_MURANO_REPOSITORY=''
     </programlisting>
         <para>It's recommended to use separate vHost in <link linkend="Rabbit">RabbitMQ</link>.</para>
         <para>Then some additional system packages will be installed.</para>

@@ -472,17 +472,22 @@
         </section>
         <section xml:id="Keystone">
             <title>Keystone Configuration Notes</title>
-            <para>Service entry for murano-api and endpoint associated with it
+            <para>Service entry and endpoint associated with it for murano-api and murano-repository
                 could also be configured in the keystone. If there is no record
                 about murano-api in the keystone murano-dashboard would try to
                 reach murano-api service at localhost on the default murano-api
-                port 8082.
+                port 8082.(8084 in case of murano-repository)
             </para>
             <para>How to add service record into the keystone using python keystone
                 client:
             <programlisting>
 ># keystone service-create --name muranoapi --type murano \
                 --description "Murano-Api Service"
+            </programlisting>
+            And for murano-repository:
+                 <programlisting>
+># keystone service-create --name murano-repository --type murano-repository \
+                --description "Murano-Repository Service"
             </programlisting>
             This command returns UUID of the created service record, which
             should be used below.
