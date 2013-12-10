@@ -102,6 +102,17 @@
                         </itemizedlist>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="1" align="center">December. 9, 2013</td>
+                    <td colspan="3" align="center">Release-0.4</td>
+                    <td colspan="4">
+                        <itemizedlist>
+                            <listitem>
+                                <para>Update with Release-0.4 information</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
             </tbody>
         </informaltable>
     </section>
