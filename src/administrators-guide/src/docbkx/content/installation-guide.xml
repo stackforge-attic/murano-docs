@@ -108,7 +108,7 @@ SSL_KEY_FILE=''
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">RABBITMQ_PORT</emphasis> - Port number for Murano components interconnection.
-                            It should be different from general rabbitMq port to provide SSL opportunity.</para>
+                            It should be different from general RabbitMQ port to provide SSL opportunity.</para>
                     </listitem>
                     <listitem>
                         <para><emphasis role="bold">RABBITMQ_HOST</emphasis> - (optional) IP address or hostname of
@@ -655,8 +655,8 @@ initctl start murano-conductor
     </section>
     <section>
     <title>Murano Repository Service</title>
-    <para>Murano Repository provides access to metadata for Murano Conductor and Murano dashboard.
-    	  It also allows to managemetadata objects via API.</para>
+    <para>Murano Repository provides access to metadata for Murano Conductor and Murano Dashboard.
+    	  It also allows to manage metadata objects via API.</para>
     <para>This chapter describes the procedure of installation and configuration of Murano Repository.</para>
     <section>
         <title>Install</title>
@@ -735,10 +735,10 @@ cp murano-repository.conf.sample murano-repository.conf
                     <itemizedlist>
                         <listitem>
                             <para><emphasis>[DEFAULT]</emphasis> section sets up main server parameters: port and address. 
-                            Folder to store cache and logging parameters also defined in this section.
+                            Folder to store cache and logging parameters also defines in this section.
                             <itemizedlist>
                             	<listitem>
-                            		<para><emphasis>manifests</emphasis> parameter points out to directory with metadata objects: manifests should be on the first level. 
+                            		<para><emphasis>manifests</emphasis> parameter points out to directory with metadata objects: manifests should be on the first level.
                             		All other objects are kept in a separates folders. This folders are configured in the parameters described below:</para>
                             	</listitem>
                             	<listitem><para><emphasis>ui</emphasis> sets up directory name for keeping Murano dashboard ui definitions</para></listitem>
