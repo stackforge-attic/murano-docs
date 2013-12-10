@@ -129,10 +129,16 @@
             <para><emphasis role="bold">Murano Log Files</emphasis></para>
             <itemizedlist>
                 <listitem>
-                    <para>/var/log/murano-api.log</para>
+                    <para>/var/log/murano/murano-api.log</para>
                 </listitem>
                 <listitem>
-                    <para>/var/log/murano-conductor.log</para>
+                    <para>/var/log/murano/murano-conductor.log</para>
+                </listitem>
+                <listitem>
+                    <para>/var/log/murano/murano-dashboard.log</para>
+                </listitem>
+                <listitem>
+                    <para>/var/log/murano/murano-repository.log</para>
                 </listitem>
                 <listitem>
                     <para>/var/log/apache2/errors.log
@@ -142,7 +148,7 @@
                     <para>/var/log/httpd/errors.log</para>
                 </listitem>
             </itemizedlist>
-            <para><emphasis role="bold">Windows Log Files</emphasis></para>
+            <para><emphasis role="bold">Windows Log Files (on VM's)</emphasis></para>
             <itemizedlist>
                 <listitem>
                     <para>C:\Murano\PowerShell.log</para>
