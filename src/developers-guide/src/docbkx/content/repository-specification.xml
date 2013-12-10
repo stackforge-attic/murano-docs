@@ -1300,7 +1300,7 @@
 								<entry>full_service_name</entry>
 								<entry>Identifies the type service (corresponds to 
 								full_service_name in manifest)</entry>
-								<entry>false</entry>
+								<entry>true</entry>
 							</row>
 						</tbody>
 					</tgroup>
@@ -1323,10 +1323,6 @@
 								resources</entry>
 							</row>
 							<row>
-								<entry>404</entry>
-								<entry>The full_service_name is unknown</entry>
-							</row>
-							<row>
 								<entry>400</entry>
 								<entry>If specified full_service_name is not equivalent to that 
 								parameter in json or there is no json data in request</entry>
@@ -1335,8 +1331,22 @@
 					</tgroup>
 				</table>
 				<para><emphasis role="bold">Payload</emphasis></para>
-				<para>All files from archive are copied to corresponds location in 
+				<para>New manifest created in manifests directory.
 				Metadata Service</para>
+                <para><emphasis role="bold">Example</emphasis></para>
+                <para>Here are json that will create new service manifest in Metadata Repository
+                    (json for service update looks the same - all data will be overwritten with the new one).
+                        Note that service_display_name is a required parameter and full_service_name should correspond
+                    to<filename>full_service_name</filename> given in URL or skipped.
+                <programlisting>
+{
+  "full_service_name": "new_service",
+  "service_display_name" : "Test Service",
+  "version": "0.1"
+}
+                </programlisting>
+                    All other parameters will be set to default parameters.
+                </para>
 				<para><emphasis role="bold">Returns</emphasis></para>
 				<para>
 					In case of successful result this call returns a json:
@@ -1417,8 +1427,7 @@
 					</tgroup>
 				</table>
 				<para><emphasis role="bold">Payload</emphasis></para>
-				<para>All files from archive are copied to corresponds location in 
-				Metadata Service</para>
+                <para>Manifest for specified service deleted from </para>
 				<para><emphasis role="bold">Returns</emphasis></para>
 				<para>
 					In case of successful result this call returns a json:
