@@ -62,12 +62,12 @@ LAB_HOST=''
 ADMIN_USER=''
 ADMIN_PASSWORD=''
 
-RABBITMQ_LOGIN=''
-RABBITMQ_PASSWORD=''
-RABBITMQ_VHOST=''
-RABBITMQ_PORT=''
-#RABBITMQ_HOST=''
-#RABBITMQ_HOST_ALT=''
+RabbitMQ_LOGIN=''
+RabbitMQ_PASSWORD=''
+RabbitMQ_VHOST=''
+RabbitMQ_PORT=''
+#RabbitMQ_HOST=''
+#RabbitMQ_HOST_ALT=''
 
 #FILE_SHARE_HOST=''
 
@@ -97,28 +97,28 @@ SSL_KEY_FILE=''
                         <para><emphasis role="bold">ADMIN_PASSWORD</emphasis> - A  password for OpenStack admin user.</para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">RABBITMQ_USER</emphasis> - User to connect to RabbitMQ host.</para>
+                        <para><emphasis role="bold">RabbitMQ_USER</emphasis> - User to connect to RabbitMQ host.</para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">RABBITMQ_PASSWORD</emphasis> - Password for that user.</para>
+                        <para><emphasis role="bold">RabbitMQ_PASSWORD</emphasis> - Password for that user.</para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">RABBITMQ_VHOST</emphasis> - vHost which will be used by Murano
+                        <para><emphasis role="bold">RabbitMQ_VHOST</emphasis> - vHost which will be used by Murano
                             components. Provides additional layer of isolation from other devboxes.</para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">RABBITMQ_PORT</emphasis> - Port number for Murano components interconnection.
-                            It should be different from general rabbitMq port to provide SSL opportunity.</para>
+                        <para><emphasis role="bold">RabbitMQ_PORT</emphasis> - Port number for Murano components interconnection.
+                            It should be different from general RabbitMQ port to provide SSL opportunity.</para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">RABBITMQ_HOST</emphasis> - (optional) IP address or hostname of
+                        <para><emphasis role="bold">RabbitMQ_HOST</emphasis> - (optional) IP address or hostname of
                             the host where RabbitMQ is installed IF it is not the same host as LAB_HOST points to. 
                             This parameter can be skipped and in this case LAB_HOST will be used.</para>
                     </listitem>
                     <listitem>
-                        <para><emphasis role="bold">RABBITMQ_HOST_ALT</emphasis> - (optional) IP address or hostname of
+                        <para><emphasis role="bold">RabbitMQ_HOST_ALT</emphasis> - (optional) IP address or hostname of
                             the RabbitMQ host to connect from inside the instance. In some cases the
-                            addresses like LAB_HOST or RABBITMQ_HOST are inaccessible from instances, and they must use
+                            addresses like LAB_HOST or RabbitMQ_HOST are inaccessible from instances, and they must use
                             different address.</para>
                     </listitem>
                     <listitem>
@@ -335,17 +335,17 @@ cp murano-api-paste.ini.sample murano-api-paste.ini
                                 </para>
                             </listitem>
                             <listitem>
-                                <para>In <emphasis>[rabbitmq]</emphasis>
-                                    section you can set up host configuration where rabbitMQ
+                                <para>In <emphasis>[RabbitMQ]</emphasis>
+                                    section you can set up host configuration where RabbitMQ
                                     with just created user and vhost is running. If you consider to use Murano in production it's better to use separate vhosts in RabbitMQ.
                                     To add new vhost and user with  administrator rights perform:
                                         </para>
                                         <programlisting>
                                             <![CDATA[
-rabbitmqctl add_user muranouser murano
-rabbitmqctl set_user_tags muranouser administrator
-rabbitmqctl add_vhost muranovhost
-rabbitmqctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
+RabbitMQctl add_user muranouser murano
+RabbitMQctl set_user_tags muranouser administrator
+RabbitMQctl add_vhost muranovhost
+RabbitMQctl set_permissions -p muranovhost muranouser ".*" ".*" ".*"
                                                             ]]>
                                         </programlisting>
                             </listitem>
@@ -520,7 +520,7 @@ cp conductor.conf.sample conductor.conf
                                 </para>
                             </listitem>
                             <listitem>
-                                <para><emphasis>[rabbitmq]</emphasis>section points where your rabbitMQ installed and
+                                <para><emphasis>[RabbitMQ]</emphasis>section points where your RabbitMQ installed and
                                     configured.
                                 </para>
                          </listitem>
@@ -599,7 +599,7 @@ insecure = False
 # Valid endpoint types: publicURL (default), internalURL, adminURL
 endpoint_type = publicURL
 
-[rabbitmq]
+[RabbitMQ]
 # Connection parameters to RabbitMQ service
 
 # Hostname or IP address where RabbitMQ is located.
@@ -735,17 +735,27 @@ cp murano-repository.conf.sample murano-repository.conf
                     <itemizedlist>
                         <listitem>
                             <para><emphasis>[DEFAULT]</emphasis> section sets up main server parameters: port and address. 
-                            Folder to store cache and logging parameters also defined in this section.
+                            Folder to store cache and logging parameters also defines in this section.
                             <itemizedlist>
                             	<listitem>
                             		<para><emphasis>manifests</emphasis> parameter points out to directory with metadata objects: manifests should be on the first level. 
                             		All other objects are kept in a separates folders. This folders are configured in the parameters described below:</para>
                             	</listitem>
-                            	<listitem><para><emphasis>ui</emphasis> sets up directory name for keeping Murano dashboard ui definitions</para></listitem>
-                            	<listitem><para><emphasis>workflows</emphasis> sets up directory name for keeping Murano Conductor workflows</para> </listitem>
-                            	<listitem><para><emphasis>heat</emphasis> sets up directory name for keeping Heat templates</para></listitem>
-                            	<listitem><para><emphasis>agent</emphasis>sets up directory name for keeping Murano Agent templates</para></listitem>
-                            	<listitem><para><emphasis>scripts</emphasis> sets up directory name for keeping Murano Execution Plans</para></listitem>
+                                <listitem>
+                                    <para><emphasis>ui</emphasis> sets up directory name for keeping Murano dashboard ui definitions</para>
+                                </listitem>
+                                <listitem>
+                                    <para><emphasis>workflows</emphasis> sets up directory name for keeping Murano Conductor workflows</para>
+                                </listitem>
+                                <listitem>
+                                    <para><emphasis>heat</emphasis> sets up directory name for keeping Heat templates</para>
+                                </listitem>
+                                <listitem>
+                                    <para><emphasis>agent</emphasis>sets up directory name for keeping Murano Agent templates</para>
+                                </listitem>
+                                <listitem>
+                                    <para><emphasis>scripts</emphasis> sets up directory name for keeping Murano Execution Plans</para>
+                                </listitem>
                             </itemizedlist>
                             </para>
                         </listitem>
@@ -1008,14 +1018,14 @@ ca_file = PATH
             </para>
             <para><emphasis role="bold">Murano API -> Rabbit MQ exchange</emphasis></para>
             <para>
-                Edit <emphasis>rabbitmq</emphasis> section in <filename>/etc/murano/murano-api.conf</filename>
+                Edit <emphasis>RabbitMQ</emphasis> section in <filename>/etc/murano/murano-api.conf</filename>
                 and set ssl option to True to enable SSL. Specify the path to the
                 SSL CA certificate in regular format: /path/to/file without quotes or leave it empty to allow
                 self-signed certificates.
             </para>
             <programlisting>
                     <![CDATA[
-    [rabbitmq]
+    [RabbitMQ]
 
 # Use SSL for RabbitMQ connections (True or False)
 ssl = True
@@ -1027,13 +1037,13 @@ ca_certs =
             <para><emphasis role="bold">Rabbit MQ -> Murano Conductor exchange</emphasis></para>
             <para>
                 Open <emphasis>/etc/murano/conductor.conf</emphasis>
-                and configure <emphasis>rabbitmq</emphasis> section in the same way:
+                and configure <emphasis>RabbitMQ</emphasis> section in the same way:
                 enable ssl option to True and set CA certificate path or leave it empty to allow
                 self-signed certificates.
             </para>
             <programlisting>
                 <![CDATA[
-    [rabbitmq]
+    [RabbitMQ]
 
 # Use SSL for RabbitMQ connections (True or False)
 ssl = True
@@ -1054,29 +1064,29 @@ ca_certs = /home/user/certificates/example.crt
             <programlisting>
                     <![CDATA[
     <appSettings>
-        <add key="rabbitmq.host" value="%RABBITMQ_HOST%"/>
-        <add key="rabbitmq.port" value="%RABBITMQ_PORT%"/>
-        <add key="rabbitmq.user" value="%RABBITMQ_USER%"/>
-        <add key="rabbitmq.password"
-             value="%RABBITMQ_PASSWORD%"/>
-        <add key="rabbitmq.vhost" value="%RABBITMQ_VHOST%"/>
-        <add key="rabbitmq.inputQueue"
-             value="%RABBITMQ_INPUT_QUEUE%"/>
-        <add key="rabbitmq.resultExchange" value=""/>
-        <add key="rabbitmq.resultRoutingKey"
+        <add key="RabbitMQ.host" value="%RabbitMQ_HOST%"/>
+        <add key="RabbitMQ.port" value="%RabbitMQ_PORT%"/>
+        <add key="RabbitMQ.user" value="%RabbitMQ_USER%"/>
+        <add key="RabbitMQ.password"
+             value="%RabbitMQ_PASSWORD%"/>
+        <add key="RabbitMQ.vhost" value="%RabbitMQ_VHOST%"/>
+        <add key="RabbitMQ.inputQueue"
+             value="%RabbitMQ_INPUT_QUEUE%"/>
+        <add key="RabbitMQ.resultExchange" value=""/>
+        <add key="RabbitMQ.resultRoutingKey"
              value="%RESULT_QUEUE%"/>
-        <add key="rabbitmq.durableMessages" value="true"/>
+        <add key="RabbitMQ.durableMessages" value="true"/>
 
-        <add key="rabbitmq.ssl" value="%RABBITMQ_SSL%"/>
-        <add key="rabbitmq.allowInvalidCA" value="true"/>
-        <add key="rabbitmq.sslServerName" value=""/>
+        <add key="RabbitMQ.ssl" value="%RabbitMQ_SSL%"/>
+        <add key="RabbitMQ.allowInvalidCA" value="true"/>
+        <add key="RabbitMQ.sslServerName" value=""/>
     </appSettings>
                     ]]>
             </programlisting>
             <para>
                 Desired parameter should be set directly to the value of the key
                 that you want to change. Quotes are need to be kept.
-                Thus you can change "rabbitmq.ssl" and "rabbitmq.port" values to
+                Thus you can change "RabbitMQ.ssl" and "RabbitMQ.port" values to
                 make Rabbit MQ work with this exchange in a different from
                 Murano-Conductor way.
             </para>
