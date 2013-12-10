@@ -23,42 +23,54 @@
       version="5.0">
     <title>About Murano</title>
     <para>
-        Murano is a new service which allows a non-experienced user to deploy
-        reliable Windows based environments in OpenStack with the "One Click". The
-        key goal is to provide a UI and API enabling the deployment and
-        operation of Windows Environments at the Windows Services abstraction
-        level. The service is able to orchestrate complex circular dependent
-        cases in order to set up a complex Windows Environment with multiple
-        dependant services.
+        Murano Project introduces an application catalog, which allows application developers
+        and cloud administrators to publish various cloud-ready applications in a browsable
+        categorised catalog, which may be used by the cloud users (including the unexperienced ones)
+        to pick-up the needed applications and services and composes the reliable environments out of
+        them in a “push-the-button” manner. Key goal is to provide UI and API which allows to compose
+        and deploy composite environments on the Application abstraction level and then manage their
+        lifecycle. The Service should be able to orchestrate complex circular dependent cases in order
+        to setup complete environments with many dependant applications and services. However, the
+        actual deployment itself will be done by the existing software orchestration tools (such as Heat),
+        while the Murano project will become an integration point for various applications and services.
     </para>
     <para>
         The service addresses following use cases:
         <itemizedlist>
             <listitem>
-                <para>Self-deploying of predefined Windows services with their dependencies</para>
+                <para>Self-deploying of predefined Services with their dependencies</para>
             </listitem>
             <listitem>
                 <para>Automation of administrative tasks during data center roll-out</para>
             </listitem>
             <listitem>
-                <para>Custom windows application as a windows service</para>
+                <para>Custom windows application as a Windows Service</para>
+            </listitem>
+            <listitem>
+                <para>Custom linux application as a Linux Service</para>
             </listitem>
         </itemizedlist>
     </para>
     <para>
-        The solution provides higher level of abstraction for manipulation
-        Windows Environments. Key concepts are:
+        The solution provides higher level of abstraction for manipulation applications. Key concepts are:
         <itemizedlist>
             <listitem>
                 <para>Windows Service - a service such as Active Directory, MsSQL, or IIS, which usually consists of multiple virtual machines (VM) and has multiple dependencies.
                 </para>
             </listitem>
-            <listitem>
-                <para>Windows Environment - a logical unit for all Services and represents a classical Windows Datacenter.
+             <listitem>
+                <para>Linux Service - a service such as Apache Server can be easily preconfigured and installed in 1-Click
                 </para>
             </listitem>
             <listitem>
-                <para>Windows VM instance - a VM which hosts a Windows Service. A Windows Service might be deployed over several Windows VM instances.</para>
+                <para>Environment - a logical unit for one or several Services.
+                </para>
+            </listitem>
+            <listitem>
+                <para>VM instance - a VM which hosts a Service. A Service might be deployed over several VM instances.</para>
+            </listitem>
+            <listitem>
+                <para>Metadata Service - Service that provides opportunity to manage custom services definitions.</para>
             </listitem>
         </itemizedlist>
     </para>
@@ -75,7 +87,7 @@
                 <para>Supports Availability Zones and Disaster Recovery scenarios</para>
             </listitem>
             <listitem>
-                <para>Uses native Windows features for High Availabillity (HA) solutions</para>
+                <para>Uses native Windows features for High Availability (HA) solutions</para>
             </listitem>
         </orderedlist>
             </para>
@@ -92,12 +104,23 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="1" align="center">September. 4, 2013</td>
-                    <td colspan="3" align="center">Release-0.2</td>
+                    <td colspan="1" align="center">  September. 4, 2013  </td>
+                    <td colspan="3" align="center">  Release-0.2  </td>
                     <td colspan="4">
                         <itemizedlist>
                             <listitem>
                                 <para>Initial document creation.</para>
+                            </listitem>
+                        </itemizedlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" align="center">  December. 9, 2013  </td>
+                    <td colspan="3" align="center">  Release-0.4  </td>
+                    <td colspan="4">
+                        <itemizedlist>
+                            <listitem>
+                                <para>Update with Release-0.4 information</para>
                             </listitem>
                         </itemizedlist>
                     </td>
