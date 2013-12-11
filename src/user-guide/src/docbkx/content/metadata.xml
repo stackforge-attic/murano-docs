@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License, 
+	Version 2.0 (the &amp;quot;License&amp;quot;); you may not use this 
+	file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless 
+	required by applicable law or agreed to in writing, software 
+	distributed under the License is distributed on an &amp;quot;AS 
+	IS&amp;quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+	either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="5.0" xsi:schemaLocation="http://docbook.org/ns/docbook
+         http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+	<title>Metadata Repository</title>
+	<para>This chapter describes how to operate with Murano Metadata 
+	Repository via UI. </para>
+	<para>
+		Metadata Repository is a REST API server stores all data
+		necessary for a service deployment. Information about service and 
+		it&apos;s dependencies is called <emphasis>service definition</emphasis>
+		 or <emphasis>manifest</emphasis>. Murano Conductor and Dashboard will
+        load these service definitions and service or application will be available
+		for creation. Besides manifests Murano Repository stores this types 
+		of data:
+		<itemizedlist>
+			<listitem>
+				<para><emphasis>ui</emphasis> - UI definitions for Murano
+				dashboard</para>
+			</listitem>
+			<listitem>
+				<para><emphasis>workflows</emphasis> - set of rules for Murano
+				Conductor</para>
+			</listitem>
+			<listitem>
+				<para><emphasis>heat</emphasis> - templates for spawning instance
+				with Heat</para>
+			</listitem>
+			<listitem>
+				<para><emphasis>agent</emphasis> - Murano Agent templates</para>
+			</listitem>
+			<listitem>
+				<para><emphasis>scripts</emphasis> - Murano Execution Plans</para>
+			</listitem>
+		</itemizedlist>
+		In &quot;Murano&quot; tab go to the <filename>"Service Definitions"</filename> panel:
+		<mediaobject><imageobject role="fo">
+		<imagedata contentdepth="100%" fileref="../images/Metadata/index.png" scalefit="1" width="100%"/>
+		</imageobject></mediaobject>
+    </para>
+	<para>
+		From this view you are able to perform the following actions:
+		<itemizedlist>
+			<listitem>
+				<para><filename>Compose Service</filename> provides a form for 
+				creating new service manifest. After this operation is complete new service
+				will appear in Service Definitions table and you will be allowed
+				to download this service definition, modify or delete it.</para>
+			</listitem>
+			<listitem>
+				<para><filename>Upload Service</filename> provides a form for 
+				uploading tar.gz archive with already composed service manifest and 
+				other dependency files.</para>
+			</listitem>
+			<listitem>
+				<para><filename>Manage Files</filename> button will redirect you to 
+				a view where you can manipulate with all files stored in Metadata 
+				Repository: download, delete or upload new ones.</para>
+			</listitem>
+			<listitem>
+				<para><filename>Toggle Active</filename> button will make service
+				active or inactive depending on the current state.</para>
+			</listitem>
+			<listitem>
+				<para><filename>Modify Service</filename> gives you opportunity to 
+				modify attributes of service definition.</para>
+			</listitem>
+			<listitem>
+				<para><filename>Manage Service</filename> redirects you to a view 
+				with information about selected service and service files for all 
+				data types that Murano Repository supports. From here you can 
+				upload file and add it to service dependency in one click.</para>
+			</listitem>
+			<listitem>
+				<para><filename>Download Service</filename> saves archive with all 
+				files used by specified service.</para>
+			</listitem>
+			<listitem>
+				<para><filename>Delete Service</filename> removes service manifest 
+				and all dependencies that are not used by other services from 
+				Murano Repository server.</para>
+				<para/>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<section>
+		<title>
+			Compose Service
+		</title>
+		<para>
+			Let's review service creation in details.
+			After clicking on "Compose Service" button from "Service Definitions" view you'll see the following form:
+			<mediaobject><imageobject role="fo">
+			<imagedata contentdepth="100%" fileref="../images/Metadata/compose_service1.png" scalefit="1" width="100%"/>
+			</imageobject></mediaobject>
+			It consists of several tabs. On the first tab you need to fill up general information about service.
+            On the next tab  select one of the UI definitions you want to use for this service.
+            You can upload new definition in the <emphasis><link linked="manage_files">Manage Files</link></emphasis> view.
+            <mediaobject><imageobject role="fo">
+			<imagedata contentdepth="100%" fileref="../images/Metadata/compose_service2.png" scalefit="1" width="100%"/>
+			</imageobject></mediaobject>
+            All other tabs correspond to data types. Navigate to desired tab and select files for service dependency.
+            The only mandatory requirement for a new service is a UI definition file - if a service doesn't reference any, it won't be shown in the
+            <filename>"Create Service"</filename> form. All other tabs refer to a files required for a service's deployment phase.
+            <mediaobject><imageobject role="fo">
+			<imagedata contentdepth="100%" fileref="../images/Metadata/compose_service3.png" scalefit="1" width="100%"/>
+			</imageobject></mediaobject>
+		</para>
+	</section>
+	<section xml:id="manage_files">
+		<title>Manage Files</title>
+		<para>
+			Murano Repository table shows all files stored in Metadata
+			Repository. Files are divided into categories by data types.
+			Button name of each category also contains the number of files in that category.
+			Click on the type name to browse all files of this type.
+			<mediaobject><imageobject role="fo">
+			<imagedata contentdepth="100%" fileref="../images/Metadata/manage_files.png                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                " scalefit="1" width="100%"/>
+			</imageobject></mediaobject>
+			The following actions are available:
+			<itemizedlist>
+			<listitem>
+				<para>Download file,</para>
+			</listitem>
+			<listitem>
+				<para>Delete file,</para>
+			</listitem>
+			<listitem>
+				<para>Upload file.</para>
+			</listitem>
+			</itemizedlist>
+            To upload file to repository you need to fill up this form:
+			<mediaobject><imageobject role="fo">
+			<imagedata contentdepth="100%" fileref="../images/Metadata/manage_files_upload.png" scalefit="1" width="100%"/>
+			</imageobject></mediaobject>
+			<informaltable cellpadding="3" cellspacing="3" frame="border" rules="all" width="100%">
+			<col align="left" style="font-weight:bold" valign="top" width="25%"/>
+			<col style="padding:6px" width="70%"/>
+			<tbody>
+				<tr>
+					<td style="font-weight:bold">
+						<para>Murano Repository File</para>
+					</td>
+					<td>
+						<para>Select file for uploading. It should be not bigger than 5Mb.</para>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight:bold">
+						<para>File Type</para>
+					</td>
+					<td>
+						<para>
+							Select one of supported type. It will be loaded directly to a directory that stores corresponding file types.
+						</para>
+					</td>
+				</tr>
+			</tbody>
+		</informaltable>
+		</para>
+	</section>
+    <section>
+        <title>
+            Manage Service
+        </title>
+        <para>
+            Manage Service view displays general information about service and list of file dependency grouped by a separate tables.
+            <mediaobject><imageobject role="fo">
+			<imagedata contentdepth="100%" fileref="../images/Metadata/manage_service.png" scalefit="1" width="100%"/>
+			</imageobject></mediaobject>
+            In the following view these actions are available:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        View service detail information.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Download File.
+                    </para>
+                </listitem>
+                <listitem>
+                        Delete file.
+                </listitem>
+                <listitem>
+                    <para>
+                        Upload file of the exact type by pressing the &#60;File type&#62;" button in the appropriate table.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</chapter>
