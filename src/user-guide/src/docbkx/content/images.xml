@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License, 
+	Version 2.0 (the &quot;License&quot;); you may not use this file 
+	except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under 
+	the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See 
+	the License for the specific language governing permissions and 
+	limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="5.0" xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+	<title>Images</title>
+	<para>
+		Murano uses preconfigured images for spawning instances. Image 
+		suitable for Murano should have Murano Agent installed at least. See 
+		<link xlink:href="http://murano-docs.github.io/latest/administrators-guide/content/ch03.html">
+		here</link> how to build Murano images and upload it to Glance. Since Murano
+		supports different operating systems it&apos;s not possible to use 
+		one image to build every single application. To classify images 
+		Metadata property of Glance image is used. Murano Dashboard allows to
+		add that property from a separate view. Navigate to the Murano tab 
+		and go to 
+		<filename>Images</filename>
+		 panel.
+		<warning>
+			<para>To operate with Glance Images you need to have admin 
+			rights!</para>
+		</warning>
+		<mediaobject><imageobject role="fo">
+		<imagedata contentdepth="100%" fileref="../images/Images/index.png" scalefit="1" width="100%"/>
+		</imageobject></mediaobject>
+		 You are browsing Glance images with correctly set 
+		&quot;murano_image_info&quot; property - image metadata. From this 
+		view you are able to:
+		<itemizedlist>
+			<listitem>
+				<para>Delete an existing image metadata with <filename>&quot;Delete
+				Metadata&quot;</filename> button (only image's property get deleted,
+				the image itself stays in Glance)</para>
+			</listitem>
+			<listitem>
+				<para>Add new murano metadata to an image that is already registered
+				in Glance by clicking on  <filename>&quot;Mark
+				Image&quot;</filename> button</para>
+			</listitem>
+		</itemizedlist>
+		Take a look at the &quot;Mark Image&quot; form: 
+	</para>
+	<para>
+		<mediaobject><imageobject role="fo">
+		<imagedata contentdepth="100%" fileref="../images/Images/mark_image.png" scalefit="1" width="100%"/>
+		</imageobject></mediaobject>
+		<informaltable cellpadding="3" cellspacing="3" frame="border" rules="all" width="100%">
+			<col align="left" style="font-weight:bold" valign="top" width="25%"/>
+			<col style="padding:6px" width="70%"/>
+			<tbody>
+				<tr>
+					<td style="font-weight:bold">
+						<para>Image</para>
+					</td>
+					<td>
+						<para>From all images registered in Glance pick one that was created with
+                            <link linked="http://murano-docs.github.io/latest/administrators-guide/content/ch03.html">Murano Image Builder</link>.</para>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight:bold">
+						<para>Title</para>
+					</td>
+					<td>
+						<para>Set name for a selected image to recognize it easier during 
+						service creation.</para>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight:bold">
+						<para>Type</para>
+					</td>
+					<td>
+						<para>
+							For now there are three supported types:
+							<itemizedlist>
+								<listitem>
+									<para>Windows Server 2012 - used to build Windows-based 
+									applications</para>
+								</listitem>
+								<listitem>
+									<para>Murano Demo - light-weight Linux Cirros image with 
+									Murano Demo Agent</para>
+								</listitem>
+								<listitem>
+									<para>Generic Linux - used to build Linux-based 
+									applications</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</td>
+				</tr>
+			</tbody>
+		</informaltable>
+	</para>
+</chapter>
