@@ -33,7 +33,8 @@
     </info>
     <xi:include href="./content/general.xml" xlink:title="General Deployment Steps"/>
     <xi:include href="./content/installation-guide.xml" xlink:title="Install Murano"/>
-    <xi:include href="./content/image-bulder.xml" xlink:title="Image Builder"/>
+    <xi:include href="./content/windows-image-bulder.xml" xlink:title="Building Windows Image"/>
+    <xi:include href="./content/linux-image-bulder.xml" xlink:title="Building Linux Image"/>
     <xi:include href="./content/troubleshooting.xml" xlink:title="Troubleshooting"/>
     <xi:include href="./content/appendix.xml" xlink:title="Appendix"/>
 </book>

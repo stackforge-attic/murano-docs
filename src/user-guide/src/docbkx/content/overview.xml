@@ -24,32 +24,52 @@
     <title>How can I use Murano Service?</title>
     <para>
         Murano is intended to get opportunity for non-experienced
-        users to deploy reliable Windows-based environments extremely simple.
-        This document describes process of creation virtual Windows Environment with different services.
+        users to deploy different kinds of applications extremely simple.
+        To use Murano you should be familiar with Openstack.
+        Murano Dashboard is just a plugin to Openstack dashboard - Horizon.
+        Please visit horizon user guide first to see how dashboard is organized and how to login into it.
+        This document describes Murano Dashboard usage in detail.
     </para>
     <section>
         <title>Document change history</title>
         <para>The following table describes the most recent changes:</para>
         <informaltable rules="all">
-            <thead>
-                <tr>
-                    <td align="center" colspan="1">Revision Date</td>
-                    <td align="center" colspan="4">Summary of Changes</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="1" align="center">September. 4, 2013</td>
-                    <td colspan="4">
-                        <itemizedlist>
-                            <listitem>
-                                <para>Initial document creation.</para>
-                            </listitem>
-                        </itemizedlist>
-                    </td>
-                </tr>
-            </tbody>
-        </informaltable>        
+		<tgroup cols='2'>
+		<colspec colname="col1" colnum="1" colwidth="1*"/>
+        <colspec colname="col2" colnum="2" colwidth="1*"/>
+			<thead>
+				<row>
+                    <entry>Revision Date</entry>
+                    <entry>Summary of Changes</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry>
+						September. 4, 2013
+					</entry>
+					<entry>
+						<itemizedlist spacing="compact">
+							<listitem>
+								<para>Update for Release-0.2</para>
+							</listitem>
+						</itemizedlist>
+					</entry>
+				</row>
+				<row>
+					<entry>
+						December. 9, 2013
+					</entry>
+					<entry>
+						<itemizedlist spacing="compact">
+							<listitem>
+								<para>Update for Release-0.4</para>
+							</listitem>
+						</itemizedlist>
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+		</informaltable>
     </section>
-
 </chapter>
