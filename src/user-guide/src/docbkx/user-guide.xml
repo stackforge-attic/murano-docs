@@ -35,5 +35,7 @@
         </legalnotice>
     </info>
     <xi:include href="./content/overview.xml" xlink:title="Overview" />
-    <xi:include href="./content/murano-dashboard.xml" xlink:title="Murano Dashboard" />
+    <xi:include href="./content/images.xml" xlink:title="Murano Images" />
+    <xi:include href="./content/environments.xml" xlink:title="Murano Environments"/>
+    <xi:include href="./content/metadata.xml" xlink:title="Murano Metadata"/>
 </book>
