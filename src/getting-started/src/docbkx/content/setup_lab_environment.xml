@@ -87,12 +87,12 @@
             </programlisting>            
             <itemizedlist>
                 <listitem>
-                    <para>Checkout the <emphasis role="bold">stable/grizzly</emphasis> branch</para>
+                    <para>Checkout the <emphasis role="bold">stable/havana</emphasis> branch</para>
                 </listitem>
             </itemizedlist>
             <programlisting>
 >$ cd devstack
->$ git checkout stable/grizzly
+>$ git checkout stable/havana
             </programlisting>
             <itemizedlist>
                 <listitem>
@@ -100,10 +100,10 @@
                 </listitem>
             </itemizedlist>
             <programlisting>
->$ wget https://raw.github.com/stackforge/murano-deployment/release-0.2/
+>$ wget https://raw.github.com/stackforge/murano-deployment/release-0.4/
                 getting-started/localrc
->$ wget https://raw.github.com/stackforge/murano-deployment/release-0.2/
-                getting-started/local.sh -O local.sh-O local.sh
+>$ wget https://raw.github.com/stackforge/murano-deployment/release-0.4/
+                getting-started/local.sh
 >$ chmod +x local.sh
             </programlisting>
             <itemizedlist>
