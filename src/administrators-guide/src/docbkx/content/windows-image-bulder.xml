@@ -6,7 +6,7 @@
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+	  http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,131 +17,116 @@
   -->
 
 <chapter xmlns="http://docbook.org/ns/docbook"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
-                          http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
-         version="5.0">
-        <title>Building Windows Image</title>
-        <para>
-            Murano requires a Windows Image in QCOW2 format to be built and uploaded into Glance.
-        </para>
-        <para>
-            The easiest way to build Windows image for Murano is to build it on the host where your OpenStack is installed.
-        </para>
-        <section>
-                <title>Install Required Packages</title>
-                <note>
-                    <para>
-                        Please check that hardware virtualization supported and enabled in BIOS.
-                    </para>
-                </note>
-                <para>
-                    The following packages should be installed on any host which will be used to build Windows Image:
-                    <itemizedlist>
-                        <listitem>
-                            <para>
-                                ipxe-qemu
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                kvm-ipxe
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                qemu-kvm
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                munin-libvirt-plugins
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                python-libvirt
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                libvirt-bin
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                libvirt0
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                munin-libvirt-plugins
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                python-libvirt
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                virt-goodies
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                virt-manager
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                virt-top
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                virt-what
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                virtinst
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                python
-                            </para>
-                        </listitem>
-                    </itemizedlist>
-                </para>
-            <para>
-                On Ubuntu you could install them using the command below:
-            </para>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns:xlink="http://www.w3.org/1999/xlink"
+		 xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+						  http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
+		 version="5.0">
+		<title>Building Windows Image</title>
+		<para>
+			Murano requires a Windows Image in QCOW2 format to be built and uploaded into Glance.
+		</para>
+		<para>
+			The easiest way to build Windows image for Murano is to build it on the host where your OpenStack is installed.
+		</para>
+		<section>
+				<title>Install Required Packages</title>
+				<note>
+					<para>
+						Please check that hardware virtualization supported and enabled in BIOS.
+					</para>
+				</note>
+				<para>
+					The following packages should be installed on any host which will be used to build Windows Image:
+					<itemizedlist>
+						<listitem>
+							<para>
+								ipxe-qemu
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								kvm-ipxe
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								qemu-kvm
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								python-libvirt
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								libvirt-bin
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								libvirt0
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								virt-goodies
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								virt-manager
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								virt-top
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								virt-what
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								virtinst
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								python
+							</para>
+						</listitem>
+					</itemizedlist>
+				</para>
+			<para>
+				On Ubuntu you could install them using the command below:
+			</para>
 <screen>
 ># apt-get install ipxe-qemu kvm-ipxe qemu-kvm virt-goodies \
-           virtinst virt-manager libvirt0 libvirt-bin \
-           munin-libvirt-plugins python python-libvirt \
-           python-libxml2 python-minimal python-pycurl \
-           python-pyorbit python-requests python-six \
-           samba samba-common openssh-server virt-top virt-what
+	 virtinst virt-manager libvirt0 libvirt-bin \
+	 python python-libvirt \
+	 python-libxml2 python-minimal python-pycurl \
+	 python-pyorbit python-requests python-six \
+	 samba samba-common openssh-server virt-top virt-what
 </screen>
-            </section>
-            <section>
-                <title>Configure Shared Resource</title>
-                <formalpara>
-                    <title>Configure samba based share</title>
-                    <para>
+			</section>
+			<section>
+				<title>Configure Shared Resource</title>
+				<formalpara>
+					<title>Configure samba based share</title>
+					<para>
 <screen>
 ># mkdir -p /opt/samba/share
 ># chown -R nobody:nogroup /opt/samba/share
 </screen>
-                    </para>
-                </formalpara>
-                <formalpara>
-                    <title>Configure samba server (/etc/samba/smb.conf)</title>
-                    <para>
+					</para>
+				</formalpara>
+				<formalpara>
+					<title>Configure samba server (/etc/samba/smb.conf)</title>
+					<para>
 <screen>
 ...
 [global]
@@ -158,334 +143,410 @@
    guest account = nobody
 ...
 </screen>
-                    </para>
-                </formalpara>
-                <formalpara>
-                    <title>Restart services</title>
-                    <para>
+					</para>
+				</formalpara>
+				<formalpara>
+					<title>Restart services</title>
+					<para>
 <screen>
 ># service smbd restart
 ># service nmbd restart
 </screen>
-                    </para>
-                </formalpara>
-        </section>
-        <section>
-            <title>Prerequisites</title>
-            <para>Download the files below and copy them into their places in your <emphasis
-                    role="bold">${SHARE_PATH}</emphasis> folder (we usually use <emphasis
-                    role="bold">/opt/samba/share</emphasis> as <emphasis role="bold"
-                    >${SHARE_PATH}</emphasis>):<itemizedlist>
-                    <listitem>
-                        <para>Windows 2012 Server ISO evaluation version<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/libvirt/images/ws-2012-eval.iso</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://technet.microsoft.com/en-us/evalcenter/hh670538.aspx">
-                                                          http://technet.microsoft.com/en-us/evalcenter/hh670538.aspx
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>VirtIO drivers for Windows<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/libvirt/images/virtio-win-0.1-52.iso</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/stable/virtio-win-0.1-52.iso">
-                                            http://alt.fedoraproject.org/pub/alt/virtio-win/stable/virtio-win-0.1-52.iso
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>CloudBase-Init for Windows<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/CloudbaseInitSetup_Beta.msi</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://www.cloudbase.it/downloads/CloudbaseInitSetup_Beta.msi">
-                                            http://www.cloudbase.it/downloads/CloudbaseInitSetup_Beta.msi
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>Far Manager<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/Far30b3367.x64.20130426.msi</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://www.farmanager.com/files/Far30b3525.x64.20130717.msi">
-                                            http://www.farmanager.com/files/Far30b3525.x64.20130717.msi
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>Git client<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/Git-1.8.1.2-preview20130201.exe</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="https://msysgit.googlecode.com/files/Git-1.8.3-preview20130601.exe">
-                                            https://msysgit.googlecode.com/files/Git-1.8.3-preview20130601.exe
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>Sysinternals Suite<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/SysinternalsSuite.zip</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://download.sysinternals.com/files/SysinternalsSuite.zip">
-                                            http://download.sysinternals.com/files/SysinternalsSuite.zip
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>unzip.exe tool<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/unzip.exe</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR">
-                                            https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>PowerShell v3<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/Windows6.1-KB2506143-x64.msu</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=34595">
-                                            http://www.microsoft.com/en-us/download/details.aspx?id=34595
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>.NET 4.0<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/dotNetFx40_Full_x86_x64.exe</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=17718">
-                                            http://www.microsoft.com/en-us/download/details.aspx?id=17718
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>.NET 4.5<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/dotNetFx45_Full_setup.exe</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=30653">
-                                            http://www.microsoft.com/en-us/download/details.aspx?id=30653
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>Murano Agent<itemizedlist>
-                                <listitem>
-                                    <para>${SHARE_PATH}/share/files/MuranoAgent.zip</para>
-                                </listitem>
-                                <listitem>
-                                    <para>
-                                        <link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR">
-                                            https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR
-                                        </link>
-                                    </para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                </itemizedlist></para>
-        </section>
-        <section>
-            <title>Additional Software</title>
-            <para> This section describes additional software which is required to build an Windows
-                Image.</para>
-
-            <para><emphasis role="bold">Windows ADK</emphasis></para>
-
-            <para>
-                <emphasis role="italic">Windows Assessment and Deployment Kit (ADK) for Windows®
-                    8</emphasis> is required to build your own answer files for auto unattended
-                Windows installation. </para>
-
-            <para>
-                You can dowload it from <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=30652">
-                    http://www.microsoft.com/en-us/download/details.aspx?id=30652</link>.
-            </para>
-
-            <para><emphasis role="bold">PuTTY</emphasis></para>
-
-            <para>PuTTY is a useful tool to manage your Linux boxes via SSH.</para>
-
-            <para>
-                You can download it from <link xlink:href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">
-                http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html</link>.
-            </para>
-
-            <para><emphasis role="bold">Windows Server 2012 ISO image</emphasis></para>
-
-            <para>We use the following Windows installation images:<itemizedlist>
-                    <listitem>
-                        <para>Windows Server 2008 R2<itemizedlist>
-                                <listitem>
-                                    <para>Image Name:
-                                        7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso</para>
-                                </listitem>
-                                <listitem>
-                                    <para>URL: <link
-                                            xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=11093"
-                                            >
-                                            http://www.microsoft.com/en-us/download/details.aspx?id=11093
-                                        </link></para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                    <listitem>
-                        <para>Windows Server 2012<itemizedlist>
-                                <listitem>
-                                    <para>Image Name:
-                                        9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.iso</para>
-                                </listitem>
-                                <listitem>
-                                    <para>URL: <link
-                                            xlink:href="http://technet.microsoft.com/en-US/evalcenter/hh670538.aspx?ocid=&amp;wt.mc_id=TEC_108_1_33"
-                                            >
-                                            http://technet.microsoft.com/en-US/evalcenter/hh670538.aspx?ocid=&amp;wt.mc_id=TEC_108_1_33
-                                        </link></para>
-                                </listitem>
-                            </itemizedlist></para>
-                    </listitem>
-                </itemizedlist></para>
-
-            <para><emphasis role="bold">VirtIO Red Hat drivers ISO image</emphasis></para>
-
-            <warning>
-                <para>
-                    Please, choose stable version instead of latest, We&#8217;ve got errors with unstable drivers during guest unattended install.
-                </para>
-            </warning>
-
-            <para>Download drivers from <link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/stable/">
-            http://alt.fedoraproject.org/pub/alt/virtio-win/stable/</link>
-            </para>
-
-            <para><emphasis role="bold">Floppy Image With Unattended File</emphasis></para>
-
-                <para>
-                    Run following commands as root:
-                </para>
-
-                <orderedlist numeration="arabic">
-                    <listitem>
-                        <para>
-                            Create emtpy floppy image in your home folder
-                        </para>
+					</para>
+				</formalpara>
+		</section>
+		<section>
+			<title>Prerequisites</title>
+			<para>
+				Download the files below and copy them into their places in your
+				<emphasis role="bold">${SHARE_PATH}</emphasis> folder (we usually use
+				<emphasis role="bold">/opt/samba/share</emphasis> as <emphasis role="bold">${SHARE_PATH}</emphasis>):
+				<itemizedlist>
+					<listitem>
+						<para>
+							Windows 2012 Server ISO evaluation version
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/libvirt/images/ws-2012-eval.iso
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://technet.microsoft.com/en-us/evalcenter/hh670538.aspx">
+										http://technet.microsoft.com/en-us/evalcenter/hh670538.aspx
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							VirtIO drivers for Windows
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/libvirt/images/virtio-win-0.1-52.iso
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/stable/virtio-win-0.1-52.iso">
+										http://alt.fedoraproject.org/pub/alt/virtio-win/stable/virtio-win-0.1-52.iso
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							CloudBase-Init for Windows
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/CloudbaseInitSetup_Beta.msi
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://www.cloudbase.it/downloads/CloudbaseInitSetup_Beta.msi">
+											http://www.cloudbase.it/downloads/CloudbaseInitSetup_Beta.msi
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Far Manager
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/Far30b3367.x64.20130426.msi
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://www.farmanager.com/files/Far30b3525.x64.20130717.msi">
+											http://www.farmanager.com/files/Far30b3525.x64.20130717.msi
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Git client
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/Git-1.8.1.2-preview20130201.exe
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="https://msysgit.googlecode.com/files/Git-1.8.3-preview20130601.exe">
+											https://msysgit.googlecode.com/files/Git-1.8.3-preview20130601.exe
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Sysinternals Suite
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/SysinternalsSuite.zip
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://download.sysinternals.com/files/SysinternalsSuite.zip">
+											http://download.sysinternals.com/files/SysinternalsSuite.zip
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							unzip.exe tool
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/unzip.exe
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR">
+											https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							PowerShell v3
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/Windows6.1-KB2506143-x64.msu
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=34595">
+											http://www.microsoft.com/en-us/download/details.aspx?id=34595
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							.NET 4.0
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/dotNetFx40_Full_x86_x64.exe
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=17718">
+											http://www.microsoft.com/en-us/download/details.aspx?id=17718
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							.NET 4.5
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/dotNetFx45_Full_setup.exe
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=30653">
+											http://www.microsoft.com/en-us/download/details.aspx?id=30653
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Murano Agent
+							<itemizedlist>
+								<listitem>
+									<para>
+										${SHARE_PATH}/share/files/MuranoAgent.zip
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<link xlink:href="https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR">
+											https://www.dropbox.com/sh/zthldcxnp6r4flm/-k1Om_V6XR
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+		<section>
+			<title>Additional Software</title>
+			<para>
+				This section describes additional software which is required to build a Windows Image.
+			</para>
+			<para>
+				<emphasis role="bold">Windows ADK</emphasis>
+			</para>
+			<para>
+				<emphasis role="italic">Windows Assessment and Deployment Kit (ADK) for Windows® 8</emphasis>
+				is required to build your own answer files for auto unattended Windows installation.
+			</para>
+			<para>
+				You can dowload it from <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=30652">
+					http://www.microsoft.com/en-us/download/details.aspx?id=30652</link>.
+			</para>
+			<para>
+				<emphasis role="bold">PuTTY</emphasis>
+			</para>
+			<para>
+				PuTTY is a useful tool to manage your Linux boxes via SSH.
+			</para>
+			<para>
+				You can download it from <link xlink:href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">
+				http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html</link>.
+			</para>
+			<para>
+				<emphasis role="bold">Windows Server 2012 ISO image</emphasis>
+			</para>
+			<para>
+				We use the following Windows installation images:
+				<itemizedlist>
+					<listitem>
+						<para>
+							Windows Server 2008 R2
+							<itemizedlist>
+								<listitem>
+									<para>
+										Image Name: 7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										URL: <link xlink:href="http://www.microsoft.com/en-us/download/details.aspx?id=11093">
+											http://www.microsoft.com/en-us/download/details.aspx?id=11093
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Windows Server 2012
+							<itemizedlist>
+								<listitem>
+									<para>
+										Image Name: 9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.iso
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										URL: <link xlink:href="http://technet.microsoft.com/en-US/evalcenter/hh670538.aspx?ocid=&amp;wt.mc_id=TEC_108_1_33">
+											http://technet.microsoft.com/en-US/evalcenter/hh670538.aspx?ocid=&amp;wt.mc_id=TEC_108_1_33
+										</link>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para>
+				<emphasis role="bold">VirtIO Red Hat drivers ISO image</emphasis>
+			</para>
+			<warning>
+				<para>
+					Please, choose stable version instead of latest, We&#8217;ve got errors with unstable drivers during guest unattended install.
+				</para>
+			</warning>
+			<para>
+				Download drivers from <link xlink:href="http://alt.fedoraproject.org/pub/alt/virtio-win/stable/">
+				http://alt.fedoraproject.org/pub/alt/virtio-win/stable/</link>
+			</para>
+			<para>
+				<emphasis role="bold">Floppy Image With Unattended File</emphasis>
+			</para>
+				<para>
+					Run following commands as root:
+				</para>
+				<orderedlist numeration="arabic">
+					<listitem>
+						<para>
+							Create emtpy floppy image in your home folder
+						</para>
 <screen>
 ># dd bs=512 count=2880 \
-   if=/dev/zero of=~/floppy.img \
-   mkfs.msdos ~/floppy.img
+	 if=/dev/zero of=~/floppy.img \
+	 mkfs.msdos ~/floppy.img
 </screen>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            Mount the image to <emphasis role="strong">/media/floppy</emphasis>
-                        </para>
+					</listitem>
+					<listitem>
+						<para>
+							Mount the image to <emphasis role="strong">/media/floppy</emphasis>
+						</para>
 <screen>
 ># mkdir /media/floppy mount -o loop \
-   ~/floppy.img /media/floppy
+	 ~/floppy.img /media/floppy
 </screen>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            Download <emphasis role="strong">autounattend.xml</emphasis> file from <link
-                                xlink:href="https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/files/ws-2012-std/autounattend.xml">
-                                https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/files/ws-2012-std/autounattend.xml
-                            </link>
-                        </para>
+					</listitem>
+					<listitem>
+						<para>
+							Download <emphasis role="strong">autounattend.xml</emphasis> file from <link
+								xlink:href="https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/files/ws-2012-std/autounattend.xml">
+								https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/files/ws-2012-std/autounattend.xml
+							</link>
+						</para>
 <screen>
 ># cd ~
 ># wget https://raw.github.com/stackforge/murano-deployment\
-/master/image-builder/share/files/ws-2012-std/autounattend.xml
+	 /master/image-builder/share/files/ws-2012-std/autounattend.xml
 </screen>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            Copy our <emphasis role="strong">autounattend.xml</emphasis> to <emphasis role="strong">/media/floppy</emphasis>
-                        </para>
+					</listitem>
+					<listitem>
+						<para>
+							Copy our <emphasis role="strong">autounattend.xml</emphasis> to
+							<emphasis role="strong">/media/floppy</emphasis>
+						</para>
 <screen>
 ># cp ~/autounattend.xml /media/floppy
 </screen>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            Unmount the image
-                        </para>
+					</listitem>
+					<listitem>
+						<para>
+							Unmount the image
+						</para>
 <screen>
 ># umount /media/floppy
 </screen>
-                    </listitem>
-                </orderedlist>
-        </section>
-    <section>
-        <title>Build Windows Image (Automatic Way)</title>
-        <orderedlist numeration="arabic">
-            <listitem>
-                <para>Clone <emphasis role="strong">murano-deployment</emphasis> repository </para>
+					</listitem>
+				</orderedlist>
+		</section>
+	<section>
+		<title>Build Windows Image (Automatic Way)</title>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					Clone <emphasis role="strong">murano-deployment</emphasis> repository
+				</para>
 <screen>
 ># git clone git://github.com/stackforge/murano-deployment.git
 </screen>
-            </listitem>
-            <listitem>
-                <para>Change directory to <emphasis role="strong"
-                        >murano-deployment/image-builder</emphasis> folder. </para>
-            </listitem>
-            <listitem>
-                <para>Create folder structure for image builder </para>
+			</listitem>
+			<listitem>
+				<para>
+					Change directory to <emphasis role="strong">murano-deployment/image-builder</emphasis> folder.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Create folder structure for image builder
+				</para>
 <screen>
 ># make build-root
 </screen>
-            </listitem>
-            <listitem>
-                <para>Create shared resource </para>
-                <formalpara>
-                    <title>Add to /etc/samba/smb.conf</title>
-                    <para>
+			</listitem>
+			<listitem>
+				<para>
+					Create shared resource
+				</para>
+				<formalpara>
+					<title>Add to /etc/samba/smb.conf</title>
+					<para>
 <screen>
 [image-builder-share]
    comment = Image Builder Share
@@ -496,280 +557,334 @@
    read only = no
    create mask = 0755
 </screen>
-                    </para>
-                </formalpara>
-                <formalpara>
-                    <title>Restart samba services</title>
-                    <para>
+					</para>
+				</formalpara>
+				<formalpara>
+					<title>Restart samba services</title>
+					<para>
 <screen>
 ># restart smbd &amp;&amp; restart nmbd
 </screen>
-                    </para>
-                </formalpara>
-            </listitem>
-            <listitem>
-                <para>Test that all required files are in place </para>
+					</para>
+				</formalpara>
+			</listitem>
+			<listitem>
+				<para>
+					Test that all required files are in place
+				</para>
 <screen>
 ># make test-build-files
 </screen>
-            </listitem>
-            <listitem>
-                <para>Get list of available images </para>
+			</listitem>
+			<listitem>
+				<para>
+					Get list of available images
+				</para>
 <screen>
 ># make
 </screen>
-            </listitem>
-            <listitem>
-                <para>Run image build process </para>
+			</listitem>
+			<listitem>
+				<para>
+					Run image build process
+				</para>
 <screen>
 ># make ws-2012-std
 </screen>
-            </listitem>
-            <listitem>
-                <para>Wait until process finishes </para>
-            </listitem>
-            <listitem>
-                <para>The image file <emphasis role="strong">ws-2012-std.qcow2</emphasis> should be
-                    stored under <emphasis role="strong">/opt/image-builder/share/images</emphasis>
-                    folder. </para>
-            </listitem>
-        </orderedlist>
-    </section>
-    <section>
-        <title>Build Windows Image (Manual Way)</title>
-        <warning>
-            <para> Please note that the preferred way to build images is to use <emphasis
-                    role="strong">Automated Build</emphasis> described in the previous chapter. </para>
-        </warning>
-        <para><emphasis role="strong">Get Post-Install Scripts</emphasis></para>
-
-        <para>There are a few scripts which perform all the required post-installation tasks. </para>
-
-        <para>Package installation tasks are performed by script named <emphasis role="strong"
-                    >wpi.ps1</emphasis>. </para>
-            <para>Download it from <link
-                    xlink:href="https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/wpi.ps1"
-                    >
-                    https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/wpi.ps1</link>
-            </para>
-            <note>
-                <para>There are a few scripts named <emphasis role="strong">wpi.ps1</emphasis>, each
-                    supports only one version of Windows image. The script above is intended to be
-                    used to create Windows Server 2012 Standard. To build other version of Windows
-                    please use appropriate script from <emphasis role="strong">scripts</emphasis>
-                    folder. </para>
-            </note>
-            <para>Clean-up actions to finish image preparation are performed by <emphasis role="strong">Start-Sysprep.ps1</emphasis>
-                script.</para>
-            <para>Download it from <link
-                    xlink:href="https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/Start-Sysprep.ps1"
-                    >
-                    https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/Start-Sysprep.ps1</link>
-            </para>
-            <para>These scripts should be copied to the shared resource folder, subfolder <emphasis
-                    role="strong">Scripts</emphasis>.</para>
-
-        <para><emphasis role="strong">Create a VM</emphasis></para>
-
-        <para>This section describes steps required to build an image of Windows Virtual Machine
-                    which could be used with Murano. There are two possible ways to create it - from
-                    CLI or using GUI tools. We describe both in this section. </para>
-
-            <note>
-                <para>
-                    Run all commands as root.
-                </para>
-            </note>
-
-
-        <para><emphasis role="strong">Way 1: Using CLI Tools</emphasis></para>
-
-        <para>This section describes the required step to launch a VM using CLI tools only. </para>
-
-            <para>
-                    <orderedlist>
-                        <listitem>
-                            <para>
-                                Preallocate disk image
-                            </para>
+			</listitem>
+			<listitem>
+				<para>
+					Wait until process finishes
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					The image file <emphasis role="strong">ws-2012-std.qcow2</emphasis> should be stored
+					under <emphasis role="strong">/opt/image-builder/share/images</emphasis> folder.
+				</para>
+			</listitem>
+		</orderedlist>
+	</section>
+	<section>
+		<title>Build Windows Image (Manual Way)</title>
+		<warning>
+			<para>
+				Please note that the preferred way to build images is to use
+				<emphasis role="strong">Automated Build</emphasis> described in the previous chapter.
+			</para>
+		</warning>
+		<para>
+			<emphasis role="strong">Get Post-Install Scripts</emphasis>
+		</para>
+		<para>
+			There are a few scripts which perform all the required post-installation tasks.
+		</para>
+		<para>
+			Package installation tasks are performed by script named
+			<emphasis role="strong">wpi.ps1</emphasis>.
+		</para>
+		<para>
+			Download it from
+			<link xlink:href="https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/wpi.ps1">
+			https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/wpi.ps1
+			</link>
+		</para>
+		<note>
+			<para>
+				There are a few scripts named <emphasis role="strong">wpi.ps1</emphasis>, each
+				supports only one version of Windows image. The script above is intended to be
+				used to create Windows Server 2012 Standard. To build other version of Windows
+				please use appropriate script from <emphasis role="strong">scripts</emphasis>
+				folder.
+			</para>
+		</note>
+			<para>
+				Clean-up actions to finish image preparation are performed by
+				<emphasis role="strong">Start-Sysprep.ps1</emphasis> script.
+			</para>
+			<para>
+				Download it from
+				<link xlink:href="https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/Start-Sysprep.ps1">
+				https://raw.github.com/stackforge/murano-deployment/master/image-builder/share/scripts/ws-2012-std/Start-Sysprep.ps1
+				</link>
+			</para>
+			<para>
+				These scripts should be copied to the shared resource folder, subfolder
+				<emphasis role="strong">Scripts</emphasis>.
+			</para>
+		<para>
+			<emphasis role="strong">Create a VM</emphasis>
+		</para>
+		<para>
+			This section describes steps required to build an image of Windows Virtual Machine
+			which could be used with Murano. There are two possible ways to create it - from
+			CLI or using GUI tools. We describe both in this section.
+		</para>
+		<note>
+			<para>
+				Run all commands as root.
+			</para>
+		</note>
+		<para>
+			<emphasis role="strong">Way 1: Using CLI Tools</emphasis>
+		</para>
+		<para>
+			This section describes the required step to launch a VM using CLI tools only.
+		</para>
+			<para>
+				<orderedlist>
+					<listitem>
+						<para>
+							Preallocate disk image
+						</para>
 <screen>
 ># qemu-img create -f raw /var/lib/libvirt/images/ws-2012.img 40G
 </screen>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                Start the VM
-                            </para>
+					</listitem>
+					<listitem>
+						<para>
+							Start the VM
+						</para>
 <screen>
 ># virt-install --connect qemu:///system --hvm --name WinServ \
-   --ram 2048 --vcpus 2 --cdrom /opt/samba/share/9200.16384.WIN8_RTM\
+	 --ram 2048 --vcpus 2 --cdrom /opt/samba/share/9200.16384.WIN8_RTM\
 .120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO \
-  --disk path=/opt/samba/share/virtio-win-0.1-52.iso,device=cdrom \
-  --disk path=/opt/samba/share/floppy.img,device=floppy \
-  --disk path=/var/lib/libvirt/images/ws-2012.qcow2\
+	 --disk path=/opt/samba/share/virtio-win-0.1-52.iso,device=cdrom \
+	 --disk path=/opt/samba/share/floppy.img,device=floppy \
+	 --disk path=/var/lib/libvirt/images/ws-2012.qcow2\
 ,format=qcow2,bus=virtio,cache=none \
-  --network network=default,model=virtio \
-  --memballoon model=virtio --vnc --os-type=windows \
-  --os-variant=win2k8 --noautoconsole \
-  --accelerate --noapic --keymap=en-us --video=cirrus --force
+	 --network network=default,model=virtio \
+	 --memballoon model=virtio --vnc --os-type=windows \
+	 --os-variant=win2k8 --noautoconsole \
+	 --accelerate --noapic --keymap=en-us --video=cirrus --force
 </screen>
-                        </listitem>
-                    </orderedlist>
-                </para>
-
-        <para><emphasis role="strong">Way 2: Using virt-manager UI</emphasis></para>
-
-        <para>A VM also could be lauched via GUI tools like virt-manager. </para>
-
-            <para>
-                    <orderedlist>
-                        <listitem>
-                            <para>Launch <emphasis role="italic">virt-manager</emphasis> from shell
-                            as root </para>
-                        </listitem>
-                        <listitem>
-                            <para>Set a name for VM and select Local install media</para>
-                        </listitem>
-                        <listitem>
-                            <para>Add one cdrom and attach Windows Server ISO image to it</para>
-                        </listitem>
-                        <listitem>
-                            <para>Select OS type <emphasis role="bold">Windows</emphasis> and it's
-                            version <emphasis role="bold">Windows Server 2008</emphasis>
-                        </para>
-                        </listitem>
-                        <listitem>
-                            <para>Set CPU and RAM amount </para>
-                        </listitem>
-                        <listitem>
-                            <para>Deselect option <emphasis role="bold">Enable storage for this
-                                virtual machine</emphasis>
-                        </para>
-                        </listitem>
-                        <listitem>
-                            <para>Select option <emphasis role="bold">Customize configuration before
-                                install</emphasis>
-                        </para>
-                        </listitem>
-                        <listitem>
-                            <para>Add second cdrom for ISO image with virtio drivers</para>
-                        </listitem>
-                        <listitem>
-                            <para>Add a floppy drive and attach our floppy image to it</para>
-                        </listitem>
-                        <listitem>
-                            <para>Add (or create new) HDD image with Disk bus <emphasis role="bold"
-                                >VirtIO</emphasis> and storage format <emphasis role="bold"
-                                >RAW</emphasis>
-                        </para>
-                        </listitem>
-                        <listitem>
-                            <para>Set network device model <emphasis role="bold">VirtIO</emphasis>
-                        </para>
-                        </listitem>
-                        <listitem>
-                            <para>Start installation process and open guest vm screen through
-                                <emphasis role="bold">Console</emphasis> button </para>
-                        </listitem>
-                    </orderedlist>
-                </para>
-
-            <formalpara>
-                <title>Convert the image from RAW to QCOW2 format</title>
-                <para>The image must be converted from RAW format to QCOW2 before being imorted into
-                    Glance. </para>
-            </formalpara>
-            <para>
-                <screen>
+					</listitem>
+				</orderedlist>
+			</para>
+		<para>
+			<emphasis role="strong">Way 2: Using virt-manager UI</emphasis>
+		</para>
+		<para>
+			A VM also could be lauched via GUI tools like virt-manager.
+		</para>
+			<para>
+				<orderedlist>
+					<listitem>
+						<para>
+							Launch <emphasis role="italic">virt-manager</emphasis> from shell as root
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Set a name for VM and select Local install media
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Add one cdrom and attach Windows Server ISO image to it
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Select OS type <emphasis role="bold">Windows</emphasis> and it's
+							version <emphasis role="bold">Windows Server 2008</emphasis>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Set CPU and RAM amount
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Deselect option <emphasis role="bold">Enable storage for this virtual machine
+						</emphasis>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Select option <emphasis role="bold">Customize configuration before install
+						</emphasis>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Add second cdrom for ISO image with virtio drivers
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Add a floppy drive and attach our floppy image to it
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Add (or create new) HDD image with Disk bus
+							<emphasis role="bold">VirtIO</emphasis> and storage format
+							<emphasis role="bold">RAW</emphasis>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Set network device model <emphasis role="bold">VirtIO</emphasis>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Start installation process and open guest vm screen through
+							<emphasis role="bold">Console</emphasis> button
+						</para>
+					</listitem>
+				</orderedlist>
+			</para>
+			<formalpara>
+				<title>Convert the image from RAW to QCOW2 format</title>
+				<para>
+					The image must be converted from RAW format to QCOW2 before being imorted into Glance.
+				</para>
+			</formalpara>
+		<para>
+<screen>
 ># qemu-img convert -O qcow2 /var/lib/libvirt/images/ws-2012.raw \
-   /var/lib/libvirt/images/ws-2012-ref.qcow2
-                </screen>
-            </para>
-
-    </section>
-    <section>
-        <title>Upload Image Into Glance</title>
-        <para>
-            Services deployed by Murano require specially prepared images, that can be created manually or via automated scripts.
-            Please refer to corresponding chapters of this book to create image. After images are created they should be registered in Openstack Glance - image operation service.
-        </para>
-        <orderedlist>
-            <listitem>
-                <para>
-                    Use the glance image-create command to import your disk image to Glance:
+	 /var/lib/libvirt/images/ws-2012-ref.qcow2
+</screen>
+		</para>
+	</section>
+	<section>
+		<title>Upload Image Into Glance</title>
+		<para>
+			Services deployed by Murano require specially prepared images,
+			that can be created manually or via automated scripts.
+			Please refer to corresponding chapters of this book to create image.
+			After images are created they should be registered in Openstack Glance - image operation service.
+		</para>
+		<orderedlist>
+			<listitem>
+				<para>
+					Use the glance image-create command to import your disk image to Glance:
 <screen>
 >$ glance image-create --name &lt;NAME> \
-     --is-public true --disk-format qcow2 \
-     --container-format bare \
-     --file &lt;IMAGE_FILE> \
-     --property &lt;IMAGE_METADATA>
+	 --is-public true --disk-format qcow2 \
+	 --container-format bare \
+	 --file &lt;IMAGE_FILE> \
+	 --property &lt;IMAGE_METADATA>
 </screen>
-                </para>
-                <para>
-                    Replace the command line arguments to glance image-create with the appropriate values for your environment and disk image:
-                </para>
-                <itemizedlist>
-                    <listitem>
-                        <para>
-                            Replace <emphasis role="bold">&lt;NAME></emphasis> with the name that users will refer to the disk image by.
-                            E.g. '<emphasis role="bold">ws-2012-std</emphasis>'
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            Replace <emphasis role="bold">&lt;IMAGE_FILE></emphasis> with the local path to the image file to upload.
-                            E.g. '<emphasis role="bold">ws-2012-std.qcow2</emphasis>'.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para> Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with the
-                                following property string
-                                <screen>
-murano_image_info='{"title": "Windows 2012 Standart Edition", "type": "windows.2012"}'
+				</para>
+				<para>
+					Replace the command line arguments to <emphasis role="italic">glance image-create</emphasis>
+					with the appropriate values for your environment and disk image:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							Replace <emphasis role="bold">&lt;NAME></emphasis> with the name that users will refer to the disk image by.
+							E.g. '<emphasis role="bold">ws-2012-std</emphasis>'
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Replace <emphasis role="bold">&lt;IMAGE_FILE></emphasis> with the local path to the image file to upload.
+							E.g. '<emphasis role="bold">ws-2012-std.qcow2</emphasis>'.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with the following property string
+							(It <emphasis role="bold">MUST</emphasis> be one-line string!)
+<screen>
+murano_image_info='{"title": "Windows 2012 Standart Edition",
+	"type": "windows.2012"}'
 </screen>
-                                where <itemizedlist>
-                                    <listitem>
-                                        <para>title - user-friendly description of the image</para>
-                                    </listitem>
-                                    <listitem>
-                                        <para>type - is a image type, for example 'windows.2012'</para>
-                                    </listitem>
-                                </itemizedlist>
-                            </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
-                <para> To update metadata of the existing image run the command:</para>
+							where
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis role="bold">title</emphasis> - user-friendly description of the image
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis role="bold">type</emphasis> - an image type, for example 'windows.2012'
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>
+					To update metadata of the existing image run the command:
+				</para>
 <screen>
 >$ glance image-update &lt;IMAGE-ID> --property &lt;IMAGE_MATADATA>
 </screen>
-                <itemizedlist>
-                    <listitem>
-                        <para>
-                            Replace <emphasis role="bold">&lt;IMAGE-ID></emphasis> with image id from the previous command output.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para> Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with
-                                murano_image_info property, e.g.
-                                <screen>
-murano_image_info='{"title": "Windows 2012 Standart Edition", "type": "windows.2012"}'
+				<itemizedlist>
+					<listitem>
+						<para>
+							Replace <emphasis role="bold">&lt;IMAGE-ID></emphasis> with image id from the previous command output.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Replace <emphasis role="bold">&lt;IMAGE_METADATA></emphasis> with murano_image_info property, e.g.
+<screen>
+murano_image_info='{"title": "Windows 2012 Std", "type": "windows.2012"}'
 </screen>
-                            </para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-        </orderedlist>
-        <warning>
-            <para>The value of the <emphasis role="bold"
-                >--property</emphasis> argument named <emphasis
-                    role="bold">murano_image_info</emphasis> is a JSON
-                string. Only double quotes are valid in JSON, so please type
-                the string exactly as in the example above. </para>
-        </warning>
-        <para>
-            After these steps desired image can be chosen in Murano dashboard and used for services platform.
-        </para>
-    </section>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+		</orderedlist>
+		<warning>
+			<para>
+				The value of the <emphasis role="bold">--property</emphasis> argument named
+				<emphasis role="bold">murano_image_info</emphasis> is a JSON string.
+				Only double quotes are valid in JSON, so please type the string exactly as in the example above.
+			</para>
+		</warning>
+		<para>
+			After these steps desired image can be chosen in Murano dashboard and used for services platform.
+		</para>
+	</section>
 </chapter>

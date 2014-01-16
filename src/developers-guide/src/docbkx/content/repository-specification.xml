@@ -696,9 +696,7 @@
 							</row>
 							<row>
 								<entry>403</entry>
-								<entry>The object specified by full_path_to_object is directory 
-								and it is not empty or object_type is set to 
-								&quot;manifest&quot;</entry>
+								<entry>The object_type is &quot;manifest&quot;</entry>
 							</row>
 						</tbody>
 					</tgroup>
