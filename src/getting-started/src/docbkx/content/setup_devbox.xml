@@ -217,5 +217,103 @@ SSL_KEY_FILE=''
             </listitem>
         </itemizedlist>
     </section>
+    <section>
+        <title>Custom devstack script</title>
+        <para>
+            It's just like regular devstack installation, but included all Murano services!
+            Follow the steps below:
+        </para>
+        <para><emphasis role="bold">System preparation</emphasis></para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis>Create user stack</emphasis></para>
+                    <programlisting>
+># adduser stack
+            </programlisting>
+                </listitem>
+                <listitem>
+                    <para>Add user stack to sudoers rules</para>
+                    <programlisting>
+># echo 'stack ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/stack
+># chmod 440 /etc/sudoers.d/stack
+                    </programlisting>
+                </listitem>
+            </itemizedlist>
+        </para>
+<para><emphasis role="bold"></emphasis>Installation</para>
+        <itemizedlist>
+            <listitem>
+                <para>Create folders where devstack will install all the files</para>
+                <programlisting>
+># mkdir -p /opt/stack
+># chown stack:stack /opt/stack
+                </programlisting>
+            </listitem>
+            <listitem>
+                <para>Change current user to "stack" and change directory to home</para>
+                <programlisting>
+># su stack
+>stack$ cd ~
+                </programlisting>
+            </listitem>
+            <listitem>
+                <para>Clone devstack repository and checkout havana branch</para>
+                <programlisting>
+>stack$ cd
+>stack$ git clone https://github.com/openstack-dev/devstack.git
+>stack$ cd devstack
+>stack$ git checkout stable/havana
+                </programlisting>
+            </listitem>
+            <listitem>
+                <para>Clone murano-deployment repository</para>
+                <programlisting>>stack$ cd
+>stack$ git clone https://github.com/stackforge/murano-deployment.git</programlisting>
+            </listitem>
+            <listitem>
+                <para>Copy required files from murano-deployment to devstack, then configure local.conf.
+                    You should set at least one configuration parameter there - HOST_IP address.</para>
+                <programlisting>
+>stack$ cd
+>stack$ cp -r murano-deployment/devstack-integration/* devstack/
+                </programlisting>
+            </listitem>
+
+             <listitem>
+                <para>Replace (or merge settings with) <filename>local.conf</filename> with another config file, if you need a different type of installation.
+                    Available config files and installation types are:
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            <filename>single-node.local.conf</filename> - single-node all-in-one installation. OpenStack + Murano will be installed on your node together.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            <filename>devbox.local.conf</filename> - install Murano only. OpenStack must be installed on another node, and your node will be configured to use it.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Edit devstack's configuration file</para>
+                <programlisting>
+>stack$ vim devstack/local.conf
+                </programlisting>
+            </listitem>
+            <listitem>
+                <para>From devstack directory, launch stack.sh</para>
+                <programlisting>
+>stack$ ./stack.sh
+                </programlisting>
+            </listitem>
+        </itemizedlist>
+        <para>
+            Now you can operate with Openstack and Murano. Murano Dashboard panel should appears in horizon dashboard.
+            Just open URL http://&lsaquo;your hostname&rsaquo; in web browser and  login with your credentials. Open Murano tab and enjoy.
+        </para>
+    </section>
 </chapter>
 
