@@ -22,118 +22,172 @@
          xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
          version="5.0">
-        <title>Troubleshooting</title>
-        <formalpara>
-            <title>General Notes</title>
-            <para>The following debug sequence should be used when you have no idea about why the
-                system isn't working. If you have one, you may skip unnecessary sections.</para>
-        </formalpara>
-        <para>Set debug options to "True" in the following Murano configuration files:<itemizedlist>
-                    <listitem>
-                        <para>/etc/murano-api/murano-api.conf</para>
-                    </listitem>
-                    <listitem>
-                        <para>/etc/murano-conductor/conductor.conf</para>
-                    </listitem>
-                </itemizedlist></para>
-            <para>Stop both <emphasis role="bold">murano-api</emphasis> and <emphasis role="bold"
-                >murano-conductor</emphasis> services. We will start them one by one from the
-            console.</para>
-        <formalpara>
-            <title>murano-api</title>
-            <para>First, the murano-api must be started.</para>
-        </formalpara>
+    <title>Troubleshooting</title>
+    <formalpara>
+        <title>General Notes</title>
         <para>
-            <itemizedlist>
-                    <listitem>
-                        <para>Open new console</para>
-                    </listitem>
-                    <listitem>
-                        <para>Start <emphasis role="bold">murano-api</emphasis> service
-                        manually<screen>># murano-api --config-dir /etc/murano-api 2>&amp;1 \
-   > /var/log/murano-api-live.log &amp;
-># tailf /var/log/murano-api-live.log</screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Open dashboard, create and send to deploy some simple
-                            environment.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Open RabbitMQ web console, open your vhost and ensure that queues were
-                            created and there is at least one message.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Check log for errors - there shouldn't be any</para>
-                    </listitem>
-                    <listitem>
-                        <para>Keep <emphasis role="bold">murano-api</emphasis> service
-                            running</para>
-                    </listitem>
-                </itemizedlist>
-            </para>
-        <formalpara>
-            <title>murano-conductor</title>
-            <para>Next to the <emphasis role="bold">murano-api</emphasis> the <emphasis role="bold"
-                    >murano-conductor</emphasis> should be started
-            </para>
-        </formalpara>
+            The following debug sequence should be used when you have no idea about why the
+            system isn't working. If you have one, you may skip unnecessary sections.
+        </para>
+    </formalpara>
+    <para>
+        Set debug options to "True" in the following Murano configuration files:
+        <itemizedlist>
+            <listitem>
+                <para>
+                    /etc/murano-api/murano-api.conf
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    /etc/murano-conductor/conductor.conf
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        Stop both <emphasis role="bold">murano-api</emphasis> and
+        <emphasis role="bold">murano-conductor</emphasis> services.
+        We will start them one by one from the console.
+    </para>
+    <formalpara>
+        <title>murano-api</title>
         <para>
-            <itemizedlist>
-                <listitem>
-                        <para>Open new console</para>
-                    </listitem>
-                    <listitem>
-                        <para>Start conductor from
-                        console<screen>># muranoconductor --config-dir /etc/murano-conductor \
-   > /var/log/murano-conductor-live.log &amp;
-># tailf /var/log/murano-conductor-live.log</screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>Check that there is no python exceptions in the log. Some errors like
-                            404 are ok, as conductor tries to delete environment that doesn't
-                            exist</para>
-                    </listitem>
-                    <listitem>
-                        <para>Check heat stack status. It should not be in FAILED state. If it is -
-                            check heat and nova error log to find the cause.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Keep murano-conductor service running.</para>
-                    </listitem>
-                </itemizedlist>
+            First, the murano-api must be started.
         </para>
-        <formalpara>
-            <title>Log Files</title>
-            <para>There are various log files which will help you to debug the system.</para>
-        </formalpara>
-        <para><emphasis role="bold">Murano Log Files</emphasis>
-            <itemizedlist>
-                <listitem>
-                    <para>/var/log/murano-api.log</para>
-                </listitem>
-                <listitem>
-                    <para>/var/log/murano-conductor.log</para>
-                </listitem>
-                <listitem>
-                    <para>/var/log/apache2/errors.log</para>
-                </listitem>
-                <listitem>
-                    <para>/var/log/httpd/errors.log</para>
-                </listitem>
-            </itemizedlist>
+    </formalpara>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Open new console
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Start <emphasis role="bold">murano-api</emphasis> service manually
+<screen>
+># murano-api --config-dir /etc/murano-api 2>&amp;1 >\
+    /var/log/murano-api-live.log &amp;
+># tailf /var/log/murano-api-live.log
+</screen>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Open dashboard, create and send to deploy some simple environment.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Open RabbitMQ web console, open your vhost and ensure that queues
+                    were created and there is at least one message.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Check log for errors - there shouldn't be any
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Keep <emphasis role="bold">murano-api</emphasis> service running
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <formalpara>
+        <title>murano-conductor</title>
+        <para>
+            Next to the <emphasis role="bold">murano-api</emphasis> the
+            <emphasis role="bold">murano-conductor</emphasis> should be started
         </para>
-        <para><emphasis role="bold">Windows Log Files</emphasis>
-            <itemizedlist>
-                <listitem>
-                    <para>C:\Program Files (x86)\CloudBase Solutions\logs\log.txt</para>
-                </listitem>
-                <listitem>
-                    <para>C:\Murano\Agent\log.txt</para>
-                </listitem>
-                <listitem>
-                    <para>C:\Murano\PowerShell.log</para>
-                </listitem>
-            </itemizedlist>
+    </formalpara>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Open new console
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Start conductor from console
+<screen>
+># muranoconductor --config-dir /etc/murano-conductor >\
+     /var/log/murano-conductor-live.log &amp;
+># tailf /var/log/murano-conductor-live.log
+</screen>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Check that there is no python exceptions in the log. Some errors like
+                    404 are ok, as conductor tries to delete environment that doesn't exist
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Check heat stack status. It should not be in FAILED state.
+                    If it is - check heat and nova error log to find the cause.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Keep murano-conductor service running.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <formalpara>
+        <title>Log Files</title>
+        <para>
+            There are various log files which will help you to debug the system.
         </para>
+    </formalpara>
+    <para>
+        <emphasis role="bold">Murano Log Files</emphasis>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    /var/log/murano-api.log
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    /var/log/murano-conductor.log
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    /var/log/apache2/errors.log
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    /var/log/httpd/errors.log
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        <emphasis role="bold">Windows Log Files</emphasis>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    C:\Program Files (x86)\CloudBase Solutions\logs\log.txt
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    C:\Murano\Agent\log.txt
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    C:\Murano\PowerShell.log
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
 </chapter>
-
