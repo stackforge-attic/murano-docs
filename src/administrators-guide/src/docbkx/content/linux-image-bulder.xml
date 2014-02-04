@@ -168,7 +168,7 @@ format=qcow2,bus=virtio,cache=none \
 				</listitem>
 				<listitem>
 					<para>
-						Set a name for VM and select Local install media
+						Set a name for VM and select Local installation media
 					</para>
 				</listitem>
 				<listitem>
@@ -399,7 +399,7 @@ PermitRootLogin no
 		<note>
 			<para>
 				Image should be marked with an appropriate type. That could be done through the Horizon UI.
-				Navigate to Project -&gt; Environments -&gt; Marked Images -&gt; Mark Image and fill up form:
+				Navigate to Murano -&gt; Manage -&gt; Images and fill up form:
 				<itemizedlist>
 					<listitem>
 						<para>
