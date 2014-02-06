@@ -13,8 +13,8 @@
 <chapter xmlns="http://docbook.org/ns/docbook" 
 		 xmlns:xlink="http://www.w3.org/1999/xlink" 
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd" 
-         version="5.0">
+		 xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd" 
+		 version="5.0">
 	<title>Install Murano</title>
 	<para>This chapter describes Murano services installation in virtual 
 	environment.</para>
@@ -79,6 +79,9 @@
 			<para>Before installing any packages make sure that your system is 
 			updated and upgraded.</para>
 		</note>
+		<note>
+			To deploy web farm services Neutron LBaaS (Neutron extension package) should be installed in Openstack
+		</note>
 	</section>
 	<section xml:id="venv">
 		<title>Installing with virtual environment</title>
@@ -91,7 +94,7 @@
 			virtualenv package if you don&apos;t have one:
 			<programlisting>
 sudo pip install virtualenv
-            </programlisting>
+			</programlisting>
 		</para>
 		<para>
 			<emphasis role="bold">Murano Api</emphasis>
@@ -101,7 +104,7 @@ sudo pip install virtualenv
 						Check out git repository with murano component:
 						<programlisting>
 git clone https://github.com/stackforge/murano-api
-                    </programlisting>
+					</programlisting>
 					</para>
 				</listitem>
 				<listitem>
@@ -111,21 +114,22 @@ git clone https://github.com/stackforge/murano-api
 						 directory to create virtual environment automatically:
 						<programlisting>
 cd murano-api &amp;&amp; python ./tools/install_venv.py
-                        </programlisting>
+						</programlisting>
 					</para>
 				</listitem>
 				<listitem>
-					<para>Config files are <filename>etc/murano-api.conf</filename> 
-					where you just need to point out IP address where your RabbitMQ is 
-					running, and <filename>etc/murano-api-paste.ini</filename>, which 
-					doesn&apos;t require any changes.</para>
+					<para> Copy murano-api sample config file located at
+						<filename>etc/murano/murano-api.conf.sample</filename> to <filename>etc/murano/murano-api.conf</filename>.
+						In config file set up keystone endpoint in Openstack installation. Other settings are described in 'Murano Admin Guide'.
+						Config <filename>etc/murano/murano-api-paste.conf</filename>
+					doesn't require any modification.</para>
 				</listitem>
 				<listitem>
 					<para>
 						And finally run Murano API:
 						<programlisting>
-./tools/with_venv.sh python muranoapi/cmd/api.py --config-file=./etc/murano-api.conf
-                        </programlisting>
+./tools/with_venv.sh python muranoapi/cmd/api.py --config-file=./etc/murano/murano-api.conf
+						</programlisting>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -138,41 +142,33 @@ cd murano-api &amp;&amp; python ./tools/install_venv.py
 						Check out git repository with murano component:
 						<programlisting>
 git clone https://github.com/stackforge/murano-conductor
-                        </programlisting>
+						</programlisting>
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Execute a script located at the
+						Execute the following script located at the
 						<filename>murano-conductor/tools</filename>
 						 directory to create virtual environment automatically:
 						<programlisting>
 cd murano-conductor &amp;&amp; python ./tools/install_venv.py
-                        </programlisting>
+						</programlisting>
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Murano Conductor config file located at 
-						<filename>etc/conductor.conf</filename>
-						 For a local development comment data_dir parameter in this file:
-						<programlisting>
-# Directory where conductor&apos;s data directory located.
-# &quot;data&quot; must be subdirectory to this.
-# data_dir = /etc/murano-conductor
-                        </programlisting>
-						After that local 
-						<filename>data</filename>
-						 directory, which contain all necessary files will be used. All 
-						other possible configuration described in the Murano Admin Guide.
+						Copy Murano Conductor sample config file located at
+						<filename>etc/murano/conductor.conf.sample</filename> to <filename>etc/murano/conductor.conf</filename>.
+						In config file set up keystone endpoint in Openstack installation.
+						All other possible configuration described in the Murano Admin Guide.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Run Murano Conductor:
 						<programlisting>
-./tools/with_venv.sh python muranoconductor/cmd/run.py --config-file=./etc/conductor.conf
-                        </programlisting>
+./tools/with_venv.sh python muranoconductor/cmd/run.py --config-file=./etc/murano/conductor.conf
+						</programlisting>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -185,7 +181,7 @@ cd murano-conductor &amp;&amp; python ./tools/install_venv.py
 						Check out git repository with murano component:
 						<programlisting>
 git clone https://github.com/stackforge/murano-repository
-                    </programlisting>
+					</programlisting>
 					</para>
 				</listitem>
 				<listitem>
@@ -195,20 +191,20 @@ git clone https://github.com/stackforge/murano-repository
 						 directory to create virtual environment automatically:
 						<programlisting>
 cd murano-repository &amp;&amp; python ./tools/install_venv.py
-                        </programlisting>
+						</programlisting>
 					</para>
 				</listitem>
 				<listitem>
 					<para>Copy a config file <filename>
-					etc/murano-repository.conf.sample</filename> to <filename>
-					etc/murano-repository.conf</filename> and point out Keystone parameters.</para>
+					etc/murano/murano-repository.conf.sample</filename> to <filename>
+					etc/murano/murano-repository.conf</filename> and point out Keystone parameters.</para>
 				</listitem>
 				<listitem>
 					<para>
 						And finally run Murano Repository:
 						<programlisting>
-./tools/with_venv.sh python muranorepository/cmd/run.py --config-file=./etc/murano-repository.conf
-                        </programlisting>
+./tools/with_venv.sh python muranorepository/cmd/run.py --config-file=./etc/murano/murano-repository.conf
+						</programlisting>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -220,7 +216,7 @@ cd murano-repository &amp;&amp; python ./tools/install_venv.py
 					Check out git repository with murano component:
 					<programlisting>
 git clone https://github.com/stackforge/murano-dashboard
-                    </programlisting>
+					</programlisting>
 				</para>
 			</listitem>
 			<listitem>
@@ -230,7 +226,7 @@ git clone https://github.com/stackforge/murano-dashboard
 					 directory to create virtual environment automatically:
 					<programlisting>
 cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
-                    </programlisting>
+					</programlisting>
 				</para>
 			</listitem>
 			<listitem>
@@ -242,15 +238,15 @@ cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
 							<para>
 								<programlisting>
 # ./tools/with_venv.sh pip install https://github.com/openstack/horizon/archive/grizzly-2.tar.gz
-                                </programlisting>
+								</programlisting>
 								<emphasis>Ubuntu</emphasis>
 								<programlisting>
 # apt-get install nodejs
-                                </programlisting>
+								</programlisting>
 								<emphasis>CentOS</emphasis>
 								<programlisting>
 # yum install nodejs
-                                </programlisting>
+								</programlisting>
 							</para>
 						</listitem>
 					</itemizedlist>
@@ -261,12 +257,33 @@ cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
 					To configure Murano Dashboard copy example config file:
 					<programlisting>
 # cp muranodashboard/local/local_settings.py.example muranodashboard/local/local_settings.py
-                        </programlisting>
-					and set in just copied file the the actual IP address of the 
-					OpenStack end-point. If you haven&apos;t register murano-api 
-					service in the keystone catalog you can set MURANO_API_URL in the 
-					same settings file. Note that local murano-api service will be 
-					using by default.
+						</programlisting>
+					and set in just copied file the following parameters:
+					<itemizedlist>
+						<listitem>
+							 <para>
+								 <emphasis>MURANO_API_URL</emphasis> Required if murano-api service is not registered in keystone.
+								 Provide valid URL where Murano API is running
+							 </para>
+						</listitem>
+						 <listitem>
+							 <para>
+								 <emphasis>MURANO_METADATA_URL</emphasis>
+								 Required if murano-repository service is not registered in keystone.
+								 Provide valid URL where Murano Repository service is running
+							 </para>
+						</listitem>
+						<listitem>
+							 <para><emphasis>NETWORK_TOPOLOGY</emphasis></para> - network configuration.
+							Duplicates murano-conductor setting (routed - default, flat, nova).
+						</listitem>
+					</itemizedlist>
+					Since all UI forms are described in Metadata Repository and kept in Django sessions - default Memcached as a session backend is not
+					suitable for a dynamic UI and we need to use Database backend. (It's already set up in murano settings file).
+					But this requires to synchronize database with the specified settings:
+					<programlisting>
+./tools/with_venv.sh ./manage.py syncdb
+					</programlisting>
 				</para>
 			</listitem>
 			<listitem>
@@ -276,7 +293,7 @@ cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
 					utility with the context of the virtual environment:
 					<programlisting>
 ./tools/with_venv.sh ./manage.py runserver 0.0.0.0:8080
-                        </programlisting>
+					</programlisting>
 				</para>
 			</listitem>
 		</itemizedlist>
