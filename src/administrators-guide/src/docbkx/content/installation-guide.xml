@@ -512,7 +512,7 @@ cp conductor.conf.sample conductor.conf
                                 </para>
                             </listitem>
                             <listitem>
-                                <para><emphasis>[heat]</emphasis>points where heat is running.
+                                <para><emphasis>[heat]</emphasis> points where heat is running.
                                 </para>
                             </listitem>
                             <listitem>
@@ -520,7 +520,7 @@ cp conductor.conf.sample conductor.conf
                                 </para>
                             </listitem>
                             <listitem>
-                                <para><emphasis>[rabbitmq]</emphasis>section points where your rabbitMQ installed and
+                                <para><emphasis>[rabbitmq]</emphasis> section points where your rabbitMQ installed and
                                     configured.
                                 </para>
                          </listitem>
@@ -529,21 +529,23 @@ cp conductor.conf.sample conductor.conf
                     <programlisting>
 [DEFAULT]
 
-# Path where log will be written
-log_file = /tmp/conductor.log
+# Set up logging. To use syslog just set use_syslog parameter value to 'True'
+log_file = /tmp/murano-conductor.log
+use_syslog = False
+syslog-log-facility=LOG_LOCAL0
 
 # Log verbosity
-debug=True
-verbose=True
+debug = True
+verbose = True
 
 # Provide directory with initialization scripts
-init_scripts_dir = etc/init-scripts
+init_scripts_dir = etc/murano/init-scripts
 
 # Provide directory with agent configs
-agent_config_dir = etc/agent-config
+agent_config_dir = etc/murano/agent-config
 
 # Directory for data cache, OS temp directory is used by default
-#data_dir = /tmp/muranoconductor-cache
+data_dir = /tmp/muranoconductor-cache
 
 # Provide url to Murano Metadata repository
 # Comment this line if you registered murano-metadata in keystone catalog
