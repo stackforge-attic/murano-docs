@@ -148,6 +148,15 @@
                     <para>/var/log/httpd/errors.log</para>
                 </listitem>
             </itemizedlist>
+            <para><emphasis role="bold">Murano Cache</emphasis></para>
+            <itemizedlist>
+                <listitem>
+                    <para>/var/</para>
+                </listitem>
+                <listitem>
+                    <para>C:\Murano\Agent\log.txt</para>
+                </listitem>
+            </itemizedlist>
             <para><emphasis role="bold">Windows Log Files (on VM's)</emphasis></para>
             <itemizedlist>
                 <listitem>

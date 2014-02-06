@@ -118,6 +118,11 @@ some_key2 = some_value2
                       </para>
                   </listitem>
                   <listitem>
+                      <para>
+                          <link xlink:href="https://wiki.openstack.org/wiki/Neutron/LBaaS/HowToRun"> Neutron LBaaS (Neutron extension package)</link>
+                      </para>
+                  </listitem>
+                  <listitem>
                       <para>Windows Server 2012 Standard image imported into Glance.
                           See <link linkend="Build Windows Image">Build Windows Image</link> chapter.
                       </para>
@@ -126,7 +131,7 @@ some_key2 = some_value2
                       <para>Samba share with prerequisites. See <link linkend="Samba">Install Samba</link></para>
                   </listitem>
                   <listitem>
-                      <para>OpenStack metadata service.</para>
+                      <para>OpenStack metadata service</para>
                   </listitem>
               </itemizedlist>
               </listitem>

@@ -79,6 +79,9 @@
 			<para>Before installing any packages make sure that your system is 
 			updated and upgraded.</para>
 		</note>
+        <note>
+            To deploy web farm services Neutron LBaaS (Neutron extension package)  should be installed in Openstack
+        </note>
 	</section>
 	<section xml:id="venv">
 		<title>Installing with virtual environment</title>
@@ -115,10 +118,11 @@ cd murano-api &amp;&amp; python ./tools/install_venv.py
 					</para>
 				</listitem>
 				<listitem>
-					<para>Config files are <filename>etc/murano-api.conf</filename> 
-					where you just need to point out IP address where your RabbitMQ is 
-					running, and <filename>etc/murano-api-paste.ini</filename>, which 
-					doesn&apos;t require any changes.</para>
+                    <para> Copy murano-api sample config file located at
+						<filename>etc/murano-api.conf.sample</filename> to <filename>etc/murano-api.conf</filename>.
+						In config file set up keystone endpoint in Openstack installation. Other settings are described in 'Murano Admin Guide'.
+                        Config <filename>etc/murano-api-paste.conf</filename>
+					doesn't require any modification.</para>
 				</listitem>
 				<listitem>
 					<para>
@@ -143,7 +147,7 @@ git clone https://github.com/stackforge/murano-conductor
 				</listitem>
 				<listitem>
 					<para>
-						Execute a script located at the
+						Execute the following script located at the
 						<filename>murano-conductor/tools</filename>
 						 directory to create virtual environment automatically:
 						<programlisting>
@@ -153,18 +157,10 @@ cd murano-conductor &amp;&amp; python ./tools/install_venv.py
 				</listitem>
 				<listitem>
 					<para>
-						Murano Conductor config file located at 
-						<filename>etc/conductor.conf</filename>
-						 For a local development comment data_dir parameter in this file:
-						<programlisting>
-# Directory where conductor&apos;s data directory located.
-# &quot;data&quot; must be subdirectory to this.
-# data_dir = /etc/murano-conductor
-                        </programlisting>
-						After that local 
-						<filename>data</filename>
-						 directory, which contain all necessary files will be used. All 
-						other possible configuration described in the Murano Admin Guide.
+						Copy Murano Conductor sample config file located at
+						<filename>etc/conductor.conf.sample</filename> to <filename>etc/conductor.conf</filename>.
+						In config file set up keystone endpoint in Openstack installation.
+                        All other possible configuration described in the Murano Admin Guide.
 					</para>
 				</listitem>
 				<listitem>
@@ -262,11 +258,31 @@ cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
 					<programlisting>
 # cp muranodashboard/local/local_settings.py.example muranodashboard/local/local_settings.py
                         </programlisting>
-					and set in just copied file the the actual IP address of the 
-					OpenStack end-point. If you haven&apos;t register murano-api 
-					service in the keystone catalog you can set MURANO_API_URL in the 
-					same settings file. Note that local murano-api service will be 
-					using by default.
+					and set in just copied file the following parameters:
+                    <itemizedlist>
+                        <listitem>
+                             <para>
+                                 <emphasis>MURANO_API_URL</emphasis> Required if murano-api service is not registered in keystone.
+                                 Provide valid URL where Murano API is running
+                             </para>
+                        </listitem>
+                         <listitem>
+                             <para>
+                                 <emphasis>MURANO_METADATA_URL</emphasis> Required if murano-repository service is not registered in keystone.
+                                 Provide valid URL where Murano Repository service is running
+                             </para>
+                        </listitem>
+                        <listitem>
+                             <para><emphasis>NETWORK_TOPOLOGY</emphasis></para> - network configuration.
+                            Duplicates murano-conductor setting (routed - default, flat, nova).
+                        </listitem>
+                    </itemizedlist>
+                    Since all UI forms are described in Metadata Repository and kept in Django sessions - default Memcached as a session backend is not
+                    suitable for a dynamic UI and we need to use Database backend. (It's already set up in murano settings file).
+                    But this requires to synchronize database with the specified settings:
+                    <programlisting>
+./tools/with_venv.sh ./manage.py syncdb
+                    </programlisting>
 				</para>
 			</listitem>
 			<listitem>
@@ -276,7 +292,7 @@ cd murano-dashboard &amp;&amp; python ./tools/install_venv.py
 					utility with the context of the virtual environment:
 					<programlisting>
 ./tools/with_venv.sh ./manage.py runserver 0.0.0.0:8080
-                        </programlisting>
+                    </programlisting>
 				</para>
 			</listitem>
 		</itemizedlist>
