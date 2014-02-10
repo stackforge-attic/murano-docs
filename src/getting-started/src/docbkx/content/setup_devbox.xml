@@ -241,7 +241,8 @@ SSL_KEY_FILE=''
                 </listitem>
             </itemizedlist>
         </para>
-<para><emphasis role="bold"></emphasis>Installation</para>
+<para><emphasis role="bold">Installation</emphasis></para>
+        <para>
         <itemizedlist>
             <listitem>
                 <para>Create folders where devstack will install all the files</para>
@@ -310,9 +311,8 @@ SSL_KEY_FILE=''
                 </programlisting>
             </listitem>
         </itemizedlist>
-        <para>
             Now you can operate with Openstack and Murano. Murano Dashboard panel should appears in horizon dashboard.
-            Just open URL http://&lsaquo;your hostname&rsaquo; in web browser and  login with your credentials. Open Murano tab and enjoy.
+            Just open URL http://&lt;your hostname &gt; in web browser and  login with your credentials. Open Murano tab and enjoy.
         </para>
     </section>
 </chapter>
