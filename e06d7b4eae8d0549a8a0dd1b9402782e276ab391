@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Approved+1: Dmitry Teselkin <dteselkin@mirantis.com>
+Code-Review+2: Dmitry Teselkin <dteselkin@mirantis.com>
+Code-Review+2: Alexander Tivelkov <ativelkov@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Tue, 22 Apr 2014 12:45:24 +0000
+Reviewed-on: https://review.openstack.org/89537
+Project: stackforge/murano-docs
+Branch: refs/heads/master
