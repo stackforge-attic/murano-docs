@@ -23,14 +23,14 @@
 		Metadata property of Glance image is used. Murano Dashboard allows to
 		add that property from a separate view. Navigate to the Murano tab 
 		and go to 
-		<filename>Images</filename>
+		<filename>Manage > Images</filename>
 		 panel.
 		<warning>
 			<para>To operate with Glance Images you need to have admin 
 			rights!</para>
 		</warning>
 		<mediaobject><imageobject role="fo">
-		<imagedata contentdepth="100%" fileref="../images/Images/index.png" scalefit="1" width="100%"/>
+		<imagedata contentdepth="100%" fileref="../images/Images/main-images.png" scalefit="1" width="100%"/>
 		</imageobject></mediaobject>
 		 You are browsing Glance images with correctly set 
 		&quot;murano_image_info&quot; property - image metadata. From this 

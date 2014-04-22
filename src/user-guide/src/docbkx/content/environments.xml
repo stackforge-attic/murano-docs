@@ -30,6 +30,9 @@
                 <para>Create;</para>
             </listitem>
             <listitem>
+                <para>Edit;</para>
+            </listitem>
+            <listitem>
                 <para>Delete;</para>
             </listitem>
             <listitem>
@@ -43,16 +46,20 @@
         <para>Once you installed all Murano components and logged-in to horizon dashboard successfully you will see Murano tab:</para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata  fileref="../images/env_panel.png" scalefit="1" width="100%" contentdepth="100%"/>
+                <imagedata  fileref="../images/Environments/main-envs.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
         <para>
             First thing you need to do is to create an environment.
-            To do this, navigate to the "Environments" page and click the "Create Environment". After setting name to your virtual environment it will be created.
+            To do this, navigate to the
+            <filename>Deployment > Environments</filename>
+            page and click to the
+            <filename>"Create Environment"</filename>
+            . After setting name to your virtual environment it will be created.
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/env_btn.png" scalefit="1"
+                <imagedata fileref="../images/Environments/create-env.png" scalefit="1"
                            width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
@@ -61,38 +68,42 @@
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/env_created.png" scalefit="1"
+                <imagedata fileref="../images/Environments/created-env.jpg" scalefit="1"
                            width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
     </section>
     <section>
-        <title>Creating service prototype</title>
+        <title>Adding application to the environment</title>
         <para >
-            All services should be created in the context of Environment. After Environment is created, you need to create service prototypes
+            After Environment is created, you need to add applications to this environment
             and then deploy the Environment. When deploy process is done instances
-            with your services will be spawned in Openstack.
-            To create a service prototype navigate to page with the list of environment services by
+            with your aplications will be spawned in OpenStack.
+            To add an application navigate to page with the list of environment services by
             clicking on the environment name (or on the "Services" button) and then, click
-            the "Create Service" button.
+            the 
+            <filename>"Add Application"</filename>button.
         </para>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/service_btn.png" scalefit="1" width="100%" contentdepth="100%"/>
+                    <imagedata fileref="../images/Environments/add-app-btn.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
         <para>
-            You have an opportunity to create one of the following services:
+            After clicking on the button you will be redirected to the "Application Catalog" page.
+            Here you can see all applications: public applications and application uploaded by yourself.
+            (Information about how to upload your own package to repository is availiable in appropriate 
+            chapter.) You have an opportunity to add some of them. Base public applications are following:
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/service_list.png" scalefit="1" width="100%" contentdepth="50%" />
+                <imagedata fileref="../images/Application_Catalog/AppCatalog.png" scalefit="1" width="100%" contentdepth="50%" />
             </imageobject>
         </mediaobject>
         <para>
-            Once you choose service that you want to create click "Next" and fill the form.
-            Forms for each service are specific.
-            To see more information about filling the form for a specific service follow one of the link below:
+            Once you choose application that you want to add click "Add to Env" and fill the form.
+            Forms for each application are specific.
+            To see more information about filling the form for a specific application follow one of the link below:
         </para>
         <itemizedlist>
              <listitem>
@@ -131,6 +142,13 @@
                         <link linkend="Apache">Apache Service:</link></emphasis>
                    Apache HTTP Server is a web server application notable for playing a key role in the initial growth of the World Wide Web.
                    This service can install Apache with PHP module or without it.
+                </para>
+            </listitem>
+             <listitem>
+                <para>
+                    <emphasis role="bold">
+                        <link linkend="Tomcat">Apache Tomcat:</link></emphasis>
+                   Apache Tomcat is an open source software implementation of the Java Servlet and JavaServer Pages technologies.
                 </para>
             </listitem>
              <listitem>
@@ -180,9 +198,18 @@
                     SQL Server Cluster the way you want.
                 </para>
             </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="bold">
+                        <link linkend="PostgreSQL">PostgreSQL:</link>
+                    </emphasis>
+                    PostgreSQL, often simply "Postgres", is an object-relational database management
+                    system with an emphasis on extensibility and standards-compliance.
+            </para>
+            </listitem>
         </itemizedlist>
         <para>
-            On the last step of creating service prototype you have opportunity to set
+            On the last step of creating application prototype you have opportunity to set
             the hardware flavor of the instance which will be created -
             and the image with the operating system, which will be installed on
             the instance. Also you may select availability zone, if there are more
@@ -586,12 +613,12 @@
     <section>
         <title>Deploying environment</title>
         <para>
-            Once all services are prepared you can send environment to deploy.
-            Just press the "Deploy Environment" button.
+            Once all application are added you can send environment to deploy.
+            Just press the <filename>"Deploy This Environment"</filename> button.
         </para>
         <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/deploy_btn.png" scalefit="1" width="100%" contentdepth="100%"/>
+                    <imagedata fileref="../images/Environments/deploy-env-btn.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
         </mediaobject>
         <para>
@@ -600,7 +627,7 @@
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/deploy_started.png" scalefit="1"
+                <imagedata fileref="../images/Environments/deploy_started.png" scalefit="1"
                            width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
@@ -624,12 +651,12 @@
         <para>
             As long as installation and configuration are in progress, environment
             is in <emphasis>Deploy in progress</emphasis> state. Depending on how many
-            services you are deploying or how many nodes in your cluster, process of spawning instances,
+            applications you are deploying or how many nodes in your cluster, process of spawning instances,
             installation and post installation settings takes from 10 minutes up to one hour.
         </para>
         <mediaobject>
             <imageobject role="fo">
-                <imagedata fileref="../images/env_deploy.png" scalefit="1" width="100%" contentdepth="100%"/>
+                <imagedata fileref="../images/Environments/deploy-in-prg.png" scalefit="1" width="100%" contentdepth="100%"/>
             </imageobject>
         </mediaobject>
         <para>
@@ -645,8 +672,8 @@
     <section>
         <title>Working with deployed environment</title>
         <para>
-            Congratulations! After some time waiting you are able to operate with the services.
-            To get information about installed services, navigate to service detailed page.
+            Congratulations! After some time waiting you are able to operate with the applications.
+            To get information about installed application, navigate to service detailed page.
             To do that click on the environment name and then on the name of the service you what to know about.
         </para>
         <mediaobject>
@@ -675,13 +702,13 @@
         <para>There are more things you can do with Murano Environment:</para>
         <itemizedlist>
             <listitem>
-                <para><link linkend="redeploy">Add new services and deploy it again;</link></para>
+                <para><link linkend="redeploy">Add new application and deploy it again;</link></para>
             </listitem>
             <listitem>
-                <para><link linkend="delete">Delete outdated and unnecessary environments or services;</link></para>
+                <para><link linkend="delete">Delete outdated and unnecessary environments or applications;</link></para>
             </listitem>
             <listitem>
-                <para><link linkend="deployments">Browse deployment history and service installation logs;</link></para>
+                <para><link linkend="deployments">Browse deployment history and application installation logs;</link></para>
             </listitem>
             <listitem>
                 <para><link linkend="edit">Rename your environment.</link></para>
@@ -698,13 +725,13 @@
         </section>
         <section xml:id="delete">
             <title>Deleting</title>
-            <para>Services as well as environments can be easily deleted.</para>
+            <para>Applications as well as environments can be easily deleted.</para>
             <itemizedlist>
                 <listitem>
-                    <para>To delete an environment go to the environment index page and click "More" -> "Delete Environment" in Actions column of ready to delete environment.</para>
+                    <para>To delete an environment go to the Deployment > Environments index page and click "More" -> "Delete Environment" in Actions column of ready to delete environment.</para>
                     <mediaobject>
                         <imageobject role="fo">
-                            <imagedata fileref="../images/env_delete.png"
+                            <imagedata fileref="../images/Environments/delete-env.png"
                                        scalefit="1" width="100%"
                                        contentdepth="100%"/>
                         </imageobject>
@@ -716,9 +743,9 @@
                 </listitem>
                 <listitem>
                     <para>
-                        To delete a service go service list page and click the "Delete Service" button in Actions column. <emphasis role="bold">Note:</emphasis>
-                        If you are deleting service that was already deployed you'll need to <emphasis>Deploy</emphasis> the environment again by pressing corresponding button.
-                        In case you want to delete service prototype - it has <emphasis>"Service draft created"</emphasis> in the <emphasis>
+                        To delete an application go to the application list page and click the "Delete Service" button in Actions column. <emphasis role="bold">Note:</emphasis>
+                        If you are deleting application that was already deployed you'll need to <emphasis>Deploy</emphasis> the environment again by pressing corresponding button.
+                        In case you want to delete application prototype - it has <emphasis>"Service draft created"</emphasis> in the <emphasis>
                         Last operation</emphasis> column (see the screenshot below) - changes applies right away.
                     </para>
                     <mediaobject>
@@ -740,7 +767,7 @@
             </para>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/env_show.png" scalefit="1" width="100%" contentdepth="100%"/>
+                    <imagedata fileref="../images/Environments/show-env.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
             <para>
@@ -778,16 +805,16 @@
             </para>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/env_edit.png" scalefit="1" width="100%" contentdepth="100%"/>
+                    <imagedata fileref="../images/Environments/edit-env.png" scalefit="1" width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
             <para>
-                Environment name is not involved in service creation process so you can use spaces and any other
-                characters you want.
+                Environment name is not involved in application creation process but environment name have to corresponds with 
+		heat stack name. So name must contains only alphanumeric characters (case sensitive) and start with an alpha character.
             </para>
             <mediaobject>
                 <imageobject role="fo">
-                    <imagedata fileref="../images/env_edit2.png" scalefit="1"
+                    <imagedata fileref="../images/Environments/rename-env.png" scalefit="1"
                                width="100%" contentdepth="100%"/>
                 </imageobject>
             </mediaobject>
