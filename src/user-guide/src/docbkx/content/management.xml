@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License,
+	Version 2.0 (the &quot;License&quot;); you may not use this file
+	except in compliance with the License. You may obtain a copy of the
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required
+	by applicable law or agreed to in writing, software distributed under
+	the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+	the License for the specific language governing permissions and
+	limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+		 xmlns:xlink="http://www.w3.org/1999/xlink"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 version="5.0"
+		 xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+	<title>Murano Management</title>
+	<section xml:id="PackageDefinition">
+		<title>Package definitions</title>
+		<para>
+			Cloud administrator has rights to manage applications in the
+			catalog: upload new applications, modify existing, disable or
+			delete them.
+			All this actions are available in Murano UI and will be described
+			in this section. Go to the <emphasis>Manage ->Package
+			Definitions</emphasis> page.
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata contentdepth="100%"
+							   fileref="../images/manage/index.png"
+							   scalefit="1" width="100%"/>
+				</imageobject>
+			</mediaobject>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<filename>Upload Package</filename>
+						provides a form for uploading an application package.
+						After this operation your application will be
+						acceptable from application catalog.
+					</para>
+					<mediaobject>
+						<imageobject role="fo">
+							<imagedata contentdepth="100%"
+									   fileref="../images/manage/upload.png"
+									   scalefit="1" width="100%"/>
+						</imageobject>
+					</mediaobject>
+					<para>
+						You'll need to provide path to the package with your
+						application. It should be in a zip format.
+						See
+						<link xlink:href="https://wiki.openstack.org/wiki/Murano/Documentation/How_to_create_application_package">
+							here
+						</link>
+						for more information on how to prepare an application
+						package. Also select one category to which your application belongs too.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<filename>Toggle Active</filename>
+						makes an application
+						active or disabled depending on the current state.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<filename>Delete Packages</filename>
+						removes applications from the catalog
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<filename>Modify Package</filename>
+						gives you opportunity to modify meta information about
+						the application.
+					</para>
+					<mediaobject>
+						<imageobject role="fo">
+							<imagedata contentdepth="100%"
+									   fileref="../images/manage/modify.png"
+									   scalefit="1" width="100%"/>
+						</imageobject>
+					</mediaobject>
+					<para>The following properties are allowed to edit:
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis role="bold">Name</emphasis>
+									- visible application name
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">Categories</emphasis>
+									- change application category
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">Tags</emphasis>
+									- specify comma-separated list of words,
+									associated with the application
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">Public</emphasis>
+									- indicates access for non-admin users from
+									all tenants
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">Active</emphasis>
+									- indicates if this application is enabled
+									or disabled
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">Description
+									</emphasis>
+									- extend information about application,
+									which will be shown at the Application
+									Details page
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<filename>Download Package</filename>
+						saves application definition as zip archive, as it was
+						uploaded
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Murano Images</title>
+		<para>
+			Murano uses preconfigured images for spawning instances. Image
+			suitable for Murano should have Murano Agent installed at least.
+			See
+			<link xlink:href="http://murano-docs.github.io/latest/administrators-guide/content/ch03.html">
+				here
+			</link>
+			how to build Murano images and upload it to Glance. Since Murano
+			supports different operating systems it&apos;s not possible to use
+			one image to build every single application. To classify images
+			Metadata property of Glance image is used. Murano Dashboard allows
+			to
+			add that property from a separate view. Navigate to the Murano tab
+			and go to
+			<filename>Images</filename>
+			panel.
+			<warning>
+				<para>To operate with Glance Images you need to have admin
+					rights!
+				</para>
+			</warning>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata contentdepth="100%"
+							   fileref="../images/images/index.png"
+							   scalefit="1" width="100%"/>
+				</imageobject>
+			</mediaobject>
+			You are browsing Glance images with correctly set
+			&quot;murano_image_info&quot; property - image metadata. From this
+			view you are able to:
+			<itemizedlist>
+				<listitem>
+					<para>Delete an existing image metadata with
+						<filename>&quot;Delete
+							Metadata&quot;</filename>
+						button (only image's property get deleted,
+						the image itself stays in Glance)
+					</para>
+				</listitem>
+				<listitem>
+					<para>Add new murano metadata to an image that is already
+						registered in Glance by clicking on
+						<filename>&quot;Mark Image&quot;</filename> button
+					</para>
+				</listitem>
+			</itemizedlist>
+			Take a look at the &quot;Mark Image&quot; form:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata contentdepth="100%"
+							   fileref="../images/images/mark_image.png"
+							   scalefit="1" width="100%"/>
+				</imageobject>
+			</mediaobject>
+			<informaltable cellpadding="3" cellspacing="3" frame="border"
+						   rules="all" width="100%">
+				<col align="left" style="font-weight:bold" valign="top"
+					 width="25%"/>
+				<col style="padding:6px" width="70%"/>
+				<tbody>
+					<tr>
+						<td style="font-weight:bold">
+							<para>Image</para>
+						</td>
+						<td>
+							<para>From all images registered in Glance pick one
+								that was created with
+								<link linked="http://murano-docs.github.io/latest/administrators-guide/content/ch03.html">
+									Murano Image Builder</link>.
+							</para>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-weight:bold">
+							<para>Title</para>
+						</td>
+						<td>
+							<para>Set name for a selected image to recognize it
+								easier during
+								service creation.
+							</para>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-weight:bold">
+							<para>Type</para>
+						</td>
+						<td>
+							<para>
+								For now there are three supported types:
+								<itemizedlist>
+									<listitem>
+										<para>Windows Server 2012 - used to
+											build Windows-based
+											applications
+										</para>
+									</listitem>
+									<listitem>
+										<para>Murano Demo - light-weight Linux
+											Cirros image with
+											Murano Demo Agent
+										</para>
+									</listitem>
+									<listitem>
+										<para>Generic Linux - used to build
+											Linux-based
+											applications
+										</para>
+									</listitem>
+								</itemizedlist>
+							</para>
+						</td>
+					</tr>
+				</tbody>
+			</informaltable>
+		</para>
+	</section>
+</chapter>

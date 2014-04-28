@@ -21,14 +21,16 @@
       xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd"
       version="5.0">
-    <title>How can I use Murano Service?</title>
+    <title>Overview</title>
     <para>
-        Murano is intended to get opportunity for non-experienced
-        users to deploy different kinds of applications extremely simple.
-        To use Murano you should be familiar with Openstack.
-        Murano Dashboard is just a plugin to Openstack dashboard - Horizon.
-        Please visit horizon user guide first to see how dashboard is organized and how to login into it.
-        This document describes Murano Dashboard usage in detail.
+        Murano is an Application catalog for Openstack.
+        Full information about Murano in <link xlink:href="https://wiki.openstack.org/wiki/Murano">Openstack wiki page.</link>
+        Murano Project introduces an application catalog, which allows application developers and cloud administrators to publish various cloud-ready applications
+        in a browsable categorised catalog.
+        It may be used by the cloud users to pick-up the needed applications and services and composes the reliable environments out of them in a “push-the-button” manner.
+        Murano UI is just a plugin to Openstack dashboard - Horizon.
+        Please visit horizon user guide first to see how dashboard is organized and how to log in to it.
+        This document describes Murano Application Catalog usage in detail.
     </para>
     <section>
         <title>Document change history</title>
@@ -36,7 +38,7 @@
         <informaltable rules="all">
 		<tgroup cols='2'>
 		<colspec colname="col1" colnum="1" colwidth="1*"/>
-        <colspec colname="col2" colnum="2" colwidth="1*"/>
+        <colspec colname="col2" colnum="2" />
 			<thead>
 				<row>
                     <entry>Revision Date</entry>
@@ -46,10 +48,10 @@
 			<tbody>
 				<row>
 					<entry>
-						September. 4, 2013
+						September 4, 2013
 					</entry>
 					<entry>
-						<itemizedlist spacing="compact">
+						<itemizedlist>
 							<listitem>
 								<para>Update for Release-0.2</para>
 							</listitem>
@@ -58,12 +60,24 @@
 				</row>
 				<row>
 					<entry>
-						December. 9, 2013
+						December 9, 2013
 					</entry>
 					<entry>
-						<itemizedlist spacing="compact">
+						<itemizedlist>
 							<listitem>
 								<para>Update for Release-0.4</para>
+							</listitem>
+						</itemizedlist>
+					</entry>
+				</row>
+                <row>
+					<entry>
+						April 22, 2014
+					</entry>
+					<entry>
+						<itemizedlist>
+							<listitem>
+								<para>Update for Release-0.5</para>
 							</listitem>
 						</itemizedlist>
 					</entry>

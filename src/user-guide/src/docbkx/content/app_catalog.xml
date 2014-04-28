@@ -1,0 +1,1114 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License,
+	Version 2.0 (the &quot;License&quot;); you may not use this file
+	except in compliance with the License. You may obtain a copy of the
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required
+	by applicable law or agreed to in writing, software distributed under
+	the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+	the License for the specific language governing permissions and
+	limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+		 xmlns:xlink="http://www.w3.org/1999/xlink"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 version="5.0"
+		 xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsdhttp://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+	<title>Application Catalog</title>
+	<section>
+		<title>Environments</title>
+		<para>
+			<emphasis role="bold">Application Catalog Environment</emphasis>
+			- a virtual unit to store different services (applications).
+			They can be connected with each other or be individual. The
+			following actions with environment are available:
+			<itemizedlist>
+				<listitem>
+					<para>Create;</para>
+				</listitem>
+				<listitem>
+					<para>Edit;</para>
+				</listitem>
+				<listitem>
+					<para>Delete;</para>
+				</listitem>
+				<listitem>
+					<para>Deploy.</para>
+				</listitem>
+			</itemizedlist>
+			More information about actions with environment are described in
+			this chapter.
+		</para>
+		<section>
+			<title>Creating environment</title>
+			<para>Once you installed all Murano components and logged-in to
+				horizon dashboard successfully you will see Murano tab:
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/environments/main-envs.png"
+							scalefit="1" width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				First thing you need to do is to create an environment.
+				To do this, navigate to the
+				<filename>Application Catalog > Environments</filename>
+				page and click to the
+				<filename>"Create Environment"</filename>
+				. After setting name to your virtual environment it will be
+				created.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/environments/create-env.png"
+							scalefit="1"
+							width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				Just created environment has status <emphasis>Ready to configure</emphasis>.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/environments/created.jpg"
+							scalefit="1" width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+		</section>
+		<section>
+			<title>Adding application to the environment</title>
+			<para>
+				After Environment is created, you need to add applications to
+				this environment
+				and then send the environment to deploy. When deploy process is
+				done instances
+				with your applications will be spawned in OpenStack.
+				To add an application, navigate to the page with the list of
+				environment components by
+				clicking on the environment name (or on the "Components"
+				button) and then, click
+				the
+				<filename>"Add Application"</filename>button.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/environments/add-app-btn.png"
+							scalefit="1" width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				After that, you will be redirected to the "Applications" page.
+				Here you can see all applications: tenant applications and
+				public applications.
+				(Information about how to upload your own application package to repository
+				is available in <link linkend="PackageDefinition">appropriate chapter.</link>)
+				Base Murano public applications are described below.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata
+							fileref="../images/app_catalog/index.png"
+							scalefit="1" width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				Once you choose application that you want to add click "Add to
+				Env" and fill the form.
+				Forms for each application are specific.
+				To see more information about filling the form for a specific
+				application follow one of the link below:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="ASP">ASP.NET Application:</link>
+						</emphasis>
+						is a server-side Web application framework designed for
+						Web
+						development to produce dynamic Web pages. Application
+						is able
+						to install custom services onto one IIS Web Server.
+						Murano installs
+						all needed components and makes proper configuration.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="ASPfarm">ASP.NET Farm Application:
+							</link>
+						</emphasis>
+						ASP.NET Farm Application installs a custom application
+						on a
+						load-balanced array of IIS servers.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="AD">Active Directory:</link>
+						</emphasis>
+						Active Directory is a directory application implemented
+						by Microsoft for Windows domain networks.
+						In one installation, in addition to primary Domain
+						Controller,
+						you can add optional count of secondary Domain
+						Controllers.
+						Any other applications you are intending to create can
+						be
+						joined to that domain.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="Apache">Apache Application:</link>
+						</emphasis>
+						Apache HTTP Server is a web server application notable
+						for playing a key role in the initial growth of the
+						World Wide Web.
+						This application can install Apache with PHP module or
+						without it.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="Tomcat">Apache Tomcat:</link>
+						</emphasis>
+						Apache Tomcat is an open source software implementation
+						of the Java Servlet and JavaServer Pages technologies.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="Demo">Demo Application:</link>
+						</emphasis>
+						Installs test application that demonstrates how to
+						Murano interconnects with Murano Demo Agent.
+						For this application light-weight Linux Cirros image
+						can be used.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="IIS">Internet Information
+								Application:
+							</link>
+						</emphasis>
+						IIS is a web server and a set of feature extension
+						modules.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="IISfarm">Internet Information Web
+								Farm Application:
+							</link>
+						</emphasis>
+						Murano installs the Web Farm Framework on the
+						controller server,
+						configures the primary server and prepares the
+						secondary servers.
+						In addition load balancer is installed to monitor
+						application statuses.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="Telnet">Linux Telnet:</link>
+						</emphasis>
+						"AD
+						Telnet - is a network protocol used to provide a
+						bidirectional interactive
+						text-oriented communication facility using a virtual
+						terminal connection.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="SQL">MS SQL Application:</link>
+						</emphasis>
+						Microsoft SQL Application is a relational database
+						management system.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="SQLfarm">MS SQL Server Failover
+								Cluster:
+							</link>
+						</emphasis>
+						Murano installs all needed components and configures
+						your
+						SQL Server Cluster the way you want.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							<link linkend="PostgreSQL">PostgreSQL:</link>
+						</emphasis>
+						PostgreSQL, often simply "Postgres", is an
+						object-relational database management
+						system with an emphasis on extensibility and
+						standards-compliance.
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				On the last step of creating application prototype you have
+				opportunity to set
+				the hardware flavor of the instance which will be created -
+				and the image with the operating system, which will be
+				installed on
+				the instance. Also you may select availability zone, if there
+				are more
+				then one in your environment.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/last_step.png" scalefit="1"
+							width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<section xml:id="AD">
+				<title>Active Directory</title>
+				<para>
+					After you picked the Active Directory application you'll
+					see the following form:
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/active_directory.png"
+								width="100%" contentdepth="100%"
+								format="PDF"/>
+					</imageobject>
+				</mediaobject>
+				<para>
+					Enter or select values for this fields:
+				</para>
+				<informaltable rules="all" frame="border"
+							width="100%" cellpadding="3" cellspacing="3">
+					<col width="25%" align="left" style="font-weight:bold"
+						valign="top"/>
+					<col width="70%" style="padding:6px"/>
+					<tbody>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Domain name</para>
+							</td>
+							<td>
+								<para>
+									Enter a desired name for a new domain. This
+									name should fit to
+									DNS Domain Name requirements: it should
+									contain
+									only A-Z, a-z, 0-9, (.) and (-) and should
+									not end with a dash.
+									DNS server will be automatically set up on
+									each of the Domain
+									Controller instances.
+									Period characters are allowed only when
+									they
+									are used to delimit the components of
+									domain style
+									names. Single-level domain is not
+									appropriate.
+									Note: Only first 15 characters or
+									characters
+									before first period is used as NetBIOS
+									name.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Instance Count</para>
+							</td>
+							<td>
+								<para>
+									You can create several Active Directory
+									instances by setting
+									instance number larger than one. One
+									primary
+									Domain Controller and a few secondary DCs
+									will be created.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Account Name</para>
+							</td>
+							<td>
+								<para>
+									You account will have Active Directory
+									administrator rights.
+									So initial value is "Administrator" but you
+									can change it to any name you like.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Administrator password</para>
+							</td>
+							<td>
+								<para>
+									Windows requires strong password for
+									service administration. Your password
+									should have at least one letter
+									in each register, a number and a special
+									character.
+									Password length should be a minimum of 7
+									characters.
+
+									Once you forget your password you won't be
+									able to operate the service until recovery
+									password would be entered. So it's better
+									for Recovery and Administrator password
+									to be different.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Confirm password</para>
+							</td>
+							<td>
+								<para>Password confirmation is required.</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Recovery password</para>
+							</td>
+							<td>
+								<para>
+									Restrictions are the same as for the
+									Administrator password.
+									Please provide password that is different
+									from Administrator. It's not required for
+									form validation though.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Confirm password</para>
+							</td>
+							<td>
+								<para>Password confirmation is required.</para>
+							</td>
+						</tr>
+					</tbody>
+				</informaltable>
+			</section>
+			<section xml:id="IIS">
+				<title>Internet Information Service</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/iis.png" scalefit="1"
+								width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+			<section xml:id="IISfarm">
+				<title>Internet Information Web Farm Service</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/iis_farm.png"
+								scalefit="1" width="100%"
+								contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+			<section xml:id="ASP">
+				<title>ASP.NET Service</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/asp_net.png" scalefit="1"
+								width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+			<section xml:id="ASPfarm">
+				<title>ASP.NET Farm Service</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/asp_net_farm.png"
+								scalefit="1" width="100%"
+								contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+			<section xml:id="SQL">
+				<title>MS SQL Service</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/sql.png" scalefit="1"
+								width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+			<section xml:id="SQLfarm">
+				<title>MS SQL Server Failover Cluster</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/cluster1.png"
+								scalefit="1" width="100%"
+								contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<para>Enter or select values for the following fields:</para>
+				<informaltable rules="all" frame="border" width="100%"
+							cellpadding="3"
+							cellspacing="3">
+					<col width="25%" align="left" style="font-weight:bold"
+						valign="top"/>
+					<col width="70%" style="padding:6px"/>
+					<tbody>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Service Name</para>
+							</td>
+							<td>
+								<para>
+									Enter a desired name for a service. Just
+									A-Z,
+									a-z, 0-9, dash and underline are allowed.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Administrator password</para>
+							</td>
+							<td>
+								<para>
+									Windows requires strong password for
+									service
+									administration.
+									Your password should have at least one
+									letter
+									in each register, a number and a special
+									character.
+									Password length should be a minimum of 7
+									characters.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Confirm password</para>
+							</td>
+							<td>
+								<para>Password confirmation is required.</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Active Directory is configured by the
+									System Administrator
+								</para>
+							</td>
+							<td>
+								<para>
+									Enable this option only if you have
+									properly configured rules
+									that will include service to the domain,
+									that already exists in you environment.
+									Once you set this option to true,
+									additional fields will appear. (See
+									information below)
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Domain</para>
+							</td>
+							<td>
+								<para>
+									Application should be joined to the Active
+									Directory
+									domain. Please, create Active Directory
+									Application
+									prototype first.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>Mixed-mode Authentication</para>
+							</td>
+							<td>
+								<para>
+									Mixed authentication mode allows the use of
+									Windows
+									credentials but supplements them with local
+									SQL
+									Server user accounts that the administrator
+									may create and
+									maintain within SQL Server. If this mode is
+									on SA password is required
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<para>SA Password</para>
+							</td>
+							<td>
+								<para>
+									Set system administrator password for the
+									MS SQL Server.
+									Password requirements are the same as
+									previous.
+								</para>
+							</td>
+						</tr>
+					</tbody>
+				</informaltable>
+				<para>
+					In case pre-configured AD is enabled following fields will
+					appeared:
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/cluster1a.png"
+								scalefit="1" width="100%"
+								contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<informaltable rules="all" frame="border" width="100%"
+							cellpadding="3"
+							cellspacing="3">
+					<col width="25%" align="left" style="font-weight:bold"
+						valign="top"/>
+					<col width="70%" style="padding:6px"/>
+					<tbody>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Active Directory User</para>
+								<para>Active Directory Password</para>
+							</td>
+							<td>
+								<para>
+									Specify administrator user credentials to
+									the existent AD domain
+									(to which application will be join
+									according to your system automation setup)
+								</para>
+							</td>
+						</tr>
+					</tbody>
+				</informaltable>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/cluster2.png"
+								scalefit="1" width="100%"
+								contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/cluster3.png"
+								scalefit="1"
+								width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+			<section xml:id="Apache">
+				<title>Linux Apache Application</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/apache.png" scalefit="1"
+								width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<informaltable rules="all" frame="border" width="100%"
+							cellpadding="3"
+							cellspacing="3">
+					<col width="25%" align="left" style="font-weight:bold"
+						valign="top"/>
+					<col width="70%" style="padding:6px"/>
+					<tbody>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Application Name</para>
+							</td>
+							<td>
+								<para>
+									Enter a desired name for an application.
+									Just A-Z, a-z, 0-9, dash and
+									underline are allowed.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td style="font-weight:bold">
+								<para>PHP module</para>
+							</td>
+							<td>
+								<para>
+									PHP module can be installed with Apache.
+									Enable or disable this options via
+									checkbox.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Key Pair</para>
+							</td>
+							<td>
+								<para>
+									Select SSH Key Pair from the existing to
+									control access to your instance.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Hostname</para>
+							</td>
+							<td>
+								<para>
+									Machine hostname.
+									If blank - random name will be used.
+								</para>
+							</td>
+						</tr>
+					</tbody>
+				</informaltable>
+			</section>
+			<section xml:id="Telnet">
+				<title>Linux Telnet Application</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/telnet.png" scalefit="1"
+								width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<informaltable rules="all" frame="border" width="100%"
+							cellpadding="3"
+							cellspacing="3">
+					<col width="25%" align="left" style="font-weight:bold"
+						valign="top"/>
+					<col width="70%" style="padding:6px"/>
+					<tbody>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Service Name</para>
+							</td>
+							<td>
+								<para>
+									Enter a desired name for a service. Just
+									A-Z,
+									a-z, 0-9, dash and underline are allowed.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Key Pair</para>
+							</td>
+							<td>
+								<para>
+									Select SSH Key Pair from the existing.
+								</para>
+							</td>
+						</tr>
+						<tr>
+							<td style="font-weight:bold">
+								<para>Hostname</para>
+							</td>
+							<td>
+								<para>
+									Machine hostname.
+									If blank - random name will be used.
+								</para>
+							</td>
+						</tr>
+					</tbody>
+				</informaltable>
+			</section>
+		</section>
+		<section>
+			<title>Deploying environment</title>
+			<para>
+				Once environment has all applications, it can be sent to
+				deploy. Just press the
+				<filename>"Deploy This Environment"</filename> button.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata
+							fileref="../images/environments/deploy-env-btn.png"
+							scalefit="1" width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				And you'll see a message about successful start of deploying
+				your services in Openstack. Since now all you have to do is
+				just wait for a little bit
+				while Murano is installing and configuring your applications.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata
+							fileref="../images/environments/deploy_started.png"
+							scalefit="1"
+							width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				You can monitor deploying process. Just go to the Log tab on
+				application detailed page, where you can get by clicking on
+				the application name.
+				And now you can see installation logs.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/logs.png" scalefit="1"
+							width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				As long as installation and configuration are in progress,
+				environment is in
+				<emphasis>Deploy in progress</emphasis>
+				state. Depending on how many
+				applications you are deploying or how many nodes in your
+				cluster, process of spawning instances,
+				installation and post installation settings takes from 10
+				minutes up to one hour.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata
+							fileref="../images/environments/deploy-in-prg.png"
+							scalefit="1" width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				If installation process finished without any errors,
+				environment changes its status to
+				<emphasis>Ready:</emphasis>
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/done.png" scalefit="1"
+							width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+		</section>
+		<section>
+			<title>Working with deployed environment</title>
+			<para>
+				Congratulations! After some time waiting you are able to
+				operate with the applications.
+				To get information about installed application, navigate to
+				application detailed page.
+				To do that click on the environment name and then on the name
+				of the application you what to know about.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/iis_farm_detail.png"
+							scalefit="1" width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				Now you are seeing general information about the application in
+				terms of Murano Environment.
+				To get information about the instance in Openstack terms follow
+				the link on application instance name.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/name_link.png" scalefit="1"/>
+				</imageobject>
+			</mediaobject>
+			<para>
+				You can log in to the virtual machine directly from the horizon
+				(if your Openstack installation allows you) or by RDP protocol.
+			</para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="../images/instance_console.png"
+							scalefit="1"
+							width="100%" contentdepth="100%"/>
+				</imageobject>
+			</mediaobject>
+			<para>There are more things you can do with Murano Environment:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<link linkend="redeploy">Add new application and deploy
+							it again;
+						</link>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<link linkend="delete">Delete outdated and unnecessary
+							environments or applications;
+						</link>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<link linkend="deployments">Browse deployment history
+							and application installation logs;
+						</link>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<link linkend="edit">Rename your environment.</link>
+					</para>
+				</listitem>
+			</itemizedlist>
+			<section xml:id="redeploy">
+				<title>Redeploy Murano Environment</title>
+				<para>
+					Murano gives an opportunity to supplement already deployed
+					environment.
+					Thus if you already deployed the Active Directory
+					application and want to add any other applications just
+					create desired application prototype and click the
+					"Deploy This Environment" button. During application
+					prototype creation you can join this application
+					to the existent Active Directory domain.
+				</para>
+			</section>
+			<section xml:id="delete">
+				<title>Delete</title>
+				<para>Applications as well as environments can be easily
+					deleted.
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>To delete an environment go to the Application Catalog >
+							Environments index page and click "More" -> "Delete
+							Environment" in Actions column of ready to delete
+							environment.
+						</para>
+						<mediaobject>
+							<imageobject role="fo">
+								<imagedata
+										fileref="../images/environments/delete-env.png"
+										scalefit="1" width="100%"
+										contentdepth="100%"/>
+							</imageobject>
+						</mediaobject>
+						<para>
+							Environment deletion means to kill all services
+							with instances on which they are installed.
+							Instances will be scheduled to delete right after
+							you choose the "Delete Environment" action.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							To delete an application go to the application list
+							page and click the "Delete Service" button in
+							Actions column.
+							<emphasis role="bold">Note:</emphasis>
+							If you are deleting application that was already
+							deployed you'll need to
+							<emphasis>Deploy</emphasis>
+							the environment again by pressing corresponding
+							button.
+							In case you want to delete application prototype -
+							it has
+							<emphasis>"Service draft created"</emphasis>
+							in the
+							<emphasis>
+								Last operation
+							</emphasis>
+							column (see the screenshot below) - changes applies
+							right away.
+						</para>
+						<mediaobject>
+							<imageobject role="fo">
+								<imagedata
+										fileref="../images/service_delete.png"
+										scalefit="1" width="100%"
+										contentdepth="100%"/>
+							</imageobject>
+						</mediaobject>
+					</listitem>
+				</itemizedlist>
+			</section>
+			<section xml:id="deployments">
+				<title>Browse Murano Deployment</title>
+				<para>
+					Since Murano Environment can be deployed many times you may
+					want
+					to see the history of its deployments. To do that click the
+					"More-> Show deployments"
+					button on environments index page:
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata
+								fileref="../images/environments/show-env.png"
+								scalefit="1" width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<para>
+					From this page it's easy to see how many times and when
+					Murano Environment was deployed:
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata fileref="../images/deployments.png"
+								scalefit="1" width="100%"
+								contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<para>
+					For each deployment you can get a detailed information by
+					clicking the "Show Details" button.
+					You always can go back to any level using navigation string
+					at the page header.
+					From here you can observe which applications were installed
+					during deployment:
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata
+								fileref="../images/deployment_configuration.png"
+								scalefit="1" width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<para>Also deployment logs are available at the "Logs" tab:
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata
+								fileref="../images/deployment_logs.png"
+								scalefit="1" width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+			<section xml:id="edit">
+				<title>Rename Murano Environment</title>
+				<para>
+					It's possible to change the name of your environment: just
+					click the "More-> Edit Environment" button on environment
+					index page:
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata
+								fileref="../images/environments/edit-env.png"
+								scalefit="1" width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+				<para>
+					Environment name will correspond with heat stack name. So
+					the name must contains only alphanumeric characters (case
+					sensitive) and - character.
+				</para>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata
+								fileref="../images/environments/rename-env.png"
+								scalefit="1"
+								width="100%" contentdepth="100%"/>
+					</imageobject>
+				</mediaobject>
+			</section>
+		</section>
+	</section>
+	<section>
+		<title>Applications</title>
+		<para>At the
+			<filename>Application Catalog -> Applications</filename>
+			page all applications, registered in Application Catalog, are shown.
+		</para>
+		<mediaobject>
+			<imageobject role="fo">
+				<imagedata contentdepth="100%"
+						fileref="../images/app_catalog/index.png"
+						scalefit="1" width="100%"/>
+			</imageobject>
+		</mediaobject>
+		<para>
+			To see the full description of an application just click on the
+			<filename>Details</filename>
+			button.
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata contentdepth="100%"
+							fileref="../images/app_catalog/details.png"
+							scalefit="1" width="100%"/>
+				</imageobject>
+			</mediaobject>
+			And you will see all information about the application, its
+			requirements and licence.
+			From here you can add application to the current environment by
+			pressing the corresponding button.
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata contentdepth="100%"
+							fileref="../images/app_catalog/details2.png"
+							scalefit="1" width="100%"/>
+				</imageobject>
+			</mediaobject>
+			If there are more then six applications you can use navigation bar
+			underneath.
+		</para>
+		<para>Desired application can be easily found with the
+			<filename>Search</filename>
+			button. It's located on the right side.
+			You can enter any words or digits: applications will be searched by
+			there names, tags, categories or by date of
+			creation or modification.
+		<mediaobject>
+			<imageobject role="fo">
+				<imagedata contentdepth="100%"
+						fileref="../images/app_catalog/search.png"
+						scalefit="1" width="100%"/>
+			</imageobject>
+		</mediaobject>
+			Applications can be added to the existing environment. To select
+			the environment witch you want to add application just click to
+			the environment selector button.
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata contentdepth="100%"
+							fileref="../images/app_catalog/env_selector.png"
+							scalefit="1" width="100%"/>
+				</imageobject>
+			</mediaobject>
+			You can filter applications by categories with category selector.
+			It's located on the top of the page. Click on the desired category
+			name and all applications not related to that category will be
+			hidden.
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata
+							contentdepth="100%"
+							fileref="../images/app_catalog/category_selector.png"
+							scalefit="1" width="100%"/>
+				</imageobject>
+			</mediaobject>
+		</para>
+	</section>
+</chapter>

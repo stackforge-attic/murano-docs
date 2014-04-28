@@ -35,7 +35,7 @@
         </legalnotice>
     </info>
     <xi:include href="./content/overview.xml" xlink:title="Overview" />
-    <xi:include href="./content/images.xml" xlink:title="Murano Images" />
-    <xi:include href="./content/environments.xml" xlink:title="Murano Environments"/>
-    <xi:include href="./content/metadata.xml" xlink:title="Murano Metadata"/>
+    <xi:include href="./content/app_catalog.xml" xlink:title="Application Catalog" />
+    <xi:include href="./content/management.xml" xlink:title="Murano Management" />
+    <xi:include href="./content/troubleshooting.xml" xlink:title="Troubleshooting" />
 </book>

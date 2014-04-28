@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Copyright (c) 2013 Mirantis, Inc. Licensed under the Apache License,
+	Version 2.0 (the &quot;License&quot;); you may not use this file
+	except in compliance with the License. You may obtain a copy of the
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required
+	by applicable law or agreed to in writing, software distributed under
+	the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+	the License for the specific language governing permissions and
+	limitations under the License.
+-->
+<chapter xmlns="http://docbook.org/ns/docbook"
+		 xmlns:xlink="http://www.w3.org/1999/xlink"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 version="5.0"
+		 xsi:schemaLocation="http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd                           http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd">
+		<title>Troubleshooting</title>
+        <section xml:id="trouble">
+            <title>FQN</title>
+			<para><emphasis role="bold"> How to debug OpenStack Heat?</emphasis></para>
+			<para>
+				If you can execute Heat command via console interface - all good. It is
+				the most simple way to check Heat state on the node - just execute CLI
+				command 'heat list'.
+
+				See more information about Heat in openstack wiki
+				<link xlink:href="https://wiki.openstack.org/wiki/Heat/TroubleShooting"> page</link>
+			</para>
+			<para><emphasis role="bold"> If 'heat list' returns 503 error</emphasis></para>
+			<para>
+				It means that OpenStack Heat configuration files contain incorrect
+				credentials. Need to set 'user' = 'heat' and change passwords
+				'verybadpass' in all configuration files from directory /etc/heat/
+			</para>
+			<para><emphasis role="bold">If 'heat list' hangs up</emphasis></para>
+			<para>
+				Sometimes you can see that 'heat list' hangs up. The root of this
+				problem - connection to the rabbitMQ.
+			</para>
+			<para><emphasis role="bold">How I can connect to LoadBalancer instance in Server Farms?</emphasis></para>
+			<para>
+				First of all you should have KeyPair file 'murano-lb-key'. You can
+				create this file using commands
+				<programlisting>
+					<![CDATA[
+nova keypair-add murano-lb-key > murano-lb-key.priv
+chmod 600 murano-lb-key.priv
+					]]>
+				</programlisting>
+				And after that server farms need to be created with this KeyPair.
+				The second step is to 'how to connect to VM with LoadBalancer':
+				<programlisting>
+				<![CDATA[
+ssh -i murano-lb-key.priv root@10.0.0.3
+				]]>
+			  </programlisting>
+			</para>
+			<para><emphasis role="bold">Murano dashboard can not connect to Murano API. How I can fix it?</emphasis></para>
+			<para>
+				This problem has two ways to fix:
+				Add string
+					<programlisting>
+						<![CDATA[
+MURANO_API_URL='http://localhost:8082'
+								]]>
+					</programlisting>
+				to the /etc/openstack-dashboard/local_settings (or
+				/etc/openstack-dashboard/local_settings.py - it depends on OpenStack
+				configuration)
+				and after that web server restart is needed.
+				Add keystone endpoints for Murano API
+					<programlisting>
+						<![CDATA[
+keystone service-create --name muranoapi --type murano --description "Murano-Api Service"
+keystone endpoint-create --region RegionOne --service-id
+--publicurl http://localhost:8082 --internalurl http://localhost:8082 --adminurl http://localhost:8082
+					]]>
+				</programlisting>
+			</para>
+			<para><emphasis role="bold">
+				Murano API Service does not work on CentOS 6.x. WebUI can not connect
+				to this service. How to fix this?</emphasis>
+				</para>
+			<para>
+				The problem in pip lib routes. Need to upgrade this lib and restart
+				Murano API:
+				<programlisting>
+					<![CDATA[
+python-pip install routes --upgrade
+initctl stop murano-api
+initctl start murano-api
+				]]>
+			</programlisting>
+			</para>
+			<para><emphasis role="bold">
+				Error 'Unexpected state' during the deployment of Web Farms. What the
+				problem? </emphasis>
+			</para>
+			<para>
+				Sometimes we can see in deployments logs:
+				<programlisting>
+					<![CDATA[
+2013-08-06 09:10:07 - Unable to deploy instance ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
+2013-08-06 09:10:07 - Unable to create a Server Farm load balancer on unit ipkrmhk0vzq4b6 (asp-farm_instance_0) due to Unexpected state
+								]]>
+				</programlisting>
+				The root of this problem is incorrect configuration - Heat can not
+				create Load Balancer instance. Please, remember that you should have
+				admin access for the project in OpenStack to deploy LoadBalancer and also,
+				you should have KeyPair with default name 'murano-lb-key'.
+			</para>
+			<para><emphasis role="bold">Error in Murano API logs 'No module named helpers.token_sanitizer'</emphasis></para>
+			 <para>
+				This pip version problem. Need to install pip 1.4 and after that reinstall murano-client, murano-common and murano-api.
+			</para>
+        </section>
+	</chapter>
